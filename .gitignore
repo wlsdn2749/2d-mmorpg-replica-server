@@ -1,0 +1,27 @@
+# Visual Studio 사용자 설정
+.vs/
+*.user
+*.suo
+*.userosscache
+*.userprefs
+
+# 빌드 출력 폴더
+bin/
+obj/
+
+
+# 프로토콜 생성폴더
+Protocols/
+
+# 임시 / 캐시 파일
+*.tmp
+*.temp
+*.log
+*.cache
+*.pdb
+
+# 패키지들
+third_party/
+
+# Rider / JetBrains
+.idea/
