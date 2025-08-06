@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-public static class RegisterValidator
+public static class LoginValidator
 {
     public readonly record struct ValidationResult(bool IsValid, string Detail)
     {
@@ -19,18 +19,17 @@ public static class RegisterValidator
     public static readonly Regex _emailRx = new(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
     public static async Task<ValidationResult> ValidateAsync(
-        RegisterRequest req,
+        LoginRequest req,
         IUserRepository userRepository)
     {
-        // 1. 이메일 형식인지
-        if (!_emailRx.IsMatch(req.Email))
-            return ValidationResult.Fail("적절한 이메일 형식이 아닙니다.");
-        //if (!_korNickRx.IsMatch(req.Username))
-        //    return ValidationResult.Fail("이름이 길거나 적합하지 않습니다.");
+        // 1. 공백 or null 체크
+        if (string.IsNullOrWhiteSpace(req.Email) ||
+           string.IsNullOrWhiteSpace(req.Password))
+            return ValidationResult.Fail("Username or Password는 필수 항목입니다.");
 
-        // 2. 중복된 이메일인지?
-        if (await userRepository.ExistAsync(req.Email))
-            return ValidationResult.Fail("이미 존재하는 이메일 입니다.");
+        // 2. 존재 여부 확인
+        if (!await userRepository.ExistAsync(req.Email))
+            return ValidationResult.Fail("존재하지 않는 계정입니다.");
 
         return ValidationResult.Success();
     }

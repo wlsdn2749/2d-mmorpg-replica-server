@@ -25,3 +25,6 @@ third_party/
 
 # Rider / JetBrains
 .idea/
+
+# Configuation
+appsettings.json
