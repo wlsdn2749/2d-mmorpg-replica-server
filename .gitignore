@@ -28,3 +28,7 @@ third_party/
 
 # Configuation
 appsettings.json
+
+# Creds
+key.pem
+crt.pem

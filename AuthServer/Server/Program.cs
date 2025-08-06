@@ -39,10 +39,9 @@ namespace AuthServer.Server
             builder.WebHost.ConfigureKestrel(options =>
             {
                 // gRPC는 HTTP/2를 필요로 함
-                options.ListenAnyIP(443, listenOptions =>
+                options.ListenAnyIP(5100, listenOptions =>
                 {
                     listenOptions.Protocols = HttpProtocols.Http2;
-                    listenOptions.UseHttps();
                 });
             });
 
