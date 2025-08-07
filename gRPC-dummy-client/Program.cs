@@ -12,7 +12,7 @@ class Program
         //    "System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
 
         using var channel = GrpcChannel.ForAddress(
-            "https://localhost",
+            "https://mmo.jdj.kr:8443",
             new GrpcChannelOptions
             {
                 //Credentials = Grpc.Core.ChannelCredentials.Insecure

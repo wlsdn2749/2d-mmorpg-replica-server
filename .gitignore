@@ -32,3 +32,6 @@ appsettings.json
 # Creds
 key.pem
 crt.pem
+cert.crt
+cert.key
+jdj.kr.pfx

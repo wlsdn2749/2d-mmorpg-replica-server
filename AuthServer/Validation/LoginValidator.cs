@@ -25,7 +25,7 @@ public static class LoginValidator
         // 1. 공백 or null 체크
         if (string.IsNullOrWhiteSpace(req.Email) ||
            string.IsNullOrWhiteSpace(req.Password))
-            return ValidationResult.Fail("Username or Password는 필수 항목입니다.");
+            return ValidationResult.Fail("Email or Password는 필수 항목입니다.");
 
         // 2. 존재 여부 확인
         if (!await userRepository.ExistAsync(req.Email))
