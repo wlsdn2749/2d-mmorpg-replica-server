@@ -8,7 +8,10 @@
 # 빌드 출력 폴더
 bin/
 obj/
-
+_Client/
+Debug
+Release
+x64/
 
 # 프로토콜 생성폴더
 Protocols/
@@ -35,3 +38,6 @@ crt.pem
 cert.crt
 cert.key
 jdj.kr.pfx
+
+# include
+include

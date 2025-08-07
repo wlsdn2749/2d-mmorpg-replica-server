@@ -16,15 +16,15 @@ REM %PROTOC% --cpp_out=%OUT_DIR_CPP% --grpc_out=%OUT_DIR_CPP% --plugin=protoc-ge
 
 IF ERRORLEVEL 1 PAUSE
 
-XCOPY /Y greet.cs "../gRPC-dummy-client\Protocols"
-XCOPY /Y greetGrpc.cs "../gRPC-dummy-client\Protocols"
-XCOPY /Y greet.cs "../AuthServer\Protocols"
-XCOPY /Y greetGrpc.cs "../AuthServer\Protocols"
+XCOPY /Y greet.cs "../gRPC-dummy-client\Protocol"
+XCOPY /Y greetGrpc.cs "../gRPC-dummy-client\Protocol"
+XCOPY /Y greet.cs "../AuthServer\Protocol"
+XCOPY /Y greetGrpc.cs "../AuthServer\Protocol"
 
-XCOPY /Y auth.cs "../gRPC-dummy-client\Protocols"
-XCOPY /Y authGrpc.cs "../gRPC-dummy-client\Protocols"
-XCOPY /Y auth.cs "../AuthServer\Protocols"
-XCOPY /Y authGrpc.cs "../AuthServer\Protocols"
+XCOPY /Y auth.cs "../gRPC-dummy-client\Protocol"
+XCOPY /Y authGrpc.cs "../gRPC-dummy-client\Protocol"
+XCOPY /Y auth.cs "../AuthServer\Protocol"
+XCOPY /Y authGrpc.cs "../AuthServer\Protocol"
 
 
 DEL /Q /F *.pb.h
