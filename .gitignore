@@ -41,3 +41,7 @@ jdj.kr.pfx
 
 # include
 include
+
+# Python
+__pycache__
+env

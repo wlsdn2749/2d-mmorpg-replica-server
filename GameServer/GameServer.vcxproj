@@ -133,7 +133,8 @@
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);libssl.lib;libcrypto.lib</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>CALL $(SolutionDIr)Common\Protobuf\bin\GenPackets.bat</Command>
+      <Command>CALL $(SolutionDIr)Common\Protobuf\bin\GenPackets.bat
+CALL $(SolutionDIr)Common\Procedures\GenProcs.bat</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -155,7 +156,8 @@
       <AdditionalLibraryDirectories>;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MD;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MDd;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MT;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MTd</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
-      <Command>CALL $(SolutionDIr)Common\Protobuf\bin\GenPackets.bat</Command>
+      <Command>CALL $(SolutionDIr)Common\Protobuf\bin\GenPackets.bat
+CALL $(SolutionDIr)Common\Procedures\GenProcs.bat</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -195,13 +197,16 @@
     <ClInclude Include="GameSession.h" />
     <ClInclude Include="GameSessionAccessor.h" />
     <ClInclude Include="GameSessionContainer.h" />
+    <ClInclude Include="GenProcedures.h" />
     <ClInclude Include="JwtAuth.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Protocol.pb.h" />
+    <ClInclude Include="StringConvert.h" />
     <ClInclude Include="Struct.pb.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\iocp-server-unity-client-demo\iocp_server_cpp\Common\Procedures\GenProcs.bat" />
     <None Include="..\Common\Protobuf\bin\Enum.proto" />
     <None Include="..\Common\Protobuf\bin\Protocol.proto" />
     <None Include="..\Common\Protobuf\bin\Struct.proto" />
@@ -211,6 +216,9 @@
     <UpToDateCheckInput Include="..\Common\Protobuf\bin\Enum.proto" />
     <UpToDateCheckInput Include="..\Common\Protobuf\bin\Protocol.proto" />
     <UpToDateCheckInput Include="..\Common\Protobuf\bin\Struct.proto" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="GameDB.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

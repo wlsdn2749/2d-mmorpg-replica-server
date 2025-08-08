@@ -47,6 +47,8 @@ AppSettings LoadAppSettings(const std::string& path)
     cfg.tokenExpiryHours = get_int("TokenExpiryHours", cfg.tokenExpiryHours);
     cfg.issuer = get_str("Issuer", cfg.issuer);
     cfg.audience = get_str("Audience", cfg.audience);
+    cfg.dbLocalPath = get_str("DBLocalPath", cfg.dbLocalPath);
+    cfg.dbXmlPath = get_str("DBXmlPath", cfg.dbXmlPath);
 
     if (cfg.jwtSecret.empty())
         throw std::runtime_error("JwtSecret is empty");

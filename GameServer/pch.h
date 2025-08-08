@@ -16,6 +16,8 @@
 #include "Struct.pb.h"
 #include "Protocol.pb.h"
 
+#include "StringConvert.h"
+
 #include "Windows.h"
 #undef max
 #undef min

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GameDB>
+  <Table name="Gold">
+    <Column name="id" type="int" notnull="true" identity="1,1"/>
+    <Column name="gold" type="int" notnull="false"/>
+    <Column name="name" type="nvarchar(50)" notnull="false"/>
+    <Column name="createDate" type="datetime" notnull="false"/>
+    <Index type="clustered"> 
+      <PrimaryKey/>
+      <Column name="id"/>
+    </Index>
+  </Table>
+  <Procedure name="spInsertGold">
+    <Param name="@gold" type="int"/>
+    <Param name="@name" type="nvarchar(50)"/>
+    <Param name="@createDate" type="datetime"/>
+    <Body>
+      <![CDATA[
+       INSERT INTO [dbo].[Gold] ([gold], [name], [createDate]) VALUES(@gold, @name, @createDate)
+      ]]>
+    </Body>
+  </Procedure>
+  <Procedure name="spGetGold">
+    <Param name="@gold" type="int"/>
+    <Body>
+      <![CDATA[
+       SELECT id, gold, name, createDate FROM [dbo].[Gold] where gold = (@gold)
+      ]]>
+    </Body>
+  </Procedure>
+</GameDB>

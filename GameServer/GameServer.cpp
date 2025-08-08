@@ -1,15 +1,31 @@
 ﻿#include "pch.h"
 #include <iostream>
+
+/*------------------------
+	 네트워크 & 세션
+------------------------*/
 #include "GameSession.h"
 #include "GameSessionContainer.h"
 #include "GameSessionAccessor.h"
 
+/*------------------------
+	 서비스 & 스레드
+------------------------*/
 #include "Service.h"
 #include "ThreadManager.h"
 
+/*------------------------
+	 설정 & 인증
+------------------------*/
 #include "AppConfig.h"
 #include "JwtAuth.h"
 #include "ClientPacketHandler.h"
+
+/*------------------------
+	 데이터 베이스
+------------------------*/
+#include "DBConnectionPool.h"
+#include "DBSynchronizer.h"
 
 enum
 {
@@ -36,20 +52,28 @@ void DoWorkerJob(ServerServiceRef& service)
 
 int main()
 {
-	// TODO: DB Initialization
+	// Initialize AppSettings
+	AppSettings s = LoadAppSettings(); 
 
-	// Room?
+	// Initialize & Sync DB
+	ASSERT_CRASH(GDBConnectionPool->Connect(10, StrToWstr(s.dbLocalPath).data()));
+	DBConnection* dbConn = GDBConnectionPool->Pop();
+	DBSynchronizer dbSync(*dbConn);
+	dbSync.Synchronize(StrToWstr(s.dbXmlPath).data());
 
+	// Initalize Handler & Valiator
 	ClientPacketHandler::init(); // 핸들러와 Wrapper 매핑 필수
-
-	AppSettings s = LoadAppSettings();
 	JwtAuth::Init(s.jwtSecret);
+
+
+	// TODO Room
+
 
 	GameSessionContainerRef container = MakeShared<GameSessionContainer>();
 	GameSessionAccessor accessor(container); // 레퍼런스 주입
 
 	ServerServiceRef service = MakeShared<ServerService>(
-		NetAddress(L"0.0.0.0", 6100),
+		NetAddress(L"0.0.0.0", 6201),
 		MakeShared<IocpCore>(),
 		[container] {return MakeShared<GameSession>(container);},
 		100);

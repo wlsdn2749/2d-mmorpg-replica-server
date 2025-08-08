@@ -22,6 +22,9 @@
     <Filter Include="Config">
       <UniqueIdentifier>{bcc7bf58-da28-4833-927d-68c125f34589}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DB">
+      <UniqueIdentifier>{6ef28bb6-9b0c-4022-bf03-fd41ae0a7440}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameServer.cpp">
@@ -95,6 +98,12 @@
     <ClInclude Include="AppConfig.h">
       <Filter>Config</Filter>
     </ClInclude>
+    <ClInclude Include="GenProcedures.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="StringConvert.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Common\Protobuf\bin\Enum.proto">
@@ -109,5 +118,13 @@
     <None Include="appsettings.json">
       <Filter>Config</Filter>
     </None>
+    <None Include="..\..\iocp-server-unity-client-demo\iocp_server_cpp\Common\Procedures\GenProcs.bat">
+      <Filter>DB</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="GameDB.xml">
+      <Filter>DB</Filter>
+    </Xml>
   </ItemGroup>
 </Project>
