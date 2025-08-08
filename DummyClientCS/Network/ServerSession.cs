@@ -33,7 +33,7 @@ namespace DummyClientCS
 
         public override void OnConnected(EndPoint endPoint)
         {
-            //Console.WriteLine($"onConnected : {endPoint}");
+            Console.WriteLine($"onConnected : {endPoint}");
 
             // 중복처리 안되있어서 일단 비활성화
             //Protocol.C_REGISTER registerPkt = new C_REGISTER()
@@ -44,14 +44,14 @@ namespace DummyClientCS
             //var registerSendBuffer = ServerPacketManager.MakeSendBuffer(registerPkt);
             //Send(registerSendBuffer);
 
-            Protocol.C_LOGIN loginPkt = new C_LOGIN()
-            {
-                Email = "abc@123d.com",
-                Pw = "abcde",
-                Type = Protocol.PlayerType.Dummy,
-            };
-            var sendBuffer = ServerPacketManager.MakeSendBuffer(loginPkt);
-            Send(sendBuffer);
+            //Protocol.C_LOGIN loginPkt = new C_LOGIN()
+            //{
+            //    Email = "abc@123d.com",
+            //    Pw = "abcde",
+            //    Type = Protocol.PlayerType.Dummy,
+            //};
+            //var sendBuffer = ServerPacketManager.MakeSendBuffer(loginPkt);
+            //Send(sendBuffer);
         }
 
         public override void OnDisconnected(EndPoint endPoint)
@@ -65,7 +65,6 @@ namespace DummyClientCS
         public override void OnRecvPacket(ArraySegment<byte> buffer)
         {
             ServerPacketManager.Instance.OnRecvPacket(this, buffer);
-            ClientPerformanceStats.Instance.OnPacketReceived();
         }
 
         public override void OnSend(int numOfBytes)

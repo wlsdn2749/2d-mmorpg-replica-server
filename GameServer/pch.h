@@ -12,9 +12,14 @@
 #endif
 
 #include "CorePch.h"
-
 #include "Enum.pb.h"
 #include "Struct.pb.h"
+#include "Protocol.pb.h"
+
+#include "Windows.h"
+#undef max
+#undef min
+#include <jwt-cpp/jwt.h>
 
 using GameSessionRef	= shared_ptr<class GameSession>;
 using PlayerRef			= shared_ptr<class Player>;

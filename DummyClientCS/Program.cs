@@ -1,4 +1,5 @@
-﻿using DummyClientCS.Utils;
+﻿using DummyClientCS;
+using DummyClientCS.Utils;
 using Grpc.Net.Client;
 using GrpcGreeter;
 using Mmorpg2d.Auth;
@@ -8,6 +9,7 @@ using System.Net;
 class Program
 {
     private static Auth.AuthClient? _client;
+    private static string? _jwt = "";
     static async Task Main()
     {
         using var channel = GrpcChannel.ForAddress(
@@ -19,6 +21,10 @@ class Program
 
         _client = new Auth.AuthClient(channel);
 
+        // GameServer TCP HandShake
+        await ConnectToGameServer();
+
+
         while (true)
         {
             Console.WriteLine("\n===== 메뉴 =====");
@@ -26,18 +32,24 @@ class Program
             Console.WriteLine("[1] 회원가입");
             Console.WriteLine("[2] 로그인");
             Console.WriteLine("\n===== TCP 게임서버 =====");
+            Console.WriteLine("[3] JWT 검증");
 
             Console.WriteLine("[0] 종료");
             Console.Write("선택: ");
 
             var key = Console.ReadLine();
+
+            SessionManager.Instance.SetCanSendPackets(true);
             switch (key)
             {
                 case "1":
                     await AuthUtil.DoRegisterAsync(_client);
                     break;
                 case "2":
-                    await AuthUtil.DoLoginAsync(_client);
+                    _jwt = await AuthUtil.DoLoginAsync(_client);
+                    break;
+                case "3":
+                    await SessionManager.Instance.SendForEachJWTLoginAsync(_jwt);
                     break;
                 case "0":
                     return;
@@ -59,10 +71,10 @@ class Program
         Connector connector = new Connector();
 
         connector.Connect(endPoint,
-            () => { 
-                // SessionManager로 생성
-                // 세션 리턴
-            })
+            () => {
+                var session = SessionManager.Instance.Generate();
+                return session;
+            }, 1);
     }
 
     

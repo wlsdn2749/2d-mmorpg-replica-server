@@ -16,6 +16,12 @@
     <Filter Include="Protocol">
       <UniqueIdentifier>{ba7a6c5b-515d-44b8-bd34-dcf6f1fedf98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Auth">
+      <UniqueIdentifier>{d469cb61-4da8-4fbe-bf2d-a480f020d2f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Config">
+      <UniqueIdentifier>{bcc7bf58-da28-4833-927d-68c125f34589}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameServer.cpp">
@@ -48,6 +54,12 @@
     <ClCompile Include="Struct.pb.cc">
       <Filter>Protocol</Filter>
     </ClCompile>
+    <ClCompile Include="JwtAuth.cpp">
+      <Filter>Auth</Filter>
+    </ClCompile>
+    <ClCompile Include="AppConfig.cpp">
+      <Filter>Config</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -77,6 +89,12 @@
     <ClInclude Include="Struct.pb.h">
       <Filter>Protocol</Filter>
     </ClInclude>
+    <ClInclude Include="JwtAuth.h">
+      <Filter>Auth</Filter>
+    </ClInclude>
+    <ClInclude Include="AppConfig.h">
+      <Filter>Config</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Common\Protobuf\bin\Enum.proto">
@@ -87,6 +105,9 @@
     </None>
     <None Include="..\Common\Protobuf\bin\Struct.proto">
       <Filter>Protocol</Filter>
+    </None>
+    <None Include="appsettings.json">
+      <Filter>Config</Filter>
     </None>
   </ItemGroup>
 </Project>

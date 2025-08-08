@@ -79,12 +79,12 @@
     <LibraryPath>$(SolutionDir)Libraries\Libs\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)Libraries\Include\;$(SolutionDir)IocpCore;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Libraries\Libs\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Libraries\Include\;$(SolutionDir)IocpCore;C:\Program Files\OpenSSL-Win64\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Libraries\Libs\;C:\Program Files\OpenSSL-Win64\lib\VC\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)Libraries\Include\;$(SolutionDir)IocpCore;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Libraries\Libs\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Libraries\Include\;$(SolutionDir)IocpCore;C:\Program Files\OpenSSL-Win64\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Libraries\Libs\;C:\Program Files\OpenSSL-Win64\lib\VC\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -129,6 +129,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MD;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MDd;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MT;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MTd</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);libssl.lib;libcrypto.lib</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>CALL $(SolutionDIr)Common\Protobuf\bin\GenPackets.bat</Command>
@@ -149,12 +151,15 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);libssl.lib;libcrypto.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MD;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MDd;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MT;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MTd</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
       <Command>CALL $(SolutionDIr)Common\Protobuf\bin\GenPackets.bat</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AppConfig.cpp" />
     <ClCompile Include="ClientPacketHandler.cpp" />
     <ClCompile Include="Enum.pb.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -164,6 +169,7 @@
     <ClCompile Include="GameSession.cpp" />
     <ClCompile Include="GameSessionAccessor.cpp" />
     <ClCompile Include="GameSessionContainer.cpp" />
+    <ClCompile Include="JwtAuth.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -183,11 +189,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AppConfig.h" />
     <ClInclude Include="ClientPacketHandler.h" />
     <ClInclude Include="Enum.pb.h" />
     <ClInclude Include="GameSession.h" />
     <ClInclude Include="GameSessionAccessor.h" />
     <ClInclude Include="GameSessionContainer.h" />
+    <ClInclude Include="JwtAuth.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Protocol.pb.h" />
@@ -197,6 +205,7 @@
     <None Include="..\Common\Protobuf\bin\Enum.proto" />
     <None Include="..\Common\Protobuf\bin\Protocol.proto" />
     <None Include="..\Common\Protobuf\bin\Struct.proto" />
+    <None Include="appsettings.json" />
   </ItemGroup>
   <ItemGroup>
     <UpToDateCheckInput Include="..\Common\Protobuf\bin\Enum.proto" />

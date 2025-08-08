@@ -7,6 +7,8 @@
 #include "Service.h"
 #include "ThreadManager.h"
 
+#include "AppConfig.h"
+#include "JwtAuth.h"
 #include "ClientPacketHandler.h"
 
 enum
@@ -40,11 +42,14 @@ int main()
 
 	ClientPacketHandler::init(); // 핸들러와 Wrapper 매핑 필수
 
+	AppSettings s = LoadAppSettings();
+	JwtAuth::Init(s.jwtSecret);
+
 	GameSessionContainerRef container = MakeShared<GameSessionContainer>();
 	GameSessionAccessor accessor(container); // 레퍼런스 주입
 
 	ServerServiceRef service = MakeShared<ServerService>(
-		NetAddress(L"127.0.0.1", 8421),
+		NetAddress(L"0.0.0.0", 6100),
 		MakeShared<IocpCore>(),
 		[container] {return MakeShared<GameSession>(container);},
 		100);

@@ -28,7 +28,7 @@ namespace DummyClientCS.Utils
         }
 
         /* ---------- 로그인 ---------- */
-        public static async Task DoLoginAsync(Auth.AuthClient client)
+        public static async Task<string> DoLoginAsync(Auth.AuthClient client)
         {
             Console.Write("아이디(이메일): ");
             var email = Console.ReadLine() ?? "";
@@ -43,6 +43,8 @@ namespace DummyClientCS.Utils
 
             Console.WriteLine($"[로그인 결과] {reply.Success} / {reply.Detail}");
             Console.WriteLine($"JWT: {reply.Jwt}");
+
+            return reply.Jwt;
         }
 
         /* ---------- 비밀번호 입력 시 에코 숨김 ---------- */
