@@ -32,7 +32,23 @@
     </Body>
   </Procedure>
   <!--===== 캐릭터 관련 DB =====-->
-  
+  <Table name="Characters">
+    <Column name="characterId" type="int" notnull="true"/>
+    <Column name="userId" type="int" notnull="true"/>
+    <Column name="username" type="nvarchar(32)" notnull="true"/>
+    <Column name="gender" type="int" notnull="true"/>
+    <Column name="region" type="int" notnull="true"/>
+    <Column name="level" type="int" notnull="true" default="1"/>
+    <Column name="exp" type="int" notnull="true"/>
+    <Column name="lastZone" type="int" notnull="true"/>
+    <Column name="posX" type="int" notnull="true"/>
+    <Column name="posY" type="int" notnull="true"/>
+    <Column name="createdAt" type="datetime" notnull="true" 
+    <Index type="clustered">
+      <PrimaryKey/>
+      <Column name="userId"/>
+    </Index>
+  </Table>
   
   
   <!-- 아래 Procedures는 예시임 -->

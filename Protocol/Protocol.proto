@@ -9,6 +9,8 @@ enum MsgId
 	S_JWT_LOGIN_REPLY = 1;
 	C_CREATE_CHARACTER_REQUEST = 2;
 	S_CREATE_CHARACTER_REPLY = 3;
+	C_PLAYER_MOVE_REQUEST = 4;
+	s_BROADCAST_PLAYER_MOVE = 5;
 }
 
 // 클라 -> 게임 서버 jwt 로그인 인증
@@ -36,6 +38,16 @@ message S_CreateCharacterReply
 	string detail = 2; // 실패 시 에러 메시지
 }
 
+message C_PlayerMoveRequest
+{
+	Vector2Info clickWorldPos = 1;
+}
+
+message S_BroadcastPlayerMove
+{
+	repeated PlayerMoveInfo playerMoves = 1;
+}
+
 enum ELoginResult
 {
     SUCCESS = 0;
@@ -56,4 +68,24 @@ enum ERegion
     REGION_NONE = 0;
     REGION_GO = 1;
     REGION_BACK = 2;
+}
+
+enum EDirection
+{
+	DIR_UP = 0;
+	DIR_DOWN = 1;
+	DIR_LEFT = 2;
+	DIR_RIGHT = 3;
+}
+
+message Vector2Info
+{
+	int32 x = 1;
+	int32 y = 2;
+}
+
+message PlayerMoveInfo
+{
+	int32 playerId = 1;
+	EDirection direction = 2; 
 }
