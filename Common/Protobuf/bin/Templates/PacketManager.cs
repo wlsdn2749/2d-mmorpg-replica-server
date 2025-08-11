@@ -2,7 +2,7 @@ using ServerCore;
 using System;
 using System.Collections.Generic;
 using Google.Protobuf;
-using Packet;
+using Google.Protobuf.Protocol;
 
 namespace Packet
 {
@@ -38,7 +38,7 @@ namespace Packet
         private readonly Dictionary<Type, ushort> _typeToId = new();
 
 {%- for pkt in parser.send_pkt %}
-        public static ArraySegment<byte> MakeSendBuffer(Protocol.{{pkt.name}} pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_{{pkt.name}});
+        public static ArraySegment<byte> MakeSendBuffer({{pkt.name}} pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_{{pkt.name}});
 {%- endfor %}
 
         void Register()
@@ -49,7 +49,7 @@ namespace Packet
             }
             
 {%- for pkt in parser.recv_pkt %}
-            RegisterHandler((ushort)PacketID.PKT_{{pkt.name}}, ServerPacketHandler.HANDLE_{{pkt.name}}, Protocol.{{pkt.name}}.Parser);
+            RegisterHandler((ushort)PacketID.PKT_{{pkt.name}}, ServerPacketHandler.HANDLE_{{pkt.name}}, {{pkt.name}}.Parser);
 {%- endfor %}
             
                   

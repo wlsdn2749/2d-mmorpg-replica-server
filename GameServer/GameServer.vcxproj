@@ -73,18 +73,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(SolutionDir)Libraries\Include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Libraries\Libs\;$(LibraryPath)</LibraryPath>
+    <OutDir>$(ProjectDIr)Build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDIr)Output\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(SolutionDir)Libraries\Include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Libraries\Libs\;$(LibraryPath)</LibraryPath>
+    <OutDir>$(ProjectDIr)Build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDIr)Output\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(SolutionDir)Libraries\Include\;$(SolutionDir)IocpCore;C:\Program Files\OpenSSL-Win64\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Libraries\Libs\;C:\Program Files\OpenSSL-Win64\lib\VC\;$(LibraryPath)</LibraryPath>
+    <OutDir>$(ProjectDIr)Build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDIr)Output\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)Libraries\Include\;$(SolutionDir)IocpCore;C:\Program Files\OpenSSL-Win64\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Libraries\Libs\;C:\Program Files\OpenSSL-Win64\lib\VC\;$(LibraryPath)</LibraryPath>
+    <OutDir>$(ProjectDIr)Build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDIr)Output\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -133,7 +141,7 @@
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);libssl.lib;libcrypto.lib</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>CALL $(SolutionDIr)Common\Protobuf\bin\GenPackets.bat
+      <Command>CALL $(SolutionDIr)Protocol\GenPackets.bat
 CALL $(SolutionDIr)Common\Procedures\GenProcs.bat</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -156,7 +164,7 @@ CALL $(SolutionDIr)Common\Procedures\GenProcs.bat</Command>
       <AdditionalLibraryDirectories>;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MD;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MDd;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MT;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MTd</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
-      <Command>CALL $(SolutionDIr)Common\Protobuf\bin\GenPackets.bat
+      <Command>CALL $(SolutionDIr)Protocol\GenPackets.bat
 CALL $(SolutionDIr)Common\Procedures\GenProcs.bat</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -166,10 +174,6 @@ CALL $(SolutionDIr)Common\Procedures\GenProcs.bat</Command>
     <ClCompile Include="ClientPacketHandler.cpp" />
     <ClCompile Include="DBDisPatcher.cpp" />
     <ClCompile Include="DBWorker.cpp" />
-    <ClCompile Include="Enum.pb.cc">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="GameServer.cpp" />
     <ClCompile Include="GameSession.cpp" />
     <ClCompile Include="GameSessionAccessor.cpp" />
@@ -188,10 +192,6 @@ CALL $(SolutionDIr)Common\Procedures\GenProcs.bat</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Struct.pb.cc">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Account.h" />
@@ -200,7 +200,6 @@ CALL $(SolutionDIr)Common\Procedures\GenProcs.bat</Command>
     <ClInclude Include="ClientPacketHandler.h" />
     <ClInclude Include="DBDisPatcher.h" />
     <ClInclude Include="DBWorker.h" />
-    <ClInclude Include="Enum.pb.h" />
     <ClInclude Include="GameSession.h" />
     <ClInclude Include="GameSessionAccessor.h" />
     <ClInclude Include="GameSessionContainer.h" />
@@ -210,13 +209,10 @@ CALL $(SolutionDIr)Common\Procedures\GenProcs.bat</Command>
     <ClInclude Include="Player.h" />
     <ClInclude Include="Protocol.pb.h" />
     <ClInclude Include="StringConvert.h" />
-    <ClInclude Include="Struct.pb.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\iocp-server-unity-client-demo\iocp_server_cpp\Common\Procedures\GenProcs.bat" />
-    <None Include="..\Common\Protobuf\bin\Enum.proto" />
-    <None Include="..\Common\Protobuf\bin\Protocol.proto" />
-    <None Include="..\Common\Protobuf\bin\Struct.proto" />
+    <None Include="..\Protocol\Protocol.proto" />
     <None Include="appsettings.json" />
   </ItemGroup>
   <ItemGroup>

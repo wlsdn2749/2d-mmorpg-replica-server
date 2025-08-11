@@ -1,7 +1,7 @@
 ﻿using DummyClientCS;
 using Google.Protobuf;
+using Google.Protobuf.Protocol;
 using Microsoft.VisualBasic;
-using Protocol;
 using ServerCore;
 using System;
 using System.Collections.Generic;
@@ -15,11 +15,12 @@ namespace Packet
 
     public class ServerPacketHandler
     {
-        internal static void HANDLE_INVALID(PacketSession session, IMessage message)
+        internal static void HANDLE_Invalid(PacketSession session, IMessage message)
         {
             throw new NotImplementedException();
         }
-        internal static void HANDLE_S_JWT_LOGIN_REPLY(PacketSession session, S_JWT_LOGIN_REPLY reply)
+
+        internal static void HANDLE_S_JwtLoginReply(PacketSession session, S_JwtLoginReply reply)
         {
             switch (reply.Result) // 프로토 C# 코드 생성 시 보통 PascalCase enum이 됩니다 (Success 등). 필요하면 이름 맞춰 수정
             {
@@ -53,8 +54,7 @@ namespace Packet
                     break;
             }
         }
-
-        internal static void HANDLE_S_CREATE_CHARACTER_REPLY(PacketSession session, S_CREATE_CHARACTER_REPLY rEPLY)
+        internal static void HANDLE_S_CreateCharacterReply(PacketSession session, S_CreateCharacterReply reply)
         {
             throw new NotImplementedException();
         }

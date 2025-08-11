@@ -12,8 +12,6 @@
 #endif
 
 #include "CorePch.h"
-#include "Enum.pb.h"
-#include "Struct.pb.h"
 #include "Protocol.pb.h"
 
 #include "StringConvert.h"

@@ -2,16 +2,16 @@ using ServerCore;
 using System;
 using System.Collections.Generic;
 using Google.Protobuf;
-using Packet;
+using Google.Protobuf.Protocol;
 
 namespace Packet
 {
     public enum PacketID : ushort
     {
-	    PKT_C_JWT_LOGIN_REQUEST = 1000,
-	    PKT_S_JWT_LOGIN_REPLY = 1001,
-	    PKT_C_CREATE_CHARACTER_REQUEST = 1002,
-	    PKT_S_CREATE_CHARACTER_REPLY = 1003,
+	    PKT_C_JwtLoginRequest = 1000,
+	    PKT_S_JwtLoginReply = 1001,
+	    PKT_C_CreateCharacterRequest = 1002,
+	    PKT_S_CreateCharacterReply = 1003,
     }
     public class ServerPacketManager
     {
@@ -37,17 +37,17 @@ namespace Packet
         Dictionary<ushort, Func<byte[], int, int, IMessage>> _messageParsers = new Dictionary<ushort, Func<byte[], int, int, IMessage>>();
 
         private readonly Dictionary<Type, ushort> _typeToId = new();
-        public static ArraySegment<byte> MakeSendBuffer(Protocol.C_JWT_LOGIN_REQUEST pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_JWT_LOGIN_REQUEST);
-        public static ArraySegment<byte> MakeSendBuffer(Protocol.C_CREATE_CHARACTER_REQUEST pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_CREATE_CHARACTER_REQUEST);
+        public static ArraySegment<byte> MakeSendBuffer(C_JwtLoginRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_JwtLoginRequest);
+        public static ArraySegment<byte> MakeSendBuffer(C_CreateCharacterRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_CreateCharacterRequest);
 
         void Register()
         {
             for (int i = 0; i < UInt16.MaxValue + 1; i++)
             {
-                _packetHandlers[i] = ServerPacketHandler.HANDLE_INVALID;
+                _packetHandlers[i] = ServerPacketHandler.HANDLE_Invalid;
             }
-            RegisterHandler((ushort)PacketID.PKT_S_JWT_LOGIN_REPLY, ServerPacketHandler.HANDLE_S_JWT_LOGIN_REPLY, Protocol.S_JWT_LOGIN_REPLY.Parser);
-            RegisterHandler((ushort)PacketID.PKT_S_CREATE_CHARACTER_REPLY, ServerPacketHandler.HANDLE_S_CREATE_CHARACTER_REPLY, Protocol.S_CREATE_CHARACTER_REPLY.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_JwtLoginReply, ServerPacketHandler.HANDLE_S_JwtLoginReply, S_JwtLoginReply.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_CreateCharacterReply, ServerPacketHandler.HANDLE_S_CreateCharacterReply, S_CreateCharacterReply.Parser);
             
                   
         }

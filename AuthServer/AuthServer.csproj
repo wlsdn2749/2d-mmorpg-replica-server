@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Protocols\**" />
+    <EmbeddedResource Remove="Protocols\**" />
+    <None Remove="Protocols\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Dapper" Version="2.1.66" />
     <PackageReference Include="Google.Protobuf" Version="3.31.1" />
@@ -19,10 +25,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Protocols\" />
   </ItemGroup>
   <ItemGroup>
     <UpToDateCheckInput Include="..\Protocol\greet.proto" />

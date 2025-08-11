@@ -1,0 +1,59 @@
+syntax = "proto3";
+package Protocol;
+
+option csharp_namespace = "Google.Protobuf.Protocol";
+
+enum MsgId 
+{
+	C_JWT_LOGIN_REQUEST = 0;
+	S_JWT_LOGIN_REPLY = 1;
+	C_CREATE_CHARACTER_REQUEST = 2;
+	S_CREATE_CHARACTER_REPLY = 3;
+}
+
+// 클라 -> 게임 서버 jwt 로그인 인증
+message C_JwtLoginRequest
+{
+	string accessToken = 1; 
+}
+
+// 게임서버 -> 클라 jwt 검증
+message S_JwtLoginReply
+{
+	ELoginResult result = 1;
+}
+
+message C_CreateCharacterRequest
+{
+	string username = 1; // 캐릭터 이름 한글만 가능 2~6자
+	EGender gender = 2; 
+	ERegion region = 3;
+}
+
+message S_CreateCharacterReply
+{
+	bool success = 1;
+	string detail = 2; // 실패 시 에러 메시지
+}
+
+enum ELoginResult
+{
+    SUCCESS = 0;
+    INVALID_TOKEN = 1;
+    TOKEN_EXPIRED = 2;
+    SERVER_ERROR = 3;
+}
+
+enum EGender 
+{
+	GENDER_NONE = 0;
+	GENDER_MALE = 1;
+	GENDER_FEMAIL = 2;
+}
+
+enum ERegion 
+{
+    REGION_NONE = 0;
+    REGION_GO = 1;
+    REGION_BACK = 2;
+}

@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace Protocol {
+namespace Google.Protobuf.Protocol {
 
   /// <summary>Holder for reflection information generated from Protocol.proto</summary>
   public static partial class ProtocolReflection {
@@ -24,45 +24,81 @@ namespace Protocol {
     static ProtocolReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cg5Qcm90b2NvbC5wcm90bxIIUHJvdG9jb2waCkVudW0ucHJvdG8aDFN0cnVj",
-            "dC5wcm90byIqChNDX0pXVF9MT0dJTl9SRVFVRVNUEhMKC2FjY2Vzc1Rva2Vu",
-            "GAEgASgJIjsKEVNfSldUX0xPR0lOX1JFUExZEiYKBnJlc3VsdBgBIAEoDjIW",
-            "LlByb3RvY29sLkVMb2dpblJlc3VsdCJ0ChpDX0NSRUFURV9DSEFSQUNURVJf",
-            "UkVRVUVTVBIQCgh1c2VybmFtZRgBIAEoCRIhCgZnZW5kZXIYAiABKA4yES5Q",
-            "cm90b2NvbC5FR2VuZGVyEiEKBnJlZ2lvbhgDIAEoDjIRLlByb3RvY29sLkVS",
-            "ZWdpb24iOwoYU19DUkVBVEVfQ0hBUkFDVEVSX1JFUExZEg8KB3N1Y2Nlc3MY",
-            "ASABKAgSDgoGZGV0YWlsGAIgASgJYgZwcm90bzM="));
+            "Cg5Qcm90b2NvbC5wcm90bxIIUHJvdG9jb2wiKAoRQ19Kd3RMb2dpblJlcXVl",
+            "c3QSEwoLYWNjZXNzVG9rZW4YASABKAkiOQoPU19Kd3RMb2dpblJlcGx5EiYK",
+            "BnJlc3VsdBgBIAEoDjIWLlByb3RvY29sLkVMb2dpblJlc3VsdCJyChhDX0Ny",
+            "ZWF0ZUNoYXJhY3RlclJlcXVlc3QSEAoIdXNlcm5hbWUYASABKAkSIQoGZ2Vu",
+            "ZGVyGAIgASgOMhEuUHJvdG9jb2wuRUdlbmRlchIhCgZyZWdpb24YAyABKA4y",
+            "ES5Qcm90b2NvbC5FUmVnaW9uIjkKFlNfQ3JlYXRlQ2hhcmFjdGVyUmVwbHkS",
+            "DwoHc3VjY2VzcxgBIAEoCBIOCgZkZXRhaWwYAiABKAkqdQoFTXNnSWQSFwoT",
+            "Q19KV1RfTE9HSU5fUkVRVUVTVBAAEhUKEVNfSldUX0xPR0lOX1JFUExZEAES",
+            "HgoaQ19DUkVBVEVfQ0hBUkFDVEVSX1JFUVVFU1QQAhIcChhTX0NSRUFURV9D",
+            "SEFSQUNURVJfUkVQTFkQAypTCgxFTG9naW5SZXN1bHQSCwoHU1VDQ0VTUxAA",
+            "EhEKDUlOVkFMSURfVE9LRU4QARIRCg1UT0tFTl9FWFBJUkVEEAISEAoMU0VS",
+            "VkVSX0VSUk9SEAMqPgoHRUdlbmRlchIPCgtHRU5ERVJfTk9ORRAAEg8KC0dF",
+            "TkRFUl9NQUxFEAESEQoNR0VOREVSX0ZFTUFJTBACKjoKB0VSZWdpb24SDwoL",
+            "UkVHSU9OX05PTkUQABINCglSRUdJT05fR08QARIPCgtSRUdJT05fQkFDSxAC",
+            "QhuqAhhHb29nbGUuUHJvdG9idWYuUHJvdG9jb2xiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Protocol.EnumReflection.Descriptor, global::Protocol.StructReflection.Descriptor, },
-          new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.C_JWT_LOGIN_REQUEST), global::Protocol.C_JWT_LOGIN_REQUEST.Parser, new[]{ "AccessToken" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.S_JWT_LOGIN_REPLY), global::Protocol.S_JWT_LOGIN_REPLY.Parser, new[]{ "Result" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.C_CREATE_CHARACTER_REQUEST), global::Protocol.C_CREATE_CHARACTER_REQUEST.Parser, new[]{ "Username", "Gender", "Region" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.S_CREATE_CHARACTER_REPLY), global::Protocol.S_CREATE_CHARACTER_REPLY.Parser, new[]{ "Success", "Detail" }, null, null, null, null)
+          new pbr::FileDescriptor[] { },
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Google.Protobuf.Protocol.MsgId), typeof(global::Google.Protobuf.Protocol.ELoginResult), typeof(global::Google.Protobuf.Protocol.EGender), typeof(global::Google.Protobuf.Protocol.ERegion), }, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.C_JwtLoginRequest), global::Google.Protobuf.Protocol.C_JwtLoginRequest.Parser, new[]{ "AccessToken" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.S_JwtLoginReply), global::Google.Protobuf.Protocol.S_JwtLoginReply.Parser, new[]{ "Result" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.C_CreateCharacterRequest), global::Google.Protobuf.Protocol.C_CreateCharacterRequest.Parser, new[]{ "Username", "Gender", "Region" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.S_CreateCharacterReply), global::Google.Protobuf.Protocol.S_CreateCharacterReply.Parser, new[]{ "Success", "Detail" }, null, null, null, null)
           }));
     }
     #endregion
 
   }
+  #region Enums
+  public enum MsgId {
+    [pbr::OriginalName("C_JWT_LOGIN_REQUEST")] CJwtLoginRequest = 0,
+    [pbr::OriginalName("S_JWT_LOGIN_REPLY")] SJwtLoginReply = 1,
+    [pbr::OriginalName("C_CREATE_CHARACTER_REQUEST")] CCreateCharacterRequest = 2,
+    [pbr::OriginalName("S_CREATE_CHARACTER_REPLY")] SCreateCharacterReply = 3,
+  }
+
+  public enum ELoginResult {
+    [pbr::OriginalName("SUCCESS")] Success = 0,
+    [pbr::OriginalName("INVALID_TOKEN")] InvalidToken = 1,
+    [pbr::OriginalName("TOKEN_EXPIRED")] TokenExpired = 2,
+    [pbr::OriginalName("SERVER_ERROR")] ServerError = 3,
+  }
+
+  public enum EGender {
+    [pbr::OriginalName("GENDER_NONE")] GenderNone = 0,
+    [pbr::OriginalName("GENDER_MALE")] GenderMale = 1,
+    [pbr::OriginalName("GENDER_FEMAIL")] GenderFemail = 2,
+  }
+
+  public enum ERegion {
+    [pbr::OriginalName("REGION_NONE")] RegionNone = 0,
+    [pbr::OriginalName("REGION_GO")] RegionGo = 1,
+    [pbr::OriginalName("REGION_BACK")] RegionBack = 2,
+  }
+
+  #endregion
+
   #region Messages
   /// <summary>
   /// 클라 -> 게임 서버 jwt 로그인 인증
   /// </summary>
-  public sealed partial class C_JWT_LOGIN_REQUEST : pb::IMessage<C_JWT_LOGIN_REQUEST>
+  public sealed partial class C_JwtLoginRequest : pb::IMessage<C_JwtLoginRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<C_JWT_LOGIN_REQUEST> _parser = new pb::MessageParser<C_JWT_LOGIN_REQUEST>(() => new C_JWT_LOGIN_REQUEST());
+    private static readonly pb::MessageParser<C_JwtLoginRequest> _parser = new pb::MessageParser<C_JwtLoginRequest>(() => new C_JwtLoginRequest());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<C_JWT_LOGIN_REQUEST> Parser { get { return _parser; } }
+    public static pb::MessageParser<C_JwtLoginRequest> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protocol.ProtocolReflection.Descriptor.MessageTypes[0]; }
+      get { return global::Google.Protobuf.Protocol.ProtocolReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -73,7 +109,7 @@ namespace Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public C_JWT_LOGIN_REQUEST() {
+    public C_JwtLoginRequest() {
       OnConstruction();
     }
 
@@ -81,15 +117,15 @@ namespace Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public C_JWT_LOGIN_REQUEST(C_JWT_LOGIN_REQUEST other) : this() {
+    public C_JwtLoginRequest(C_JwtLoginRequest other) : this() {
       accessToken_ = other.accessToken_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public C_JWT_LOGIN_REQUEST Clone() {
-      return new C_JWT_LOGIN_REQUEST(this);
+    public C_JwtLoginRequest Clone() {
+      return new C_JwtLoginRequest(this);
     }
 
     /// <summary>Field number for the "accessToken" field.</summary>
@@ -107,12 +143,12 @@ namespace Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as C_JWT_LOGIN_REQUEST);
+      return Equals(other as C_JwtLoginRequest);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(C_JWT_LOGIN_REQUEST other) {
+    public bool Equals(C_JwtLoginRequest other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -185,7 +221,7 @@ namespace Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(C_JWT_LOGIN_REQUEST other) {
+    public void MergeFrom(C_JwtLoginRequest other) {
       if (other == null) {
         return;
       }
@@ -240,21 +276,21 @@ namespace Protocol {
   /// <summary>
   /// 게임서버 -> 클라 jwt 검증
   /// </summary>
-  public sealed partial class S_JWT_LOGIN_REPLY : pb::IMessage<S_JWT_LOGIN_REPLY>
+  public sealed partial class S_JwtLoginReply : pb::IMessage<S_JwtLoginReply>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<S_JWT_LOGIN_REPLY> _parser = new pb::MessageParser<S_JWT_LOGIN_REPLY>(() => new S_JWT_LOGIN_REPLY());
+    private static readonly pb::MessageParser<S_JwtLoginReply> _parser = new pb::MessageParser<S_JwtLoginReply>(() => new S_JwtLoginReply());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<S_JWT_LOGIN_REPLY> Parser { get { return _parser; } }
+    public static pb::MessageParser<S_JwtLoginReply> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protocol.ProtocolReflection.Descriptor.MessageTypes[1]; }
+      get { return global::Google.Protobuf.Protocol.ProtocolReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -265,7 +301,7 @@ namespace Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public S_JWT_LOGIN_REPLY() {
+    public S_JwtLoginReply() {
       OnConstruction();
     }
 
@@ -273,23 +309,23 @@ namespace Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public S_JWT_LOGIN_REPLY(S_JWT_LOGIN_REPLY other) : this() {
+    public S_JwtLoginReply(S_JwtLoginReply other) : this() {
       result_ = other.result_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public S_JWT_LOGIN_REPLY Clone() {
-      return new S_JWT_LOGIN_REPLY(this);
+    public S_JwtLoginReply Clone() {
+      return new S_JwtLoginReply(this);
     }
 
     /// <summary>Field number for the "result" field.</summary>
     public const int ResultFieldNumber = 1;
-    private global::Protocol.ELoginResult result_ = global::Protocol.ELoginResult.Success;
+    private global::Google.Protobuf.Protocol.ELoginResult result_ = global::Google.Protobuf.Protocol.ELoginResult.Success;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Protocol.ELoginResult Result {
+    public global::Google.Protobuf.Protocol.ELoginResult Result {
       get { return result_; }
       set {
         result_ = value;
@@ -299,12 +335,12 @@ namespace Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as S_JWT_LOGIN_REPLY);
+      return Equals(other as S_JwtLoginReply);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(S_JWT_LOGIN_REPLY other) {
+    public bool Equals(S_JwtLoginReply other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -319,7 +355,7 @@ namespace Protocol {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Result != global::Protocol.ELoginResult.Success) hash ^= Result.GetHashCode();
+      if (Result != global::Google.Protobuf.Protocol.ELoginResult.Success) hash ^= Result.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -338,7 +374,7 @@ namespace Protocol {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Result != global::Protocol.ELoginResult.Success) {
+      if (Result != global::Google.Protobuf.Protocol.ELoginResult.Success) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Result);
       }
@@ -352,7 +388,7 @@ namespace Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Result != global::Protocol.ELoginResult.Success) {
+      if (Result != global::Google.Protobuf.Protocol.ELoginResult.Success) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Result);
       }
@@ -366,7 +402,7 @@ namespace Protocol {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Result != global::Protocol.ELoginResult.Success) {
+      if (Result != global::Google.Protobuf.Protocol.ELoginResult.Success) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
       }
       if (_unknownFields != null) {
@@ -377,11 +413,11 @@ namespace Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(S_JWT_LOGIN_REPLY other) {
+    public void MergeFrom(S_JwtLoginReply other) {
       if (other == null) {
         return;
       }
-      if (other.Result != global::Protocol.ELoginResult.Success) {
+      if (other.Result != global::Google.Protobuf.Protocol.ELoginResult.Success) {
         Result = other.Result;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -400,7 +436,7 @@ namespace Protocol {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            Result = (global::Protocol.ELoginResult) input.ReadEnum();
+            Result = (global::Google.Protobuf.Protocol.ELoginResult) input.ReadEnum();
             break;
           }
         }
@@ -419,7 +455,7 @@ namespace Protocol {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            Result = (global::Protocol.ELoginResult) input.ReadEnum();
+            Result = (global::Google.Protobuf.Protocol.ELoginResult) input.ReadEnum();
             break;
           }
         }
@@ -429,21 +465,21 @@ namespace Protocol {
 
   }
 
-  public sealed partial class C_CREATE_CHARACTER_REQUEST : pb::IMessage<C_CREATE_CHARACTER_REQUEST>
+  public sealed partial class C_CreateCharacterRequest : pb::IMessage<C_CreateCharacterRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<C_CREATE_CHARACTER_REQUEST> _parser = new pb::MessageParser<C_CREATE_CHARACTER_REQUEST>(() => new C_CREATE_CHARACTER_REQUEST());
+    private static readonly pb::MessageParser<C_CreateCharacterRequest> _parser = new pb::MessageParser<C_CreateCharacterRequest>(() => new C_CreateCharacterRequest());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<C_CREATE_CHARACTER_REQUEST> Parser { get { return _parser; } }
+    public static pb::MessageParser<C_CreateCharacterRequest> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protocol.ProtocolReflection.Descriptor.MessageTypes[2]; }
+      get { return global::Google.Protobuf.Protocol.ProtocolReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -454,7 +490,7 @@ namespace Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public C_CREATE_CHARACTER_REQUEST() {
+    public C_CreateCharacterRequest() {
       OnConstruction();
     }
 
@@ -462,7 +498,7 @@ namespace Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public C_CREATE_CHARACTER_REQUEST(C_CREATE_CHARACTER_REQUEST other) : this() {
+    public C_CreateCharacterRequest(C_CreateCharacterRequest other) : this() {
       username_ = other.username_;
       gender_ = other.gender_;
       region_ = other.region_;
@@ -471,8 +507,8 @@ namespace Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public C_CREATE_CHARACTER_REQUEST Clone() {
-      return new C_CREATE_CHARACTER_REQUEST(this);
+    public C_CreateCharacterRequest Clone() {
+      return new C_CreateCharacterRequest(this);
     }
 
     /// <summary>Field number for the "username" field.</summary>
@@ -492,10 +528,10 @@ namespace Protocol {
 
     /// <summary>Field number for the "gender" field.</summary>
     public const int GenderFieldNumber = 2;
-    private global::Protocol.EGender gender_ = global::Protocol.EGender.GenderNone;
+    private global::Google.Protobuf.Protocol.EGender gender_ = global::Google.Protobuf.Protocol.EGender.GenderNone;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Protocol.EGender Gender {
+    public global::Google.Protobuf.Protocol.EGender Gender {
       get { return gender_; }
       set {
         gender_ = value;
@@ -504,10 +540,10 @@ namespace Protocol {
 
     /// <summary>Field number for the "region" field.</summary>
     public const int RegionFieldNumber = 3;
-    private global::Protocol.ERegion region_ = global::Protocol.ERegion.RegionNone;
+    private global::Google.Protobuf.Protocol.ERegion region_ = global::Google.Protobuf.Protocol.ERegion.RegionNone;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Protocol.ERegion Region {
+    public global::Google.Protobuf.Protocol.ERegion Region {
       get { return region_; }
       set {
         region_ = value;
@@ -517,12 +553,12 @@ namespace Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as C_CREATE_CHARACTER_REQUEST);
+      return Equals(other as C_CreateCharacterRequest);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(C_CREATE_CHARACTER_REQUEST other) {
+    public bool Equals(C_CreateCharacterRequest other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -540,8 +576,8 @@ namespace Protocol {
     public override int GetHashCode() {
       int hash = 1;
       if (Username.Length != 0) hash ^= Username.GetHashCode();
-      if (Gender != global::Protocol.EGender.GenderNone) hash ^= Gender.GetHashCode();
-      if (Region != global::Protocol.ERegion.RegionNone) hash ^= Region.GetHashCode();
+      if (Gender != global::Google.Protobuf.Protocol.EGender.GenderNone) hash ^= Gender.GetHashCode();
+      if (Region != global::Google.Protobuf.Protocol.ERegion.RegionNone) hash ^= Region.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -564,11 +600,11 @@ namespace Protocol {
         output.WriteRawTag(10);
         output.WriteString(Username);
       }
-      if (Gender != global::Protocol.EGender.GenderNone) {
+      if (Gender != global::Google.Protobuf.Protocol.EGender.GenderNone) {
         output.WriteRawTag(16);
         output.WriteEnum((int) Gender);
       }
-      if (Region != global::Protocol.ERegion.RegionNone) {
+      if (Region != global::Google.Protobuf.Protocol.ERegion.RegionNone) {
         output.WriteRawTag(24);
         output.WriteEnum((int) Region);
       }
@@ -586,11 +622,11 @@ namespace Protocol {
         output.WriteRawTag(10);
         output.WriteString(Username);
       }
-      if (Gender != global::Protocol.EGender.GenderNone) {
+      if (Gender != global::Google.Protobuf.Protocol.EGender.GenderNone) {
         output.WriteRawTag(16);
         output.WriteEnum((int) Gender);
       }
-      if (Region != global::Protocol.ERegion.RegionNone) {
+      if (Region != global::Google.Protobuf.Protocol.ERegion.RegionNone) {
         output.WriteRawTag(24);
         output.WriteEnum((int) Region);
       }
@@ -607,10 +643,10 @@ namespace Protocol {
       if (Username.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Username);
       }
-      if (Gender != global::Protocol.EGender.GenderNone) {
+      if (Gender != global::Google.Protobuf.Protocol.EGender.GenderNone) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Gender);
       }
-      if (Region != global::Protocol.ERegion.RegionNone) {
+      if (Region != global::Google.Protobuf.Protocol.ERegion.RegionNone) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Region);
       }
       if (_unknownFields != null) {
@@ -621,17 +657,17 @@ namespace Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(C_CREATE_CHARACTER_REQUEST other) {
+    public void MergeFrom(C_CreateCharacterRequest other) {
       if (other == null) {
         return;
       }
       if (other.Username.Length != 0) {
         Username = other.Username;
       }
-      if (other.Gender != global::Protocol.EGender.GenderNone) {
+      if (other.Gender != global::Google.Protobuf.Protocol.EGender.GenderNone) {
         Gender = other.Gender;
       }
-      if (other.Region != global::Protocol.ERegion.RegionNone) {
+      if (other.Region != global::Google.Protobuf.Protocol.ERegion.RegionNone) {
         Region = other.Region;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -654,11 +690,11 @@ namespace Protocol {
             break;
           }
           case 16: {
-            Gender = (global::Protocol.EGender) input.ReadEnum();
+            Gender = (global::Google.Protobuf.Protocol.EGender) input.ReadEnum();
             break;
           }
           case 24: {
-            Region = (global::Protocol.ERegion) input.ReadEnum();
+            Region = (global::Google.Protobuf.Protocol.ERegion) input.ReadEnum();
             break;
           }
         }
@@ -681,11 +717,11 @@ namespace Protocol {
             break;
           }
           case 16: {
-            Gender = (global::Protocol.EGender) input.ReadEnum();
+            Gender = (global::Google.Protobuf.Protocol.EGender) input.ReadEnum();
             break;
           }
           case 24: {
-            Region = (global::Protocol.ERegion) input.ReadEnum();
+            Region = (global::Google.Protobuf.Protocol.ERegion) input.ReadEnum();
             break;
           }
         }
@@ -695,21 +731,21 @@ namespace Protocol {
 
   }
 
-  public sealed partial class S_CREATE_CHARACTER_REPLY : pb::IMessage<S_CREATE_CHARACTER_REPLY>
+  public sealed partial class S_CreateCharacterReply : pb::IMessage<S_CreateCharacterReply>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<S_CREATE_CHARACTER_REPLY> _parser = new pb::MessageParser<S_CREATE_CHARACTER_REPLY>(() => new S_CREATE_CHARACTER_REPLY());
+    private static readonly pb::MessageParser<S_CreateCharacterReply> _parser = new pb::MessageParser<S_CreateCharacterReply>(() => new S_CreateCharacterReply());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<S_CREATE_CHARACTER_REPLY> Parser { get { return _parser; } }
+    public static pb::MessageParser<S_CreateCharacterReply> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protocol.ProtocolReflection.Descriptor.MessageTypes[3]; }
+      get { return global::Google.Protobuf.Protocol.ProtocolReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -720,7 +756,7 @@ namespace Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public S_CREATE_CHARACTER_REPLY() {
+    public S_CreateCharacterReply() {
       OnConstruction();
     }
 
@@ -728,7 +764,7 @@ namespace Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public S_CREATE_CHARACTER_REPLY(S_CREATE_CHARACTER_REPLY other) : this() {
+    public S_CreateCharacterReply(S_CreateCharacterReply other) : this() {
       success_ = other.success_;
       detail_ = other.detail_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -736,8 +772,8 @@ namespace Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public S_CREATE_CHARACTER_REPLY Clone() {
-      return new S_CREATE_CHARACTER_REPLY(this);
+    public S_CreateCharacterReply Clone() {
+      return new S_CreateCharacterReply(this);
     }
 
     /// <summary>Field number for the "success" field.</summary>
@@ -770,12 +806,12 @@ namespace Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as S_CREATE_CHARACTER_REPLY);
+      return Equals(other as S_CreateCharacterReply);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(S_CREATE_CHARACTER_REPLY other) {
+    public bool Equals(S_CreateCharacterReply other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -861,7 +897,7 @@ namespace Protocol {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(S_CREATE_CHARACTER_REPLY other) {
+    public void MergeFrom(S_CreateCharacterReply other) {
       if (other == null) {
         return;
       }

@@ -46,8 +46,17 @@ include
 __pycache__
 env
 
-/Common/Protobuf/bin/*
-!/Common/Protobuf/bin/
-!/Common/Protobuf/bin/*.proto
-!/Common/Protobuf/bin/*.bat
-!/Common/Protobuf/bin/Templates
+
+# 서버 실행파일 해제
+# 하지만 AuthServer/bin/Debug/net8.0/은 추적
+!AuthServer/
+!AuthServer/bin/
+!AuthServer/bin/Debug/
+!AuthServer/bin/Debug/net8.0/
+!AuthServer/bin/Debug/net8.0/*.pdb
+
+!GameServer/
+!GameServer/Build/
+!GameServer/Build/x64/
+!GameServer/Build/x64/Debug/
+!GameServer/Build/x64/Debug/*.pdb

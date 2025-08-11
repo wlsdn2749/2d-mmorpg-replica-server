@@ -46,7 +46,7 @@ namespace DummyClientCS
                 foreach(ServerSession session in _sessions)
                 {
                     var accessToken = jwt;
-                    var pkt = new C_JWT_LOGIN_REQUEST { AccessToken = accessToken };
+                    var pkt = new Google.Protobuf.Protocol.C_JwtLoginRequest { AccessToken = accessToken };
 
                     session.Send(ServerPacketManager.MakeSendBuffer(pkt));
                 }

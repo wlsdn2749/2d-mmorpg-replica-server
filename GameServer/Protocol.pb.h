@@ -29,9 +29,8 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
+#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
-#include "Enum.pb.h"
-#include "Struct.pb.h"
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_Protocol_2eproto
@@ -47,47 +46,153 @@ struct TableStruct_Protocol_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Protocol_2eproto;
 namespace Protocol {
-class C_CREATE_CHARACTER_REQUEST;
-struct C_CREATE_CHARACTER_REQUESTDefaultTypeInternal;
-extern C_CREATE_CHARACTER_REQUESTDefaultTypeInternal _C_CREATE_CHARACTER_REQUEST_default_instance_;
-class C_JWT_LOGIN_REQUEST;
-struct C_JWT_LOGIN_REQUESTDefaultTypeInternal;
-extern C_JWT_LOGIN_REQUESTDefaultTypeInternal _C_JWT_LOGIN_REQUEST_default_instance_;
-class S_CREATE_CHARACTER_REPLY;
-struct S_CREATE_CHARACTER_REPLYDefaultTypeInternal;
-extern S_CREATE_CHARACTER_REPLYDefaultTypeInternal _S_CREATE_CHARACTER_REPLY_default_instance_;
-class S_JWT_LOGIN_REPLY;
-struct S_JWT_LOGIN_REPLYDefaultTypeInternal;
-extern S_JWT_LOGIN_REPLYDefaultTypeInternal _S_JWT_LOGIN_REPLY_default_instance_;
+class C_CreateCharacterRequest;
+struct C_CreateCharacterRequestDefaultTypeInternal;
+extern C_CreateCharacterRequestDefaultTypeInternal _C_CreateCharacterRequest_default_instance_;
+class C_JwtLoginRequest;
+struct C_JwtLoginRequestDefaultTypeInternal;
+extern C_JwtLoginRequestDefaultTypeInternal _C_JwtLoginRequest_default_instance_;
+class S_CreateCharacterReply;
+struct S_CreateCharacterReplyDefaultTypeInternal;
+extern S_CreateCharacterReplyDefaultTypeInternal _S_CreateCharacterReply_default_instance_;
+class S_JwtLoginReply;
+struct S_JwtLoginReplyDefaultTypeInternal;
+extern S_JwtLoginReplyDefaultTypeInternal _S_JwtLoginReply_default_instance_;
 }  // namespace Protocol
 PROTOBUF_NAMESPACE_OPEN
-template<> ::Protocol::C_CREATE_CHARACTER_REQUEST* Arena::CreateMaybeMessage<::Protocol::C_CREATE_CHARACTER_REQUEST>(Arena*);
-template<> ::Protocol::C_JWT_LOGIN_REQUEST* Arena::CreateMaybeMessage<::Protocol::C_JWT_LOGIN_REQUEST>(Arena*);
-template<> ::Protocol::S_CREATE_CHARACTER_REPLY* Arena::CreateMaybeMessage<::Protocol::S_CREATE_CHARACTER_REPLY>(Arena*);
-template<> ::Protocol::S_JWT_LOGIN_REPLY* Arena::CreateMaybeMessage<::Protocol::S_JWT_LOGIN_REPLY>(Arena*);
+template<> ::Protocol::C_CreateCharacterRequest* Arena::CreateMaybeMessage<::Protocol::C_CreateCharacterRequest>(Arena*);
+template<> ::Protocol::C_JwtLoginRequest* Arena::CreateMaybeMessage<::Protocol::C_JwtLoginRequest>(Arena*);
+template<> ::Protocol::S_CreateCharacterReply* Arena::CreateMaybeMessage<::Protocol::S_CreateCharacterReply>(Arena*);
+template<> ::Protocol::S_JwtLoginReply* Arena::CreateMaybeMessage<::Protocol::S_JwtLoginReply>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace Protocol {
 
+enum MsgId : int {
+  C_JWT_LOGIN_REQUEST = 0,
+  S_JWT_LOGIN_REPLY = 1,
+  C_CREATE_CHARACTER_REQUEST = 2,
+  S_CREATE_CHARACTER_REPLY = 3,
+  MsgId_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  MsgId_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool MsgId_IsValid(int value);
+constexpr MsgId MsgId_MIN = C_JWT_LOGIN_REQUEST;
+constexpr MsgId MsgId_MAX = S_CREATE_CHARACTER_REPLY;
+constexpr int MsgId_ARRAYSIZE = MsgId_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MsgId_descriptor();
+template<typename T>
+inline const std::string& MsgId_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, MsgId>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function MsgId_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    MsgId_descriptor(), enum_t_value);
+}
+inline bool MsgId_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, MsgId* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<MsgId>(
+    MsgId_descriptor(), name, value);
+}
+enum ELoginResult : int {
+  SUCCESS = 0,
+  INVALID_TOKEN = 1,
+  TOKEN_EXPIRED = 2,
+  SERVER_ERROR = 3,
+  ELoginResult_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  ELoginResult_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool ELoginResult_IsValid(int value);
+constexpr ELoginResult ELoginResult_MIN = SUCCESS;
+constexpr ELoginResult ELoginResult_MAX = SERVER_ERROR;
+constexpr int ELoginResult_ARRAYSIZE = ELoginResult_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ELoginResult_descriptor();
+template<typename T>
+inline const std::string& ELoginResult_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, ELoginResult>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function ELoginResult_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    ELoginResult_descriptor(), enum_t_value);
+}
+inline bool ELoginResult_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, ELoginResult* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<ELoginResult>(
+    ELoginResult_descriptor(), name, value);
+}
+enum EGender : int {
+  GENDER_NONE = 0,
+  GENDER_MALE = 1,
+  GENDER_FEMAIL = 2,
+  EGender_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  EGender_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool EGender_IsValid(int value);
+constexpr EGender EGender_MIN = GENDER_NONE;
+constexpr EGender EGender_MAX = GENDER_FEMAIL;
+constexpr int EGender_ARRAYSIZE = EGender_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* EGender_descriptor();
+template<typename T>
+inline const std::string& EGender_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, EGender>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function EGender_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    EGender_descriptor(), enum_t_value);
+}
+inline bool EGender_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, EGender* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<EGender>(
+    EGender_descriptor(), name, value);
+}
+enum ERegion : int {
+  REGION_NONE = 0,
+  REGION_GO = 1,
+  REGION_BACK = 2,
+  ERegion_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  ERegion_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool ERegion_IsValid(int value);
+constexpr ERegion ERegion_MIN = REGION_NONE;
+constexpr ERegion ERegion_MAX = REGION_BACK;
+constexpr int ERegion_ARRAYSIZE = ERegion_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ERegion_descriptor();
+template<typename T>
+inline const std::string& ERegion_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, ERegion>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function ERegion_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    ERegion_descriptor(), enum_t_value);
+}
+inline bool ERegion_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, ERegion* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<ERegion>(
+    ERegion_descriptor(), name, value);
+}
 // ===================================================================
 
-class C_JWT_LOGIN_REQUEST final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.C_JWT_LOGIN_REQUEST) */ {
+class C_JwtLoginRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.C_JwtLoginRequest) */ {
  public:
-  inline C_JWT_LOGIN_REQUEST() : C_JWT_LOGIN_REQUEST(nullptr) {}
-  ~C_JWT_LOGIN_REQUEST() override;
-  explicit PROTOBUF_CONSTEXPR C_JWT_LOGIN_REQUEST(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline C_JwtLoginRequest() : C_JwtLoginRequest(nullptr) {}
+  ~C_JwtLoginRequest() override;
+  explicit PROTOBUF_CONSTEXPR C_JwtLoginRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  C_JWT_LOGIN_REQUEST(const C_JWT_LOGIN_REQUEST& from);
-  C_JWT_LOGIN_REQUEST(C_JWT_LOGIN_REQUEST&& from) noexcept
-    : C_JWT_LOGIN_REQUEST() {
+  C_JwtLoginRequest(const C_JwtLoginRequest& from);
+  C_JwtLoginRequest(C_JwtLoginRequest&& from) noexcept
+    : C_JwtLoginRequest() {
     *this = ::std::move(from);
   }
 
-  inline C_JWT_LOGIN_REQUEST& operator=(const C_JWT_LOGIN_REQUEST& from) {
+  inline C_JwtLoginRequest& operator=(const C_JwtLoginRequest& from) {
     CopyFrom(from);
     return *this;
   }
-  inline C_JWT_LOGIN_REQUEST& operator=(C_JWT_LOGIN_REQUEST&& from) noexcept {
+  inline C_JwtLoginRequest& operator=(C_JwtLoginRequest&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -110,20 +215,20 @@ class C_JWT_LOGIN_REQUEST final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const C_JWT_LOGIN_REQUEST& default_instance() {
+  static const C_JwtLoginRequest& default_instance() {
     return *internal_default_instance();
   }
-  static inline const C_JWT_LOGIN_REQUEST* internal_default_instance() {
-    return reinterpret_cast<const C_JWT_LOGIN_REQUEST*>(
-               &_C_JWT_LOGIN_REQUEST_default_instance_);
+  static inline const C_JwtLoginRequest* internal_default_instance() {
+    return reinterpret_cast<const C_JwtLoginRequest*>(
+               &_C_JwtLoginRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     0;
 
-  friend void swap(C_JWT_LOGIN_REQUEST& a, C_JWT_LOGIN_REQUEST& b) {
+  friend void swap(C_JwtLoginRequest& a, C_JwtLoginRequest& b) {
     a.Swap(&b);
   }
-  inline void Swap(C_JWT_LOGIN_REQUEST* other) {
+  inline void Swap(C_JwtLoginRequest* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -136,7 +241,7 @@ class C_JWT_LOGIN_REQUEST final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(C_JWT_LOGIN_REQUEST* other) {
+  void UnsafeArenaSwap(C_JwtLoginRequest* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -144,14 +249,14 @@ class C_JWT_LOGIN_REQUEST final :
 
   // implements Message ----------------------------------------------
 
-  C_JWT_LOGIN_REQUEST* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<C_JWT_LOGIN_REQUEST>(arena);
+  C_JwtLoginRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<C_JwtLoginRequest>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const C_JWT_LOGIN_REQUEST& from);
+  void CopyFrom(const C_JwtLoginRequest& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const C_JWT_LOGIN_REQUEST& from) {
-    C_JWT_LOGIN_REQUEST::MergeImpl(*this, from);
+  void MergeFrom( const C_JwtLoginRequest& from) {
+    C_JwtLoginRequest::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
@@ -169,15 +274,15 @@ class C_JWT_LOGIN_REQUEST final :
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(C_JWT_LOGIN_REQUEST* other);
+  void InternalSwap(C_JwtLoginRequest* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "Protocol.C_JWT_LOGIN_REQUEST";
+    return "Protocol.C_JwtLoginRequest";
   }
   protected:
-  explicit C_JWT_LOGIN_REQUEST(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit C_JwtLoginRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -207,7 +312,7 @@ class C_JWT_LOGIN_REQUEST final :
   std::string* _internal_mutable_accesstoken();
   public:
 
-  // @@protoc_insertion_point(class_scope:Protocol.C_JWT_LOGIN_REQUEST)
+  // @@protoc_insertion_point(class_scope:Protocol.C_JwtLoginRequest)
  private:
   class _Internal;
 
@@ -223,24 +328,24 @@ class C_JWT_LOGIN_REQUEST final :
 };
 // -------------------------------------------------------------------
 
-class S_JWT_LOGIN_REPLY final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.S_JWT_LOGIN_REPLY) */ {
+class S_JwtLoginReply final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.S_JwtLoginReply) */ {
  public:
-  inline S_JWT_LOGIN_REPLY() : S_JWT_LOGIN_REPLY(nullptr) {}
-  ~S_JWT_LOGIN_REPLY() override;
-  explicit PROTOBUF_CONSTEXPR S_JWT_LOGIN_REPLY(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline S_JwtLoginReply() : S_JwtLoginReply(nullptr) {}
+  ~S_JwtLoginReply() override;
+  explicit PROTOBUF_CONSTEXPR S_JwtLoginReply(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  S_JWT_LOGIN_REPLY(const S_JWT_LOGIN_REPLY& from);
-  S_JWT_LOGIN_REPLY(S_JWT_LOGIN_REPLY&& from) noexcept
-    : S_JWT_LOGIN_REPLY() {
+  S_JwtLoginReply(const S_JwtLoginReply& from);
+  S_JwtLoginReply(S_JwtLoginReply&& from) noexcept
+    : S_JwtLoginReply() {
     *this = ::std::move(from);
   }
 
-  inline S_JWT_LOGIN_REPLY& operator=(const S_JWT_LOGIN_REPLY& from) {
+  inline S_JwtLoginReply& operator=(const S_JwtLoginReply& from) {
     CopyFrom(from);
     return *this;
   }
-  inline S_JWT_LOGIN_REPLY& operator=(S_JWT_LOGIN_REPLY&& from) noexcept {
+  inline S_JwtLoginReply& operator=(S_JwtLoginReply&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -263,20 +368,20 @@ class S_JWT_LOGIN_REPLY final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const S_JWT_LOGIN_REPLY& default_instance() {
+  static const S_JwtLoginReply& default_instance() {
     return *internal_default_instance();
   }
-  static inline const S_JWT_LOGIN_REPLY* internal_default_instance() {
-    return reinterpret_cast<const S_JWT_LOGIN_REPLY*>(
-               &_S_JWT_LOGIN_REPLY_default_instance_);
+  static inline const S_JwtLoginReply* internal_default_instance() {
+    return reinterpret_cast<const S_JwtLoginReply*>(
+               &_S_JwtLoginReply_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     1;
 
-  friend void swap(S_JWT_LOGIN_REPLY& a, S_JWT_LOGIN_REPLY& b) {
+  friend void swap(S_JwtLoginReply& a, S_JwtLoginReply& b) {
     a.Swap(&b);
   }
-  inline void Swap(S_JWT_LOGIN_REPLY* other) {
+  inline void Swap(S_JwtLoginReply* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -289,7 +394,7 @@ class S_JWT_LOGIN_REPLY final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(S_JWT_LOGIN_REPLY* other) {
+  void UnsafeArenaSwap(S_JwtLoginReply* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -297,14 +402,14 @@ class S_JWT_LOGIN_REPLY final :
 
   // implements Message ----------------------------------------------
 
-  S_JWT_LOGIN_REPLY* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<S_JWT_LOGIN_REPLY>(arena);
+  S_JwtLoginReply* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<S_JwtLoginReply>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const S_JWT_LOGIN_REPLY& from);
+  void CopyFrom(const S_JwtLoginReply& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const S_JWT_LOGIN_REPLY& from) {
-    S_JWT_LOGIN_REPLY::MergeImpl(*this, from);
+  void MergeFrom( const S_JwtLoginReply& from) {
+    S_JwtLoginReply::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
@@ -322,15 +427,15 @@ class S_JWT_LOGIN_REPLY final :
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S_JWT_LOGIN_REPLY* other);
+  void InternalSwap(S_JwtLoginReply* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "Protocol.S_JWT_LOGIN_REPLY";
+    return "Protocol.S_JwtLoginReply";
   }
   protected:
-  explicit S_JWT_LOGIN_REPLY(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit S_JwtLoginReply(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -355,7 +460,7 @@ class S_JWT_LOGIN_REPLY final :
   void _internal_set_result(::Protocol::ELoginResult value);
   public:
 
-  // @@protoc_insertion_point(class_scope:Protocol.S_JWT_LOGIN_REPLY)
+  // @@protoc_insertion_point(class_scope:Protocol.S_JwtLoginReply)
  private:
   class _Internal;
 
@@ -371,24 +476,24 @@ class S_JWT_LOGIN_REPLY final :
 };
 // -------------------------------------------------------------------
 
-class C_CREATE_CHARACTER_REQUEST final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.C_CREATE_CHARACTER_REQUEST) */ {
+class C_CreateCharacterRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.C_CreateCharacterRequest) */ {
  public:
-  inline C_CREATE_CHARACTER_REQUEST() : C_CREATE_CHARACTER_REQUEST(nullptr) {}
-  ~C_CREATE_CHARACTER_REQUEST() override;
-  explicit PROTOBUF_CONSTEXPR C_CREATE_CHARACTER_REQUEST(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline C_CreateCharacterRequest() : C_CreateCharacterRequest(nullptr) {}
+  ~C_CreateCharacterRequest() override;
+  explicit PROTOBUF_CONSTEXPR C_CreateCharacterRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  C_CREATE_CHARACTER_REQUEST(const C_CREATE_CHARACTER_REQUEST& from);
-  C_CREATE_CHARACTER_REQUEST(C_CREATE_CHARACTER_REQUEST&& from) noexcept
-    : C_CREATE_CHARACTER_REQUEST() {
+  C_CreateCharacterRequest(const C_CreateCharacterRequest& from);
+  C_CreateCharacterRequest(C_CreateCharacterRequest&& from) noexcept
+    : C_CreateCharacterRequest() {
     *this = ::std::move(from);
   }
 
-  inline C_CREATE_CHARACTER_REQUEST& operator=(const C_CREATE_CHARACTER_REQUEST& from) {
+  inline C_CreateCharacterRequest& operator=(const C_CreateCharacterRequest& from) {
     CopyFrom(from);
     return *this;
   }
-  inline C_CREATE_CHARACTER_REQUEST& operator=(C_CREATE_CHARACTER_REQUEST&& from) noexcept {
+  inline C_CreateCharacterRequest& operator=(C_CreateCharacterRequest&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -411,20 +516,20 @@ class C_CREATE_CHARACTER_REQUEST final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const C_CREATE_CHARACTER_REQUEST& default_instance() {
+  static const C_CreateCharacterRequest& default_instance() {
     return *internal_default_instance();
   }
-  static inline const C_CREATE_CHARACTER_REQUEST* internal_default_instance() {
-    return reinterpret_cast<const C_CREATE_CHARACTER_REQUEST*>(
-               &_C_CREATE_CHARACTER_REQUEST_default_instance_);
+  static inline const C_CreateCharacterRequest* internal_default_instance() {
+    return reinterpret_cast<const C_CreateCharacterRequest*>(
+               &_C_CreateCharacterRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     2;
 
-  friend void swap(C_CREATE_CHARACTER_REQUEST& a, C_CREATE_CHARACTER_REQUEST& b) {
+  friend void swap(C_CreateCharacterRequest& a, C_CreateCharacterRequest& b) {
     a.Swap(&b);
   }
-  inline void Swap(C_CREATE_CHARACTER_REQUEST* other) {
+  inline void Swap(C_CreateCharacterRequest* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -437,7 +542,7 @@ class C_CREATE_CHARACTER_REQUEST final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(C_CREATE_CHARACTER_REQUEST* other) {
+  void UnsafeArenaSwap(C_CreateCharacterRequest* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -445,14 +550,14 @@ class C_CREATE_CHARACTER_REQUEST final :
 
   // implements Message ----------------------------------------------
 
-  C_CREATE_CHARACTER_REQUEST* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<C_CREATE_CHARACTER_REQUEST>(arena);
+  C_CreateCharacterRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<C_CreateCharacterRequest>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const C_CREATE_CHARACTER_REQUEST& from);
+  void CopyFrom(const C_CreateCharacterRequest& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const C_CREATE_CHARACTER_REQUEST& from) {
-    C_CREATE_CHARACTER_REQUEST::MergeImpl(*this, from);
+  void MergeFrom( const C_CreateCharacterRequest& from) {
+    C_CreateCharacterRequest::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
@@ -470,15 +575,15 @@ class C_CREATE_CHARACTER_REQUEST final :
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(C_CREATE_CHARACTER_REQUEST* other);
+  void InternalSwap(C_CreateCharacterRequest* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "Protocol.C_CREATE_CHARACTER_REQUEST";
+    return "Protocol.C_CreateCharacterRequest";
   }
   protected:
-  explicit C_CREATE_CHARACTER_REQUEST(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit C_CreateCharacterRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -528,7 +633,7 @@ class C_CREATE_CHARACTER_REQUEST final :
   void _internal_set_region(::Protocol::ERegion value);
   public:
 
-  // @@protoc_insertion_point(class_scope:Protocol.C_CREATE_CHARACTER_REQUEST)
+  // @@protoc_insertion_point(class_scope:Protocol.C_CreateCharacterRequest)
  private:
   class _Internal;
 
@@ -546,24 +651,24 @@ class C_CREATE_CHARACTER_REQUEST final :
 };
 // -------------------------------------------------------------------
 
-class S_CREATE_CHARACTER_REPLY final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.S_CREATE_CHARACTER_REPLY) */ {
+class S_CreateCharacterReply final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.S_CreateCharacterReply) */ {
  public:
-  inline S_CREATE_CHARACTER_REPLY() : S_CREATE_CHARACTER_REPLY(nullptr) {}
-  ~S_CREATE_CHARACTER_REPLY() override;
-  explicit PROTOBUF_CONSTEXPR S_CREATE_CHARACTER_REPLY(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline S_CreateCharacterReply() : S_CreateCharacterReply(nullptr) {}
+  ~S_CreateCharacterReply() override;
+  explicit PROTOBUF_CONSTEXPR S_CreateCharacterReply(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  S_CREATE_CHARACTER_REPLY(const S_CREATE_CHARACTER_REPLY& from);
-  S_CREATE_CHARACTER_REPLY(S_CREATE_CHARACTER_REPLY&& from) noexcept
-    : S_CREATE_CHARACTER_REPLY() {
+  S_CreateCharacterReply(const S_CreateCharacterReply& from);
+  S_CreateCharacterReply(S_CreateCharacterReply&& from) noexcept
+    : S_CreateCharacterReply() {
     *this = ::std::move(from);
   }
 
-  inline S_CREATE_CHARACTER_REPLY& operator=(const S_CREATE_CHARACTER_REPLY& from) {
+  inline S_CreateCharacterReply& operator=(const S_CreateCharacterReply& from) {
     CopyFrom(from);
     return *this;
   }
-  inline S_CREATE_CHARACTER_REPLY& operator=(S_CREATE_CHARACTER_REPLY&& from) noexcept {
+  inline S_CreateCharacterReply& operator=(S_CreateCharacterReply&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -586,20 +691,20 @@ class S_CREATE_CHARACTER_REPLY final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const S_CREATE_CHARACTER_REPLY& default_instance() {
+  static const S_CreateCharacterReply& default_instance() {
     return *internal_default_instance();
   }
-  static inline const S_CREATE_CHARACTER_REPLY* internal_default_instance() {
-    return reinterpret_cast<const S_CREATE_CHARACTER_REPLY*>(
-               &_S_CREATE_CHARACTER_REPLY_default_instance_);
+  static inline const S_CreateCharacterReply* internal_default_instance() {
+    return reinterpret_cast<const S_CreateCharacterReply*>(
+               &_S_CreateCharacterReply_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     3;
 
-  friend void swap(S_CREATE_CHARACTER_REPLY& a, S_CREATE_CHARACTER_REPLY& b) {
+  friend void swap(S_CreateCharacterReply& a, S_CreateCharacterReply& b) {
     a.Swap(&b);
   }
-  inline void Swap(S_CREATE_CHARACTER_REPLY* other) {
+  inline void Swap(S_CreateCharacterReply* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -612,7 +717,7 @@ class S_CREATE_CHARACTER_REPLY final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(S_CREATE_CHARACTER_REPLY* other) {
+  void UnsafeArenaSwap(S_CreateCharacterReply* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -620,14 +725,14 @@ class S_CREATE_CHARACTER_REPLY final :
 
   // implements Message ----------------------------------------------
 
-  S_CREATE_CHARACTER_REPLY* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<S_CREATE_CHARACTER_REPLY>(arena);
+  S_CreateCharacterReply* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<S_CreateCharacterReply>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const S_CREATE_CHARACTER_REPLY& from);
+  void CopyFrom(const S_CreateCharacterReply& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const S_CREATE_CHARACTER_REPLY& from) {
-    S_CREATE_CHARACTER_REPLY::MergeImpl(*this, from);
+  void MergeFrom( const S_CreateCharacterReply& from) {
+    S_CreateCharacterReply::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
@@ -645,15 +750,15 @@ class S_CREATE_CHARACTER_REPLY final :
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(S_CREATE_CHARACTER_REPLY* other);
+  void InternalSwap(S_CreateCharacterReply* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "Protocol.S_CREATE_CHARACTER_REPLY";
+    return "Protocol.S_CreateCharacterReply";
   }
   protected:
-  explicit S_CREATE_CHARACTER_REPLY(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit S_CreateCharacterReply(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -693,7 +798,7 @@ class S_CREATE_CHARACTER_REPLY final :
   void _internal_set_success(bool value);
   public:
 
-  // @@protoc_insertion_point(class_scope:Protocol.S_CREATE_CHARACTER_REPLY)
+  // @@protoc_insertion_point(class_scope:Protocol.S_CreateCharacterReply)
  private:
   class _Internal;
 
@@ -717,44 +822,44 @@ class S_CREATE_CHARACTER_REPLY final :
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
-// C_JWT_LOGIN_REQUEST
+// C_JwtLoginRequest
 
 // string accessToken = 1;
-inline void C_JWT_LOGIN_REQUEST::clear_accesstoken() {
+inline void C_JwtLoginRequest::clear_accesstoken() {
   _impl_.accesstoken_.ClearToEmpty();
 }
-inline const std::string& C_JWT_LOGIN_REQUEST::accesstoken() const {
-  // @@protoc_insertion_point(field_get:Protocol.C_JWT_LOGIN_REQUEST.accessToken)
+inline const std::string& C_JwtLoginRequest::accesstoken() const {
+  // @@protoc_insertion_point(field_get:Protocol.C_JwtLoginRequest.accessToken)
   return _internal_accesstoken();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void C_JWT_LOGIN_REQUEST::set_accesstoken(ArgT0&& arg0, ArgT... args) {
+void C_JwtLoginRequest::set_accesstoken(ArgT0&& arg0, ArgT... args) {
  
  _impl_.accesstoken_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:Protocol.C_JWT_LOGIN_REQUEST.accessToken)
+  // @@protoc_insertion_point(field_set:Protocol.C_JwtLoginRequest.accessToken)
 }
-inline std::string* C_JWT_LOGIN_REQUEST::mutable_accesstoken() {
+inline std::string* C_JwtLoginRequest::mutable_accesstoken() {
   std::string* _s = _internal_mutable_accesstoken();
-  // @@protoc_insertion_point(field_mutable:Protocol.C_JWT_LOGIN_REQUEST.accessToken)
+  // @@protoc_insertion_point(field_mutable:Protocol.C_JwtLoginRequest.accessToken)
   return _s;
 }
-inline const std::string& C_JWT_LOGIN_REQUEST::_internal_accesstoken() const {
+inline const std::string& C_JwtLoginRequest::_internal_accesstoken() const {
   return _impl_.accesstoken_.Get();
 }
-inline void C_JWT_LOGIN_REQUEST::_internal_set_accesstoken(const std::string& value) {
+inline void C_JwtLoginRequest::_internal_set_accesstoken(const std::string& value) {
   
   _impl_.accesstoken_.Set(value, GetArenaForAllocation());
 }
-inline std::string* C_JWT_LOGIN_REQUEST::_internal_mutable_accesstoken() {
+inline std::string* C_JwtLoginRequest::_internal_mutable_accesstoken() {
   
   return _impl_.accesstoken_.Mutable(GetArenaForAllocation());
 }
-inline std::string* C_JWT_LOGIN_REQUEST::release_accesstoken() {
-  // @@protoc_insertion_point(field_release:Protocol.C_JWT_LOGIN_REQUEST.accessToken)
+inline std::string* C_JwtLoginRequest::release_accesstoken() {
+  // @@protoc_insertion_point(field_release:Protocol.C_JwtLoginRequest.accessToken)
   return _impl_.accesstoken_.Release();
 }
-inline void C_JWT_LOGIN_REQUEST::set_allocated_accesstoken(std::string* accesstoken) {
+inline void C_JwtLoginRequest::set_allocated_accesstoken(std::string* accesstoken) {
   if (accesstoken != nullptr) {
     
   } else {
@@ -766,73 +871,73 @@ inline void C_JWT_LOGIN_REQUEST::set_allocated_accesstoken(std::string* accessto
     _impl_.accesstoken_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:Protocol.C_JWT_LOGIN_REQUEST.accessToken)
+  // @@protoc_insertion_point(field_set_allocated:Protocol.C_JwtLoginRequest.accessToken)
 }
 
 // -------------------------------------------------------------------
 
-// S_JWT_LOGIN_REPLY
+// S_JwtLoginReply
 
 // .Protocol.ELoginResult result = 1;
-inline void S_JWT_LOGIN_REPLY::clear_result() {
+inline void S_JwtLoginReply::clear_result() {
   _impl_.result_ = 0;
 }
-inline ::Protocol::ELoginResult S_JWT_LOGIN_REPLY::_internal_result() const {
+inline ::Protocol::ELoginResult S_JwtLoginReply::_internal_result() const {
   return static_cast< ::Protocol::ELoginResult >(_impl_.result_);
 }
-inline ::Protocol::ELoginResult S_JWT_LOGIN_REPLY::result() const {
-  // @@protoc_insertion_point(field_get:Protocol.S_JWT_LOGIN_REPLY.result)
+inline ::Protocol::ELoginResult S_JwtLoginReply::result() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_JwtLoginReply.result)
   return _internal_result();
 }
-inline void S_JWT_LOGIN_REPLY::_internal_set_result(::Protocol::ELoginResult value) {
+inline void S_JwtLoginReply::_internal_set_result(::Protocol::ELoginResult value) {
   
   _impl_.result_ = value;
 }
-inline void S_JWT_LOGIN_REPLY::set_result(::Protocol::ELoginResult value) {
+inline void S_JwtLoginReply::set_result(::Protocol::ELoginResult value) {
   _internal_set_result(value);
-  // @@protoc_insertion_point(field_set:Protocol.S_JWT_LOGIN_REPLY.result)
+  // @@protoc_insertion_point(field_set:Protocol.S_JwtLoginReply.result)
 }
 
 // -------------------------------------------------------------------
 
-// C_CREATE_CHARACTER_REQUEST
+// C_CreateCharacterRequest
 
 // string username = 1;
-inline void C_CREATE_CHARACTER_REQUEST::clear_username() {
+inline void C_CreateCharacterRequest::clear_username() {
   _impl_.username_.ClearToEmpty();
 }
-inline const std::string& C_CREATE_CHARACTER_REQUEST::username() const {
-  // @@protoc_insertion_point(field_get:Protocol.C_CREATE_CHARACTER_REQUEST.username)
+inline const std::string& C_CreateCharacterRequest::username() const {
+  // @@protoc_insertion_point(field_get:Protocol.C_CreateCharacterRequest.username)
   return _internal_username();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void C_CREATE_CHARACTER_REQUEST::set_username(ArgT0&& arg0, ArgT... args) {
+void C_CreateCharacterRequest::set_username(ArgT0&& arg0, ArgT... args) {
  
  _impl_.username_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:Protocol.C_CREATE_CHARACTER_REQUEST.username)
+  // @@protoc_insertion_point(field_set:Protocol.C_CreateCharacterRequest.username)
 }
-inline std::string* C_CREATE_CHARACTER_REQUEST::mutable_username() {
+inline std::string* C_CreateCharacterRequest::mutable_username() {
   std::string* _s = _internal_mutable_username();
-  // @@protoc_insertion_point(field_mutable:Protocol.C_CREATE_CHARACTER_REQUEST.username)
+  // @@protoc_insertion_point(field_mutable:Protocol.C_CreateCharacterRequest.username)
   return _s;
 }
-inline const std::string& C_CREATE_CHARACTER_REQUEST::_internal_username() const {
+inline const std::string& C_CreateCharacterRequest::_internal_username() const {
   return _impl_.username_.Get();
 }
-inline void C_CREATE_CHARACTER_REQUEST::_internal_set_username(const std::string& value) {
+inline void C_CreateCharacterRequest::_internal_set_username(const std::string& value) {
   
   _impl_.username_.Set(value, GetArenaForAllocation());
 }
-inline std::string* C_CREATE_CHARACTER_REQUEST::_internal_mutable_username() {
+inline std::string* C_CreateCharacterRequest::_internal_mutable_username() {
   
   return _impl_.username_.Mutable(GetArenaForAllocation());
 }
-inline std::string* C_CREATE_CHARACTER_REQUEST::release_username() {
-  // @@protoc_insertion_point(field_release:Protocol.C_CREATE_CHARACTER_REQUEST.username)
+inline std::string* C_CreateCharacterRequest::release_username() {
+  // @@protoc_insertion_point(field_release:Protocol.C_CreateCharacterRequest.username)
   return _impl_.username_.Release();
 }
-inline void C_CREATE_CHARACTER_REQUEST::set_allocated_username(std::string* username) {
+inline void C_CreateCharacterRequest::set_allocated_username(std::string* username) {
   if (username != nullptr) {
     
   } else {
@@ -844,109 +949,109 @@ inline void C_CREATE_CHARACTER_REQUEST::set_allocated_username(std::string* user
     _impl_.username_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:Protocol.C_CREATE_CHARACTER_REQUEST.username)
+  // @@protoc_insertion_point(field_set_allocated:Protocol.C_CreateCharacterRequest.username)
 }
 
 // .Protocol.EGender gender = 2;
-inline void C_CREATE_CHARACTER_REQUEST::clear_gender() {
+inline void C_CreateCharacterRequest::clear_gender() {
   _impl_.gender_ = 0;
 }
-inline ::Protocol::EGender C_CREATE_CHARACTER_REQUEST::_internal_gender() const {
+inline ::Protocol::EGender C_CreateCharacterRequest::_internal_gender() const {
   return static_cast< ::Protocol::EGender >(_impl_.gender_);
 }
-inline ::Protocol::EGender C_CREATE_CHARACTER_REQUEST::gender() const {
-  // @@protoc_insertion_point(field_get:Protocol.C_CREATE_CHARACTER_REQUEST.gender)
+inline ::Protocol::EGender C_CreateCharacterRequest::gender() const {
+  // @@protoc_insertion_point(field_get:Protocol.C_CreateCharacterRequest.gender)
   return _internal_gender();
 }
-inline void C_CREATE_CHARACTER_REQUEST::_internal_set_gender(::Protocol::EGender value) {
+inline void C_CreateCharacterRequest::_internal_set_gender(::Protocol::EGender value) {
   
   _impl_.gender_ = value;
 }
-inline void C_CREATE_CHARACTER_REQUEST::set_gender(::Protocol::EGender value) {
+inline void C_CreateCharacterRequest::set_gender(::Protocol::EGender value) {
   _internal_set_gender(value);
-  // @@protoc_insertion_point(field_set:Protocol.C_CREATE_CHARACTER_REQUEST.gender)
+  // @@protoc_insertion_point(field_set:Protocol.C_CreateCharacterRequest.gender)
 }
 
 // .Protocol.ERegion region = 3;
-inline void C_CREATE_CHARACTER_REQUEST::clear_region() {
+inline void C_CreateCharacterRequest::clear_region() {
   _impl_.region_ = 0;
 }
-inline ::Protocol::ERegion C_CREATE_CHARACTER_REQUEST::_internal_region() const {
+inline ::Protocol::ERegion C_CreateCharacterRequest::_internal_region() const {
   return static_cast< ::Protocol::ERegion >(_impl_.region_);
 }
-inline ::Protocol::ERegion C_CREATE_CHARACTER_REQUEST::region() const {
-  // @@protoc_insertion_point(field_get:Protocol.C_CREATE_CHARACTER_REQUEST.region)
+inline ::Protocol::ERegion C_CreateCharacterRequest::region() const {
+  // @@protoc_insertion_point(field_get:Protocol.C_CreateCharacterRequest.region)
   return _internal_region();
 }
-inline void C_CREATE_CHARACTER_REQUEST::_internal_set_region(::Protocol::ERegion value) {
+inline void C_CreateCharacterRequest::_internal_set_region(::Protocol::ERegion value) {
   
   _impl_.region_ = value;
 }
-inline void C_CREATE_CHARACTER_REQUEST::set_region(::Protocol::ERegion value) {
+inline void C_CreateCharacterRequest::set_region(::Protocol::ERegion value) {
   _internal_set_region(value);
-  // @@protoc_insertion_point(field_set:Protocol.C_CREATE_CHARACTER_REQUEST.region)
+  // @@protoc_insertion_point(field_set:Protocol.C_CreateCharacterRequest.region)
 }
 
 // -------------------------------------------------------------------
 
-// S_CREATE_CHARACTER_REPLY
+// S_CreateCharacterReply
 
 // bool success = 1;
-inline void S_CREATE_CHARACTER_REPLY::clear_success() {
+inline void S_CreateCharacterReply::clear_success() {
   _impl_.success_ = false;
 }
-inline bool S_CREATE_CHARACTER_REPLY::_internal_success() const {
+inline bool S_CreateCharacterReply::_internal_success() const {
   return _impl_.success_;
 }
-inline bool S_CREATE_CHARACTER_REPLY::success() const {
-  // @@protoc_insertion_point(field_get:Protocol.S_CREATE_CHARACTER_REPLY.success)
+inline bool S_CreateCharacterReply::success() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_CreateCharacterReply.success)
   return _internal_success();
 }
-inline void S_CREATE_CHARACTER_REPLY::_internal_set_success(bool value) {
+inline void S_CreateCharacterReply::_internal_set_success(bool value) {
   
   _impl_.success_ = value;
 }
-inline void S_CREATE_CHARACTER_REPLY::set_success(bool value) {
+inline void S_CreateCharacterReply::set_success(bool value) {
   _internal_set_success(value);
-  // @@protoc_insertion_point(field_set:Protocol.S_CREATE_CHARACTER_REPLY.success)
+  // @@protoc_insertion_point(field_set:Protocol.S_CreateCharacterReply.success)
 }
 
 // string detail = 2;
-inline void S_CREATE_CHARACTER_REPLY::clear_detail() {
+inline void S_CreateCharacterReply::clear_detail() {
   _impl_.detail_.ClearToEmpty();
 }
-inline const std::string& S_CREATE_CHARACTER_REPLY::detail() const {
-  // @@protoc_insertion_point(field_get:Protocol.S_CREATE_CHARACTER_REPLY.detail)
+inline const std::string& S_CreateCharacterReply::detail() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_CreateCharacterReply.detail)
   return _internal_detail();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void S_CREATE_CHARACTER_REPLY::set_detail(ArgT0&& arg0, ArgT... args) {
+void S_CreateCharacterReply::set_detail(ArgT0&& arg0, ArgT... args) {
  
  _impl_.detail_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:Protocol.S_CREATE_CHARACTER_REPLY.detail)
+  // @@protoc_insertion_point(field_set:Protocol.S_CreateCharacterReply.detail)
 }
-inline std::string* S_CREATE_CHARACTER_REPLY::mutable_detail() {
+inline std::string* S_CreateCharacterReply::mutable_detail() {
   std::string* _s = _internal_mutable_detail();
-  // @@protoc_insertion_point(field_mutable:Protocol.S_CREATE_CHARACTER_REPLY.detail)
+  // @@protoc_insertion_point(field_mutable:Protocol.S_CreateCharacterReply.detail)
   return _s;
 }
-inline const std::string& S_CREATE_CHARACTER_REPLY::_internal_detail() const {
+inline const std::string& S_CreateCharacterReply::_internal_detail() const {
   return _impl_.detail_.Get();
 }
-inline void S_CREATE_CHARACTER_REPLY::_internal_set_detail(const std::string& value) {
+inline void S_CreateCharacterReply::_internal_set_detail(const std::string& value) {
   
   _impl_.detail_.Set(value, GetArenaForAllocation());
 }
-inline std::string* S_CREATE_CHARACTER_REPLY::_internal_mutable_detail() {
+inline std::string* S_CreateCharacterReply::_internal_mutable_detail() {
   
   return _impl_.detail_.Mutable(GetArenaForAllocation());
 }
-inline std::string* S_CREATE_CHARACTER_REPLY::release_detail() {
-  // @@protoc_insertion_point(field_release:Protocol.S_CREATE_CHARACTER_REPLY.detail)
+inline std::string* S_CreateCharacterReply::release_detail() {
+  // @@protoc_insertion_point(field_release:Protocol.S_CreateCharacterReply.detail)
   return _impl_.detail_.Release();
 }
-inline void S_CREATE_CHARACTER_REPLY::set_allocated_detail(std::string* detail) {
+inline void S_CreateCharacterReply::set_allocated_detail(std::string* detail) {
   if (detail != nullptr) {
     
   } else {
@@ -958,7 +1063,7 @@ inline void S_CREATE_CHARACTER_REPLY::set_allocated_detail(std::string* detail) 
     _impl_.detail_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:Protocol.S_CREATE_CHARACTER_REPLY.detail)
+  // @@protoc_insertion_point(field_set_allocated:Protocol.S_CreateCharacterReply.detail)
 }
 
 #ifdef __GNUC__
@@ -974,6 +1079,31 @@ inline void S_CREATE_CHARACTER_REPLY::set_allocated_detail(std::string* detail) 
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace Protocol
+
+PROTOBUF_NAMESPACE_OPEN
+
+template <> struct is_proto_enum< ::Protocol::MsgId> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::MsgId>() {
+  return ::Protocol::MsgId_descriptor();
+}
+template <> struct is_proto_enum< ::Protocol::ELoginResult> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::ELoginResult>() {
+  return ::Protocol::ELoginResult_descriptor();
+}
+template <> struct is_proto_enum< ::Protocol::EGender> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::EGender>() {
+  return ::Protocol::EGender_descriptor();
+}
+template <> struct is_proto_enum< ::Protocol::ERegion> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::ERegion>() {
+  return ::Protocol::ERegion_descriptor();
+}
+
+PROTOBUF_NAMESPACE_CLOSE
 
 // @@protoc_insertion_point(global_scope)
 

@@ -21,133 +21,137 @@ namespace _pb = ::PROTOBUF_NAMESPACE_ID;
 namespace _pbi = _pb::internal;
 
 namespace Protocol {
-PROTOBUF_CONSTEXPR C_JWT_LOGIN_REQUEST::C_JWT_LOGIN_REQUEST(
+PROTOBUF_CONSTEXPR C_JwtLoginRequest::C_JwtLoginRequest(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.accesstoken_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_._cached_size_)*/{}} {}
-struct C_JWT_LOGIN_REQUESTDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR C_JWT_LOGIN_REQUESTDefaultTypeInternal()
+struct C_JwtLoginRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR C_JwtLoginRequestDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
-  ~C_JWT_LOGIN_REQUESTDefaultTypeInternal() {}
+  ~C_JwtLoginRequestDefaultTypeInternal() {}
   union {
-    C_JWT_LOGIN_REQUEST _instance;
+    C_JwtLoginRequest _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 C_JWT_LOGIN_REQUESTDefaultTypeInternal _C_JWT_LOGIN_REQUEST_default_instance_;
-PROTOBUF_CONSTEXPR S_JWT_LOGIN_REPLY::S_JWT_LOGIN_REPLY(
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 C_JwtLoginRequestDefaultTypeInternal _C_JwtLoginRequest_default_instance_;
+PROTOBUF_CONSTEXPR S_JwtLoginReply::S_JwtLoginReply(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.result_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
-struct S_JWT_LOGIN_REPLYDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR S_JWT_LOGIN_REPLYDefaultTypeInternal()
+struct S_JwtLoginReplyDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR S_JwtLoginReplyDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
-  ~S_JWT_LOGIN_REPLYDefaultTypeInternal() {}
+  ~S_JwtLoginReplyDefaultTypeInternal() {}
   union {
-    S_JWT_LOGIN_REPLY _instance;
+    S_JwtLoginReply _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_JWT_LOGIN_REPLYDefaultTypeInternal _S_JWT_LOGIN_REPLY_default_instance_;
-PROTOBUF_CONSTEXPR C_CREATE_CHARACTER_REQUEST::C_CREATE_CHARACTER_REQUEST(
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_JwtLoginReplyDefaultTypeInternal _S_JwtLoginReply_default_instance_;
+PROTOBUF_CONSTEXPR C_CreateCharacterRequest::C_CreateCharacterRequest(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.username_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.gender_)*/0
   , /*decltype(_impl_.region_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
-struct C_CREATE_CHARACTER_REQUESTDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR C_CREATE_CHARACTER_REQUESTDefaultTypeInternal()
+struct C_CreateCharacterRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR C_CreateCharacterRequestDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
-  ~C_CREATE_CHARACTER_REQUESTDefaultTypeInternal() {}
+  ~C_CreateCharacterRequestDefaultTypeInternal() {}
   union {
-    C_CREATE_CHARACTER_REQUEST _instance;
+    C_CreateCharacterRequest _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 C_CREATE_CHARACTER_REQUESTDefaultTypeInternal _C_CREATE_CHARACTER_REQUEST_default_instance_;
-PROTOBUF_CONSTEXPR S_CREATE_CHARACTER_REPLY::S_CREATE_CHARACTER_REPLY(
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 C_CreateCharacterRequestDefaultTypeInternal _C_CreateCharacterRequest_default_instance_;
+PROTOBUF_CONSTEXPR S_CreateCharacterReply::S_CreateCharacterReply(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.detail_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.success_)*/false
   , /*decltype(_impl_._cached_size_)*/{}} {}
-struct S_CREATE_CHARACTER_REPLYDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR S_CREATE_CHARACTER_REPLYDefaultTypeInternal()
+struct S_CreateCharacterReplyDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR S_CreateCharacterReplyDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
-  ~S_CREATE_CHARACTER_REPLYDefaultTypeInternal() {}
+  ~S_CreateCharacterReplyDefaultTypeInternal() {}
   union {
-    S_CREATE_CHARACTER_REPLY _instance;
+    S_CreateCharacterReply _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_CREATE_CHARACTER_REPLYDefaultTypeInternal _S_CREATE_CHARACTER_REPLY_default_instance_;
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_CreateCharacterReplyDefaultTypeInternal _S_CreateCharacterReply_default_instance_;
 }  // namespace Protocol
 static ::_pb::Metadata file_level_metadata_Protocol_2eproto[4];
-static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_Protocol_2eproto = nullptr;
+static const ::_pb::EnumDescriptor* file_level_enum_descriptors_Protocol_2eproto[4];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_Protocol_2eproto = nullptr;
 
 const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::Protocol::C_JWT_LOGIN_REQUEST, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_JwtLoginRequest, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::Protocol::C_JWT_LOGIN_REQUEST, _impl_.accesstoken_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_JwtLoginRequest, _impl_.accesstoken_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::Protocol::S_JWT_LOGIN_REPLY, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_JwtLoginReply, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::Protocol::S_JWT_LOGIN_REPLY, _impl_.result_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_JwtLoginReply, _impl_.result_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::Protocol::C_CREATE_CHARACTER_REQUEST, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_CreateCharacterRequest, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::Protocol::C_CREATE_CHARACTER_REQUEST, _impl_.username_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::C_CREATE_CHARACTER_REQUEST, _impl_.gender_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::C_CREATE_CHARACTER_REQUEST, _impl_.region_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_CreateCharacterRequest, _impl_.username_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_CreateCharacterRequest, _impl_.gender_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_CreateCharacterRequest, _impl_.region_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::Protocol::S_CREATE_CHARACTER_REPLY, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_CreateCharacterReply, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::Protocol::S_CREATE_CHARACTER_REPLY, _impl_.success_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::S_CREATE_CHARACTER_REPLY, _impl_.detail_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_CreateCharacterReply, _impl_.success_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_CreateCharacterReply, _impl_.detail_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, -1, -1, sizeof(::Protocol::C_JWT_LOGIN_REQUEST)},
-  { 7, -1, -1, sizeof(::Protocol::S_JWT_LOGIN_REPLY)},
-  { 14, -1, -1, sizeof(::Protocol::C_CREATE_CHARACTER_REQUEST)},
-  { 23, -1, -1, sizeof(::Protocol::S_CREATE_CHARACTER_REPLY)},
+  { 0, -1, -1, sizeof(::Protocol::C_JwtLoginRequest)},
+  { 7, -1, -1, sizeof(::Protocol::S_JwtLoginReply)},
+  { 14, -1, -1, sizeof(::Protocol::C_CreateCharacterRequest)},
+  { 23, -1, -1, sizeof(::Protocol::S_CreateCharacterReply)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
-  &::Protocol::_C_JWT_LOGIN_REQUEST_default_instance_._instance,
-  &::Protocol::_S_JWT_LOGIN_REPLY_default_instance_._instance,
-  &::Protocol::_C_CREATE_CHARACTER_REQUEST_default_instance_._instance,
-  &::Protocol::_S_CREATE_CHARACTER_REPLY_default_instance_._instance,
+  &::Protocol::_C_JwtLoginRequest_default_instance_._instance,
+  &::Protocol::_S_JwtLoginReply_default_instance_._instance,
+  &::Protocol::_C_CreateCharacterRequest_default_instance_._instance,
+  &::Protocol::_S_CreateCharacterReply_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\016Protocol.proto\022\010Protocol\032\nEnum.proto\032\014"
-  "Struct.proto\"*\n\023C_JWT_LOGIN_REQUEST\022\023\n\013a"
-  "ccessToken\030\001 \001(\t\";\n\021S_JWT_LOGIN_REPLY\022&\n"
-  "\006result\030\001 \001(\0162\026.Protocol.ELoginResult\"t\n"
-  "\032C_CREATE_CHARACTER_REQUEST\022\020\n\010username\030"
-  "\001 \001(\t\022!\n\006gender\030\002 \001(\0162\021.Protocol.EGender"
-  "\022!\n\006region\030\003 \001(\0162\021.Protocol.ERegion\";\n\030S"
-  "_CREATE_CHARACTER_REPLY\022\017\n\007success\030\001 \001(\010"
-  "\022\016\n\006detail\030\002 \001(\tb\006proto3"
+  "\n\016Protocol.proto\022\010Protocol\"(\n\021C_JwtLogin"
+  "Request\022\023\n\013accessToken\030\001 \001(\t\"9\n\017S_JwtLog"
+  "inReply\022&\n\006result\030\001 \001(\0162\026.Protocol.ELogi"
+  "nResult\"r\n\030C_CreateCharacterRequest\022\020\n\010u"
+  "sername\030\001 \001(\t\022!\n\006gender\030\002 \001(\0162\021.Protocol"
+  ".EGender\022!\n\006region\030\003 \001(\0162\021.Protocol.EReg"
+  "ion\"9\n\026S_CreateCharacterReply\022\017\n\007success"
+  "\030\001 \001(\010\022\016\n\006detail\030\002 \001(\t*u\n\005MsgId\022\027\n\023C_JWT"
+  "_LOGIN_REQUEST\020\000\022\025\n\021S_JWT_LOGIN_REPLY\020\001\022"
+  "\036\n\032C_CREATE_CHARACTER_REQUEST\020\002\022\034\n\030S_CRE"
+  "ATE_CHARACTER_REPLY\020\003*S\n\014ELoginResult\022\013\n"
+  "\007SUCCESS\020\000\022\021\n\rINVALID_TOKEN\020\001\022\021\n\rTOKEN_E"
+  "XPIRED\020\002\022\020\n\014SERVER_ERROR\020\003*>\n\007EGender\022\017\n"
+  "\013GENDER_NONE\020\000\022\017\n\013GENDER_MALE\020\001\022\021\n\rGENDE"
+  "R_FEMAIL\020\002*:\n\007ERegion\022\017\n\013REGION_NONE\020\000\022\r"
+  "\n\tREGION_GO\020\001\022\017\n\013REGION_BACK\020\002B\033\252\002\030Googl"
+  "e.Protobuf.Protocolb\006proto3"
   ;
-static const ::_pbi::DescriptorTable* const descriptor_table_Protocol_2eproto_deps[2] = {
-  &::descriptor_table_Enum_2eproto,
-  &::descriptor_table_Struct_2eproto,
-};
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 344, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 667, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
-    &descriptor_table_Protocol_2eproto_once, descriptor_table_Protocol_2eproto_deps, 2, 4,
+    &descriptor_table_Protocol_2eproto_once, nullptr, 0, 4,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
     file_level_metadata_Protocol_2eproto, file_level_enum_descriptors_Protocol_2eproto,
     file_level_service_descriptors_Protocol_2eproto,
@@ -159,22 +163,84 @@ PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_Protocol
 // Force running AddDescriptors() at dynamic initialization time.
 PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_Protocol_2eproto(&descriptor_table_Protocol_2eproto);
 namespace Protocol {
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MsgId_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_Protocol_2eproto);
+  return file_level_enum_descriptors_Protocol_2eproto[0];
+}
+bool MsgId_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ELoginResult_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_Protocol_2eproto);
+  return file_level_enum_descriptors_Protocol_2eproto[1];
+}
+bool ELoginResult_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* EGender_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_Protocol_2eproto);
+  return file_level_enum_descriptors_Protocol_2eproto[2];
+}
+bool EGender_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ERegion_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_Protocol_2eproto);
+  return file_level_enum_descriptors_Protocol_2eproto[3];
+}
+bool ERegion_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
 
 // ===================================================================
 
-class C_JWT_LOGIN_REQUEST::_Internal {
+class C_JwtLoginRequest::_Internal {
  public:
 };
 
-C_JWT_LOGIN_REQUEST::C_JWT_LOGIN_REQUEST(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+C_JwtLoginRequest::C_JwtLoginRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:Protocol.C_JWT_LOGIN_REQUEST)
+  // @@protoc_insertion_point(arena_constructor:Protocol.C_JwtLoginRequest)
 }
-C_JWT_LOGIN_REQUEST::C_JWT_LOGIN_REQUEST(const C_JWT_LOGIN_REQUEST& from)
+C_JwtLoginRequest::C_JwtLoginRequest(const C_JwtLoginRequest& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
-  C_JWT_LOGIN_REQUEST* const _this = this; (void)_this;
+  C_JwtLoginRequest* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.accesstoken_){}
     , /*decltype(_impl_._cached_size_)*/{}};
@@ -188,10 +254,10 @@ C_JWT_LOGIN_REQUEST::C_JWT_LOGIN_REQUEST(const C_JWT_LOGIN_REQUEST& from)
     _this->_impl_.accesstoken_.Set(from._internal_accesstoken(), 
       _this->GetArenaForAllocation());
   }
-  // @@protoc_insertion_point(copy_constructor:Protocol.C_JWT_LOGIN_REQUEST)
+  // @@protoc_insertion_point(copy_constructor:Protocol.C_JwtLoginRequest)
 }
 
-inline void C_JWT_LOGIN_REQUEST::SharedCtor(
+inline void C_JwtLoginRequest::SharedCtor(
     ::_pb::Arena* arena, bool is_message_owned) {
   (void)arena;
   (void)is_message_owned;
@@ -205,8 +271,8 @@ inline void C_JWT_LOGIN_REQUEST::SharedCtor(
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
-C_JWT_LOGIN_REQUEST::~C_JWT_LOGIN_REQUEST() {
-  // @@protoc_insertion_point(destructor:Protocol.C_JWT_LOGIN_REQUEST)
+C_JwtLoginRequest::~C_JwtLoginRequest() {
+  // @@protoc_insertion_point(destructor:Protocol.C_JwtLoginRequest)
   if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
   (void)arena;
     return;
@@ -214,17 +280,17 @@ C_JWT_LOGIN_REQUEST::~C_JWT_LOGIN_REQUEST() {
   SharedDtor();
 }
 
-inline void C_JWT_LOGIN_REQUEST::SharedDtor() {
+inline void C_JwtLoginRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.accesstoken_.Destroy();
 }
 
-void C_JWT_LOGIN_REQUEST::SetCachedSize(int size) const {
+void C_JwtLoginRequest::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void C_JWT_LOGIN_REQUEST::Clear() {
-// @@protoc_insertion_point(message_clear_start:Protocol.C_JWT_LOGIN_REQUEST)
+void C_JwtLoginRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:Protocol.C_JwtLoginRequest)
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -233,7 +299,7 @@ void C_JWT_LOGIN_REQUEST::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* C_JWT_LOGIN_REQUEST::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+const char* C_JwtLoginRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
@@ -245,7 +311,7 @@ const char* C_JWT_LOGIN_REQUEST::_InternalParse(const char* ptr, ::_pbi::ParseCo
           auto str = _internal_mutable_accesstoken();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "Protocol.C_JWT_LOGIN_REQUEST.accessToken"));
+          CHK_(::_pbi::VerifyUTF8(str, "Protocol.C_JwtLoginRequest.accessToken"));
         } else
           goto handle_unusual;
         continue;
@@ -272,9 +338,9 @@ failure:
 #undef CHK_
 }
 
-uint8_t* C_JWT_LOGIN_REQUEST::_InternalSerialize(
+uint8_t* C_JwtLoginRequest::_InternalSerialize(
     uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:Protocol.C_JWT_LOGIN_REQUEST)
+  // @@protoc_insertion_point(serialize_to_array_start:Protocol.C_JwtLoginRequest)
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -283,7 +349,7 @@ uint8_t* C_JWT_LOGIN_REQUEST::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_accesstoken().data(), static_cast<int>(this->_internal_accesstoken().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "Protocol.C_JWT_LOGIN_REQUEST.accessToken");
+      "Protocol.C_JwtLoginRequest.accessToken");
     target = stream->WriteStringMaybeAliased(
         1, this->_internal_accesstoken(), target);
   }
@@ -292,12 +358,12 @@ uint8_t* C_JWT_LOGIN_REQUEST::_InternalSerialize(
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:Protocol.C_JWT_LOGIN_REQUEST)
+  // @@protoc_insertion_point(serialize_to_array_end:Protocol.C_JwtLoginRequest)
   return target;
 }
 
-size_t C_JWT_LOGIN_REQUEST::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:Protocol.C_JWT_LOGIN_REQUEST)
+size_t C_JwtLoginRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Protocol.C_JwtLoginRequest)
   size_t total_size = 0;
 
   uint32_t cached_has_bits = 0;
@@ -314,17 +380,17 @@ size_t C_JWT_LOGIN_REQUEST::ByteSizeLong() const {
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData C_JWT_LOGIN_REQUEST::_class_data_ = {
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData C_JwtLoginRequest::_class_data_ = {
     ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    C_JWT_LOGIN_REQUEST::MergeImpl
+    C_JwtLoginRequest::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*C_JWT_LOGIN_REQUEST::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*C_JwtLoginRequest::GetClassData() const { return &_class_data_; }
 
 
-void C_JWT_LOGIN_REQUEST::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<C_JWT_LOGIN_REQUEST*>(&to_msg);
-  auto& from = static_cast<const C_JWT_LOGIN_REQUEST&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:Protocol.C_JWT_LOGIN_REQUEST)
+void C_JwtLoginRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<C_JwtLoginRequest*>(&to_msg);
+  auto& from = static_cast<const C_JwtLoginRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:Protocol.C_JwtLoginRequest)
   GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -335,18 +401,18 @@ void C_JWT_LOGIN_REQUEST::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, co
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void C_JWT_LOGIN_REQUEST::CopyFrom(const C_JWT_LOGIN_REQUEST& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.C_JWT_LOGIN_REQUEST)
+void C_JwtLoginRequest::CopyFrom(const C_JwtLoginRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.C_JwtLoginRequest)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool C_JWT_LOGIN_REQUEST::IsInitialized() const {
+bool C_JwtLoginRequest::IsInitialized() const {
   return true;
 }
 
-void C_JWT_LOGIN_REQUEST::InternalSwap(C_JWT_LOGIN_REQUEST* other) {
+void C_JwtLoginRequest::InternalSwap(C_JwtLoginRequest* other) {
   using std::swap;
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
@@ -357,7 +423,7 @@ void C_JWT_LOGIN_REQUEST::InternalSwap(C_JWT_LOGIN_REQUEST* other) {
   );
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata C_JWT_LOGIN_REQUEST::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata C_JwtLoginRequest::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
       file_level_metadata_Protocol_2eproto[0]);
@@ -365,29 +431,29 @@ void C_JWT_LOGIN_REQUEST::InternalSwap(C_JWT_LOGIN_REQUEST* other) {
 
 // ===================================================================
 
-class S_JWT_LOGIN_REPLY::_Internal {
+class S_JwtLoginReply::_Internal {
  public:
 };
 
-S_JWT_LOGIN_REPLY::S_JWT_LOGIN_REPLY(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+S_JwtLoginReply::S_JwtLoginReply(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:Protocol.S_JWT_LOGIN_REPLY)
+  // @@protoc_insertion_point(arena_constructor:Protocol.S_JwtLoginReply)
 }
-S_JWT_LOGIN_REPLY::S_JWT_LOGIN_REPLY(const S_JWT_LOGIN_REPLY& from)
+S_JwtLoginReply::S_JwtLoginReply(const S_JwtLoginReply& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
-  S_JWT_LOGIN_REPLY* const _this = this; (void)_this;
+  S_JwtLoginReply* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.result_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   _this->_impl_.result_ = from._impl_.result_;
-  // @@protoc_insertion_point(copy_constructor:Protocol.S_JWT_LOGIN_REPLY)
+  // @@protoc_insertion_point(copy_constructor:Protocol.S_JwtLoginReply)
 }
 
-inline void S_JWT_LOGIN_REPLY::SharedCtor(
+inline void S_JwtLoginReply::SharedCtor(
     ::_pb::Arena* arena, bool is_message_owned) {
   (void)arena;
   (void)is_message_owned;
@@ -397,8 +463,8 @@ inline void S_JWT_LOGIN_REPLY::SharedCtor(
   };
 }
 
-S_JWT_LOGIN_REPLY::~S_JWT_LOGIN_REPLY() {
-  // @@protoc_insertion_point(destructor:Protocol.S_JWT_LOGIN_REPLY)
+S_JwtLoginReply::~S_JwtLoginReply() {
+  // @@protoc_insertion_point(destructor:Protocol.S_JwtLoginReply)
   if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
   (void)arena;
     return;
@@ -406,16 +472,16 @@ S_JWT_LOGIN_REPLY::~S_JWT_LOGIN_REPLY() {
   SharedDtor();
 }
 
-inline void S_JWT_LOGIN_REPLY::SharedDtor() {
+inline void S_JwtLoginReply::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
 }
 
-void S_JWT_LOGIN_REPLY::SetCachedSize(int size) const {
+void S_JwtLoginReply::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void S_JWT_LOGIN_REPLY::Clear() {
-// @@protoc_insertion_point(message_clear_start:Protocol.S_JWT_LOGIN_REPLY)
+void S_JwtLoginReply::Clear() {
+// @@protoc_insertion_point(message_clear_start:Protocol.S_JwtLoginReply)
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -424,7 +490,7 @@ void S_JWT_LOGIN_REPLY::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* S_JWT_LOGIN_REPLY::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+const char* S_JwtLoginReply::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
@@ -462,9 +528,9 @@ failure:
 #undef CHK_
 }
 
-uint8_t* S_JWT_LOGIN_REPLY::_InternalSerialize(
+uint8_t* S_JwtLoginReply::_InternalSerialize(
     uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:Protocol.S_JWT_LOGIN_REPLY)
+  // @@protoc_insertion_point(serialize_to_array_start:Protocol.S_JwtLoginReply)
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -479,12 +545,12 @@ uint8_t* S_JWT_LOGIN_REPLY::_InternalSerialize(
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:Protocol.S_JWT_LOGIN_REPLY)
+  // @@protoc_insertion_point(serialize_to_array_end:Protocol.S_JwtLoginReply)
   return target;
 }
 
-size_t S_JWT_LOGIN_REPLY::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:Protocol.S_JWT_LOGIN_REPLY)
+size_t S_JwtLoginReply::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Protocol.S_JwtLoginReply)
   size_t total_size = 0;
 
   uint32_t cached_has_bits = 0;
@@ -500,17 +566,17 @@ size_t S_JWT_LOGIN_REPLY::ByteSizeLong() const {
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData S_JWT_LOGIN_REPLY::_class_data_ = {
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData S_JwtLoginReply::_class_data_ = {
     ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    S_JWT_LOGIN_REPLY::MergeImpl
+    S_JwtLoginReply::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*S_JWT_LOGIN_REPLY::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*S_JwtLoginReply::GetClassData() const { return &_class_data_; }
 
 
-void S_JWT_LOGIN_REPLY::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<S_JWT_LOGIN_REPLY*>(&to_msg);
-  auto& from = static_cast<const S_JWT_LOGIN_REPLY&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:Protocol.S_JWT_LOGIN_REPLY)
+void S_JwtLoginReply::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<S_JwtLoginReply*>(&to_msg);
+  auto& from = static_cast<const S_JwtLoginReply&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:Protocol.S_JwtLoginReply)
   GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -521,24 +587,24 @@ void S_JWT_LOGIN_REPLY::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, cons
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void S_JWT_LOGIN_REPLY::CopyFrom(const S_JWT_LOGIN_REPLY& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.S_JWT_LOGIN_REPLY)
+void S_JwtLoginReply::CopyFrom(const S_JwtLoginReply& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.S_JwtLoginReply)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool S_JWT_LOGIN_REPLY::IsInitialized() const {
+bool S_JwtLoginReply::IsInitialized() const {
   return true;
 }
 
-void S_JWT_LOGIN_REPLY::InternalSwap(S_JWT_LOGIN_REPLY* other) {
+void S_JwtLoginReply::InternalSwap(S_JwtLoginReply* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_.result_, other->_impl_.result_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata S_JWT_LOGIN_REPLY::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata S_JwtLoginReply::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
       file_level_metadata_Protocol_2eproto[1]);
@@ -546,19 +612,19 @@ void S_JWT_LOGIN_REPLY::InternalSwap(S_JWT_LOGIN_REPLY* other) {
 
 // ===================================================================
 
-class C_CREATE_CHARACTER_REQUEST::_Internal {
+class C_CreateCharacterRequest::_Internal {
  public:
 };
 
-C_CREATE_CHARACTER_REQUEST::C_CREATE_CHARACTER_REQUEST(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+C_CreateCharacterRequest::C_CreateCharacterRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:Protocol.C_CREATE_CHARACTER_REQUEST)
+  // @@protoc_insertion_point(arena_constructor:Protocol.C_CreateCharacterRequest)
 }
-C_CREATE_CHARACTER_REQUEST::C_CREATE_CHARACTER_REQUEST(const C_CREATE_CHARACTER_REQUEST& from)
+C_CreateCharacterRequest::C_CreateCharacterRequest(const C_CreateCharacterRequest& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
-  C_CREATE_CHARACTER_REQUEST* const _this = this; (void)_this;
+  C_CreateCharacterRequest* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.username_){}
     , decltype(_impl_.gender_){}
@@ -577,10 +643,10 @@ C_CREATE_CHARACTER_REQUEST::C_CREATE_CHARACTER_REQUEST(const C_CREATE_CHARACTER_
   ::memcpy(&_impl_.gender_, &from._impl_.gender_,
     static_cast<size_t>(reinterpret_cast<char*>(&_impl_.region_) -
     reinterpret_cast<char*>(&_impl_.gender_)) + sizeof(_impl_.region_));
-  // @@protoc_insertion_point(copy_constructor:Protocol.C_CREATE_CHARACTER_REQUEST)
+  // @@protoc_insertion_point(copy_constructor:Protocol.C_CreateCharacterRequest)
 }
 
-inline void C_CREATE_CHARACTER_REQUEST::SharedCtor(
+inline void C_CreateCharacterRequest::SharedCtor(
     ::_pb::Arena* arena, bool is_message_owned) {
   (void)arena;
   (void)is_message_owned;
@@ -596,8 +662,8 @@ inline void C_CREATE_CHARACTER_REQUEST::SharedCtor(
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
-C_CREATE_CHARACTER_REQUEST::~C_CREATE_CHARACTER_REQUEST() {
-  // @@protoc_insertion_point(destructor:Protocol.C_CREATE_CHARACTER_REQUEST)
+C_CreateCharacterRequest::~C_CreateCharacterRequest() {
+  // @@protoc_insertion_point(destructor:Protocol.C_CreateCharacterRequest)
   if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
   (void)arena;
     return;
@@ -605,17 +671,17 @@ C_CREATE_CHARACTER_REQUEST::~C_CREATE_CHARACTER_REQUEST() {
   SharedDtor();
 }
 
-inline void C_CREATE_CHARACTER_REQUEST::SharedDtor() {
+inline void C_CreateCharacterRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.username_.Destroy();
 }
 
-void C_CREATE_CHARACTER_REQUEST::SetCachedSize(int size) const {
+void C_CreateCharacterRequest::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void C_CREATE_CHARACTER_REQUEST::Clear() {
-// @@protoc_insertion_point(message_clear_start:Protocol.C_CREATE_CHARACTER_REQUEST)
+void C_CreateCharacterRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:Protocol.C_CreateCharacterRequest)
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -627,7 +693,7 @@ void C_CREATE_CHARACTER_REQUEST::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* C_CREATE_CHARACTER_REQUEST::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+const char* C_CreateCharacterRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
@@ -639,7 +705,7 @@ const char* C_CREATE_CHARACTER_REQUEST::_InternalParse(const char* ptr, ::_pbi::
           auto str = _internal_mutable_username();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "Protocol.C_CREATE_CHARACTER_REQUEST.username"));
+          CHK_(::_pbi::VerifyUTF8(str, "Protocol.C_CreateCharacterRequest.username"));
         } else
           goto handle_unusual;
         continue;
@@ -684,9 +750,9 @@ failure:
 #undef CHK_
 }
 
-uint8_t* C_CREATE_CHARACTER_REQUEST::_InternalSerialize(
+uint8_t* C_CreateCharacterRequest::_InternalSerialize(
     uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:Protocol.C_CREATE_CHARACTER_REQUEST)
+  // @@protoc_insertion_point(serialize_to_array_start:Protocol.C_CreateCharacterRequest)
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -695,7 +761,7 @@ uint8_t* C_CREATE_CHARACTER_REQUEST::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_username().data(), static_cast<int>(this->_internal_username().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "Protocol.C_CREATE_CHARACTER_REQUEST.username");
+      "Protocol.C_CreateCharacterRequest.username");
     target = stream->WriteStringMaybeAliased(
         1, this->_internal_username(), target);
   }
@@ -718,12 +784,12 @@ uint8_t* C_CREATE_CHARACTER_REQUEST::_InternalSerialize(
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:Protocol.C_CREATE_CHARACTER_REQUEST)
+  // @@protoc_insertion_point(serialize_to_array_end:Protocol.C_CreateCharacterRequest)
   return target;
 }
 
-size_t C_CREATE_CHARACTER_REQUEST::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:Protocol.C_CREATE_CHARACTER_REQUEST)
+size_t C_CreateCharacterRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Protocol.C_CreateCharacterRequest)
   size_t total_size = 0;
 
   uint32_t cached_has_bits = 0;
@@ -752,17 +818,17 @@ size_t C_CREATE_CHARACTER_REQUEST::ByteSizeLong() const {
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData C_CREATE_CHARACTER_REQUEST::_class_data_ = {
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData C_CreateCharacterRequest::_class_data_ = {
     ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    C_CREATE_CHARACTER_REQUEST::MergeImpl
+    C_CreateCharacterRequest::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*C_CREATE_CHARACTER_REQUEST::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*C_CreateCharacterRequest::GetClassData() const { return &_class_data_; }
 
 
-void C_CREATE_CHARACTER_REQUEST::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<C_CREATE_CHARACTER_REQUEST*>(&to_msg);
-  auto& from = static_cast<const C_CREATE_CHARACTER_REQUEST&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:Protocol.C_CREATE_CHARACTER_REQUEST)
+void C_CreateCharacterRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<C_CreateCharacterRequest*>(&to_msg);
+  auto& from = static_cast<const C_CreateCharacterRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:Protocol.C_CreateCharacterRequest)
   GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -779,18 +845,18 @@ void C_CREATE_CHARACTER_REQUEST::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void C_CREATE_CHARACTER_REQUEST::CopyFrom(const C_CREATE_CHARACTER_REQUEST& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.C_CREATE_CHARACTER_REQUEST)
+void C_CreateCharacterRequest::CopyFrom(const C_CreateCharacterRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.C_CreateCharacterRequest)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool C_CREATE_CHARACTER_REQUEST::IsInitialized() const {
+bool C_CreateCharacterRequest::IsInitialized() const {
   return true;
 }
 
-void C_CREATE_CHARACTER_REQUEST::InternalSwap(C_CREATE_CHARACTER_REQUEST* other) {
+void C_CreateCharacterRequest::InternalSwap(C_CreateCharacterRequest* other) {
   using std::swap;
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
@@ -800,14 +866,14 @@ void C_CREATE_CHARACTER_REQUEST::InternalSwap(C_CREATE_CHARACTER_REQUEST* other)
       &other->_impl_.username_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(C_CREATE_CHARACTER_REQUEST, _impl_.region_)
-      + sizeof(C_CREATE_CHARACTER_REQUEST::_impl_.region_)
-      - PROTOBUF_FIELD_OFFSET(C_CREATE_CHARACTER_REQUEST, _impl_.gender_)>(
+      PROTOBUF_FIELD_OFFSET(C_CreateCharacterRequest, _impl_.region_)
+      + sizeof(C_CreateCharacterRequest::_impl_.region_)
+      - PROTOBUF_FIELD_OFFSET(C_CreateCharacterRequest, _impl_.gender_)>(
           reinterpret_cast<char*>(&_impl_.gender_),
           reinterpret_cast<char*>(&other->_impl_.gender_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata C_CREATE_CHARACTER_REQUEST::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata C_CreateCharacterRequest::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
       file_level_metadata_Protocol_2eproto[2]);
@@ -815,19 +881,19 @@ void C_CREATE_CHARACTER_REQUEST::InternalSwap(C_CREATE_CHARACTER_REQUEST* other)
 
 // ===================================================================
 
-class S_CREATE_CHARACTER_REPLY::_Internal {
+class S_CreateCharacterReply::_Internal {
  public:
 };
 
-S_CREATE_CHARACTER_REPLY::S_CREATE_CHARACTER_REPLY(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+S_CreateCharacterReply::S_CreateCharacterReply(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:Protocol.S_CREATE_CHARACTER_REPLY)
+  // @@protoc_insertion_point(arena_constructor:Protocol.S_CreateCharacterReply)
 }
-S_CREATE_CHARACTER_REPLY::S_CREATE_CHARACTER_REPLY(const S_CREATE_CHARACTER_REPLY& from)
+S_CreateCharacterReply::S_CreateCharacterReply(const S_CreateCharacterReply& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
-  S_CREATE_CHARACTER_REPLY* const _this = this; (void)_this;
+  S_CreateCharacterReply* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.detail_){}
     , decltype(_impl_.success_){}
@@ -843,10 +909,10 @@ S_CREATE_CHARACTER_REPLY::S_CREATE_CHARACTER_REPLY(const S_CREATE_CHARACTER_REPL
       _this->GetArenaForAllocation());
   }
   _this->_impl_.success_ = from._impl_.success_;
-  // @@protoc_insertion_point(copy_constructor:Protocol.S_CREATE_CHARACTER_REPLY)
+  // @@protoc_insertion_point(copy_constructor:Protocol.S_CreateCharacterReply)
 }
 
-inline void S_CREATE_CHARACTER_REPLY::SharedCtor(
+inline void S_CreateCharacterReply::SharedCtor(
     ::_pb::Arena* arena, bool is_message_owned) {
   (void)arena;
   (void)is_message_owned;
@@ -861,8 +927,8 @@ inline void S_CREATE_CHARACTER_REPLY::SharedCtor(
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
-S_CREATE_CHARACTER_REPLY::~S_CREATE_CHARACTER_REPLY() {
-  // @@protoc_insertion_point(destructor:Protocol.S_CREATE_CHARACTER_REPLY)
+S_CreateCharacterReply::~S_CreateCharacterReply() {
+  // @@protoc_insertion_point(destructor:Protocol.S_CreateCharacterReply)
   if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
   (void)arena;
     return;
@@ -870,17 +936,17 @@ S_CREATE_CHARACTER_REPLY::~S_CREATE_CHARACTER_REPLY() {
   SharedDtor();
 }
 
-inline void S_CREATE_CHARACTER_REPLY::SharedDtor() {
+inline void S_CreateCharacterReply::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.detail_.Destroy();
 }
 
-void S_CREATE_CHARACTER_REPLY::SetCachedSize(int size) const {
+void S_CreateCharacterReply::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void S_CREATE_CHARACTER_REPLY::Clear() {
-// @@protoc_insertion_point(message_clear_start:Protocol.S_CREATE_CHARACTER_REPLY)
+void S_CreateCharacterReply::Clear() {
+// @@protoc_insertion_point(message_clear_start:Protocol.S_CreateCharacterReply)
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -890,7 +956,7 @@ void S_CREATE_CHARACTER_REPLY::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* S_CREATE_CHARACTER_REPLY::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+const char* S_CreateCharacterReply::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
@@ -910,7 +976,7 @@ const char* S_CREATE_CHARACTER_REPLY::_InternalParse(const char* ptr, ::_pbi::Pa
           auto str = _internal_mutable_detail();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "Protocol.S_CREATE_CHARACTER_REPLY.detail"));
+          CHK_(::_pbi::VerifyUTF8(str, "Protocol.S_CreateCharacterReply.detail"));
         } else
           goto handle_unusual;
         continue;
@@ -937,9 +1003,9 @@ failure:
 #undef CHK_
 }
 
-uint8_t* S_CREATE_CHARACTER_REPLY::_InternalSerialize(
+uint8_t* S_CreateCharacterReply::_InternalSerialize(
     uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:Protocol.S_CREATE_CHARACTER_REPLY)
+  // @@protoc_insertion_point(serialize_to_array_start:Protocol.S_CreateCharacterReply)
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -954,7 +1020,7 @@ uint8_t* S_CREATE_CHARACTER_REPLY::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_detail().data(), static_cast<int>(this->_internal_detail().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "Protocol.S_CREATE_CHARACTER_REPLY.detail");
+      "Protocol.S_CreateCharacterReply.detail");
     target = stream->WriteStringMaybeAliased(
         2, this->_internal_detail(), target);
   }
@@ -963,12 +1029,12 @@ uint8_t* S_CREATE_CHARACTER_REPLY::_InternalSerialize(
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:Protocol.S_CREATE_CHARACTER_REPLY)
+  // @@protoc_insertion_point(serialize_to_array_end:Protocol.S_CreateCharacterReply)
   return target;
 }
 
-size_t S_CREATE_CHARACTER_REPLY::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:Protocol.S_CREATE_CHARACTER_REPLY)
+size_t S_CreateCharacterReply::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Protocol.S_CreateCharacterReply)
   size_t total_size = 0;
 
   uint32_t cached_has_bits = 0;
@@ -990,17 +1056,17 @@ size_t S_CREATE_CHARACTER_REPLY::ByteSizeLong() const {
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData S_CREATE_CHARACTER_REPLY::_class_data_ = {
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData S_CreateCharacterReply::_class_data_ = {
     ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    S_CREATE_CHARACTER_REPLY::MergeImpl
+    S_CreateCharacterReply::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*S_CREATE_CHARACTER_REPLY::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*S_CreateCharacterReply::GetClassData() const { return &_class_data_; }
 
 
-void S_CREATE_CHARACTER_REPLY::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<S_CREATE_CHARACTER_REPLY*>(&to_msg);
-  auto& from = static_cast<const S_CREATE_CHARACTER_REPLY&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:Protocol.S_CREATE_CHARACTER_REPLY)
+void S_CreateCharacterReply::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<S_CreateCharacterReply*>(&to_msg);
+  auto& from = static_cast<const S_CreateCharacterReply&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:Protocol.S_CreateCharacterReply)
   GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -1014,18 +1080,18 @@ void S_CREATE_CHARACTER_REPLY::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_ms
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void S_CREATE_CHARACTER_REPLY::CopyFrom(const S_CREATE_CHARACTER_REPLY& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.S_CREATE_CHARACTER_REPLY)
+void S_CreateCharacterReply::CopyFrom(const S_CreateCharacterReply& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.S_CreateCharacterReply)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool S_CREATE_CHARACTER_REPLY::IsInitialized() const {
+bool S_CreateCharacterReply::IsInitialized() const {
   return true;
 }
 
-void S_CREATE_CHARACTER_REPLY::InternalSwap(S_CREATE_CHARACTER_REPLY* other) {
+void S_CreateCharacterReply::InternalSwap(S_CreateCharacterReply* other) {
   using std::swap;
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
@@ -1037,7 +1103,7 @@ void S_CREATE_CHARACTER_REPLY::InternalSwap(S_CREATE_CHARACTER_REPLY* other) {
   swap(_impl_.success_, other->_impl_.success_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata S_CREATE_CHARACTER_REPLY::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata S_CreateCharacterReply::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
       file_level_metadata_Protocol_2eproto[3]);
@@ -1046,21 +1112,21 @@ void S_CREATE_CHARACTER_REPLY::InternalSwap(S_CREATE_CHARACTER_REPLY* other) {
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace Protocol
 PROTOBUF_NAMESPACE_OPEN
-template<> PROTOBUF_NOINLINE ::Protocol::C_JWT_LOGIN_REQUEST*
-Arena::CreateMaybeMessage< ::Protocol::C_JWT_LOGIN_REQUEST >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::Protocol::C_JWT_LOGIN_REQUEST >(arena);
+template<> PROTOBUF_NOINLINE ::Protocol::C_JwtLoginRequest*
+Arena::CreateMaybeMessage< ::Protocol::C_JwtLoginRequest >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Protocol::C_JwtLoginRequest >(arena);
 }
-template<> PROTOBUF_NOINLINE ::Protocol::S_JWT_LOGIN_REPLY*
-Arena::CreateMaybeMessage< ::Protocol::S_JWT_LOGIN_REPLY >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::Protocol::S_JWT_LOGIN_REPLY >(arena);
+template<> PROTOBUF_NOINLINE ::Protocol::S_JwtLoginReply*
+Arena::CreateMaybeMessage< ::Protocol::S_JwtLoginReply >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Protocol::S_JwtLoginReply >(arena);
 }
-template<> PROTOBUF_NOINLINE ::Protocol::C_CREATE_CHARACTER_REQUEST*
-Arena::CreateMaybeMessage< ::Protocol::C_CREATE_CHARACTER_REQUEST >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::Protocol::C_CREATE_CHARACTER_REQUEST >(arena);
+template<> PROTOBUF_NOINLINE ::Protocol::C_CreateCharacterRequest*
+Arena::CreateMaybeMessage< ::Protocol::C_CreateCharacterRequest >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Protocol::C_CreateCharacterRequest >(arena);
 }
-template<> PROTOBUF_NOINLINE ::Protocol::S_CREATE_CHARACTER_REPLY*
-Arena::CreateMaybeMessage< ::Protocol::S_CREATE_CHARACTER_REPLY >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::Protocol::S_CREATE_CHARACTER_REPLY >(arena);
+template<> PROTOBUF_NOINLINE ::Protocol::S_CreateCharacterReply*
+Arena::CreateMaybeMessage< ::Protocol::S_CreateCharacterReply >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Protocol::S_CreateCharacterReply >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

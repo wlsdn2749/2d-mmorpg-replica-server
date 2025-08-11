@@ -7,18 +7,18 @@ extern PacketHandlerFunc GPacketHandler[UINT16_MAX]; // 65535만큼의 배열 �
 
 enum : uint16
 {
-	PKT_C_JWT_LOGIN_REQUEST = 1000,
-	PKT_S_JWT_LOGIN_REPLY = 1001,
-	PKT_C_CREATE_CHARACTER_REQUEST = 1002,
-	PKT_S_CREATE_CHARACTER_REPLY = 1003,
+	PKT_C_JwtLoginRequest = 1000,
+	PKT_S_JwtLoginReply = 1001,
+	PKT_C_CreateCharacterRequest = 1002,
+	PKT_S_CreateCharacterReply = 1003,
 
 };
 
 // Custom Handler : 직접 컨텐츠 작업자가 CPP를 만들어야함
 
 bool Handle_INVALID(PacketSessionRef& session, BYTE* buffer, int32 len);
-bool Handle_C_JWT_LOGIN_REQUEST(PacketSessionRef& session, Protocol::C_JWT_LOGIN_REQUEST& pkt);
-bool Handle_C_CREATE_CHARACTER_REQUEST(PacketSessionRef& session, Protocol::C_CREATE_CHARACTER_REQUEST& pkt);
+bool Handle_C_JwtLoginRequest(PacketSessionRef& session, Protocol::C_JwtLoginRequest& pkt);
+bool Handle_C_CreateCharacterRequest(PacketSessionRef& session, Protocol::C_CreateCharacterRequest& pkt);
 
 class ClientPacketHandler
 {
@@ -30,8 +30,8 @@ public:
 		{
 			GPacketHandler[i] = Handle_INVALID;
 		}
-		GPacketHandler[PKT_C_JWT_LOGIN_REQUEST] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_JWT_LOGIN_REQUEST>(Handle_C_JWT_LOGIN_REQUEST, session, buffer, len); };
-		GPacketHandler[PKT_C_CREATE_CHARACTER_REQUEST] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_CREATE_CHARACTER_REQUEST>(Handle_C_CREATE_CHARACTER_REQUEST, session, buffer, len); };
+		GPacketHandler[PKT_C_JwtLoginRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_JwtLoginRequest>(Handle_C_JwtLoginRequest, session, buffer, len); };
+		GPacketHandler[PKT_C_CreateCharacterRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_CreateCharacterRequest>(Handle_C_CreateCharacterRequest, session, buffer, len); };
 		
 	}
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
@@ -39,8 +39,8 @@ public:
 		PacketHeader* header = reinterpret_cast<PacketHeader*>(buffer);
 		return GPacketHandler[header->id](session, buffer, len);
 	}
-	static SendBufferRef MakeSendBuffer(Protocol::S_JWT_LOGIN_REPLY& pkt) { return MakeSendBuffer(pkt, PKT_S_JWT_LOGIN_REPLY); };
-	static SendBufferRef MakeSendBuffer(Protocol::S_CREATE_CHARACTER_REPLY& pkt) { return MakeSendBuffer(pkt, PKT_S_CREATE_CHARACTER_REPLY); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_JwtLoginReply& pkt) { return MakeSendBuffer(pkt, PKT_S_JwtLoginReply); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_CreateCharacterReply& pkt) { return MakeSendBuffer(pkt, PKT_S_CreateCharacterReply); };
 
 private:
 	template<typename PacketType, typename ProcessFunc>

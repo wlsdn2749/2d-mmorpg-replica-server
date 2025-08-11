@@ -12,7 +12,7 @@ bool Handle_INVALID(PacketSessionRef& session, BYTE* buffer, int32 len)
 	return true;
 }
 
-bool Handle_C_JWT_LOGIN_REQUEST(PacketSessionRef& session, Protocol::C_JWT_LOGIN_REQUEST& pkt)
+bool Handle_C_JwtLoginRequest(PacketSessionRef& session, Protocol::C_JwtLoginRequest& pkt)
 {
 	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
 
@@ -31,14 +31,14 @@ bool Handle_C_JWT_LOGIN_REQUEST(PacketSessionRef& session, Protocol::C_JWT_LOGIN
 		auto fut = AccountRepository::UpsertAccountAsync(userId);
 	}
 
-	Protocol::S_JWT_LOGIN_REPLY replyPkt;
+	Protocol::S_JwtLoginReply replyPkt;
 	replyPkt.set_result(eLoginResult);
 	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
 	session->Send(sendBuffer);
 	return true;
 }
 
-bool Handle_C_CREATE_CHARACTER_REQUEST(PacketSessionRef& session, Protocol::C_CREATE_CHARACTER_REQUEST& pkt)
+bool Handle_C_CreateCharacterRequest(PacketSessionRef& session, Protocol::C_CreateCharacterRequest& pkt)
 {
 	return true;
 }
