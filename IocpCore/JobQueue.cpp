@@ -9,8 +9,7 @@
 
 void JobQueue::Push(JobRef job, bool pushOnly)
 {
-	
-	
+
 	const int32 prevCount = _jobCount.fetch_add(1); // 카운트 증가
 	_jobs.Push(job); // WRITE_LOCK // 잡 실행
 
@@ -24,9 +23,12 @@ void JobQueue::Push(JobRef job, bool pushOnly)
 		}
 		else
 		{
-			// 여유 있는 다른 스데르가 실행하도록 GlobalQueue에 넘김
+			// 여유 있는 다른 스레드가 실행하도록 GlobalQueue에 넘김
 			// 실행목적아니고 그냥 쌓는게 목적임 (JobTimer)
-			GGlobalQueue->Push(shared_from_this());
+			if(pushOnly == false && _owner)
+				_owner->Push(shared_from_this());
+
+			//GGlobalQueue->Push(shared_from_this());
 		}
 	}
 }
@@ -69,7 +71,7 @@ void JobQueue::Execute()
 		{
 			LCurrentJobQueue = nullptr;
 			// 여유 있는 다른 스데르가 실행하도록 GlobalQueue에 넘김
-			GGlobalQueue->Push(shared_from_this());
+			if(_owner) _owner->Push(shared_from_this());
 			break;
 		}
 	}

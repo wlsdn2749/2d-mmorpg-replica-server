@@ -25,6 +25,8 @@ using namespace std;
 #include "Session.h"
 #include "LockQueue.h"
 #include "ConsoleLogger.h"
+
+#include "DBConnectionPool.h"
 class Uncopyable
 {
 protected:

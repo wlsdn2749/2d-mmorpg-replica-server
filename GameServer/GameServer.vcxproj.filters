@@ -25,6 +25,15 @@
     <Filter Include="DB">
       <UniqueIdentifier>{6ef28bb6-9b0c-4022-bf03-fd41ae0a7440}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Repository">
+      <UniqueIdentifier>{42e6fd31-6cb3-417c-a413-5cb20d70f5c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Service">
+      <UniqueIdentifier>{e7f4e254-c0b8-4593-bb86-cb09bf9530c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameContents\Accounts">
+      <UniqueIdentifier>{bfb6b4ca-3b0f-41a2-bfd7-0f812b9dd008}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameServer.cpp">
@@ -62,6 +71,15 @@
     </ClCompile>
     <ClCompile Include="AppConfig.cpp">
       <Filter>Config</Filter>
+    </ClCompile>
+    <ClCompile Include="AccountRepository.cpp">
+      <Filter>Repository</Filter>
+    </ClCompile>
+    <ClCompile Include="DBDisPatcher.cpp">
+      <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="DBWorker.cpp">
+      <Filter>DB</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +121,18 @@
     </ClInclude>
     <ClInclude Include="StringConvert.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Account.h">
+      <Filter>GameContents\Accounts</Filter>
+    </ClInclude>
+    <ClInclude Include="AccountRepository.h">
+      <Filter>Repository</Filter>
+    </ClInclude>
+    <ClInclude Include="DBDisPatcher.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DBWorker.h">
+      <Filter>DB</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -6,6 +6,17 @@
 namespace SP
 {
 	
+    class AccountsUpsert : public DBBind<1,0>
+    {
+    public:
+    	AccountsUpsert(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spAccountsUpsert(?)}") { }
+    	void ParamIn_UserId(int32& v) { BindParam(0, v); };
+    	void ParamIn_UserId(int32&& v) { _userId = std::move(v); BindParam(0, _userId); };
+
+    private:
+    	int32 _userId = {};
+    };
+
     class InsertGold : public DBBind<3,0>
     {
     public:

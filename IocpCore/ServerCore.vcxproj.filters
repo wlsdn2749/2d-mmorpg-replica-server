@@ -160,6 +160,9 @@
     <ClInclude Include="DBModel.h">
       <Filter>DB</Filter>
     </ClInclude>
+    <ClInclude Include="DBConnGuard.h">
+      <Filter>DB</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CorePch.cpp">
@@ -263,6 +266,9 @@
       <Filter>DB</Filter>
     </ClCompile>
     <ClCompile Include="DBSynchronizer.cpp">
+      <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="DBConnGuard.cpp">
       <Filter>DB</Filter>
     </ClCompile>
   </ItemGroup>

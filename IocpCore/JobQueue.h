@@ -39,11 +39,17 @@ public:
 	void CledrJobs() {_jobs.Clear(); }
 
 public:
+	explicit JobQueue(GlobalQueue* owner = nullptr) : _owner(owner) {}
+
+public:
 	void Execute();
 	void Push(JobRef job, bool pushOnly = false);
+	void SetOwner(GlobalQueue* owner) { _owner = owner; }
 
 protected:
 	LockQueue<JobRef>	_jobs;
 	Atomic<int32>		_jobCount = 0;
+private:
+	GlobalQueue* _owner = nullptr;
 };
 

@@ -20,8 +20,6 @@ JobTimer*				GJobTimer = nullptr;
 DBConnectionPool*		GDBConnectionPool = nullptr;
 ConsoleLogger*			GConsoleLogger = nullptr;
 
-
-
 class CoreGlobal
 {
 public:

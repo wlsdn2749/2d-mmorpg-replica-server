@@ -22,6 +22,7 @@ public:
 
 
 	static void DoGlobalQueueWork();
+	static void DoDbGlobalQueueWork();
 private:
 	Mutex						_lock;
 	std::vector<std::thread>	_threads;

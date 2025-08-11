@@ -26,7 +26,8 @@
 ------------------------*/
 #include "DBConnectionPool.h"
 #include "DBSynchronizer.h"
-
+#include "GlobalQueue.h"
+#include "DBWorker.h"
 enum
 {
 	WORKER_TICK = 64
@@ -34,7 +35,6 @@ enum
 
 void DoWorkerJob(ServerServiceRef& service)
 {
-	static uint64 lastMemUpdateTick = 0; // 메모리 측정 주기 관리
 	while (true)
 	{
 		LEndTickCount = ::GetTickCount64() + WORKER_TICK;
@@ -56,15 +56,19 @@ int main()
 	AppSettings s = LoadAppSettings(); 
 
 	// Initialize & Sync DB
-	ASSERT_CRASH(GDBConnectionPool->Connect(10, StrToWstr(s.dbLocalPath).data()));
-	DBConnection* dbConn = GDBConnectionPool->Pop();
-	DBSynchronizer dbSync(*dbConn);
-	dbSync.Synchronize(StrToWstr(s.dbXmlPath).data());
+	{
+		ASSERT_CRASH(GDBConnectionPool->Connect(10, StrToWstr(s.dbLocalPath).data()));
+		DBConnection* dbConn = GDBConnectionPool->Pop();
+		DBSynchronizer dbSync(*dbConn);
+		dbSync.Synchronize(StrToWstr(s.dbXmlPath).data());
+		GDBConnectionPool->Push(dbConn);
+
+		DB::Start();
+	}
 
 	// Initalize Handler & Valiator
 	ClientPacketHandler::init(); // 핸들러와 Wrapper 매핑 필수
 	JwtAuth::Init(s.jwtSecret);
-
 
 	// TODO Room
 
@@ -86,7 +90,6 @@ int main()
 				while (true)
 				{
 					DoWorkerJob(service);
-
 				}
 			});
 	}

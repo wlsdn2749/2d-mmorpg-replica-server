@@ -2,13 +2,17 @@
 
 using namespace Protocol;
 
+struct VerifyResult {
+    ELoginResult    result;
+    int32           userId;
+};
 class JwtAuth {
 public:
 	static void Init(std::string secret) {
 		_secret = std::move(secret);
 	}
 
-    static ELoginResult Verify(const std::string& token) {
+    static pair<ELoginResult, int32> Verify(const std::string& token) {
         try {
             auto decoded = jwt::decode(token);
 
@@ -24,22 +28,33 @@ public:
             try {
                 auto exp = decoded.get_expires_at();
                 if (exp <= system_clock::now() - seconds(5)) {
-                    return ELoginResult::TOKEN_EXPIRED;
+                    return { ELoginResult::TOKEN_EXPIRED, -1 };
                 }
             }
             catch (...) {
                 // exp 클레임 없음/파싱 실패 → invalid 처리
-                return ELoginResult::INVALID_TOKEN;
+                return { ELoginResult::INVALID_TOKEN, -1 };
             }
 
-            return ELoginResult::SUCCESS;
+            int32 userId = 0;
+            try {
+                auto subStr = decoded.get_payload_claim("sub").as_string();
+                userId = std::stoi(subStr);
+            }
+            catch (...) {
+                return { ELoginResult::INVALID_TOKEN, 0 };
+            }
+
+            return { ELoginResult::SUCCESS, userId };
         }
-        catch (const std::exception& e) {
-            // 서명 불일치, iss/aud 불일치 등
-            return ELoginResult::INVALID_TOKEN;
+
+        catch (const exception& e)
+        {
+            // iss, aud 파싱 실패
+            return { ELoginResult::INVALID_TOKEN, -1};
         }
         catch (...) {
-            return ELoginResult::SERVER_ERROR;
+            return { ELoginResult::SERVER_ERROR, -1 };
         }
     }
 private:

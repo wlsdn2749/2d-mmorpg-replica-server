@@ -63,7 +63,7 @@ class Program
     static async Task ConnectToGameServer()
     {
         string  host = "mmo.jdj.kr";
-        int     port = 6100;
+        int     port = 6201;
 
         IPAddress ipAddr = (await Dns.GetHostAddressesAsync(host))[0];
         IPEndPoint endPoint = new IPEndPoint(ipAddr, port);

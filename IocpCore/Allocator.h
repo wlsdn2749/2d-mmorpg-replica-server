@@ -1,5 +1,6 @@
 #pragma once
 
+#include <type_traits>
 /*----------------------
  * BaseAllocator
  ----------------------*/
@@ -49,6 +50,11 @@ class StlAllocator
 public:
 	using value_type = T;
 
+	// --- MSVC가 최적화/검사에 쓰는 traits ---
+	using propagate_on_container_swap = std::true_type;
+	using propagate_on_container_move_assignment = std::true_type;
+	using is_always_equal = std::true_type;
+
 	StlAllocator() {}
 
 	template <typename Other>
@@ -67,3 +73,10 @@ public:
 
 	
 };
+
+// --- 동등 비교 연산자: 타입 달라도 true/false 결정 가능하도록 템플릿으로 제공 ---
+template <class T, class U>
+constexpr bool operator==(const StlAllocator<T>&, const StlAllocator<U>&) noexcept { return true; }
+
+template <class T, class U>
+constexpr bool operator!=(const StlAllocator<T>&, const StlAllocator<U>&) noexcept { return false; }

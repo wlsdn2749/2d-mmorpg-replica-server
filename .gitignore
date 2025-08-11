@@ -45,3 +45,9 @@ include
 # Python
 __pycache__
 env
+
+/Common/Protobuf/bin/*
+!/Common/Protobuf/bin/
+!/Common/Protobuf/bin/*.proto
+!/Common/Protobuf/bin/*.bat
+!/Common/Protobuf/bin/Templates

@@ -77,4 +77,3 @@ void ThreadManager::DoGlobalQueueWork()
 		jobQueue->Execute();
 	}
 }
-

@@ -662,12 +662,10 @@ void DBSynchronizer::CompareColumns(DBModel::TableRef dbTable, DBModel::ColumnRe
 
 void DBSynchronizer::CompareStoredProcedures()
 {
-	// XML�� �ִ� ���ν��� ����� ���� �´�.
 	Map<String, DBModel::ProcedureRef> xmlProceduresMap;
 	for (DBModel::ProcedureRef& xmlProcedure : _xmlProcedures)
 		xmlProceduresMap[xmlProcedure->_name] = xmlProcedure;
 
-	// DB�� �����ϴ� ���̺� ���ν������� ���鼭 XML�� ���ǵ� ���ν������ ���Ѵ�.
 	for (DBModel::ProcedureRef& dbProcedure : _dbProcedures)
 	{
 		auto findProcedure = xmlProceduresMap.find(dbProcedure->_name);
@@ -677,17 +675,16 @@ void DBSynchronizer::CompareStoredProcedures()
 			String xmlBody = xmlProcedure->GenerateCreateQuery();
 			if (DBModel::Helpers::RemoveWhiteSpace(dbProcedure->_fullBody) != DBModel::Helpers::RemoveWhiteSpace(xmlBody))
 			{
-				GConsoleLogger->WriteStdOut(Color::YELLOW, L"Updating Procedure : %s\n", dbProcedure->_name.c_str());
+				GConsoleLogger->WriteStdOut(Color::YELLOW, L"Existing Updating Procedure : %s\n", dbProcedure->_name.c_str());
 				_updateQueries[UpdateStep::StoredProcecure].push_back(xmlProcedure->GenerateAlterQuery());
 			}
 			xmlProceduresMap.erase(findProcedure);
 		}
 	}
 
-	// �ʿ��� ���ŵ��� ���� XML ���ν��� ���Ǵ� ���� �߰�.
 	for (auto& mapIt : xmlProceduresMap)
 	{
-		GConsoleLogger->WriteStdOut(Color::YELLOW, L"Updating Procedure : %s\n", mapIt.first.c_str());
+		GConsoleLogger->WriteStdOut(Color::YELLOW, L"New Updating Procedure : %s\n", mapIt.first.c_str());
 		_updateQueries[UpdateStep::StoredProcecure].push_back(mapIt.second->GenerateCreateQuery());
 	}
 }

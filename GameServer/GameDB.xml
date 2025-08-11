@@ -1,5 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <GameDB>
+  <!-- ====== 계정 관련 DB ======-->
+  <Table name="Accounts">
+    <Column name="userId" type="int" notnull="true"/>
+    <Column name="createdAt" type="datetime" notnull="true" default="SYSUTCDATETIME()"/>
+    <Column name="lastLoginAt" type="datetime" notnull="true"/>
+  </Table>
+  <Index type="clustered">
+    <PrimaryKey/>
+    <Column name="userId"/>
+  </Index>
+  <Procedure name="spAccountsUpsert">
+    <Param name="@userId" type="int"/>
+    <Body>
+      <![CDATA[
+       SET NOCOUNT ON;
+       SET XACT_ABORT ON;
+       
+       DECLARE @now DATETIME = SYSUTCDATETIME();
+       
+       UPDATE dbo.Accounts
+       SET LastLoginAt = @now
+       WHERE [userId] = @userId;
+       
+       IF @@ROWCOUNT = 0
+       BEGIN
+           INSERT INTO [dbo].[Accounts] ([userId], [createdAt], [lastLoginAt])
+           VALUES (@userId, @now, @now);
+       END
+      ]]>
+    </Body>
+  </Procedure>
+  
+  
+  <!-- 아래 Procedures는 예시임 -->
   <Table name="Gold">
     <Column name="id" type="int" notnull="true" identity="1,1"/>
     <Column name="gold" type="int" notnull="false"/>
