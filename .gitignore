@@ -8,7 +8,6 @@
 # 빌드 출력 폴더
 bin/
 obj/
-_Client/
 Debug
 Release
 x64/
