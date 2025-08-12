@@ -20,7 +20,6 @@ Protocols/
 *.temp
 *.log
 *.cache
-*.pdb
 
 # 패키지들
 third_party/
@@ -59,3 +58,8 @@ env
 !GameServer/Build/x64/
 !GameServer/Build/x64/Debug/
 !GameServer/Build/x64/Debug/*.pdb
+
+!DummyClientCS
+!DummyClientCS/bin/
+!DummyClientCS/bin/Debug/
+!DummyClientCS/bin/Debug/*.pdb
