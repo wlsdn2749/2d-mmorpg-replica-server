@@ -22,7 +22,6 @@ Protocols/
 *.cache
 
 # 패키지들
-third_party/
 
 # Rider / JetBrains
 .idea/
@@ -68,3 +67,8 @@ env
 !Common/Protobuf/include/
 !Libraries/
 !Libraries/Include/
+
+
+third_party/grpc/
+!third_party/openssl/include/
+
