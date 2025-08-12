@@ -8,7 +8,6 @@
 # 빌드 출력 폴더
 bin/
 obj/
-_Client/
 Debug
 Release
 x64/
@@ -30,7 +29,7 @@ third_party/
 .idea/
 
 # Configuation
-appsettings.json
+# appsettings.json
 
 # Creds
 key.pem

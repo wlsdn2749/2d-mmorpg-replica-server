@@ -16,6 +16,7 @@ bool Handle_C_JwtLoginRequest(PacketSessionRef& session, Protocol::C_JwtLoginReq
 {
 	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
 
+	GConsoleLogger->WriteStdOut(Color::GREEN, L"Handle C_JwtLoginRequest \n");
 	// 현재 상태가 Connected, 즉 연결되기 전이면 말이안되는거.
 	if (gameSession->GetState() != GameSession::State::Connected) {
 		// 서버 에러 반환

@@ -84,13 +84,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(SolutionDir)Libraries\Include\;$(SolutionDir)IocpCore;C:\Program Files\OpenSSL-Win64\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Libraries\Libs\;C:\Program Files\OpenSSL-Win64\lib\VC\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)Libraries\Libs\;$(SolutionDir)third_party\openssl\lib\VC\;$(LibraryPath)</LibraryPath>
     <OutDir>$(ProjectDIr)Build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDIr)Output\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)Libraries\Include\;$(SolutionDir)IocpCore;C:\Program Files\OpenSSL-Win64\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Libraries\Libs\;C:\Program Files\OpenSSL-Win64\lib\VC\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)Libraries\Libs\;$(SolutionDir)third_party\openssl\lib\VC\;$(LibraryPath)</LibraryPath>
     <OutDir>$(ProjectDIr)Build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDIr)Output\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -137,12 +137,15 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MD;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MDd;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MT;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MTd</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)third_party\openssl\lib\VC\x64\MD;$(SolutionDir)third_party\openssl\lib\VC\x64\MDd;$(SolutionDir)third_party\openssl\lib\VC\x64\MT;$(SolutionDir)third_party\openssl\lib\VC\x64\MTd</AdditionalLibraryDirectories>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);libssl.lib;libcrypto.lib</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>CALL $(SolutionDIr)Protocol\GenPackets.bat
-CALL $(SolutionDIr)Common\Procedures\GenProcs.bat</Command>
+CALL $(SolutionDIr)Common\Procedures\GenProcs.bat
+xcopy /Y /D $(SolutionDir)third_party\openssl\lib\VC\x64\MD\libcrypto.lib "$(OutDir)"
+xcopy /Y /D $(SolutionDir)third_party\openssl\lib\VC\x64\MD\libssl.lib "$(OutDir)"
+xcopy /Y /D $(SolutionDir)GameServer\appsettings.json "$(OutDir)"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -161,11 +164,14 @@ CALL $(SolutionDIr)Common\Procedures\GenProcs.bat</Command>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);libssl.lib;libcrypto.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MD;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MDd;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MT;C:\Program Files\OpenSSL-Win64\lib\VC\x64\MTd</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)third_party\openssl\lib\VC\x64\MD;$(SolutionDir)third_party\openssl\lib\VC\x64\MDd;$(SolutionDir)third_party\openssl\lib\VC\x64\MT;$(SolutionDir)third_party\openssl\lib\VC\x64\MTd</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
       <Command>CALL $(SolutionDIr)Protocol\GenPackets.bat
-CALL $(SolutionDIr)Common\Procedures\GenProcs.bat</Command>
+CALL $(SolutionDIr)Common\Procedures\GenProcs.bat
+xcopy /Y /D $(SolutionDir)third_party\openssl\lib\VC\x64\MD\libcrypto.lib "$(OutDir)"
+xcopy /Y /D $(SolutionDir)third_party\openssl\lib\VC\x64\MD\libssl.lib "$(OutDir)"
+xcopy /Y /D $(SolutionDir)GameServer\appsettings.json "$(OutDir)"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
