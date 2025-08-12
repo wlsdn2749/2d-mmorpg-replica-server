@@ -59,6 +59,9 @@ namespace Packet
             throw new NotImplementedException();
         }
 
-
+        internal static void HANDLE_S_BroadcastPlayerMove(PacketSession session, S_BroadcastPlayerMove move)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

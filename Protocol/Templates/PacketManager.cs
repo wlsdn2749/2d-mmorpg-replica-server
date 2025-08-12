@@ -45,7 +45,7 @@ namespace Packet
         {
             for (int i = 0; i < UInt16.MaxValue + 1; i++)
             {
-                _packetHandlers[i] = ServerPacketHandler.HANDLE_INVALID;
+                _packetHandlers[i] = ServerPacketHandler.HANDLE_Invalid;
             }
             
 {%- for pkt in parser.recv_pkt %}

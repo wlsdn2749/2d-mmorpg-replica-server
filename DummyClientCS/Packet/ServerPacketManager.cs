@@ -8,10 +8,12 @@ namespace Packet
 {
     public enum PacketID : ushort
     {
-	    PKT_C_JwtLoginRequest = 1000,
-	    PKT_S_JwtLoginReply = 1001,
-	    PKT_C_CreateCharacterRequest = 1002,
-	    PKT_S_CreateCharacterReply = 1003,
+	    PKT_C_JwtLoginRequest = 0,
+	    PKT_S_JwtLoginReply = 1,
+	    PKT_C_CreateCharacterRequest = 2,
+	    PKT_S_CreateCharacterReply = 3,
+	    PKT_C_PlayerMoveRequest = 4,
+	    PKT_S_BroadcastPlayerMove = 5,
     }
     public class ServerPacketManager
     {
@@ -39,6 +41,7 @@ namespace Packet
         private readonly Dictionary<Type, ushort> _typeToId = new();
         public static ArraySegment<byte> MakeSendBuffer(C_JwtLoginRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_JwtLoginRequest);
         public static ArraySegment<byte> MakeSendBuffer(C_CreateCharacterRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_CreateCharacterRequest);
+        public static ArraySegment<byte> MakeSendBuffer(C_PlayerMoveRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PlayerMoveRequest);
 
         void Register()
         {
@@ -48,6 +51,7 @@ namespace Packet
             }
             RegisterHandler((ushort)PacketID.PKT_S_JwtLoginReply, ServerPacketHandler.HANDLE_S_JwtLoginReply, S_JwtLoginReply.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_CreateCharacterReply, ServerPacketHandler.HANDLE_S_CreateCharacterReply, S_CreateCharacterReply.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_BroadcastPlayerMove, ServerPacketHandler.HANDLE_S_BroadcastPlayerMove, S_BroadcastPlayerMove.Parser);
             
                   
         }

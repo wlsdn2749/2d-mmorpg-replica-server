@@ -15,7 +15,7 @@ enum : uint16
 
 // Custom Handler : 직접 컨텐츠 작업자가 CPP를 만들어야함
 
-bool Handle_INVALID(PacketSessionRef& session, BYTE* buffer, int32 len);
+bool Handle_Invalid(PacketSessionRef& session, BYTE* buffer, int32 len);
 
 {%- for pkt in parser.recv_pkt %}
 bool Handle_{{pkt.name}}(PacketSessionRef& session, Protocol::{{pkt.name}}& pkt);
@@ -29,7 +29,7 @@ public:
 	{
 		for (int32 i = 0; i < UINT16_MAX; i++)
 		{
-			GPacketHandler[i] = Handle_INVALID;
+			GPacketHandler[i] = Handle_Invalid;
 		}
 
 {%- for pkt in parser.recv_pkt %}

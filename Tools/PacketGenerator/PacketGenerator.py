@@ -14,7 +14,7 @@ def main():
 
     args = arg_parser.parse_args()
 
-    parser = ProtoParser.ProtoParser(1000, args.recv, args.send)
+    parser = ProtoParser.ProtoParser(0, args.recv, args.send)
     parser.parse_proto(args.path)
 
     # jinja2

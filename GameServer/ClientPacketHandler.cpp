@@ -7,8 +7,10 @@
 
 PacketHandlerFunc GPacketHandler[UINT16_MAX];
 
-bool Handle_INVALID(PacketSessionRef& session, BYTE* buffer, int32 len)
+
+bool Handle_Invalid(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
+	GConsoleLogger->WriteStdOut(Color::RED, L"Handle INVALID \n");
 	return true;
 }
 
@@ -42,4 +44,9 @@ bool Handle_C_JwtLoginRequest(PacketSessionRef& session, Protocol::C_JwtLoginReq
 bool Handle_C_CreateCharacterRequest(PacketSessionRef& session, Protocol::C_CreateCharacterRequest& pkt)
 {
 	return true;
+}
+
+bool Handle_C_PlayerMoveRequest(PacketSessionRef& session, Protocol::C_PlayerMoveRequest& pkt)
+{
+	return false;
 }

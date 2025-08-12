@@ -7,18 +7,21 @@ extern PacketHandlerFunc GPacketHandler[UINT16_MAX]; // 65535만큼의 배열 �
 
 enum : uint16
 {
-	PKT_C_JwtLoginRequest = 1000,
-	PKT_S_JwtLoginReply = 1001,
-	PKT_C_CreateCharacterRequest = 1002,
-	PKT_S_CreateCharacterReply = 1003,
+	PKT_C_JwtLoginRequest = 0,
+	PKT_S_JwtLoginReply = 1,
+	PKT_C_CreateCharacterRequest = 2,
+	PKT_S_CreateCharacterReply = 3,
+	PKT_C_PlayerMoveRequest = 4,
+	PKT_S_BroadcastPlayerMove = 5,
 
 };
 
 // Custom Handler : 직접 컨텐츠 작업자가 CPP를 만들어야함
 
-bool Handle_INVALID(PacketSessionRef& session, BYTE* buffer, int32 len);
+bool Handle_Invalid(PacketSessionRef& session, BYTE* buffer, int32 len);
 bool Handle_C_JwtLoginRequest(PacketSessionRef& session, Protocol::C_JwtLoginRequest& pkt);
 bool Handle_C_CreateCharacterRequest(PacketSessionRef& session, Protocol::C_CreateCharacterRequest& pkt);
+bool Handle_C_PlayerMoveRequest(PacketSessionRef& session, Protocol::C_PlayerMoveRequest& pkt);
 
 class ClientPacketHandler
 {
@@ -28,10 +31,11 @@ public:
 	{
 		for (int32 i = 0; i < UINT16_MAX; i++)
 		{
-			GPacketHandler[i] = Handle_INVALID;
+			GPacketHandler[i] = Handle_Invalid;
 		}
 		GPacketHandler[PKT_C_JwtLoginRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_JwtLoginRequest>(Handle_C_JwtLoginRequest, session, buffer, len); };
 		GPacketHandler[PKT_C_CreateCharacterRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_CreateCharacterRequest>(Handle_C_CreateCharacterRequest, session, buffer, len); };
+		GPacketHandler[PKT_C_PlayerMoveRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PlayerMoveRequest>(Handle_C_PlayerMoveRequest, session, buffer, len); };
 		
 	}
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
@@ -41,6 +45,7 @@ public:
 	}
 	static SendBufferRef MakeSendBuffer(Protocol::S_JwtLoginReply& pkt) { return MakeSendBuffer(pkt, PKT_S_JwtLoginReply); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_CreateCharacterReply& pkt) { return MakeSendBuffer(pkt, PKT_S_CreateCharacterReply); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerMove& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerMove); };
 
 private:
 	template<typename PacketType, typename ProcessFunc>

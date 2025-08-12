@@ -222,9 +222,7 @@ xcopy /Y /D $(SolutionDir)GameServer\appsettings.json "$(OutDir)"</Command>
     <None Include="appsettings.json" />
   </ItemGroup>
   <ItemGroup>
-    <UpToDateCheckInput Include="..\Common\Protobuf\bin\Enum.proto" />
-    <UpToDateCheckInput Include="..\Common\Protobuf\bin\Protocol.proto" />
-    <UpToDateCheckInput Include="..\Common\Protobuf\bin\Struct.proto" />
+    <UpToDateCheckInput Include="..\Protocol\Protocol.proto" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="GameDB.xml" />

@@ -92,9 +92,6 @@
     <ClInclude Include="GameSessionAccessor.h">
       <Filter>Session</Filter>
     </ClInclude>
-    <ClInclude Include="ClientPacketHandler.h">
-      <Filter>Main</Filter>
-    </ClInclude>
     <ClInclude Include="JwtAuth.h">
       <Filter>Auth</Filter>
     </ClInclude>
@@ -121,6 +118,9 @@
     </ClInclude>
     <ClInclude Include="Protocol.pb.h">
       <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientPacketHandler.h">
+      <Filter>Main</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
