@@ -67,7 +67,10 @@ env
 !Common/Protobuf/include/
 !Libraries/
 !Libraries/Include/
-
+!Libraries/Libs/
+!Libraries/Libs/Protobuf/
+!Libraries/Libs/Protobuf/Debug/
+!Libraries/Libs/Protobuf/Release/
 
 third_party/grpc/
 !third_party/openssl/include/
