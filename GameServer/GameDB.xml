@@ -39,11 +39,11 @@
     <Column name="gender" type="int" notnull="true"/>
     <Column name="region" type="int" notnull="true"/>
     <Column name="level" type="int" notnull="true" default="1"/>
-    <Column name="exp" type="int" notnull="true"/>
+    <Column name="exp" type="int" notnull="true" default="0"/>
     <Column name="lastZone" type="int" notnull="true"/>
-    <Column name="posX" type="int" notnull="true"/>
-    <Column name="posY" type="int" notnull="true"/>
-    <Column name="createdAt" type="datetime" notnull="true" 
+    <Column name="posX" type="int" notnull="true" default="0"/>
+    <Column name="posY" type="int" notnull="true" default="0"/>
+    <Column name="createdAt" type="datetime" notnull="true"/>
     <Index type="clustered">
       <PrimaryKey/>
       <Column name="userId"/>
