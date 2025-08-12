@@ -63,3 +63,8 @@ env
 !DummyClientCS/bin/
 !DummyClientCS/bin/Debug/
 !DummyClientCS/bin/Debug/*.pdb
+
+!Common/Protobuf/
+!Common/Protobuf/include/
+!Libraries/
+!Libraries/Include/

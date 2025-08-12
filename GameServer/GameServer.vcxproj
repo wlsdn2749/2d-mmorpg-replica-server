@@ -83,13 +83,13 @@
     <IntDir>$(ProjectDIr)Output\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)Libraries\Include\;$(SolutionDir)IocpCore;C:\Program Files\OpenSSL-Win64\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Libraries\Include\;$(SolutionDir)IocpCore;$(SolutionDir)third_party\openssl\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Libraries\Libs\;$(SolutionDir)third_party\openssl\lib\VC\;$(LibraryPath)</LibraryPath>
     <OutDir>$(ProjectDIr)Build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDIr)Output\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)Libraries\Include\;$(SolutionDir)IocpCore;C:\Program Files\OpenSSL-Win64\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Libraries\Include\;$(SolutionDir)IocpCore;$(SolutionDir)third_party\openssl\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Libraries\Libs\;$(SolutionDir)third_party\openssl\lib\VC\;$(LibraryPath)</LibraryPath>
     <OutDir>$(ProjectDIr)Build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDIr)Output\$(Platform)\$(Configuration)\</IntDir>
