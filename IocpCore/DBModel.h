@@ -7,6 +7,7 @@ USING_SHARED_PTR(Column);
 USING_SHARED_PTR(Index);
 USING_SHARED_PTR(Table);
 USING_SHARED_PTR(Procedure);
+USING_SHARED_PTR(ForeignKey);
 
 /*-------------
 	DataType
@@ -82,6 +83,45 @@ public:
 	Vector<ColumnRef>	_columns;
 };
 
+/*----------------
+	ForeignKey  ★ 추가
+-----------------*/
+
+enum class FkAction : uint8
+{
+	NoAction = 0,
+	Cascade = 1,
+	SetNull = 2,
+	SetDefault = 3
+};
+
+class ForeignKey
+{
+public:
+	// FK를 유일하게 식별하기 위한 시그니처(비교/동기화 키)
+	String              GetSignature(const String& parentTable) const;
+
+	// FK 이름이 비어있을 때 기본 네이밍 생성: FK_{Parent}_{col1_col2}_{Ref}
+	String              CreateName(const String& parentTable) const;
+
+	// "([LocalCols]) REFERENCES [dbo].[RefTable] ([RefCols])" 문자열 생성
+	String              CreateColumnsText() const;
+
+	// " ON DELETE ... ON UPDATE ..." 액션 문자열
+	String              ActionText() const;
+
+	// 특정 컬럼 의존 여부 (컬럼 변경 시 FK 드랍 판단에 사용)
+	bool                DependsOn(const String& columnName) const;
+
+public:
+	int32                                    _fkObjectId = 0; // DB: sys.foreign_keys.object_id
+	String                                   _name;           // DB 네임 (없으면 CreateName 사용)
+	String                                   _refTable;       // 참조 테이블명
+	Vector<std::pair<String, String>>        _cols;           // (localCol, refCol) 순서 보존
+	FkAction                                 _onDelete = FkAction::NoAction;
+	FkAction                                 _onUpdate = FkAction::NoAction;
+};
+
 /*-----------
 	Table
 ------------*/
@@ -92,10 +132,11 @@ public:
 	ColumnRef			FindColumn(const String& columnName);
 
 public:
-	int32				_objectId = 0; // DB
-	String				_name;
-	Vector<ColumnRef>	_columns;
-	Vector<IndexRef>	_indexes;
+	int32					_objectId = 0; // DB
+	String					_name;
+	Vector<ColumnRef>		_columns;
+	Vector<IndexRef>		_indexes;
+	Vector<ForeignKeyRef>	_foreignKeys;
 };
 
 /*----------------

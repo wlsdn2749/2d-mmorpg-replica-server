@@ -95,6 +95,93 @@ bool Index::DependsOn(const String& columnName)
 	return findIt != _columns.end();
 }
 
+/*----------------
+	ForeignKey  ★ 추가
+-----------------*/
+String ForeignKey::GetSignature(const String& parentTable) const
+{
+	// parent -> ref | [local]=[ref];...[last]; |D:x|U:y
+	String sig = parentTable + L"->" + _refTable + L"|";
+	for (const auto& p : _cols)
+		sig += L"[" + p.first + L"]=[" + p.second + L"];";
+	// enum class는 정수로 캐스팅해서 출력
+	sig += Helpers::Format(L"|D:%d|U:%d",
+		static_cast<int>(_onDelete),
+		static_cast<int>(_onUpdate));
+	return sig;
+}
+
+String ForeignKey::CreateName(const String& parentTable) const
+{
+	// FK_{Parent}_{col1_col2}_{Ref}
+	String colJoin;
+	for (size_t i = 0; i < _cols.size(); ++i)
+	{
+		if (i) colJoin += L"_";
+		colJoin += _cols[i].first;
+	}
+	return Helpers::Format(L"FK_%s_%s_%s",
+		parentTable.c_str(),
+		colJoin.c_str(),
+		_refTable.c_str());
+}
+
+String ForeignKey::CreateColumnsText() const
+{
+	// "([LocalCols]) REFERENCES [dbo].[RefTable] ([RefCols])"
+	// 빈 컬럼 방어
+	if (_cols.empty())
+		return Helpers::Format(L"() REFERENCES [dbo].[%s] ()", _refTable.c_str());
+
+	String l, r;
+	for (size_t i = 0; i < _cols.size(); ++i)
+	{
+		if (i) { l += L","; r += L","; }
+		l += Helpers::Format(L"[%s]", _cols[i].first.c_str());
+		r += Helpers::Format(L"[%s]", _cols[i].second.c_str());
+	}
+	return Helpers::Format(L"(%s) REFERENCES [dbo].[%s] (%s)",
+		l.c_str(), _refTable.c_str(), r.c_str());
+}
+
+String ForeignKey::ActionText() const
+{
+	auto suffix = [](FkAction a) -> const wchar_t*
+		{
+			switch (a)
+			{
+			case FkAction::Cascade:     return L" CASCADE";
+			case FkAction::SetNull:     return L" SET NULL";
+			case FkAction::SetDefault:  return L" SET DEFAULT";
+			default:                    return L"";
+			}
+		};
+
+	String res;
+	if (_onDelete != FkAction::NoAction)
+	{
+		res += L" ON DELETE";
+		res += suffix(_onDelete);
+	}
+	if (_onUpdate != FkAction::NoAction)
+	{
+		res += L" ON UPDATE";
+		res += suffix(_onUpdate);
+	}
+	return res;
+}
+
+bool ForeignKey::DependsOn(const String& columnName) const
+{
+	// FK의 local 컬럼 중 하나라도 매치되면 true
+	for (const auto& p : _cols)
+		if (p.first == columnName)
+			return true;
+	return false;
+}
+
+
+
 /*-----------
 	Table
 ------------*/
@@ -228,3 +315,4 @@ DataType Helpers::String2DataType(const WCHAR* str, OUT int32& maxLen)
 
 	return DataType::None;
 }
+

@@ -15,16 +15,19 @@ class DBSynchronizer
 
 	enum UpdateStep : uint8
 	{
+		DropForeignKey,
 		DropIndex,
-		AlterColumn,
-		AddColumn,
-		CreateTable,
-		DefaultConstraint,
-		CreateIndex,
 		DropColumn,
 		DropTable,
-		StoredProcecure,
 
+		CreateTable,
+		AddColumn,
+		AlterColumn,
+		DefaultConstraint,
+		CreateIndex,
+		CreateForeignKey,  // ← 오타 수정
+
+		StoredProcecure,
 		Max
 	};
 
@@ -47,6 +50,7 @@ private:
 	void		ParseXmlDB(const WCHAR* path);
 	bool		GatherDBTables();
 	bool		GatherDBIndexes();
+	bool		GatherDBForeignKeys();
 	bool		GatherDBStoredProcedures();
 
 	void		CompareDBModel();

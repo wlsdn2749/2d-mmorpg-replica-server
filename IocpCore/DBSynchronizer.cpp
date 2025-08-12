@@ -69,6 +69,34 @@ namespace SP
 		template<int32 N> void Out_ColumnName(OUT WCHAR(&value)[N]) { BindCol(7, value); }
 	};
 
+	const WCHAR* QForeignKeys =
+		L"SELECT fk.object_id AS fkObjectId, fk.name AS fkName, "
+		L"       fk.parent_object_id AS parentObj, fk.referenced_object_id AS refObj, "
+		L"       fk.delete_referential_action AS delAct, fk.update_referential_action AS updAct, "
+		L"       pc.name AS parentCol, rc.name AS refCol, "
+		L"       fkc.constraint_column_id AS ord "
+		L"FROM sys.foreign_keys fk "
+		L"JOIN sys.foreign_key_columns fkc ON fk.object_id = fkc.constraint_object_id "
+		L"JOIN sys.columns pc ON pc.object_id = fkc.parent_object_id AND pc.column_id = fkc.parent_column_id "
+		L"JOIN sys.columns rc ON rc.object_id = fkc.referenced_object_id AND rc.column_id = fkc.referenced_column_id "
+		L"WHERE fk.parent_object_id IN (SELECT object_id FROM sys.tables WHERE type='U') "
+		L"ORDER BY fk.object_id, fkc.constraint_column_id;";
+
+	class GetDBForeignKeys : public DBBind<0, 9>
+	{
+	public:
+		GetDBForeignKeys(DBConnection& c) : DBBind(c, QForeignKeys) {}
+		void Out_FkObjectId(OUT int32& v) { BindCol(0, v); }
+		template<int32 N> void Out_FkName(OUT WCHAR(&v)[N]) { BindCol(1, v); }
+		void Out_ParentObj(OUT int32& v) { BindCol(2, v); }
+		void Out_RefObj(OUT int32& v) { BindCol(3, v); }
+		void Out_DelAct(OUT int32& v) { BindCol(4, v); }
+		void Out_UpdAct(OUT int32& v) { BindCol(5, v); }
+		template<int32 N> void Out_ParentCol(OUT WCHAR(&v)[N]) { BindCol(6, v); }
+		template<int32 N> void Out_RefCol(OUT WCHAR(&v)[N]) { BindCol(7, v); }
+		void Out_Ord(OUT int32& v) { BindCol(8, v); }
+	};
+
 	const WCHAR* QStoredProcedures =
 		L"	SELECT name, OBJECT_DEFINITION(object_id) AS body FROM sys.procedures;";
 
@@ -96,6 +124,7 @@ bool DBSynchronizer::Synchronize(const WCHAR* path)
 
 	GatherDBTables();
 	GatherDBIndexes();
+	GatherDBForeignKeys();
 	GatherDBStoredProcedures();
 
 	CompareDBModel();
@@ -168,7 +197,55 @@ void DBSynchronizer::ParseXmlDB(const WCHAR* path)
 			t->_indexes.push_back(i);
 		}
 
+		Vector<XmlNode> fks = table.FindChildren(L"ForeignKey");
+
+		// onDelete/onUpdate 문자열을 enum으로 매핑
+		auto toFkAction = [](const WCHAR* s) -> DBModel::FkAction
+			{
+				if (s == nullptr) return DBModel::FkAction::NoAction;
+				if (_wcsicmp(s, L"CASCADE") == 0)     return DBModel::FkAction::Cascade;
+				if (_wcsicmp(s, L"SET_NULL") == 0)    return DBModel::FkAction::SetNull;
+				if (_wcsicmp(s, L"SET_DEFAULT") == 0) return DBModel::FkAction::SetDefault;
+				return DBModel::FkAction::NoAction; // NO_ACTION, 빈 값 등
+			};
+
+		for (XmlNode& fkNode : fks)
+		{
+			DBModel::ForeignKeyRef fk = MakeShared<DBModel::ForeignKey>();
+
+			// 속성: name, refTable, onDelete, onUpdate
+			fk->_name = fkNode.GetStringAttr(L"name");       // 비어있으면 나중에 CreateName() 사용
+			fk->_refTable = fkNode.GetStringAttr(L"refTable");   // 필수
+
+			const WCHAR* delStr = fkNode.GetStringAttr(L"onDelete");
+			const WCHAR* updStr = fkNode.GetStringAttr(L"onUpdate");
+			fk->_onDelete = toFkAction(delStr);
+			fk->_onUpdate = toFkAction(updStr);
+
+			// 하위 <Column local=".." ref=".."/> 들
+			Vector<XmlNode> fkCols = fkNode.FindChildren(L"Column");
+			for (XmlNode& colNode : fkCols)
+			{
+				const WCHAR* localCol = colNode.GetStringAttr(L"local");
+				const WCHAR* refCol = colNode.GetStringAttr(L"ref");
+
+				// 로컬 컬럼 존재 검증 (XML 오타 방지)
+				DBModel::ColumnRef c = t->FindColumn(localCol); //  L"ForeignKey local column not found: [%s].[%s]", t
+				ASSERT_CRASH(c != nullptr);
+
+				// 매핑 push
+				fk->_cols.emplace_back(localCol, refCol);
+			}
+
+			// 최소 유효성
+			ASSERT_CRASH(fk->_refTable.empty() == false); //  L"ForeignKey missing refTable on [%s]",
+			ASSERT_CRASH(fk->_cols.empty() == false); // L"ForeignKey has no columns on [%s]", 
+
+			// 테이블에 FK 등록
+			t->_foreignKeys.push_back(fk);
+		}
 		_xmlTables.push_back(t);
+
 	}
 
 	Vector<XmlNode> procedures = root.FindChildren(L"Procedure");
@@ -338,6 +415,60 @@ bool DBSynchronizer::GatherDBIndexes()
 		::memset(columnName, 0, sizeof(columnName));
 	}
 
+	return true;
+}
+
+bool DBSynchronizer::GatherDBForeignKeys()
+{
+	int32 fkObj, parentObj, refObj, delAct, updAct, ord;
+	WCHAR fkName[129] = { 0 }, parentCol[129] = { 0 }, refCol[129] = { 0 };
+
+	SP::GetDBForeignKeys q(_dbConn);
+	q.Out_FkObjectId(OUT fkObj);
+	q.Out_FkName(OUT fkName);
+	q.Out_ParentObj(OUT parentObj);
+	q.Out_RefObj(OUT refObj);
+	q.Out_DelAct(OUT delAct);
+	q.Out_UpdAct(OUT updAct);
+	q.Out_ParentCol(OUT parentCol);
+	q.Out_RefCol(OUT refCol);
+	q.Out_Ord(OUT ord);
+
+	if (!q.Execute()) return false;
+
+	auto findTableByObj = [&](int32 obj)->DBModel::TableRef {
+		auto it = std::find_if(_dbTables.begin(), _dbTables.end(),
+			[&](const DBModel::TableRef& t) { return t->_objectId == obj; });
+		return (it == _dbTables.end()) ? nullptr : *it;
+		};
+
+	while (q.Fetch())
+	{
+		auto parent = findTableByObj(parentObj);
+		auto ref = findTableByObj(refObj);
+		ASSERT_CRASH(parent && ref);
+
+		auto& fks = parent->_foreignKeys;
+		auto it = std::find_if(fks.begin(), fks.end(),
+			[&](const DBModel::ForeignKeyRef& f) { return f->_fkObjectId == fkObj; });
+
+		if (it == fks.end()) {
+			auto fk = MakeShared<DBModel::ForeignKey>();
+			fk->_fkObjectId = fkObj;
+			fk->_name = fkName;
+			fk->_refTable = ref->_name;
+			fk->_onDelete = (DBModel::FkAction)delAct;
+			fk->_onUpdate = (DBModel::FkAction)updAct;
+			fks.push_back(fk);
+			it = fks.end() - 1;
+		}
+		(*it)->_cols.emplace_back(parentCol, refCol);
+
+		// clear
+		::memset(fkName, 0, sizeof(fkName));
+		::memset(parentCol, 0, sizeof(parentCol));
+		::memset(refCol, 0, sizeof(refCol));
+	}
 	return true;
 }
 
@@ -529,12 +660,12 @@ void DBSynchronizer::CompareTables(DBModel::TableRef dbTable, DBModel::TableRef 
 		}
 	}
 
-	// XML�� �ִ� �ε��� ����� ���� �´�.
+	// 
 	Map<String, DBModel::IndexRef> xmlIndexMap;
 	for (DBModel::IndexRef& xmlIndex : xmlTable->_indexes)
 		xmlIndexMap[xmlIndex->GetUniqueName()] = xmlIndex;
 
-	// DB�� �����ϴ� ���̺� �ε������� ���鼭 XML�� ���ǵ� �ε������ ���Ѵ�.
+	// 
 	for (DBModel::IndexRef& dbIndex : dbTable->_indexes)
 	{
 		auto findIndex = xmlIndexMap.find(dbIndex->GetUniqueName());
@@ -551,6 +682,44 @@ void DBSynchronizer::CompareTables(DBModel::TableRef dbTable, DBModel::TableRef 
 			else
 				_updateQueries[UpdateStep::DropIndex].push_back(DBModel::Helpers::Format(L"DROP INDEX [%s] ON [dbo].[%s]", dbIndex->_name.c_str(), dbTable->_name.c_str()));
 		}
+	}
+
+	Map<String, DBModel::ForeignKeyRef> xmlFkMap;
+	for (auto& fk : xmlTable->_foreignKeys)
+		xmlFkMap[fk->GetSignature(xmlTable->_name)] = fk;
+
+	// DB FK 순회 → XML에 없으면 드랍
+	for (auto& dbFk : dbTable->_foreignKeys)
+	{
+		if (xmlFkMap.erase(dbFk->GetSignature(dbTable->_name)) == 0)
+		{
+			GConsoleLogger->WriteStdOut(Color::YELLOW, L"Dropping FK : [%s] [%s]\n",
+				dbTable->_name.c_str(), dbFk->_name.c_str());
+			_updateQueries[UpdateStep::DropForeignKey].push_back(
+				DBModel::Helpers::Format(
+					L"ALTER TABLE [dbo].[%s] DROP CONSTRAINT [%s]",
+					dbTable->_name.c_str(), dbFk->_name.c_str()));
+		}
+	}
+
+	// 남은 XML FK는 생성
+	for (auto& kv : xmlFkMap)
+	{
+		auto fk = kv.second;
+		const String fkName = fk->_name.empty()
+			? fk->CreateName(dbTable->_name)
+			: fk->_name;
+
+		GConsoleLogger->WriteStdOut(Color::YELLOW, L"Creating FK : [%s] -> [%s] (%s)\n",
+			dbTable->_name.c_str(), fk->_refTable.c_str(), fkName.c_str());
+
+		_updateQueries[UpdateStep::CreateForeignKey].push_back(
+			DBModel::Helpers::Format(
+				L"ALTER TABLE [dbo].[%s] ADD CONSTRAINT [%s] FOREIGN KEY %s%s",
+				dbTable->_name.c_str(),
+				fkName.c_str(),
+				fk->CreateColumnsText().c_str(),
+				fk->ActionText().c_str()));
 	}
 
 	// �ʿ��� ���ŵ��� ���� XML �ε��� ���Ǵ� ���� �߰�.

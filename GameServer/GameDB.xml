@@ -5,11 +5,12 @@
     <Column name="userId" type="int" notnull="true"/>
     <Column name="createdAt" type="datetime" notnull="true" default="SYSUTCDATETIME()"/>
     <Column name="lastLoginAt" type="datetime" notnull="true"/>
+  
+    <Index type="clustered">
+      <PrimaryKey/>
+      <Column name="userId"/>
+    </Index>
   </Table>
-  <Index type="clustered">
-    <PrimaryKey/>
-    <Column name="userId"/>
-  </Index>
   <Procedure name="spAccountsUpsert">
     <Param name="@userId" type="int"/>
     <Body>
@@ -33,7 +34,7 @@
   </Procedure>
   <!--===== 캐릭터 관련 DB =====-->
   <Table name="Characters">
-    <Column name="characterId" type="int" notnull="true"/>
+    <Column name="characterId" type="int" notnull="true" identity="1,1"/>
     <Column name="userId" type="int" notnull="true"/>
     <Column name="username" type="nvarchar(32)" notnull="true"/>
     <Column name="gender" type="int" notnull="true"/>
@@ -43,11 +44,17 @@
     <Column name="lastZone" type="int" notnull="true"/>
     <Column name="posX" type="int" notnull="true" default="0"/>
     <Column name="posY" type="int" notnull="true" default="0"/>
-    <Column name="createdAt" type="datetime" notnull="true"/>
+    <Column name="createdAt" type="datetime" notnull="true" default="SYSUTCDATETIME()"/>
     <Index type="clustered">
       <PrimaryKey/>
-      <Column name="userId"/>
+      <Column name="characterId"/>
     </Index>
+    <ForeignKey name="FK_Characters_userId_Accounts_userId"
+            refTable="Accounts"
+            onDelete="NO_ACTION"
+            onUpdate="NO_ACTION">
+      <Column local="userId" ref="userId"/>
+    </ForeignKey>
   </Table>
   
   

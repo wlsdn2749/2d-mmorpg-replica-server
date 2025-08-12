@@ -143,8 +143,8 @@
     <PreBuildEvent>
       <Command>CALL $(SolutionDIr)Protocol\GenPackets.bat
 CALL $(SolutionDIr)Common\Procedures\GenProcs.bat
-xcopy /Y /D $(SolutionDir)third_party\openssl\lib\VC\x64\MD\libcrypto.lib "$(OutDir)"
-xcopy /Y /D $(SolutionDir)third_party\openssl\lib\VC\x64\MD\libssl.lib "$(OutDir)"
+xcopy /Y /D $(SolutionDir)third_party\openssl\bin\libcrypto-3-x64.dll "$(OutDir)"
+xcopy /Y /D $(SolutionDir)third_party\openssl\bin\libssl-3-x64.dll "$(OutDir)"
 xcopy /Y /D $(SolutionDir)GameServer\appsettings.json "$(OutDir)"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -169,8 +169,8 @@ xcopy /Y /D $(SolutionDir)GameServer\appsettings.json "$(OutDir)"</Command>
     <PreBuildEvent>
       <Command>CALL $(SolutionDIr)Protocol\GenPackets.bat
 CALL $(SolutionDIr)Common\Procedures\GenProcs.bat
-xcopy /Y /D $(SolutionDir)third_party\openssl\lib\VC\x64\MD\libcrypto.lib "$(OutDir)"
-xcopy /Y /D $(SolutionDir)third_party\openssl\lib\VC\x64\MD\libssl.lib "$(OutDir)"
+xcopy /Y /D $(SolutionDir)third_party\openssl\bin\libcrypto-3-x64.dll "$(OutDir)"
+xcopy /Y /D $(SolutionDir)third_party\openssl\bin\libssl-3-x64.dll "$(OutDir)"
 xcopy /Y /D $(SolutionDir)GameServer\appsettings.json "$(OutDir)"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
