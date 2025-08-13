@@ -56,6 +56,38 @@
       <Column local="userId" ref="userId"/>
     </ForeignKey>
   </Table>
+  <Procedure name="spCreateCharacter">
+    <Param name="@userId" type="int"/>
+    <Param name="@username" type="nvarchar(32)"/>
+    <Param name="@gender" type="int"/>
+    <Param name="@region" type="int"/>
+    <Param name="@lastZone" type="int"/>
+    <Body>
+      <![CDATA[
+       SET NOCOUNT ON;
+       SET XACT_ABORT ON;
+       
+       INSERT INTO [dbo].[Characters] ([userId], [username], [gender], [region], [lastZone])
+       VALUES (@userId, @username, @gender, @region, @lastZone);       
+      ]]>
+    </Body>
+  </Procedure>
+  <Procedure name="spCharacterUsernameExists">
+    <Param name="@username" type="nvarchar(32)"/>
+    <Param name="@exists" type="int" dir="out"/>
+    <Body>
+      <![CDATA[
+       SET NOCOUNT ON;
+       SELECT @Exists =
+        CASE WHEN EXISTS (
+            SELECT 1
+            FROM [dbo].[Characters] WITH (READCOMMITTED)
+            WHERE username = @username
+        )
+        THEN 1 ELSE 0 END;
+      ]]>
+    </Body>
+  </Procedure>
   
   
   <!-- 아래 Procedures는 예시임 -->

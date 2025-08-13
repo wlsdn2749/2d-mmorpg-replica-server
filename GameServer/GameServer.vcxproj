@@ -177,6 +177,7 @@ xcopy /Y /D $(SolutionDir)GameServer\appsettings.json "$(OutDir)"</Command>
   <ItemGroup>
     <ClCompile Include="AccountRepository.cpp" />
     <ClCompile Include="AppConfig.cpp" />
+    <ClCompile Include="CharacterRepository.cpp" />
     <ClCompile Include="ClientPacketHandler.cpp" />
     <ClCompile Include="DBDisPatcher.cpp" />
     <ClCompile Include="DBWorker.cpp" />
@@ -203,6 +204,7 @@ xcopy /Y /D $(SolutionDir)GameServer\appsettings.json "$(OutDir)"</Command>
     <ClInclude Include="Account.h" />
     <ClInclude Include="AccountRepository.h" />
     <ClInclude Include="AppConfig.h" />
+    <ClInclude Include="CharacterRepository.h" />
     <ClInclude Include="ClientPacketHandler.h" />
     <ClInclude Include="DBDisPatcher.h" />
     <ClInclude Include="DBWorker.h" />

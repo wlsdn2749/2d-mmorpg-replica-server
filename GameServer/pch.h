@@ -13,7 +13,7 @@
 
 #include "CorePch.h"
 #include "Protocol.pb.h"
-
+#include "Account.h"
 #include "StringConvert.h"
 
 #include "Windows.h"
@@ -23,6 +23,7 @@
 
 using GameSessionRef	= shared_ptr<class GameSession>;
 using PlayerRef			= shared_ptr<class Player>;
+using AccountRef		= shared_ptr<Account>;
 
 using GameSessionContainerRef = shared_ptr<class GameSessionContainer>;
 using GameSessionAccessorRef = shared_ptr<class GameSessionAccessor>;

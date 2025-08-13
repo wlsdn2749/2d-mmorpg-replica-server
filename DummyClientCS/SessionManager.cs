@@ -52,5 +52,25 @@ namespace DummyClientCS
                 }
             }
         }
+
+        public async Task SendForEachCreateCharacterAsync(string username)
+        {
+            if(!_canSendPackets) return;
+
+            lock(_lock)
+            {
+                foreach(ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_CreateCharacterRequest
+                    {
+                        Username = username,
+                        Gender = 0,
+                        Region = 0
+                    };
+
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                }
+            }
+        }
     }
 }

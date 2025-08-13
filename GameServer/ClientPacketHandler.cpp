@@ -3,6 +3,7 @@
 #include "GameSession.h"
 
 #include "AccountRepository.h"
+#include "CharacterRepository.h"
 #include "JwtAuth.h"
 
 PacketHandlerFunc GPacketHandler[UINT16_MAX];
@@ -29,6 +30,8 @@ bool Handle_C_JwtLoginRequest(PacketSessionRef& session, Protocol::C_JwtLoginReq
 	if (eLoginResult == Protocol::ELoginResult::SUCCESS)
 	{
 		// TODO: 세션에 jwt의 데이터 저장?
+		gameSession->_account = MakeShared<Account>();
+		gameSession->_account->SetUserId(userId);
 
 		// TODO: Accounts에 계정 정보 저장
 		auto fut = AccountRepository::UpsertAccountAsync(userId);
@@ -43,6 +46,41 @@ bool Handle_C_JwtLoginRequest(PacketSessionRef& session, Protocol::C_JwtLoginReq
 
 bool Handle_C_CreateCharacterRequest(PacketSessionRef& session, Protocol::C_CreateCharacterRequest& pkt)
 {
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	auto userId = gameSession->_account->GetUserId();
+
+	// userId는 1부터 시작하는데, 0이면 비정상 Validation
+	ASSERT_CRASH(userId != 0)
+
+	// 캐릭터 이름 검증 -> 
+	// "이미 있는 이름이면" --> "등록된 이름입니다"
+	// "모두 한글이 아니거나, 2-6글자가 아니면" -> 이름이 길거나 적합하지 않습니다.
+	auto validResult = CharacterRepository::IsValidUsername(pkt.username());
+	if (!validResult.isValid)
+	{
+		Protocol::S_CreateCharacterReply replyPkt;
+		replyPkt.set_success(validResult.isValid);
+		replyPkt.set_detail(validResult.message);
+		auto sendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
+		session->Send(sendBuffer);
+		return true;
+	}
+
+	// TODO: 지역 검증 
+	// TODO: region 검증 
+
+	// 검증 통과하면 진짜로 캐릭터 만들고 성공 리턴 
+	// 여기서 실패할 수도 있으나, 나중에 판단..
+	
+	String username = StrToWstr(pkt.username());
+	auto fut = CharacterRepository::CreateCharacterAsync(userId, username, pkt.gender(), pkt.region());
+
+	Protocol::S_CreateCharacterReply replyPkt;
+	replyPkt.set_success(true);
+	replyPkt.set_detail("");
+	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
+	session->Send(sendBuffer);
 	return true;
 }
 

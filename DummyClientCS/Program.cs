@@ -33,6 +33,7 @@ class Program
             Console.WriteLine("[2] 로그인");
             Console.WriteLine("\n===== TCP 게임서버 =====");
             Console.WriteLine("[3] JWT 검증");
+            Console.WriteLine("[4] 캐릭터 생성");
 
             Console.WriteLine("[0] 종료");
             Console.Write("선택: ");
@@ -50,6 +51,11 @@ class Program
                     break;
                 case "3":
                     await SessionManager.Instance.SendForEachJWTLoginAsync(_jwt);
+                    break;
+                case "4":
+                    Console.Write("Username : ");
+                    var username = Console.ReadLine();
+                    await SessionManager.Instance.SendForEachCreateCharacterAsync(username);
                     break;
                 case "0":
                     return;

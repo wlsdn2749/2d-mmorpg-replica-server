@@ -56,7 +56,9 @@ namespace Packet
         }
         internal static void HANDLE_S_CreateCharacterReply(PacketSession session, S_CreateCharacterReply reply)
         {
-            throw new NotImplementedException();
+            var result = reply;
+            Console.WriteLine($"[CreateCharacterReply] 결과: {result.Success}.");
+            Console.WriteLine($"[CreateCharacterReply] 결과: {result.Detail}.");
         }
 
         internal static void HANDLE_S_BroadcastPlayerMove(PacketSession session, S_BroadcastPlayerMove move)
