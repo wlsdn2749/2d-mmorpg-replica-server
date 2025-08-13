@@ -6,11 +6,9 @@
 *.userprefs
 
 # 빌드 출력 폴더
-bin/
 obj/
 Debug
 Release
-x64/
 
 # 프로토콜 생성폴더
 Protocols/
