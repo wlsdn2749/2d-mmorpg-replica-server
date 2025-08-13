@@ -73,5 +73,10 @@ namespace Packet
                 Console.WriteLine(character);
             }
         }
+
+        internal static void HANDLE_S_EnterGame(PacketSession session, S_EnterGame game)
+        {
+            Console.WriteLine("[S_EnterGame] 게임 접속 완료");
+        }
     }
 }

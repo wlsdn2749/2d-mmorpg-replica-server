@@ -11,8 +11,10 @@ enum MsgId
 	S_CREATE_CHARACTER_REPLY = 3;
 	C_CHARACTER_LIST_REQUEST = 4;
 	S_CHARACTER_LIST_REPLY = 5;
-	C_PLAYER_MOVE_REQUEST = 6;
-	S_BROADCAST_PLAYER_MOVE = 7;
+	C_ENTER_GAME = 6;
+	S_ENTER_GAME = 7;
+	C_PLAYER_MOVE_REQUEST = 8;
+	S_BROADCAST_PLAYER_MOVE = 9;
 }
 
 // 클라 -> 게임 서버 jwt 로그인 인증 (0)
@@ -55,12 +57,25 @@ message S_CharacterListReply
 }
 
 // (6)
+message C_EnterGame
+{
+	int32 playerIndex = 1;
+}
+
+// (7)
+message S_EnterGame
+{
+	int32 success = 1;
+}
+
+
+// (8)
 message C_PlayerMoveRequest
 {
 	Vector2Info clickWorldPos = 1;
 }
 
-// (7)
+// (9)
 message S_BroadcastPlayerMove
 {
 	repeated PlayerMoveInfo playerMoves = 1;

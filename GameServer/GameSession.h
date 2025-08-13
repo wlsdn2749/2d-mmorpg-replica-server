@@ -48,7 +48,7 @@ private:
 
 public:
 	Vector<PlayerRef> _players; // 플레이어 리스트
-	PlayerRef _player; // 현재 플레이어 
+	PlayerRef _currentPlayer; // 현재 플레이어 
 	AccountRef _account;
 
 };

@@ -32,9 +32,10 @@ class Program
             Console.WriteLine("[1] 회원가입");
             Console.WriteLine("[2] 로그인");
             Console.WriteLine("\n===== TCP 게임서버 =====");
-            Console.WriteLine("[3] JWT 검증");
-            Console.WriteLine("[4] 캐릭터 생성");
+            Console.WriteLine("[3] JWT 검증:          --- 반드시 2번을 하고 해야함");
+            Console.WriteLine("[4] 캐릭터 생성 :         --- Input 입력");
             Console.WriteLine("[5] 캐릭터 리스트 받기");
+            Console.WriteLine("[6] 게임 접속 :          --- Index = 0");
 
             Console.WriteLine("[0] 종료");
             Console.Write("선택: ");
@@ -61,6 +62,9 @@ class Program
 
                 case "5":
                     await SessionManager.Instance.SendForEachGetCharacterList();
+                    break;
+                case "6":
+                    await SessionManager.Instance.SendForEachEnterGame();
                     break;
                 case "0":
                     return;

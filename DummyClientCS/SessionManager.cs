@@ -88,5 +88,22 @@ namespace DummyClientCS
 
             }
         }
+
+        public async Task SendForEachEnterGame()
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_EnterGame
+                    {
+                        PlayerIndex = 0
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                }
+            }
+        }
     }
 }
