@@ -9,22 +9,25 @@ enum MsgId
 	S_JWT_LOGIN_REPLY = 1;
 	C_CREATE_CHARACTER_REQUEST = 2;
 	S_CREATE_CHARACTER_REPLY = 3;
-	C_PLAYER_MOVE_REQUEST = 4;
-	s_BROADCAST_PLAYER_MOVE = 5;
+	C_CHARACTER_LIST_REQUEST = 4;
+	S_CHARACTER_LIST_REPLY = 5;
+	C_PLAYER_MOVE_REQUEST = 6;
+	S_BROADCAST_PLAYER_MOVE = 7;
 }
 
-// 클라 -> 게임 서버 jwt 로그인 인증
-message C_JwtLoginRequest
+// 클라 -> 게임 서버 jwt 로그인 인증 (0)
+message C_JwtLoginRequest 
 {
 	string accessToken = 1; 
 }
 
-// 게임서버 -> 클라 jwt 검증
+// 게임서버 -> 클라 jwt 검증 (1)
 message S_JwtLoginReply
 {
 	ELoginResult result = 1;
 }
 
+// (2)
 message C_CreateCharacterRequest
 {
 	string username = 1; // 캐릭터 이름 한글만 가능 2~6자
@@ -32,17 +35,32 @@ message C_CreateCharacterRequest
 	ERegion region = 3;
 }
 
+// (3)
 message S_CreateCharacterReply
 {
 	bool success = 1;
 	string detail = 2; // 실패 시 에러 메시지
 }
 
+// (4)
+message C_CharacterListRequest
+{
+
+}
+
+// (5)
+message S_CharacterListReply
+{
+	repeated CharacterSummaryInfo characters = 1;
+}
+
+// (6)
 message C_PlayerMoveRequest
 {
 	Vector2Info clickWorldPos = 1;
 }
 
+// (7)
 message S_BroadcastPlayerMove
 {
 	repeated PlayerMoveInfo playerMoves = 1;
@@ -60,7 +78,7 @@ enum EGender
 {
 	GENDER_NONE = 0;
 	GENDER_MALE = 1;
-	GENDER_FEMAIL = 2;
+	GENDER_FEMALE = 2;
 }
 
 enum ERegion 
@@ -78,6 +96,8 @@ enum EDirection
 	DIR_RIGHT = 3;
 }
 
+
+
 message Vector2Info
 {
 	int32 x = 1;
@@ -88,4 +108,12 @@ message PlayerMoveInfo
 {
 	int32 playerId = 1;
 	EDirection direction = 2; 
+}
+
+message CharacterSummaryInfo
+{
+	string username = 1;
+	int32 level = 2;
+	EGender gender = 3;
+	ERegion region = 4;
 }

@@ -88,6 +88,20 @@
       ]]>
     </Body>
   </Procedure>
+  <Procedure name="spGetCharactersByUser">
+    <Param name="@userId" type="int"/>
+    <Body>
+      <![CDATA[
+        SET NOCOUNT ON;
+
+        SELECT
+            username, gender, region, level
+        FROM [dbo].[Characters]
+        WHERE [userId] = @userId
+        ORDER BY [level] DESC;
+      ]]>
+    </Body>
+  </Procedure>
   
   
   <!-- 아래 Procedures는 예시임 -->

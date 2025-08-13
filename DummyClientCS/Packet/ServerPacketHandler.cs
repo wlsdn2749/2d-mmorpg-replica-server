@@ -65,5 +65,13 @@ namespace Packet
         {
             throw new NotImplementedException();
         }
+
+        internal static void HANDLE_S_CharacterListReply(PacketSession session, S_CharacterListReply reply)
+        {
+            foreach(var character in reply.Characters)
+            {
+                Console.WriteLine(character);
+            }
+        }
     }
 }

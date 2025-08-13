@@ -237,7 +237,7 @@ bool DBConnection::BindCol(int32 columnIndex, TIMESTAMP_STRUCT* value, SQLLEN* i
 
 bool DBConnection::BindCol(int32 columnIndex, WCHAR* str, int32 size, SQLLEN* index)
 {
-	return BindCol(columnIndex, SQL_BINARY, size, str, index);
+	return BindCol(columnIndex, SQL_C_WCHAR, size, str, index);
 }
 
 bool DBConnection::BindCol(int32 columnIndex, BYTE* bin, int32 size, SQLLEN* index)

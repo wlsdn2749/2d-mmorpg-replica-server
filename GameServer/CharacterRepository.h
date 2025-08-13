@@ -2,9 +2,6 @@
 #include <future>
 #include "DBDisPatcher.h"
 #include "GenProcedures.h"
-#include "Protocol.pb.h"
-
-using namespace Protocol;
 
 struct CharacterRepository
 {
@@ -14,8 +11,9 @@ struct CharacterRepository
         std::string message;
     };
 
+/* 캐릭터 생성 요청*/
 public:
-	static void CreateCharacter_DB(DBConnection& conn, int userId, String username, EGender gender, ERegion region)
+	static void CreateCharacter_DB(DBConnection& conn, int userId, String username, Protocol::EGender gender, Protocol::ERegion region)
 	{
         SP::CreateCharacter sp(conn);
         sp.ParamIn_UserId(userId); // ForeignKey
@@ -26,16 +24,15 @@ public:
         sp.Execute();
 	}
 
-    static std::future<void> CreateCharacterAsync(int userId, wstring_view username, EGender gender, ERegion region)
+    static std::future<void> CreateCharacterAsync(int userId, wstring_view username, Protocol::EGender gender, Protocol::ERegion region)
     {
         auto w_username = String(username);
         return DbDispatcher::EnqueueRet([userId, w_username, gender, region](DBConnection& c) {
             CreateCharacter_DB(c, userId, w_username, gender, region);
             });
     }
-    
+/* 동일 Username 존재 판단*/
 public:
-
 	static ValidationResult IsValidUsername(std::string username) // username이 u8문자열
 	{
         auto fut = CharacterUsernameExists(username); // 미리 비동기 처리
@@ -55,15 +52,12 @@ public:
 
         return ValidationResult {true, ""}; 
 	}
-
-private:
     static std::future<bool> CharacterUsernameExists(std::string username)
     {
         return DbDispatcher::EnqueueRet([username](DBConnection& c) {
                 return CharacterUsernameExists_DB(c, username);
             });
     }
-    
     static bool CharacterUsernameExists_DB(DBConnection& conn, std::string username)
     {
         int exists;
@@ -75,7 +69,6 @@ private:
         if (exists) return true; // 존재하면
         else return false; // 존재하지 않으면
     }
-
     static bool IsValidKoreanNameAndLengths(const std::string& username)
     {
         // UTF-8을 코드포인트 단위로 파싱
@@ -108,6 +101,46 @@ private:
 
         // 2~6자만 허용
         return (count >= 2 && count <= 6);
+    }
+
+
+/* 캐릭터 리스트 받아오기*/
+public:
+    static Vector<Protocol::CharacterSummaryInfo> GetCharactersByUser_DB(DBConnection& conn, int userId)
+    {
+        WCHAR username[100];
+        Vector<Protocol::CharacterSummaryInfo> characters;
+        int gender;
+        int region;
+        int level;
+
+        SP::GetCharactersByUser sp(conn);
+        sp.ParamIn_UserId(userId);
+        sp.ColumnOut_Username(OUT username);
+        sp.ColumnOut_Gender(OUT gender);
+        sp.ColumnOut_Region(OUT region);
+        sp.ColumnOut_Level(OUT level);
+        sp.Execute();
+        while (sp.Fetch())
+        {
+            GConsoleLogger->WriteStdOut(Color::GREEN,
+                L"Username[%s] Gender[%d] Region[%d] Level[%d]\n", username, gender, region, level);
+
+            Protocol::CharacterSummaryInfo info;
+            info.set_username(WstrToStr(username));
+            info.set_gender(static_cast<Protocol::EGender>(gender));
+            info.set_region(static_cast<Protocol::ERegion>(region));
+            info.set_level(level);
+            characters.push_back(info);
+        }
+
+        return characters;
+    }
+    static std::future<Vector<Protocol::CharacterSummaryInfo>> GetCharactersByUserAsync(int userId)
+    {
+        return DbDispatcher::EnqueueRet([userId](DBConnection& c) {
+            return GetCharactersByUser_DB(c, userId);
+            });
     }
 };
 

@@ -34,6 +34,7 @@ class Program
             Console.WriteLine("\n===== TCP 게임서버 =====");
             Console.WriteLine("[3] JWT 검증");
             Console.WriteLine("[4] 캐릭터 생성");
+            Console.WriteLine("[5] 캐릭터 리스트 받기");
 
             Console.WriteLine("[0] 종료");
             Console.Write("선택: ");
@@ -56,6 +57,10 @@ class Program
                     Console.Write("Username : ");
                     var username = Console.ReadLine();
                     await SessionManager.Instance.SendForEachCreateCharacterAsync(username);
+                    break;
+
+                case "5":
+                    await SessionManager.Instance.SendForEachGetCharacterList();
                     break;
                 case "0":
                     return;

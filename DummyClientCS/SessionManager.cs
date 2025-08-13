@@ -72,5 +72,21 @@ namespace DummyClientCS
                 }
             }
         }
+
+        public async Task SendForEachGetCharacterList()
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_CharacterListRequest { };
+
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                }
+
+            }
+        }
     }
 }

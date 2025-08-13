@@ -55,6 +55,21 @@ namespace SP
     	int32 _exists = {};
     };
 
+    class GetCharactersByUser : public DBBind<1,4>
+    {
+    public:
+    	GetCharactersByUser(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spGetCharactersByUser(?)}") { }
+    	void ParamIn_UserId(int32& v) { BindParam(0, v); };
+    	void ParamIn_UserId(int32&& v) { _userId = std::move(v); BindParam(0, _userId); };
+    	template<int32 N> void ColumnOut_Username(OUT WCHAR(&v)[N]) { BindCol(0, v); };
+    	void ColumnOut_Gender(OUT int32& v) { BindCol(1, v); };
+    	void ColumnOut_Region(OUT int32& v) { BindCol(2, v); };
+    	void ColumnOut_Level(OUT int32& v) { BindCol(3, v); };
+
+    private:
+    	int32 _userId = {};
+    };
+
     class InsertGold : public DBBind<3,0>
     {
     public:

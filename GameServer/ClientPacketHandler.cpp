@@ -84,6 +84,29 @@ bool Handle_C_CreateCharacterRequest(PacketSessionRef& session, Protocol::C_Crea
 	return true;
 }
 
+bool Handle_C_CharacterListRequest(PacketSessionRef& session, Protocol::C_CharacterListRequest& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	auto userId = gameSession->_account->GetUserId();
+
+	auto fut = CharacterRepository::GetCharactersByUserAsync(userId);
+
+	auto characters = fut.get();
+
+	Protocol::S_CharacterListReply reply;
+	auto* out = reply.mutable_characters();
+	out->Reserve(static_cast<int>(characters.size()));
+	for (const auto& m : characters) {
+		out->Add()->CopyFrom(m);
+	}
+
+	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(reply);
+	session->Send(sendBuffer);
+	return true;
+	
+}
+
 bool Handle_C_PlayerMoveRequest(PacketSessionRef& session, Protocol::C_PlayerMoveRequest& pkt)
 {
 	return false;
