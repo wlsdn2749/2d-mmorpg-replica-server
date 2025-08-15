@@ -36,6 +36,7 @@ class Program
             Console.WriteLine("[4] 캐릭터 생성 :         --- Input 입력");
             Console.WriteLine("[5] 캐릭터 리스트 받기");
             Console.WriteLine("[6] 게임 접속 :          --- Index = 0");
+            Console.WriteLine("[7] 상하좌우 움직이기:   --- 0,1,2,3 [상하좌우]");
 
             Console.WriteLine("[0] 종료");
             Console.Write("선택: ");
@@ -65,6 +66,12 @@ class Program
                     break;
                 case "6":
                     await SessionManager.Instance.SendForEachEnterGame();
+                    break;
+                case "7":
+                    Console.Write("Dir(상하좌우) 0,1,2,3:");
+                    int dir;
+                    Int32.TryParse(Console.ReadLine(), out dir);
+                    await SessionManager.Instance.SendForEachMove(dir);
                     break;
                 case "0":
                     return;

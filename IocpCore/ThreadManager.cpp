@@ -62,18 +62,19 @@ void ThreadManager::DistributeReservedJobs()
 	GJobTimer->Distribute(now);
 }
 
-void ThreadManager::DoGlobalQueueWork()
+void ThreadManager::DoGlobalQueueWork(GlobalQueue* q)
 {
 	while (true)
 	{
-		uint64 now = ::GetTickCount64();
-		if (now > LEndTickCount)
-			break;
+		// 1) 큐에서 JobQueue 하나 블로킹 Pop
+		JobQueueRef jq = q->Pop();
+		if (!jq) return;               // 종료 시엔 nullptr를 넣어 깨우는 방식 사용
 
-		JobQueueRef jobQueue = GGlobalQueue->Pop();
-		if (jobQueue == nullptr)
-			break;
+		// 2) 이번 사이클 예산 설정은 바깥(부팅 루프)에서
+		jq->Execute();
 
-		jobQueue->Execute();
+		// 3) (선택) 예산 소진 시 바깥 루프로 돌아가 새 예산 설정
+		if (::GetTickCount64() > LEndTickCount)
+			return;
 	}
 }

@@ -2,6 +2,9 @@
 #include "Job.h"
 #include "JobTimer.h"
 #include "LockQueue.h"
+#include "../GameServer/IJobQueueOwner.h"
+#include "../GameServer/GlobalQueueShard.h"
+
 
 /*------------------------
 		JobQueue

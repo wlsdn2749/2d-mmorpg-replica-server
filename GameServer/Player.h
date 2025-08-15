@@ -10,7 +10,7 @@ class Player
 ----------------------------*/
 
 public:
-	uint64				playerId = 0;
+	uint64				playerId = 0; // DB에서 CharacterId임
 	string				username;
 	Protocol::EGender	gender{ 0 }; // gender
 	Protocol::ERegion	region{ 0 }; // region
@@ -20,11 +20,14 @@ public:
 ----------------------------*/
 
 public:
-	float posX = 0;
-	float posY = 0;
+	int posX = 0;
+	int posY = 0;
 
 	// 현재 바라보는 방향
+	Protocol::EDirection dir{ 0 };
 
+
+// 레벨도 있어야 하긴하나, 나중에 구현
 
 /*----------------------------
 	Player Runtime Links

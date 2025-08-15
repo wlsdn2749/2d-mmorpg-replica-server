@@ -11,6 +11,21 @@ struct CharacterRepository
         std::string message;
     };
 
+    struct CharacterInfo
+    {
+        int characterId;
+        string username;
+        
+        int posX;
+        int posY;
+
+        Protocol::EGender gender;
+        Protocol::ERegion region;
+        Protocol::EDirection dir;
+
+        int level;
+    };
+
 /* 캐릭터 생성 요청*/
 public:
 	static void CreateCharacter_DB(DBConnection& conn, int userId, String username, Protocol::EGender gender, Protocol::ERegion region)
@@ -106,19 +121,28 @@ public:
 
 /* 캐릭터 리스트 받아오기*/
 public:
-    static Vector<Protocol::CharacterSummaryInfo> GetCharactersByUser_DB(DBConnection& conn, int userId)
+    static Vector<CharacterInfo> GetCharactersByUser_DB(DBConnection& conn, int userId)
     {
+        Vector<CharacterInfo> characters;
+        int characterId;
         WCHAR username[100];
-        Vector<Protocol::CharacterSummaryInfo> characters;
+        int posX;
+        int posY;
+
         int gender;
         int region;
+        int dir;
         int level;
 
         SP::GetCharactersByUser sp(conn);
         sp.ParamIn_UserId(userId);
+        sp.ColumnOut_CharacterId(OUT characterId);
         sp.ColumnOut_Username(OUT username);
+        sp.ColumnOut_PosX(OUT posX);
+        sp.ColumnOut_PosY(OUT posY);
         sp.ColumnOut_Gender(OUT gender);
         sp.ColumnOut_Region(OUT region);
+        sp.ColumnOut_Dir(OUT dir);
         sp.ColumnOut_Level(OUT level);
         sp.Execute();
         while (sp.Fetch())
@@ -126,17 +150,23 @@ public:
             GConsoleLogger->WriteStdOut(Color::GREEN,
                 L"Username[%s] Gender[%d] Region[%d] Level[%d]\n", username, gender, region, level);
 
-            Protocol::CharacterSummaryInfo info;
-            info.set_username(WstrToStr(username));
-            info.set_gender(static_cast<Protocol::EGender>(gender));
-            info.set_region(static_cast<Protocol::ERegion>(region));
-            info.set_level(level);
+            CharacterInfo info
+            {
+                characterId,
+                WstrToStr(username),
+                posX,
+                posY,
+                static_cast<Protocol::EGender>(gender),
+                static_cast<Protocol::ERegion>(region),
+                static_cast<Protocol::EDirection>(dir),
+                level
+            };
             characters.push_back(info);
         }
 
         return characters;
     }
-    static std::future<Vector<Protocol::CharacterSummaryInfo>> GetCharactersByUserAsync(int userId)
+    static std::future<Vector<CharacterInfo>> GetCharactersByUserAsync(int userId)
     {
         return DbDispatcher::EnqueueRet([userId](DBConnection& c) {
             return GetCharactersByUser_DB(c, userId);

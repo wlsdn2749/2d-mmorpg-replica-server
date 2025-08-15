@@ -28,6 +28,15 @@
 #include "DBSynchronizer.h"
 #include "GlobalQueue.h"
 #include "DBWorker.h"
+
+/*------------------------
+	 룸 & 샤드
+------------------------*/
+#include "TownRoom.h"
+#include "RoomManager.h"
+
+#include "ShardBoot.h"
+
 enum
 {
 	WORKER_TICK = 64
@@ -39,14 +48,8 @@ void DoWorkerJob(ServerServiceRef& service)
 	{
 		LEndTickCount = ::GetTickCount64() + WORKER_TICK;
 
-		// 네트워크 입출력 처리 -> 인게임 로직까지 (패킷 핸들러)
+		// 네트워크 입출력 처리
 		service->GetIocpCore()->Dispatch(10);
-
-		// 예약된 일감 처리
-		ThreadManager::DistributeReservedJobs();
-
-		// 글로벌 큐 (게임에서 처리되는 일감들을 처리함)
-		ThreadManager::DoGlobalQueueWork();
 	}
 }
 
@@ -70,9 +73,18 @@ int main()
 	ClientPacketHandler::init(); // 핸들러와 Wrapper 매핑 필수
 	JwtAuth::Init(s.jwtSecret);
 
-	// TODO Room
+	// 샤드 기반 워커 로직
+	const int totalRooms = 2;
+	const int roomPersQueue = 2;
+	const UINT32 budgetMs = 30; // 한 워커의 Slice 
+	StartShardedQueues(totalRooms, roomPersQueue, budgetMs);
+
+	// 룸 생성/배정/틱 시작
+	CreateRooms();
 
 
+
+	// Session & Service
 	GameSessionContainerRef container = MakeShared<GameSessionContainer>();
 	GameSessionAccessor accessor(container); // 레퍼런스 주입
 
@@ -94,5 +106,8 @@ int main()
 			});
 	}
 
+	StopShardedQueues();
 	GThreadManager->Join();
+
+	return 0;
 }

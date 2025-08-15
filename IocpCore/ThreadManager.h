@@ -2,6 +2,7 @@
 
 #include <thread>
 #include <functional>
+#include "../GameServer/GlobalQueueShard.h"
 
 /*------------------
 	ThreadManager
@@ -21,8 +22,7 @@ public:
 	static void DistributeReservedJobs();
 
 
-	static void DoGlobalQueueWork();
-	static void DoDbGlobalQueueWork();
+	static void DoGlobalQueueWork(GlobalQueue* q);
 private:
 	Mutex						_lock;
 	std::vector<std::thread>	_threads;

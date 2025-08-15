@@ -27,6 +27,7 @@ public:
 	void Execute()
 	{
 		_callback();
+		//std::cout << "Job : 실제 잡 실행" << std::endl;
 	}
 private:
 	CallbackType _callback;

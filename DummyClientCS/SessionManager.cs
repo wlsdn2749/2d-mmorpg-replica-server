@@ -105,5 +105,54 @@ namespace DummyClientCS
                 }
             }
         }
+
+        public async Task SendForEachMove(int dir)
+        {
+            if( !_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    // 현재 플레이어 좌표 가져오기 (예: 타일 좌표 또는 월드 좌표)
+                    // 이 부분은 실제 프로젝트에서 플레이어 위치를 얻는 코드로 교체하세요
+                    int playerX = 10;
+                    int playerY = 10;
+
+                    var clickPos = new Google.Protobuf.Protocol.Vector2Info();
+
+                    switch (dir)
+                    {
+                        case 0: // UP
+                            clickPos.X = playerX;
+                            clickPos.Y = playerY - 1;
+                            break;
+                        case 1: // DOWN
+                            clickPos.X = playerX;
+                            clickPos.Y = playerY + 1;
+                            break;
+                        case 2: // LEFT
+                            clickPos.X = playerX - 1;
+                            clickPos.Y = playerY;
+                            break;
+                        case 3: // RIGHT
+                            clickPos.X = playerX + 1;
+                            clickPos.Y = playerY;
+                            break;
+                        default:
+                            clickPos.X = playerX;
+                            clickPos.Y = playerY;
+                            break;
+                    }
+
+                    var pkt = new Google.Protobuf.Protocol.C_PlayerMoveRequest
+                    {
+                        ClickWorldPos = clickPos
+                    };
+
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                }
+            }
+        }
     }
 }

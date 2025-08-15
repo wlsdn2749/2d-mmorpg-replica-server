@@ -55,16 +55,20 @@ namespace SP
     	int32 _exists = {};
     };
 
-    class GetCharactersByUser : public DBBind<1,4>
+    class GetCharactersByUser : public DBBind<1,8>
     {
     public:
     	GetCharactersByUser(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spGetCharactersByUser(?)}") { }
     	void ParamIn_UserId(int32& v) { BindParam(0, v); };
     	void ParamIn_UserId(int32&& v) { _userId = std::move(v); BindParam(0, _userId); };
-    	template<int32 N> void ColumnOut_Username(OUT WCHAR(&v)[N]) { BindCol(0, v); };
-    	void ColumnOut_Gender(OUT int32& v) { BindCol(1, v); };
-    	void ColumnOut_Region(OUT int32& v) { BindCol(2, v); };
-    	void ColumnOut_Level(OUT int32& v) { BindCol(3, v); };
+    	void ColumnOut_CharacterId(OUT int32& v) { BindCol(0, v); };
+    	template<int32 N> void ColumnOut_Username(OUT WCHAR(&v)[N]) { BindCol(1, v); };
+    	void ColumnOut_PosX(OUT int32& v) { BindCol(2, v); };
+    	void ColumnOut_PosY(OUT int32& v) { BindCol(3, v); };
+    	void ColumnOut_Gender(OUT int32& v) { BindCol(4, v); };
+    	void ColumnOut_Region(OUT int32& v) { BindCol(5, v); };
+    	void ColumnOut_Dir(OUT int32& v) { BindCol(6, v); };
+    	void ColumnOut_Level(OUT int32& v) { BindCol(7, v); };
 
     private:
     	int32 _userId = {};

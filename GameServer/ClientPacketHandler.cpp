@@ -7,6 +7,8 @@
 #include "JwtAuth.h"
 #include "Player.h"
 
+#include "RoomManager.h"
+
 PacketHandlerFunc GPacketHandler[UINT16_MAX];
 
 
@@ -99,12 +101,14 @@ bool Handle_C_CharacterListRequest(PacketSessionRef& session, Protocol::C_Charac
 	for(const auto& character : characters)
 	{
 		PlayerRef playerRef = MakeShared<Player>();
-		playerRef->playerId = 1; // 나중에 CharacterId로 바꿔야함 DB에 있는
-		playerRef->username = character.username(); // utf8
-		playerRef->posX = 0; // 나중에 posX로 바꿔야함 DB에 
-		playerRef->posY = 0; // 나중에 posY로 바꿔야함 DB에
-		playerRef->gender = static_cast<EGender>(character.gender());
-		playerRef->region = static_cast<ERegion>(character.region());
+		playerRef->playerId = character.characterId; // 나중에 CharacterId로 바꿔야함 DB에 있는
+		playerRef->username = character.username; // utf8
+		playerRef->posX = character.posX; // 나중에 posX로 바꿔야함 DB에 
+		playerRef->posY = character.posY; // 나중에 posY로 바꿔야함 DB에
+		playerRef->gender = character.gender;
+		playerRef->region = character.region;
+		playerRef->dir = character.dir;
+		//playerRef->level = character.level; // TODO: 플레이어(캐릭터) 데이터 쪽으로 넘겨야함, level, exp, hp, mp
 		
 		playerRef->ownerSession = gameSession; // WeakPtr로 참조
 
@@ -115,7 +119,11 @@ bool Handle_C_CharacterListRequest(PacketSessionRef& session, Protocol::C_Charac
 	auto* out = reply.mutable_characters();
 	out->Reserve(static_cast<int>(characters.size()));
 	for (const auto& m : characters) {
-		out->Add()->CopyFrom(m);
+		Protocol::CharacterSummaryInfo* info = out->Add();
+		info->set_username(m.username);
+		info->set_level(1); // 나중에 이건, 플레이어 데이터에서 확충
+		info->set_gender(m.gender);
+		info->set_region(m.region);
 	}
 
 	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(reply);
@@ -132,10 +140,19 @@ bool Handle_C_EnterGame(PacketSessionRef& session, Protocol::C_EnterGame& pkt)
 
 	gameSession->_currentPlayer = gameSession->_players[index];
 	
-	//TODO Room 할당
+
+	// 입장할 룸 결정
+	const int roomId = 0; // TODO: DB에서 받아 결정
+	RoomRef room = RoomManager::Instance().Find(roomId);
+	if (!room) {
+		std::cout << "존재하지 않는 룸" << std::endl; 
+	}
+
+	room->DoAsync(&Room::Enter, gameSession->_currentPlayer); 
+	
 
 	gameSession->SetState(GameSession::State::InRoom);
-	// Room에 들어왔음을 다른 플레이어에 알려야함
+	// Room에 들어왔음을 다른 플레이어에 알려야함 -- 이거 OnEnter()에서 진행함.
 	// GRoom->DoAsync(&Room::Enter, gameSession->_currentPlayer);
 
 	Protocol::S_EnterGame enterGamePkt;
@@ -149,5 +166,19 @@ bool Handle_C_EnterGame(PacketSessionRef& session, Protocol::C_EnterGame& pkt)
 }
 bool Handle_C_PlayerMoveRequest(PacketSessionRef& session, Protocol::C_PlayerMoveRequest& pkt)
 {
-	return false;
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if(gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+	if(!player) return false;
+
+	RoomRef room = player->GetRoom();
+	room->DoAsync([room, player, pkt] {
+		room->OnRecvMoveReq(player, pkt);
+	});
+
+	GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_PlayerMoveReqeust]: Client가 Room에 이동요청함 \n");
+	return true;
 }

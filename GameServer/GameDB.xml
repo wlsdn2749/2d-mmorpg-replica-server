@@ -44,6 +44,7 @@
     <Column name="lastZone" type="int" notnull="true"/>
     <Column name="posX" type="int" notnull="true" default="0"/>
     <Column name="posY" type="int" notnull="true" default="0"/>
+    <Column name="dir" type="int" notnull="true" default="0"/>
     <Column name="createdAt" type="datetime" notnull="true" default="SYSUTCDATETIME()"/>
     <Index type="clustered">
       <PrimaryKey/>
@@ -95,7 +96,7 @@
         SET NOCOUNT ON;
 
         SELECT
-            username, gender, region, level
+            characterId, username, posX, posY, gender, region, dir, level
         FROM [dbo].[Characters]
         WHERE [userId] = @userId
         ORDER BY [level] DESC;

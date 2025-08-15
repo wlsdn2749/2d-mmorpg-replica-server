@@ -34,6 +34,15 @@
     <Filter Include="GameContents\Accounts">
       <UniqueIdentifier>{bfb6b4ca-3b0f-41a2-bfd7-0f812b9dd008}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameContents\Rooms">
+      <UniqueIdentifier>{53b872b9-9846-42a0-a610-4ba758e5f07b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shard">
+      <UniqueIdentifier>{517d60da-12c6-4ce9-b2b7-5444a5df4d52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameContents\Maps">
+      <UniqueIdentifier>{61ce9d40-9684-4117-99b0-9da3d10d52e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameServer.cpp">
@@ -78,6 +87,25 @@
     <ClCompile Include="CharacterRepository.cpp">
       <Filter>Repository</Filter>
     </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>GameContents\Rooms</Filter>
+    </ClCompile>
+    <ClCompile Include="TownRoom.cpp">
+      <Filter>GameContents\Rooms</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomManager.cpp">
+      <Filter>GameContents\Rooms</Filter>
+    </ClCompile>
+    <ClCompile Include="ShardBoot.cpp">
+      <Filter>Shard</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalQueueShard.cpp">
+      <Filter>Shard</Filter>
+    </ClCompile>
+    <ClCompile Include="SharedOwner.cpp">
+      <Filter>Shard</Filter>
+    </ClCompile>
+    <ClCompile Include="MapData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -128,6 +156,28 @@
     <ClInclude Include="CharacterRepository.h">
       <Filter>Repository</Filter>
     </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>GameContents\Rooms</Filter>
+    </ClInclude>
+    <ClInclude Include="TownRoom.h">
+      <Filter>GameContents\Rooms</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomManager.h">
+      <Filter>GameContents\Rooms</Filter>
+    </ClInclude>
+    <ClInclude Include="IJobQueueOwner.h">
+      <Filter>Shard</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalQueueShard.h">
+      <Filter>Shard</Filter>
+    </ClInclude>
+    <ClInclude Include="SharedOwner.h">
+      <Filter>Shard</Filter>
+    </ClInclude>
+    <ClInclude Include="ShardBoot.h">
+      <Filter>Shard</Filter>
+    </ClInclude>
+    <ClInclude Include="MapData.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="appsettings.json">

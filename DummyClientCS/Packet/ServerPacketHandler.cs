@@ -12,7 +12,23 @@ using System.Threading.Tasks;
 
 namespace Packet
 {
+    static class NetDebug
+    {
+        // 내 플레이어ID가 있으면 넣어두면 "ME" 표시 가능 (없으면 -1 유지)
+        public static int MyPlayerId = -1;
 
+        public static string DirToStr(EDirection dir) => dir switch
+        {
+            EDirection.DirUp => "UP   ↑",
+            EDirection.DirDown => "DOWN ↓",
+            EDirection.DirLeft => "LEFT ←",
+            EDirection.DirRight => "RIGHT→",
+            _ => dir.ToString()
+        };
+
+        public static string PosToStr(Vector2Info pos)
+            => pos is null ? "(?,?)" : $"({pos.X},{pos.Y})";
+    }
     public class ServerPacketHandler
     {
         internal static void HANDLE_Invalid(PacketSession session, IMessage message)
@@ -61,11 +77,6 @@ namespace Packet
             Console.WriteLine($"[CreateCharacterReply] 결과: {result.Detail}.");
         }
 
-        internal static void HANDLE_S_BroadcastPlayerMove(PacketSession session, S_BroadcastPlayerMove move)
-        {
-            throw new NotImplementedException();
-        }
-
         internal static void HANDLE_S_CharacterListReply(PacketSession session, S_CharacterListReply reply)
         {
             foreach(var character in reply.Characters)
@@ -77,6 +88,55 @@ namespace Packet
         internal static void HANDLE_S_EnterGame(PacketSession session, S_EnterGame game)
         {
             Console.WriteLine("[S_EnterGame] 게임 접속 완료");
+        }
+
+        internal static void HANDLE_S_PlayerList(PacketSession session, S_PlayerList list)
+        {
+            Console.WriteLine("[S_PlayerList] 내가 접속해서 다른사람의 리스트 받아옴");
+        }
+
+        internal static void HANDLE_S_BroadcastPlayerEnter(PacketSession session, S_BroadcastPlayerEnter enter)
+        {
+            Console.WriteLine("[S_BroadcastPlayerEnter] 누군가 접속해서 그 정보를 받아옴");
+        }
+
+        internal static void HANDLE_S_BroadcastPlayerLeave(PacketSession session, S_BroadcastPlayerLeave leave)
+        {
+            Console.WriteLine("[S_BroadcastPlayerLeave] 누군가 나가서 그 정보를 받아옴");
+        }
+
+        internal static void HANDLE_S_PlayerMoveReply(PacketSession session, S_PlayerMoveReply reply)
+        {
+            // 안전하게 널 체크
+            var pos = reply.NewPos;
+            var posStr = NetDebug.PosToStr(pos);
+            var dirStr = NetDebug.DirToStr(reply.Direction);
+
+            // result/tick 필드가 없을 수도 있으니 Try 포맷
+            string resultStr = reply?.Result.ToString() ?? "N/A";
+            int tick = reply?.Tick ?? -1;
+
+            string meTag = (reply.PlayerId == NetDebug.MyPlayerId && NetDebug.MyPlayerId >= 0) ? " (ME)" : "";
+
+            Console.WriteLine(
+                $"[S_PlayerMoveReply] pid={reply.PlayerId}{meTag} " +
+                $"dir={dirStr} pos={posStr} result={resultStr} tick={tick}");
+        }
+
+        internal static void HANDLE_S_BroadcastPlayerMove(PacketSession session, S_BroadcastPlayerMove move)
+        {
+            int tick = move?.Tick ?? -1;
+            Console.WriteLine($"[S_BroadcastPlayerMove] tick={tick} count={move.PlayerMoves.Count}");
+
+            foreach (var m in move.PlayerMoves)
+            {
+                var pos = m.NewPos;
+                var posStr = NetDebug.PosToStr(pos);
+                var dirStr = NetDebug.DirToStr(m.Direction);
+                string meTag = (m.PlayerId == NetDebug.MyPlayerId && NetDebug.MyPlayerId >= 0) ? " (ME)" : "";
+
+                Console.WriteLine($"  - pid={m.PlayerId}{meTag} dir={dirStr} pos={posStr}");
+            }
         }
     }
 }

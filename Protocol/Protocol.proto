@@ -13,8 +13,12 @@ enum MsgId
 	S_CHARACTER_LIST_REPLY = 5;
 	C_ENTER_GAME = 6;
 	S_ENTER_GAME = 7;
-	C_PLAYER_MOVE_REQUEST = 8;
-	S_BROADCAST_PLAYER_MOVE = 9;
+	S_PLAYER_LIST = 8;
+	S_BROADCAST_PLAYER_ENTER = 9;
+	S_BROADCAST_PLAYER_LEAVE = 10;
+	C_PLAYER_MOVE_REQUEST = 11;
+	S_PLAYER_MOVE_REPLY = 12;
+	S_BROADCAST_PLAYER_MOVE = 13;
 }
 
 // 클라 -> 게임 서버 jwt 로그인 인증 (0)
@@ -68,17 +72,47 @@ message S_EnterGame
 	int32 success = 1;
 }
 
-
 // (8)
+message S_PlayerList
+{
+	int32 myPlayerId = 1;
+	repeated PlayerInfo players = 2;
+}
+
+// (9)
+message S_BroadcastPlayerEnter
+{
+	PlayerInfo player = 1;
+}
+
+// (10)
+message S_BroadcastPlayerLeave
+{
+	int32 playerId = 1;
+	ELeaveReason reason = 2;
+}
+// (11)
 message C_PlayerMoveRequest
 {
 	Vector2Info clickWorldPos = 1;
 }
 
-// (9)
+// (12)
+message S_PlayerMoveReply
+{
+	int32 playerId = 1;
+	int32 clientSeq = 2;
+	EMoveResult result = 3;
+	int32 tick = 4;
+	Vector2Info newPos = 5;
+	EDirection direction = 6;
+}
+
+// (13)
 message S_BroadcastPlayerMove
 {
-	repeated PlayerMoveInfo playerMoves = 1;
+	int32 tick = 1;
+	repeated PlayerMoveInfo playerMoves = 2; // 변경된 플레이어만 담을 것
 }
 
 enum ELoginResult
@@ -111,7 +145,20 @@ enum EDirection
 	DIR_RIGHT = 3;
 }
 
+enum ELeaveReason
+{
+	UNKNOWN = 0;
+	LOGOUT = 1; // 게임종료
+	CHANGE_ROOM = 2; // 룸 이동
+	DISCONNECT = 3; // 네트워크 끊김
+}
 
+enum EMoveResult
+{
+	OK = 0;
+	COOLDOWN = 1;
+	BLOCKED = 2;
+}
 
 message Vector2Info
 {
@@ -123,6 +170,7 @@ message PlayerMoveInfo
 {
 	int32 playerId = 1;
 	EDirection direction = 2; 
+	Vector2Info newPos = 3;
 }
 
 message CharacterSummaryInfo
@@ -131,4 +179,13 @@ message CharacterSummaryInfo
 	int32 level = 2;
 	EGender gender = 3;
 	ERegion region = 4;
+}
+
+message PlayerInfo
+{
+	int32 id = 1;
+	string username = 2;
+
+	Vector2Info pos = 3;
+	EDirection direction = 4;
 }
