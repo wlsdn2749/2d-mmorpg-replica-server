@@ -18,10 +18,11 @@ enum : uint16
 	PKT_S_PlayerList = 8,
 	PKT_S_BroadcastPlayerEnter = 9,
 	PKT_C_LeaveGame = 10,
-	PKT_S_BroadcastPlayerLeave = 11,
-	PKT_C_PlayerMoveRequest = 12,
-	PKT_S_PlayerMoveReply = 13,
-	PKT_S_BroadcastPlayerMove = 14,
+	PKT_S_LeaveGame = 11,
+	PKT_S_BroadcastPlayerLeave = 12,
+	PKT_C_PlayerMoveRequest = 13,
+	PKT_S_PlayerMoveReply = 14,
+	PKT_S_BroadcastPlayerMove = 15,
 
 };
 
@@ -64,6 +65,7 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::S_EnterGame& pkt) { return MakeSendBuffer(pkt, PKT_S_EnterGame); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_PlayerList& pkt) { return MakeSendBuffer(pkt, PKT_S_PlayerList); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerEnter& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerEnter); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_LeaveGame& pkt) { return MakeSendBuffer(pkt, PKT_S_LeaveGame); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerLeave& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerLeave); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_PlayerMoveReply& pkt) { return MakeSendBuffer(pkt, PKT_S_PlayerMoveReply); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerMove& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerMove); };

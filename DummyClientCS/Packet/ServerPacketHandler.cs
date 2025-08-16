@@ -100,11 +100,6 @@ namespace Packet
             Console.WriteLine("[S_BroadcastPlayerEnter] 누군가 접속해서 그 정보를 받아옴");
         }
 
-        internal static void HANDLE_S_BroadcastPlayerLeave(PacketSession session, S_BroadcastPlayerLeave leave)
-        {
-            Console.WriteLine("[S_BroadcastPlayerLeave] 누군가 나가서 그 정보를 받아옴");
-        }
-
         internal static void HANDLE_S_PlayerMoveReply(PacketSession session, S_PlayerMoveReply reply)
         {
             // 안전하게 널 체크
@@ -137,6 +132,16 @@ namespace Packet
 
                 Console.WriteLine($"  - pid={m.PlayerId}{meTag} dir={dirStr} pos={posStr}");
             }
+        }
+
+        internal static void HANDLE_S_LeaveGame(PacketSession session, S_LeaveGame game)
+        {
+            Console.WriteLine("[S_LeaveGame] 내가 방을 나갔음");
+        }
+
+        internal static void HANDLE_S_BroadcastPlayerLeave(PacketSession session, S_BroadcastPlayerLeave leave)
+        {
+            Console.WriteLine("[S_BroadcastPlayerLeave] 누군가 나가서 그 정보를 받아옴");
         }
     }
 }

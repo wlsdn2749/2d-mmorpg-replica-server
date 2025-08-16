@@ -16,10 +16,11 @@ enum MsgId
 	S_PLAYER_LIST = 8;
 	S_BROADCAST_PLAYER_ENTER = 9;
 	C_LEAVE_GAME = 10;
-	S_BROADCAST_PLAYER_LEAVE = 11;
-	C_PLAYER_MOVE_REQUEST = 12;
-	S_PLAYER_MOVE_REPLY = 13;
-	S_BROADCAST_PLAYER_MOVE = 14;
+	S_LEAVE_GAME = 11;
+	S_BROADCAST_PLAYER_LEAVE = 12;
+	C_PLAYER_MOVE_REQUEST = 13;
+	S_PLAYER_MOVE_REPLY = 14;
+	S_BROADCAST_PLAYER_MOVE = 15;
 }
 
 // 클라 -> 게임 서버 jwt 로그인 인증 (0)
@@ -93,18 +94,24 @@ message C_LeaveGame
 }
 
 // (11)
+message S_LeaveGame
+{
+	int32 success = 1;
+}
+
+// (12)
 message S_BroadcastPlayerLeave
 {
 	int32 playerId = 1;
 	ELeaveReason reason = 2;
 }
-// (12)
+// (13)
 message C_PlayerMoveRequest
 {
 	Vector2Info clickWorldPos = 1;
 }
 
-// (13)
+// (14)
 message S_PlayerMoveReply
 {
 	int32 playerId = 1;
@@ -115,7 +122,7 @@ message S_PlayerMoveReply
 	EDirection direction = 6;
 }
 
-// (14)
+// (15)
 message S_BroadcastPlayerMove
 {
 	int32 tick = 1;

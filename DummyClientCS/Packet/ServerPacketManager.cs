@@ -19,10 +19,11 @@ namespace Packet
 	    PKT_S_PlayerList = 8,
 	    PKT_S_BroadcastPlayerEnter = 9,
 	    PKT_C_LeaveGame = 10,
-	    PKT_S_BroadcastPlayerLeave = 11,
-	    PKT_C_PlayerMoveRequest = 12,
-	    PKT_S_PlayerMoveReply = 13,
-	    PKT_S_BroadcastPlayerMove = 14,
+	    PKT_S_LeaveGame = 11,
+	    PKT_S_BroadcastPlayerLeave = 12,
+	    PKT_C_PlayerMoveRequest = 13,
+	    PKT_S_PlayerMoveReply = 14,
+	    PKT_S_BroadcastPlayerMove = 15,
     }
     public class ServerPacketManager
     {
@@ -67,6 +68,7 @@ namespace Packet
             RegisterHandler((ushort)PacketID.PKT_S_EnterGame, ServerPacketHandler.HANDLE_S_EnterGame, S_EnterGame.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_PlayerList, ServerPacketHandler.HANDLE_S_PlayerList, S_PlayerList.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_BroadcastPlayerEnter, ServerPacketHandler.HANDLE_S_BroadcastPlayerEnter, S_BroadcastPlayerEnter.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_LeaveGame, ServerPacketHandler.HANDLE_S_LeaveGame, S_LeaveGame.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_BroadcastPlayerLeave, ServerPacketHandler.HANDLE_S_BroadcastPlayerLeave, S_BroadcastPlayerLeave.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_PlayerMoveReply, ServerPacketHandler.HANDLE_S_PlayerMoveReply, S_PlayerMoveReply.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_BroadcastPlayerMove, ServerPacketHandler.HANDLE_S_BroadcastPlayerMove, S_BroadcastPlayerMove.Parser);

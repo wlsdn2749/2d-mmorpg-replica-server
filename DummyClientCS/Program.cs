@@ -37,7 +37,7 @@ class Program
             Console.WriteLine("[5] 캐릭터 리스트 받기");
             Console.WriteLine("[6] 게임 접속 :          --- Index = 0");
             Console.WriteLine("[7] 상하좌우 움직이기:   --- 0,1,2,3 [상하좌우]");
-
+            Console.WriteLine("[8] 룸에서 나가기 : ");
             Console.WriteLine("[0] 종료");
             Console.Write("선택: ");
 
@@ -72,6 +72,9 @@ class Program
                     int dir;
                     Int32.TryParse(Console.ReadLine(), out dir);
                     await SessionManager.Instance.SendForEachMove(dir);
+                    break;
+                case "8":
+                    await SessionManager.Instance.SendForLeave();
                     break;
                 case "0":
                     return;

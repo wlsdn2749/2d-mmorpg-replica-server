@@ -82,7 +82,7 @@ void TownRoom::BroadcastLeave(const PlayerRef& leaver)
 	pkt.set_playerid(leaver->playerId);
 	pkt.set_reason(Protocol::ELeaveReason::UNKNOWN); // 일단 Unknown 고정
 	
-
+	std::cout << "" << std::endl;
 	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
 	Broadcast(sendBuffer, leaver->playerId);
 }

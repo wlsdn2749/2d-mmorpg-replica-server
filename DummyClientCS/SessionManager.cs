@@ -166,6 +166,7 @@ namespace DummyClientCS
                     {
                         Reason = 0
                     };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
                 }
             }
         }

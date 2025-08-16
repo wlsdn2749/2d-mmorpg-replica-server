@@ -166,6 +166,18 @@ bool Handle_C_EnterGame(PacketSessionRef& session, Protocol::C_EnterGame& pkt)
 }
 bool Handle_C_LeaveGame(PacketSessionRef& session, Protocol::C_LeaveGame& pkt)
 {
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	auto room = gameSession->_currentPlayer->GetRoom();
+	room->DoAsync(&Room::Leave, gameSession->_currentPlayer);
+	// 룸을 나감 -> 룸에서 제거, 브로드캐스팅
+
+	Protocol::S_LeaveGame leaveGamePkt;
+	leaveGamePkt.set_success(true);
+	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(leaveGamePkt);
+	session->Send(sendBuffer);
+
+	GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_LeaveGame]: Client가 Room에서 나감 \n");
 	return true;
 }
 bool Handle_C_PlayerMoveRequest(PacketSessionRef& session, Protocol::C_PlayerMoveRequest& pkt)
