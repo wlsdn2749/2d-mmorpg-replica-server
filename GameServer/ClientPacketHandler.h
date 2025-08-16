@@ -17,10 +17,11 @@ enum : uint16
 	PKT_S_EnterGame = 7,
 	PKT_S_PlayerList = 8,
 	PKT_S_BroadcastPlayerEnter = 9,
-	PKT_S_BroadcastPlayerLeave = 10,
-	PKT_C_PlayerMoveRequest = 11,
-	PKT_S_PlayerMoveReply = 12,
-	PKT_S_BroadcastPlayerMove = 13,
+	PKT_C_LeaveGame = 10,
+	PKT_S_BroadcastPlayerLeave = 11,
+	PKT_C_PlayerMoveRequest = 12,
+	PKT_S_PlayerMoveReply = 13,
+	PKT_S_BroadcastPlayerMove = 14,
 
 };
 
@@ -31,6 +32,7 @@ bool Handle_C_JwtLoginRequest(PacketSessionRef& session, Protocol::C_JwtLoginReq
 bool Handle_C_CreateCharacterRequest(PacketSessionRef& session, Protocol::C_CreateCharacterRequest& pkt);
 bool Handle_C_CharacterListRequest(PacketSessionRef& session, Protocol::C_CharacterListRequest& pkt);
 bool Handle_C_EnterGame(PacketSessionRef& session, Protocol::C_EnterGame& pkt);
+bool Handle_C_LeaveGame(PacketSessionRef& session, Protocol::C_LeaveGame& pkt);
 bool Handle_C_PlayerMoveRequest(PacketSessionRef& session, Protocol::C_PlayerMoveRequest& pkt);
 
 class ClientPacketHandler
@@ -47,6 +49,7 @@ public:
 		GPacketHandler[PKT_C_CreateCharacterRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_CreateCharacterRequest>(Handle_C_CreateCharacterRequest, session, buffer, len); };
 		GPacketHandler[PKT_C_CharacterListRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_CharacterListRequest>(Handle_C_CharacterListRequest, session, buffer, len); };
 		GPacketHandler[PKT_C_EnterGame] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_EnterGame>(Handle_C_EnterGame, session, buffer, len); };
+		GPacketHandler[PKT_C_LeaveGame] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_LeaveGame>(Handle_C_LeaveGame, session, buffer, len); };
 		GPacketHandler[PKT_C_PlayerMoveRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PlayerMoveRequest>(Handle_C_PlayerMoveRequest, session, buffer, len); };
 		
 	}

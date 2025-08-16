@@ -105,7 +105,9 @@
     <ClCompile Include="SharedOwner.cpp">
       <Filter>Shard</Filter>
     </ClCompile>
-    <ClCompile Include="MapData.cpp" />
+    <ClCompile Include="MapData.cpp">
+      <Filter>GameContents\Maps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -177,7 +179,9 @@
     <ClInclude Include="ShardBoot.h">
       <Filter>Shard</Filter>
     </ClInclude>
-    <ClInclude Include="MapData.h" />
+    <ClInclude Include="MapData.h">
+      <Filter>GameContents\Maps</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="appsettings.json">

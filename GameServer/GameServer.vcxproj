@@ -145,7 +145,8 @@
 CALL $(SolutionDIr)Common\Procedures\GenProcs.bat
 xcopy /Y /D $(SolutionDir)third_party\openssl\bin\libcrypto-3-x64.dll "$(OutDir)"
 xcopy /Y /D $(SolutionDir)third_party\openssl\bin\libssl-3-x64.dll "$(OutDir)"
-xcopy /Y /D $(SolutionDir)GameServer\appsettings.json "$(OutDir)"</Command>
+xcopy /Y /D $(SolutionDir)GameServer\appsettings.json "$(OutDir)"
+xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -171,7 +172,8 @@ xcopy /Y /D $(SolutionDir)GameServer\appsettings.json "$(OutDir)"</Command>
 CALL $(SolutionDIr)Common\Procedures\GenProcs.bat
 xcopy /Y /D $(SolutionDir)third_party\openssl\bin\libcrypto-3-x64.dll "$(OutDir)"
 xcopy /Y /D $(SolutionDir)third_party\openssl\bin\libssl-3-x64.dll "$(OutDir)"
-xcopy /Y /D $(SolutionDir)GameServer\appsettings.json "$(OutDir)"</Command>
+xcopy /Y /D $(SolutionDir)GameServer\appsettings.json "$(OutDir)"
+xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

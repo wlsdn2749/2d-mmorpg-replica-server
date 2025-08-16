@@ -154,5 +154,20 @@ namespace DummyClientCS
                 }
             }
         }
+        public async Task SendForLeave()
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach(ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_LeaveGame
+                    {
+                        Reason = 0
+                    };
+                }
+            }
+        }
     }
 }

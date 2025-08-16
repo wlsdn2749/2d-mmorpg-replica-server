@@ -18,10 +18,11 @@ namespace Packet
 	    PKT_S_EnterGame = 7,
 	    PKT_S_PlayerList = 8,
 	    PKT_S_BroadcastPlayerEnter = 9,
-	    PKT_S_BroadcastPlayerLeave = 10,
-	    PKT_C_PlayerMoveRequest = 11,
-	    PKT_S_PlayerMoveReply = 12,
-	    PKT_S_BroadcastPlayerMove = 13,
+	    PKT_C_LeaveGame = 10,
+	    PKT_S_BroadcastPlayerLeave = 11,
+	    PKT_C_PlayerMoveRequest = 12,
+	    PKT_S_PlayerMoveReply = 13,
+	    PKT_S_BroadcastPlayerMove = 14,
     }
     public class ServerPacketManager
     {
@@ -51,6 +52,7 @@ namespace Packet
         public static ArraySegment<byte> MakeSendBuffer(C_CreateCharacterRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_CreateCharacterRequest);
         public static ArraySegment<byte> MakeSendBuffer(C_CharacterListRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_CharacterListRequest);
         public static ArraySegment<byte> MakeSendBuffer(C_EnterGame pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_EnterGame);
+        public static ArraySegment<byte> MakeSendBuffer(C_LeaveGame pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_LeaveGame);
         public static ArraySegment<byte> MakeSendBuffer(C_PlayerMoveRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PlayerMoveRequest);
 
         void Register()

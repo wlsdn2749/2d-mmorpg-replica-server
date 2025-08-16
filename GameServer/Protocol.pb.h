@@ -59,6 +59,9 @@ extern C_EnterGameDefaultTypeInternal _C_EnterGame_default_instance_;
 class C_JwtLoginRequest;
 struct C_JwtLoginRequestDefaultTypeInternal;
 extern C_JwtLoginRequestDefaultTypeInternal _C_JwtLoginRequest_default_instance_;
+class C_LeaveGame;
+struct C_LeaveGameDefaultTypeInternal;
+extern C_LeaveGameDefaultTypeInternal _C_LeaveGame_default_instance_;
 class C_PlayerMoveRequest;
 struct C_PlayerMoveRequestDefaultTypeInternal;
 extern C_PlayerMoveRequestDefaultTypeInternal _C_PlayerMoveRequest_default_instance_;
@@ -107,6 +110,7 @@ template<> ::Protocol::C_CharacterListRequest* Arena::CreateMaybeMessage<::Proto
 template<> ::Protocol::C_CreateCharacterRequest* Arena::CreateMaybeMessage<::Protocol::C_CreateCharacterRequest>(Arena*);
 template<> ::Protocol::C_EnterGame* Arena::CreateMaybeMessage<::Protocol::C_EnterGame>(Arena*);
 template<> ::Protocol::C_JwtLoginRequest* Arena::CreateMaybeMessage<::Protocol::C_JwtLoginRequest>(Arena*);
+template<> ::Protocol::C_LeaveGame* Arena::CreateMaybeMessage<::Protocol::C_LeaveGame>(Arena*);
 template<> ::Protocol::C_PlayerMoveRequest* Arena::CreateMaybeMessage<::Protocol::C_PlayerMoveRequest>(Arena*);
 template<> ::Protocol::CharacterSummaryInfo* Arena::CreateMaybeMessage<::Protocol::CharacterSummaryInfo>(Arena*);
 template<> ::Protocol::PlayerInfo* Arena::CreateMaybeMessage<::Protocol::PlayerInfo>(Arena*);
@@ -135,10 +139,11 @@ enum MsgId : int {
   S_ENTER_GAME = 7,
   S_PLAYER_LIST = 8,
   S_BROADCAST_PLAYER_ENTER = 9,
-  S_BROADCAST_PLAYER_LEAVE = 10,
-  C_PLAYER_MOVE_REQUEST = 11,
-  S_PLAYER_MOVE_REPLY = 12,
-  S_BROADCAST_PLAYER_MOVE = 13,
+  C_LEAVE_GAME = 10,
+  S_BROADCAST_PLAYER_LEAVE = 11,
+  C_PLAYER_MOVE_REQUEST = 12,
+  S_PLAYER_MOVE_REPLY = 13,
+  S_BROADCAST_PLAYER_MOVE = 14,
   MsgId_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   MsgId_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
@@ -1858,6 +1863,154 @@ class S_BroadcastPlayerEnter final :
 };
 // -------------------------------------------------------------------
 
+class C_LeaveGame final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.C_LeaveGame) */ {
+ public:
+  inline C_LeaveGame() : C_LeaveGame(nullptr) {}
+  ~C_LeaveGame() override;
+  explicit PROTOBUF_CONSTEXPR C_LeaveGame(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  C_LeaveGame(const C_LeaveGame& from);
+  C_LeaveGame(C_LeaveGame&& from) noexcept
+    : C_LeaveGame() {
+    *this = ::std::move(from);
+  }
+
+  inline C_LeaveGame& operator=(const C_LeaveGame& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline C_LeaveGame& operator=(C_LeaveGame&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const C_LeaveGame& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const C_LeaveGame* internal_default_instance() {
+    return reinterpret_cast<const C_LeaveGame*>(
+               &_C_LeaveGame_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    10;
+
+  friend void swap(C_LeaveGame& a, C_LeaveGame& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(C_LeaveGame* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(C_LeaveGame* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  C_LeaveGame* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<C_LeaveGame>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const C_LeaveGame& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const C_LeaveGame& from) {
+    C_LeaveGame::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(C_LeaveGame* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.C_LeaveGame";
+  }
+  protected:
+  explicit C_LeaveGame(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kReasonFieldNumber = 1,
+  };
+  // .Protocol.ELeaveReason reason = 1;
+  void clear_reason();
+  ::Protocol::ELeaveReason reason() const;
+  void set_reason(::Protocol::ELeaveReason value);
+  private:
+  ::Protocol::ELeaveReason _internal_reason() const;
+  void _internal_set_reason(::Protocol::ELeaveReason value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Protocol.C_LeaveGame)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int reason_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_Protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
 class S_BroadcastPlayerLeave final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.S_BroadcastPlayerLeave) */ {
  public:
@@ -1906,7 +2059,7 @@ class S_BroadcastPlayerLeave final :
                &_S_BroadcastPlayerLeave_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    11;
 
   friend void swap(S_BroadcastPlayerLeave& a, S_BroadcastPlayerLeave& b) {
     a.Swap(&b);
@@ -2065,7 +2218,7 @@ class C_PlayerMoveRequest final :
                &_C_PlayerMoveRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    12;
 
   friend void swap(C_PlayerMoveRequest& a, C_PlayerMoveRequest& b) {
     a.Swap(&b);
@@ -2222,7 +2375,7 @@ class S_PlayerMoveReply final :
                &_S_PlayerMoveReply_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    13;
 
   friend void swap(S_PlayerMoveReply& a, S_PlayerMoveReply& b) {
     a.Swap(&b);
@@ -2434,7 +2587,7 @@ class S_BroadcastPlayerMove final :
                &_S_BroadcastPlayerMove_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    14;
 
   friend void swap(S_BroadcastPlayerMove& a, S_BroadcastPlayerMove& b) {
     a.Swap(&b);
@@ -2602,7 +2755,7 @@ class Vector2Info final :
                &_Vector2Info_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    15;
 
   friend void swap(Vector2Info& a, Vector2Info& b) {
     a.Swap(&b);
@@ -2761,7 +2914,7 @@ class PlayerMoveInfo final :
                &_PlayerMoveInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    16;
 
   friend void swap(PlayerMoveInfo& a, PlayerMoveInfo& b) {
     a.Swap(&b);
@@ -2940,7 +3093,7 @@ class CharacterSummaryInfo final :
                &_CharacterSummaryInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    16;
+    17;
 
   friend void swap(CharacterSummaryInfo& a, CharacterSummaryInfo& b) {
     a.Swap(&b);
@@ -3126,7 +3279,7 @@ class PlayerInfo final :
                &_PlayerInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    17;
+    18;
 
   friend void swap(PlayerInfo& a, PlayerInfo& b) {
     a.Swap(&b);
@@ -3776,6 +3929,30 @@ inline void S_BroadcastPlayerEnter::set_allocated_player(::Protocol::PlayerInfo*
   }
   _impl_.player_ = player;
   // @@protoc_insertion_point(field_set_allocated:Protocol.S_BroadcastPlayerEnter.player)
+}
+
+// -------------------------------------------------------------------
+
+// C_LeaveGame
+
+// .Protocol.ELeaveReason reason = 1;
+inline void C_LeaveGame::clear_reason() {
+  _impl_.reason_ = 0;
+}
+inline ::Protocol::ELeaveReason C_LeaveGame::_internal_reason() const {
+  return static_cast< ::Protocol::ELeaveReason >(_impl_.reason_);
+}
+inline ::Protocol::ELeaveReason C_LeaveGame::reason() const {
+  // @@protoc_insertion_point(field_get:Protocol.C_LeaveGame.reason)
+  return _internal_reason();
+}
+inline void C_LeaveGame::_internal_set_reason(::Protocol::ELeaveReason value) {
+  
+  _impl_.reason_ = value;
+}
+inline void C_LeaveGame::set_reason(::Protocol::ELeaveReason value) {
+  _internal_set_reason(value);
+  // @@protoc_insertion_point(field_set:Protocol.C_LeaveGame.reason)
 }
 
 // -------------------------------------------------------------------
@@ -4653,6 +4830,8 @@ inline void PlayerInfo::set_direction(::Protocol::EDirection value) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -3,6 +3,7 @@
 #include "JobQueue.h"
 #include "Player.h"
 #include "GameSession.h"
+#include "MapData.h"
 
 /*------------------------
 		Room (Base)

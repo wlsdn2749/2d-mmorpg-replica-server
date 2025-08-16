@@ -164,6 +164,10 @@ bool Handle_C_EnterGame(PacketSessionRef& session, Protocol::C_EnterGame& pkt)
 
 	return true;
 }
+bool Handle_C_LeaveGame(PacketSessionRef& session, Protocol::C_LeaveGame& pkt)
+{
+	return true;
+}
 bool Handle_C_PlayerMoveRequest(PacketSessionRef& session, Protocol::C_PlayerMoveRequest& pkt)
 {
 	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);

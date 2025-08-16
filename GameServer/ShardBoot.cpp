@@ -41,7 +41,7 @@ void StartShardedQueues(int totalRooms, int roomsPerQueue, uint32 timeBudgetMs)
 void CreateRooms()
 {
 	// 마을(0)
-    auto town0Map = MapData::FromFile("Map_001.txt");
+    auto town0Map = MapData::FromFile("./Resources/Maps/Map_001.txt");
 	auto town0 = std::make_shared<TownRoom>(Room::Cfg{ 0, "Town", 50, 200 });
     const int roomsPerQueue = 2;
     town0->SetOwner(gQueues[OwnerIndexForRoom(town0->RoomId(), roomsPerQueue)].get());
