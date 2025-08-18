@@ -21,6 +21,9 @@ enum MsgId
 	C_PLAYER_MOVE_REQUEST = 13;
 	S_PLAYER_MOVE_REPLY = 14;
 	S_BROADCAST_PLAYER_MOVE = 15;
+	S_CHANGE_ROOM_BEGIN = 16;
+	C_CHANGE_ROOM_READY = 17;
+	S_CHANGE_ROOM_COMMIT = 18;
 }
 
 // 클라 -> 게임 서버 jwt 로그인 인증 (0)
@@ -129,6 +132,23 @@ message S_BroadcastPlayerMove
 	repeated PlayerMoveInfo playerMoves = 2; // 변경된 플레이어만 담을 것
 }
 
+// (16) 서버가 시작 알림 (클라 입력 잠금, 로딩 UI)
+message S_ChangeRoomBegin {
+  int32 transitionId = 1;
+  int32 mapId        = 2;
+}
+
+// (17) 클라가 준비 완료 통보(리소스/타일맵 로드 완료)
+message C_ChangeRoomReady {
+  int32 transitionId = 1;
+}
+
+// (18) 서버가 최종 스폰 좌표/스냅샷 확정
+message S_ChangeRoomCommit {
+  int32 transitionId = 1;
+  S_PlayerList snapshots = 2; // 들어오자마자 월드 동기화
+}
+
 enum ELoginResult
 {
     SUCCESS = 0;
@@ -161,10 +181,10 @@ enum EDirection
 
 enum ELeaveReason
 {
-	UNKNOWN = 0;
-	LOGOUT = 1; // 게임종료
-	CHANGE_ROOM = 2; // 룸 이동
-	DISCONNECT = 3; // 네트워크 끊김
+	LEAVE_UNKNOWN = 0;
+	LEAVE_LOGOUT = 1; // 게임종료
+	LEAVE_CHANGE_ROOM = 2; // 룸 이동
+	LEAVE_DISCONNECT = 3; // 네트워크 끊김
 }
 
 enum EMoveResult
@@ -174,6 +194,12 @@ enum EMoveResult
 	BLOCKED = 2;
 }
 
+enum EEnterReason
+{
+	ENTER_UNKNOWN = 0;
+	ENTER_LOGIN = 1;
+	ENTER_CHANGE_ROOM = 2;
+}
 message Vector2Info
 {
 	int32 x = 1;

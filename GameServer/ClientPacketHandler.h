@@ -23,7 +23,6 @@ enum : uint16
 	PKT_C_PlayerMoveRequest = 13,
 	PKT_S_PlayerMoveReply = 14,
 	PKT_S_BroadcastPlayerMove = 15,
-
 };
 
 // Custom Handler : 직접 컨텐츠 작업자가 CPP를 만들어야함

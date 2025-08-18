@@ -21,6 +21,8 @@ public:
 		size_t	capacity			= 200; // 최대 수용량
 		int		moveCooldownTicks	= 5;
 		int		rotateCooldownTicks	= 5;
+		int		spawnX				= 0;
+		int		spawnY				= 0;
 	};
 
 	explicit Room(Cfg cfg);
@@ -60,8 +62,10 @@ public:
 	const std::string& Name() const noexcept { return _cfg.name; }
 	size_t PlayerCount() const noexcept { return _players.size(); }
 	size_t Capacity() const noexcept { return _cfg.capacity; }
-	int moveCooldownTicks() const noexcept {return _cfg.moveCooldownTicks; }
-	int rotateCooldownTicks() const noexcept {return _cfg.rotateCooldownTicks;}
+	int MoveCooldownTicks() const noexcept { return _cfg.moveCooldownTicks; }
+	int RotateCooldownTicks() const noexcept { return _cfg.rotateCooldownTicks; }
+	int SpawnX() const noexcept { return _cfg.spawnX; }
+	int SpawnY() const noexcept { return _cfg.spawnY; }
 
 /*----------------------------
 	Room Specifics Utils
@@ -79,7 +83,7 @@ public:
 	(IOCP/패킷 스레드에서 호출)
 --------------------------------------------*/
 public:
-	void Enter(PlayerRef player); // 반드시 Room::DoAsync() 형태로 호출 해야함
+	void Enter(PlayerRef player, Protocol::EEnterReason reason = Protocol::EEnterReason::ENTER_UNKNOWN); // 반드시 Room::DoAsync() 형태로 호출 해야함
 	void Leave(PlayerRef player);
 	void OnRecvMoveReq(PlayerRef p, const Protocol::C_PlayerMoveRequest& req);
 
@@ -107,6 +111,7 @@ protected:
 	// 파생 훅
 	virtual void OnEnter(const PlayerRef&) {}
 	virtual void OnLeave(const PlayerRef&) {}
+	virtual void OnEnterSetSpawn(const PlayerRef&) {}
 
 private:
 	// 예약 버퍼(간단 구현: 이번 틱 동안만 유효)

@@ -38,6 +38,8 @@ bool Handle_C_JwtLoginRequest(PacketSessionRef& session, Protocol::C_JwtLoginReq
 
 		// TODO: Accounts에 계정 정보 저장
 		auto fut = AccountRepository::UpsertAccountAsync(userId);
+
+		gameSession->SetState(GameSession::State::InGame);
 	}
 
 	Protocol::S_JwtLoginReply replyPkt;
@@ -148,7 +150,7 @@ bool Handle_C_EnterGame(PacketSessionRef& session, Protocol::C_EnterGame& pkt)
 		std::cout << "존재하지 않는 룸" << std::endl; 
 	}
 
-	room->DoAsync(&Room::Enter, gameSession->_currentPlayer); 
+	room->DoAsync(&Room::Enter, gameSession->_currentPlayer, Protocol::EEnterReason::ENTER_LOGIN); 
 	
 
 	gameSession->SetState(GameSession::State::InRoom);
@@ -171,6 +173,8 @@ bool Handle_C_LeaveGame(PacketSessionRef& session, Protocol::C_LeaveGame& pkt)
 	auto room = gameSession->_currentPlayer->GetRoom();
 	room->DoAsync(&Room::Leave, gameSession->_currentPlayer);
 	// 룸을 나감 -> 룸에서 제거, 브로드캐스팅
+
+	gameSession->SetState(GameSession::State::InGame);
 
 	Protocol::S_LeaveGame leaveGamePkt;
 	leaveGamePkt.set_success(true);

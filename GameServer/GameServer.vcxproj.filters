@@ -108,6 +108,9 @@
     <ClCompile Include="MapData.cpp">
       <Filter>GameContents\Maps</Filter>
     </ClCompile>
+    <ClCompile Include="FieldRoom.cpp">
+      <Filter>GameContents\Rooms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -181,6 +184,9 @@
     </ClInclude>
     <ClInclude Include="MapData.h">
       <Filter>GameContents\Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="FieldRoom.h">
+      <Filter>GameContents\Rooms</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

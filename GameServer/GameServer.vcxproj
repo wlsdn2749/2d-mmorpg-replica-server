@@ -183,6 +183,7 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClCompile Include="ClientPacketHandler.cpp" />
     <ClCompile Include="DBDisPatcher.cpp" />
     <ClCompile Include="DBWorker.cpp" />
+    <ClCompile Include="FieldRoom.cpp" />
     <ClCompile Include="GameServer.cpp" />
     <ClCompile Include="GameSession.cpp" />
     <ClCompile Include="GameSessionAccessor.cpp" />
@@ -217,6 +218,7 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClInclude Include="ClientPacketHandler.h" />
     <ClInclude Include="DBDisPatcher.h" />
     <ClInclude Include="DBWorker.h" />
+    <ClInclude Include="FieldRoom.h" />
     <ClInclude Include="GameSession.h" />
     <ClInclude Include="GameSessionAccessor.h" />
     <ClInclude Include="GameSessionContainer.h" />

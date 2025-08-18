@@ -45,7 +45,7 @@ Protocol::EDirection Room::DecideFacing(const PlayerRef& p, const Protocol::Vect
 /*------------------------
 	내부 구현 (룸 스레드)
 ------------------------*/
-void Room::Enter(PlayerRef p)
+void Room::Enter(PlayerRef p, Protocol::EEnterReason enterReason)
 {
 	// player가 nullptr 일경우
 	if(!p) return;
@@ -61,6 +61,11 @@ void Room::Enter(PlayerRef p)
 	
 	p->SetRoom(SharedThis());
 
+    // 만약 맵 이동이라면?
+    if (enterReason == Protocol::EEnterReason::ENTER_CHANGE_ROOM)
+    {
+        OnEnterSetSpawn(p);
+    }
 	GConsoleLogger->WriteStdOut(Color::GREEN, L"Room에 ENter 입장\n");
 	OnEnter(p); // 여기서 모두에게 BroadCasting?
 }

@@ -25,7 +25,7 @@ Protocols/
 .idea/
 
 # Configuation
-# appsettings.json
+appsettings.json
 
 # Creds
 key.pem
@@ -44,22 +44,22 @@ env
 
 # 서버 실행파일 해제
 # 하지만 AuthServer/bin/Debug/net8.0/은 추적
-!AuthServer/
-!AuthServer/bin/
-!AuthServer/bin/Debug/
-!AuthServer/bin/Debug/net8.0/
-!AuthServer/bin/Debug/net8.0/*.pdb
+# !AuthServer/
+# !AuthServer/bin/
+# !AuthServer/bin/Debug/
+# !AuthServer/bin/Debug/net8.0/
+# !AuthServer/bin/Debug/net8.0/*.pdb
 
-!GameServer/
-!GameServer/Build/
-!GameServer/Build/x64/
-!GameServer/Build/x64/Debug/
-!GameServer/Build/x64/Debug/*.pdb
+# !GameServer/
+# !GameServer/Build/
+# !GameServer/Build/x64/
+# !GameServer/Build/x64/Debug/
+# !GameServer/Build/x64/Debug/*.pdb
 
-!DummyClientCS
-!DummyClientCS/bin/
-!DummyClientCS/bin/Debug/
-!DummyClientCS/bin/Debug/*.pdb
+# !DummyClientCS
+# !DummyClientCS/bin/
+# !DummyClientCS/bin/Debug/
+# !DummyClientCS/bin/Debug/*.pdb
 
 !Common/Protobuf/
 !Common/Protobuf/include/
@@ -73,8 +73,8 @@ env
 third_party/grpc/
 !third_party/openssl/include/
 
-_Client/Win*
-!_Client/
-!_Client/Win.zip
+# _Client/Win*
+# !_Client/
+# !_Client/Win.zip
 
-Build.zip
+# Build.zip

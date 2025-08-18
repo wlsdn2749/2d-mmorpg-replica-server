@@ -21,6 +21,7 @@ protected:
 	// 입장/퇴장 훅
 	void OnEnter(const PlayerRef& p) override;
 	void OnLeave(const PlayerRef& p) override;
+	void OnEnterSetSpawn(const PlayerRef& p) override;
 
 	// 매 틱 호출
 	void OnRoomTick() override;

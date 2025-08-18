@@ -73,13 +73,16 @@ namespace Google.Protobuf.Protocol {
             "EhEKDUdFTkRFUl9GRU1BTEUQAio6CgdFUmVnaW9uEg8KC1JFR0lPTl9OT05F",
             "EAASDQoJUkVHSU9OX0dPEAESDwoLUkVHSU9OX0JBQ0sQAipDCgpFRGlyZWN0",
             "aW9uEgoKBkRJUl9VUBAAEgwKCERJUl9ET1dOEAESDAoIRElSX0xFRlQQAhIN",
-            "CglESVJfUklHSFQQAypICgxFTGVhdmVSZWFzb24SCwoHVU5LTk9XThAAEgoK",
-            "BkxPR09VVBABEg8KC0NIQU5HRV9ST09NEAISDgoKRElTQ09OTkVDVBADKjAK",
-            "C0VNb3ZlUmVzdWx0EgYKAk9LEAASDAoIQ09PTERPV04QARILCgdCTE9DS0VE",
-            "EAJCG6oCGEdvb2dsZS5Qcm90b2J1Zi5Qcm90b2NvbGIGcHJvdG8z"));
+            "CglESVJfUklHSFQQAypgCgxFTGVhdmVSZWFzb24SEQoNTEVBVkVfVU5LTk9X",
+            "ThAAEhAKDExFQVZFX0xPR09VVBABEhUKEUxFQVZFX0NIQU5HRV9ST09NEAIS",
+            "FAoQTEVBVkVfRElTQ09OTkVDVBADKjAKC0VNb3ZlUmVzdWx0EgYKAk9LEAAS",
+            "DAoIQ09PTERPV04QARILCgdCTE9DS0VEEAIqSQoMRUVudGVyUmVhc29uEhEK",
+            "DUVOVEVSX1VOS05PV04QABIPCgtFTlRFUl9MT0dJThABEhUKEUVOVEVSX0NI",
+            "QU5HRV9ST09NEAJCG6oCGEdvb2dsZS5Qcm90b2J1Zi5Qcm90b2NvbGIGcHJv",
+            "dG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Google.Protobuf.Protocol.MsgId), typeof(global::Google.Protobuf.Protocol.ELoginResult), typeof(global::Google.Protobuf.Protocol.EGender), typeof(global::Google.Protobuf.Protocol.ERegion), typeof(global::Google.Protobuf.Protocol.EDirection), typeof(global::Google.Protobuf.Protocol.ELeaveReason), typeof(global::Google.Protobuf.Protocol.EMoveResult), }, null, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Google.Protobuf.Protocol.MsgId), typeof(global::Google.Protobuf.Protocol.ELoginResult), typeof(global::Google.Protobuf.Protocol.EGender), typeof(global::Google.Protobuf.Protocol.ERegion), typeof(global::Google.Protobuf.Protocol.EDirection), typeof(global::Google.Protobuf.Protocol.ELeaveReason), typeof(global::Google.Protobuf.Protocol.EMoveResult), typeof(global::Google.Protobuf.Protocol.EEnterReason), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.C_JwtLoginRequest), global::Google.Protobuf.Protocol.C_JwtLoginRequest.Parser, new[]{ "AccessToken" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.S_JwtLoginReply), global::Google.Protobuf.Protocol.S_JwtLoginReply.Parser, new[]{ "Result" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Google.Protobuf.Protocol.C_CreateCharacterRequest), global::Google.Protobuf.Protocol.C_CreateCharacterRequest.Parser, new[]{ "Username", "Gender", "Region" }, null, null, null, null),
@@ -152,25 +155,31 @@ namespace Google.Protobuf.Protocol {
   }
 
   public enum ELeaveReason {
-    [pbr::OriginalName("UNKNOWN")] Unknown = 0,
+    [pbr::OriginalName("LEAVE_UNKNOWN")] LeaveUnknown = 0,
     /// <summary>
     /// 게임종료
     /// </summary>
-    [pbr::OriginalName("LOGOUT")] Logout = 1,
+    [pbr::OriginalName("LEAVE_LOGOUT")] LeaveLogout = 1,
     /// <summary>
     /// 룸 이동
     /// </summary>
-    [pbr::OriginalName("CHANGE_ROOM")] ChangeRoom = 2,
+    [pbr::OriginalName("LEAVE_CHANGE_ROOM")] LeaveChangeRoom = 2,
     /// <summary>
     /// 네트워크 끊김
     /// </summary>
-    [pbr::OriginalName("DISCONNECT")] Disconnect = 3,
+    [pbr::OriginalName("LEAVE_DISCONNECT")] LeaveDisconnect = 3,
   }
 
   public enum EMoveResult {
     [pbr::OriginalName("OK")] Ok = 0,
     [pbr::OriginalName("COOLDOWN")] Cooldown = 1,
     [pbr::OriginalName("BLOCKED")] Blocked = 2,
+  }
+
+  public enum EEnterReason {
+    [pbr::OriginalName("ENTER_UNKNOWN")] EnterUnknown = 0,
+    [pbr::OriginalName("ENTER_LOGIN")] EnterLogin = 1,
+    [pbr::OriginalName("ENTER_CHANGE_ROOM")] EnterChangeRoom = 2,
   }
 
   #endregion
@@ -2249,7 +2258,7 @@ namespace Google.Protobuf.Protocol {
 
     /// <summary>Field number for the "reason" field.</summary>
     public const int ReasonFieldNumber = 1;
-    private global::Google.Protobuf.Protocol.ELeaveReason reason_ = global::Google.Protobuf.Protocol.ELeaveReason.Unknown;
+    private global::Google.Protobuf.Protocol.ELeaveReason reason_ = global::Google.Protobuf.Protocol.ELeaveReason.LeaveUnknown;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::Google.Protobuf.Protocol.ELeaveReason Reason {
@@ -2282,7 +2291,7 @@ namespace Google.Protobuf.Protocol {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Reason != global::Google.Protobuf.Protocol.ELeaveReason.Unknown) hash ^= Reason.GetHashCode();
+      if (Reason != global::Google.Protobuf.Protocol.ELeaveReason.LeaveUnknown) hash ^= Reason.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -2301,7 +2310,7 @@ namespace Google.Protobuf.Protocol {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Reason != global::Google.Protobuf.Protocol.ELeaveReason.Unknown) {
+      if (Reason != global::Google.Protobuf.Protocol.ELeaveReason.LeaveUnknown) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Reason);
       }
@@ -2315,7 +2324,7 @@ namespace Google.Protobuf.Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Reason != global::Google.Protobuf.Protocol.ELeaveReason.Unknown) {
+      if (Reason != global::Google.Protobuf.Protocol.ELeaveReason.LeaveUnknown) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Reason);
       }
@@ -2329,7 +2338,7 @@ namespace Google.Protobuf.Protocol {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Reason != global::Google.Protobuf.Protocol.ELeaveReason.Unknown) {
+      if (Reason != global::Google.Protobuf.Protocol.ELeaveReason.LeaveUnknown) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Reason);
       }
       if (_unknownFields != null) {
@@ -2344,7 +2353,7 @@ namespace Google.Protobuf.Protocol {
       if (other == null) {
         return;
       }
-      if (other.Reason != global::Google.Protobuf.Protocol.ELeaveReason.Unknown) {
+      if (other.Reason != global::Google.Protobuf.Protocol.ELeaveReason.LeaveUnknown) {
         Reason = other.Reason;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -2646,7 +2655,7 @@ namespace Google.Protobuf.Protocol {
 
     /// <summary>Field number for the "reason" field.</summary>
     public const int ReasonFieldNumber = 2;
-    private global::Google.Protobuf.Protocol.ELeaveReason reason_ = global::Google.Protobuf.Protocol.ELeaveReason.Unknown;
+    private global::Google.Protobuf.Protocol.ELeaveReason reason_ = global::Google.Protobuf.Protocol.ELeaveReason.LeaveUnknown;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::Google.Protobuf.Protocol.ELeaveReason Reason {
@@ -2681,7 +2690,7 @@ namespace Google.Protobuf.Protocol {
     public override int GetHashCode() {
       int hash = 1;
       if (PlayerId != 0) hash ^= PlayerId.GetHashCode();
-      if (Reason != global::Google.Protobuf.Protocol.ELeaveReason.Unknown) hash ^= Reason.GetHashCode();
+      if (Reason != global::Google.Protobuf.Protocol.ELeaveReason.LeaveUnknown) hash ^= Reason.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -2704,7 +2713,7 @@ namespace Google.Protobuf.Protocol {
         output.WriteRawTag(8);
         output.WriteInt32(PlayerId);
       }
-      if (Reason != global::Google.Protobuf.Protocol.ELeaveReason.Unknown) {
+      if (Reason != global::Google.Protobuf.Protocol.ELeaveReason.LeaveUnknown) {
         output.WriteRawTag(16);
         output.WriteEnum((int) Reason);
       }
@@ -2722,7 +2731,7 @@ namespace Google.Protobuf.Protocol {
         output.WriteRawTag(8);
         output.WriteInt32(PlayerId);
       }
-      if (Reason != global::Google.Protobuf.Protocol.ELeaveReason.Unknown) {
+      if (Reason != global::Google.Protobuf.Protocol.ELeaveReason.LeaveUnknown) {
         output.WriteRawTag(16);
         output.WriteEnum((int) Reason);
       }
@@ -2739,7 +2748,7 @@ namespace Google.Protobuf.Protocol {
       if (PlayerId != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(PlayerId);
       }
-      if (Reason != global::Google.Protobuf.Protocol.ELeaveReason.Unknown) {
+      if (Reason != global::Google.Protobuf.Protocol.ELeaveReason.LeaveUnknown) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Reason);
       }
       if (_unknownFields != null) {
@@ -2757,7 +2766,7 @@ namespace Google.Protobuf.Protocol {
       if (other.PlayerId != 0) {
         PlayerId = other.PlayerId;
       }
-      if (other.Reason != global::Google.Protobuf.Protocol.ELeaveReason.Unknown) {
+      if (other.Reason != global::Google.Protobuf.Protocol.ELeaveReason.LeaveUnknown) {
         Reason = other.Reason;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);

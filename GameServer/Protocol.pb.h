@@ -278,16 +278,16 @@ inline bool EDirection_Parse(
     EDirection_descriptor(), name, value);
 }
 enum ELeaveReason : int {
-  UNKNOWN = 0,
-  LOGOUT = 1,
-  CHANGE_ROOM = 2,
-  DISCONNECT = 3,
+  LEAVE_UNKNOWN = 0,
+  LEAVE_LOGOUT = 1,
+  LEAVE_CHANGE_ROOM = 2,
+  LEAVE_DISCONNECT = 3,
   ELeaveReason_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   ELeaveReason_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool ELeaveReason_IsValid(int value);
-constexpr ELeaveReason ELeaveReason_MIN = UNKNOWN;
-constexpr ELeaveReason ELeaveReason_MAX = DISCONNECT;
+constexpr ELeaveReason ELeaveReason_MIN = LEAVE_UNKNOWN;
+constexpr ELeaveReason ELeaveReason_MAX = LEAVE_DISCONNECT;
 constexpr int ELeaveReason_ARRAYSIZE = ELeaveReason_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ELeaveReason_descriptor();
@@ -329,6 +329,32 @@ inline bool EMoveResult_Parse(
     ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, EMoveResult* value) {
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<EMoveResult>(
     EMoveResult_descriptor(), name, value);
+}
+enum EEnterReason : int {
+  ENTER_UNKNOWN = 0,
+  ENTER_LOGIN = 1,
+  ENTER_CHANGE_ROOM = 2,
+  EEnterReason_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  EEnterReason_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool EEnterReason_IsValid(int value);
+constexpr EEnterReason EEnterReason_MIN = ENTER_UNKNOWN;
+constexpr EEnterReason EEnterReason_MAX = ENTER_CHANGE_ROOM;
+constexpr int EEnterReason_ARRAYSIZE = EEnterReason_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* EEnterReason_descriptor();
+template<typename T>
+inline const std::string& EEnterReason_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, EEnterReason>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function EEnterReason_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    EEnterReason_descriptor(), enum_t_value);
+}
+inline bool EEnterReason_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, EEnterReason* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<EEnterReason>(
+    EEnterReason_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -5086,6 +5112,11 @@ template <> struct is_proto_enum< ::Protocol::EMoveResult> : ::std::true_type {}
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::EMoveResult>() {
   return ::Protocol::EMoveResult_descriptor();
+}
+template <> struct is_proto_enum< ::Protocol::EEnterReason> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::EEnterReason>() {
+  return ::Protocol::EEnterReason_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

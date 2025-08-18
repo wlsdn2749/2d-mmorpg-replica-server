@@ -301,7 +301,7 @@ struct PlayerInfoDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PlayerInfoDefaultTypeInternal _PlayerInfo_default_instance_;
 }  // namespace Protocol
 static ::_pb::Metadata file_level_metadata_Protocol_2eproto[20];
-static const ::_pb::EnumDescriptor* file_level_enum_descriptors_Protocol_2eproto[7];
+static const ::_pb::EnumDescriptor* file_level_enum_descriptors_Protocol_2eproto[8];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_Protocol_2eproto = nullptr;
 
 const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -567,15 +567,17 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "_FEMALE\020\002*:\n\007ERegion\022\017\n\013REGION_NONE\020\000\022\r\n"
   "\tREGION_GO\020\001\022\017\n\013REGION_BACK\020\002*C\n\nEDirect"
   "ion\022\n\n\006DIR_UP\020\000\022\014\n\010DIR_DOWN\020\001\022\014\n\010DIR_LEF"
-  "T\020\002\022\r\n\tDIR_RIGHT\020\003*H\n\014ELeaveReason\022\013\n\007UN"
-  "KNOWN\020\000\022\n\n\006LOGOUT\020\001\022\017\n\013CHANGE_ROOM\020\002\022\016\n\n"
-  "DISCONNECT\020\003*0\n\013EMoveResult\022\006\n\002OK\020\000\022\014\n\010C"
-  "OOLDOWN\020\001\022\013\n\007BLOCKED\020\002B\033\252\002\030Google.Protob"
-  "uf.Protocolb\006proto3"
+  "T\020\002\022\r\n\tDIR_RIGHT\020\003*`\n\014ELeaveReason\022\021\n\rLE"
+  "AVE_UNKNOWN\020\000\022\020\n\014LEAVE_LOGOUT\020\001\022\025\n\021LEAVE"
+  "_CHANGE_ROOM\020\002\022\024\n\020LEAVE_DISCONNECT\020\003*0\n\013"
+  "EMoveResult\022\006\n\002OK\020\000\022\014\n\010COOLDOWN\020\001\022\013\n\007BLO"
+  "CKED\020\002*I\n\014EEnterReason\022\021\n\rENTER_UNKNOWN\020"
+  "\000\022\017\n\013ENTER_LOGIN\020\001\022\025\n\021ENTER_CHANGE_ROOM\020"
+  "\002B\033\252\002\030Google.Protobuf.Protocolb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 2379, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 2478, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
     &descriptor_table_Protocol_2eproto_once, nullptr, 0, 20,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
@@ -700,6 +702,21 @@ const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* EMoveResult_descriptor() {
   return file_level_enum_descriptors_Protocol_2eproto[6];
 }
 bool EMoveResult_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* EEnterReason_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_Protocol_2eproto);
+  return file_level_enum_descriptors_Protocol_2eproto[7];
+}
+bool EEnterReason_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:

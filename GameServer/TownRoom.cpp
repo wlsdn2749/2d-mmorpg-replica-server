@@ -24,6 +24,12 @@ void TownRoom::OnLeave(const PlayerRef& p)
 	BroadcastLeave(p);
 }
 
+void TownRoom::OnEnterSetSpawn(const PlayerRef& p)
+{
+	p->posX = SpawnX();
+	p->posY = SpawnY();
+}
+
 void TownRoom::OnRoomTick()
 {
 	Room::OnRoomTick();
@@ -80,7 +86,7 @@ void TownRoom::BroadcastLeave(const PlayerRef& leaver)
 {
 	Protocol::S_BroadcastPlayerLeave pkt;
 	pkt.set_playerid(leaver->playerId);
-	pkt.set_reason(Protocol::ELeaveReason::UNKNOWN); // 일단 Unknown 고정
+	pkt.set_reason(Protocol::ELeaveReason::LEAVE_UNKNOWN); // 일단 Unknown 고정
 	
 	std::cout << "" << std::endl;
 	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
