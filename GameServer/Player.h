@@ -2,6 +2,13 @@
 
 class Room; // 전방 선언
 
+struct PendingRoomChange {
+	bool active = false;
+	int transitionId = 0;
+	int dstMapId = 0;
+	int dstPortalId = 0;
+};
+
 class Player
 {
 
@@ -26,9 +33,33 @@ public:
 	// 현재 바라보는 방향
 	Protocol::EDirection dir{ 0 };
 
+	// 레벨도 있어야 하긴하나, 나중에 구현
 
-// 레벨도 있어야 하긴하나, 나중에 구현
+/*---------------------------------
+	Player Room Transitioning Data
+---------------------------------*/
+public:
+	int NextTransitionId() { return ++_lastTransitionId; }
 
+	void BeginRoomChangeState(int tid, int dstMapId, int dstPortalId) {
+		_transferring = true;
+		_pending.active = true;
+		_pending.transitionId = tid;
+		_pending.dstMapId = dstMapId;
+		_pending.dstPortalId = dstPortalId;
+	}
+	void ClearRoomChangeState() {
+		_transferring = false;
+		_pending = {};
+	}
+
+	bool IsTransferring() const { return _transferring; }
+	const PendingRoomChange& PendingChange() const { return _pending; }
+
+private:
+	int _lastTransitionId = 0;
+	bool _transferring = false;
+	PendingRoomChange _pending;
 /*----------------------------
 	Player Runtime Links
 ----------------------------*/

@@ -3,7 +3,7 @@
 
 #include <fstream>
 
-std::shared_ptr<const MapData> MapData::FromFile(const std::string& path)
+std::shared_ptr<MapData> MapData::FromFile(const std::string& path)
 {
     auto map = std::make_shared<MapData>();
 

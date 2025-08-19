@@ -40,13 +40,37 @@ void StartShardedQueues(int totalRooms, int roomsPerQueue, uint32 timeBudgetMs)
 
 void CreateRooms()
 {
-	// 마을(0)
-    auto town0Map = MapData::FromFile("./Resources/Maps/Map_001.txt");
-	auto town0 = std::make_shared<TownRoom>(Room::Cfg{ 0, "Town", 50, 200 });
     const int roomsPerQueue = 2;
-    town0->SetOwner(gQueues[OwnerIndexForRoom(town0->RoomId(), roomsPerQueue)].get());
-	town0->StartTicking(); // 매 틱마다 호출하는 함수
-	RoomManager::Instance().Add(town0);
+    // 마을(0)
+    {
+        auto town0Map = MapData::FromFile("./Resources/Maps/Map_001.txt");
+        town0Map->DefinePortal(PortalLink{
+            1001, /* srcPortalId */
+            1, /* dstMapId */
+            2001, /*dstPortalId */
+            });
+        town0Map->MapTileToPortal(2, 2, 1001);
+        auto town0 = std::make_shared<TownRoom>(Room::Cfg{ 0, "Town", 50, 200 }, town0Map);
+        
+        town0->SetOwner(gQueues[OwnerIndexForRoom(town0->RoomId(), roomsPerQueue)].get());
+        town0->StartTicking(); // 매 틱마다 호출하는 함수
+        RoomManager::Instance().Add(town0);
+    }
+
+    // 사냥터(1)
+    {
+        auto town1Map = MapData::FromFile("./Resources/Maps/Map_002.txt");
+        auto town1 = std::make_shared<TownRoom>(Room::Cfg{ 1, "Field", 50, 200 }, town1Map);
+        town1Map->DefinePortal(PortalLink{
+            2001, /* srcPortalId */
+            0, /* dstMapId */
+            1001, /*dstPortalId */
+        });
+        town1Map->MapTileToPortal(3, 3, 2001);
+        town1->SetOwner(gQueues[OwnerIndexForRoom(town1->RoomId(), roomsPerQueue)].get());
+        town1->StartTicking(); // 매 틱마다 호출하는 함수
+        RoomManager::Instance().Add(town1);
+    }
 }
 
 void StopShardedQueues()

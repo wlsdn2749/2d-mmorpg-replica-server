@@ -13,7 +13,7 @@ class Program
     static async Task Main()
     {
         using var channel = GrpcChannel.ForAddress(
-            "https://mmo.jdj.kr:8443",
+            "https://serotina.gyu.be:8443",
             new GrpcChannelOptions
             {
                 //Credentials = Grpc.Core.ChannelCredentials.Insecure
@@ -87,7 +87,7 @@ class Program
 
     static async Task ConnectToGameServer()
     {
-        string  host = "mmo.jdj.kr";
+        string  host = "serotina.gyu.be";
         int     port = 6201;
 
         IPAddress ipAddr = (await Dns.GetHostAddressesAsync(host))[0];

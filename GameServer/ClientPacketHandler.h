@@ -23,6 +23,10 @@ enum : uint16
 	PKT_C_PlayerMoveRequest = 13,
 	PKT_S_PlayerMoveReply = 14,
 	PKT_S_BroadcastPlayerMove = 15,
+	PKT_S_ChangeRoomBegin = 16,
+	PKT_C_ChangeRoomReady = 17,
+	PKT_S_ChangeRoomCommit = 18,
+
 };
 
 // Custom Handler : 직접 컨텐츠 작업자가 CPP를 만들어야함
@@ -34,6 +38,7 @@ bool Handle_C_CharacterListRequest(PacketSessionRef& session, Protocol::C_Charac
 bool Handle_C_EnterGame(PacketSessionRef& session, Protocol::C_EnterGame& pkt);
 bool Handle_C_LeaveGame(PacketSessionRef& session, Protocol::C_LeaveGame& pkt);
 bool Handle_C_PlayerMoveRequest(PacketSessionRef& session, Protocol::C_PlayerMoveRequest& pkt);
+bool Handle_C_ChangeRoomReady(PacketSessionRef& session, Protocol::C_ChangeRoomReady& pkt);
 
 class ClientPacketHandler
 {
@@ -51,6 +56,7 @@ public:
 		GPacketHandler[PKT_C_EnterGame] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_EnterGame>(Handle_C_EnterGame, session, buffer, len); };
 		GPacketHandler[PKT_C_LeaveGame] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_LeaveGame>(Handle_C_LeaveGame, session, buffer, len); };
 		GPacketHandler[PKT_C_PlayerMoveRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PlayerMoveRequest>(Handle_C_PlayerMoveRequest, session, buffer, len); };
+		GPacketHandler[PKT_C_ChangeRoomReady] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_ChangeRoomReady>(Handle_C_ChangeRoomReady, session, buffer, len); };
 		
 	}
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
@@ -68,6 +74,8 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerLeave& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerLeave); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_PlayerMoveReply& pkt) { return MakeSendBuffer(pkt, PKT_S_PlayerMoveReply); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerMove& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerMove); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_ChangeRoomBegin& pkt) { return MakeSendBuffer(pkt, PKT_S_ChangeRoomBegin); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_ChangeRoomCommit& pkt) { return MakeSendBuffer(pkt, PKT_S_ChangeRoomCommit); };
 
 private:
 	template<typename PacketType, typename ProcessFunc>

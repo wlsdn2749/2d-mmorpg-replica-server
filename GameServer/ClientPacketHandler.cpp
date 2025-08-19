@@ -38,8 +38,6 @@ bool Handle_C_JwtLoginRequest(PacketSessionRef& session, Protocol::C_JwtLoginReq
 
 		// TODO: Accounts에 계정 정보 저장
 		auto fut = AccountRepository::UpsertAccountAsync(userId);
-
-		gameSession->SetState(GameSession::State::InGame);
 	}
 
 	Protocol::S_JwtLoginReply replyPkt;
@@ -150,7 +148,7 @@ bool Handle_C_EnterGame(PacketSessionRef& session, Protocol::C_EnterGame& pkt)
 		std::cout << "존재하지 않는 룸" << std::endl; 
 	}
 
-	room->DoAsync(&Room::Enter, gameSession->_currentPlayer, Protocol::EEnterReason::ENTER_LOGIN); 
+	room->DoAsync(&Room::Enter, gameSession->_currentPlayer); 
 	
 
 	gameSession->SetState(GameSession::State::InRoom);
@@ -169,19 +167,17 @@ bool Handle_C_EnterGame(PacketSessionRef& session, Protocol::C_EnterGame& pkt)
 bool Handle_C_LeaveGame(PacketSessionRef& session, Protocol::C_LeaveGame& pkt)
 {
 	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+	PlayerRef player = gameSession->_currentPlayer;
 
-	auto room = gameSession->_currentPlayer->GetRoom();
-	room->DoAsync(&Room::Leave, gameSession->_currentPlayer);
-	// 룸을 나감 -> 룸에서 제거, 브로드캐스팅
+	RoomRef room = player->GetRoom();
 
-	gameSession->SetState(GameSession::State::InGame);
-
+	room->DoAsync(&Room::Leave, player);
+	GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_LeaveGame]: Client가 Room에서 나감 \n");
+	
 	Protocol::S_LeaveGame leaveGamePkt;
 	leaveGamePkt.set_success(true);
 	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(leaveGamePkt);
 	session->Send(sendBuffer);
-
-	GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_LeaveGame]: Client가 Room에서 나감 \n");
 	return true;
 }
 bool Handle_C_PlayerMoveRequest(PacketSessionRef& session, Protocol::C_PlayerMoveRequest& pkt)
@@ -201,4 +197,25 @@ bool Handle_C_PlayerMoveRequest(PacketSessionRef& session, Protocol::C_PlayerMov
 
 	GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_PlayerMoveReqeust]: Client가 Room에 이동요청함 \n");
 	return true;
+}
+
+bool Handle_C_ChangeRoomReady(PacketSessionRef& session, Protocol::C_ChangeRoomReady& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+	
+	if(gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+	if (!player) return false;
+	
+	// 여기서 룸 이동 요청을하고?
+
+	RoomRef room = player->GetRoom();
+	room->DoAsync([room, player, pkt] {
+		room->ChangeRoomReady(player, pkt); 
+	});
+	// 이동요청이 완료 되면 룸에서 S_ChangeRommCommit을 보냄
+
+	GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_ChangeRoomReady]: Client가 룸 이동 준비요청함 \n");
 }

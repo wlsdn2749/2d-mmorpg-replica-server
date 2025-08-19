@@ -4,9 +4,6 @@
     <Filter Include="Main">
       <UniqueIdentifier>{81dbd6d7-7659-486e-9319-589ca742064b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Utils">
-      <UniqueIdentifier>{42096fb5-3698-450a-b570-590d69d7fd0c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameContents">
       <UniqueIdentifier>{36f14166-cf9c-4607-a4ca-a17b5307f83f}</UniqueIdentifier>
     </Filter>
@@ -42,6 +39,9 @@
     </Filter>
     <Filter Include="GameContents\Maps">
       <UniqueIdentifier>{61ce9d40-9684-4117-99b0-9da3d10d52e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{42096fb5-3698-450a-b570-590d69d7fd0c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

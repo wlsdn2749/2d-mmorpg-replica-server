@@ -21,14 +21,13 @@ protected:
 	// 입장/퇴장 훅
 	void OnEnter(const PlayerRef& p) override;
 	void OnLeave(const PlayerRef& p) override;
-	void OnEnterSetSpawn(const PlayerRef& p) override;
+	
+	//std::optional<SpawnPoint> ResolveSpawn(int portalId) const override; // 스폰
 
 	// 매 틱 호출
 	void OnRoomTick() override;
 
-private:
-	void SendWorldSnapShotTo(const PlayerRef& p);
-	void BroadcastEnter(const PlayerRef& newcomer);
-	void BroadcastLeave(const PlayerRef& leaver);
+	// 이동 로직
+	void OnPlayerMoved(const PlayerRef& p, int ox, int oy) override;
 };
 

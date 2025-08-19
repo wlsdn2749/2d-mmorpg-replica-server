@@ -24,6 +24,9 @@ namespace Packet
 	    PKT_C_PlayerMoveRequest = 13,
 	    PKT_S_PlayerMoveReply = 14,
 	    PKT_S_BroadcastPlayerMove = 15,
+	    PKT_S_ChangeRoomBegin = 16,
+	    PKT_C_ChangeRoomReady = 17,
+	    PKT_S_ChangeRoomCommit = 18,
     }
     public class ServerPacketManager
     {
@@ -55,6 +58,7 @@ namespace Packet
         public static ArraySegment<byte> MakeSendBuffer(C_EnterGame pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_EnterGame);
         public static ArraySegment<byte> MakeSendBuffer(C_LeaveGame pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_LeaveGame);
         public static ArraySegment<byte> MakeSendBuffer(C_PlayerMoveRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PlayerMoveRequest);
+        public static ArraySegment<byte> MakeSendBuffer(C_ChangeRoomReady pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_ChangeRoomReady);
 
         void Register()
         {
@@ -72,6 +76,8 @@ namespace Packet
             RegisterHandler((ushort)PacketID.PKT_S_BroadcastPlayerLeave, ServerPacketHandler.HANDLE_S_BroadcastPlayerLeave, S_BroadcastPlayerLeave.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_PlayerMoveReply, ServerPacketHandler.HANDLE_S_PlayerMoveReply, S_PlayerMoveReply.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_BroadcastPlayerMove, ServerPacketHandler.HANDLE_S_BroadcastPlayerMove, S_BroadcastPlayerMove.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_ChangeRoomBegin, ServerPacketHandler.HANDLE_S_ChangeRoomBegin, S_ChangeRoomBegin.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_ChangeRoomCommit, ServerPacketHandler.HANDLE_S_ChangeRoomCommit, S_ChangeRoomCommit.Parser);
             
                   
         }

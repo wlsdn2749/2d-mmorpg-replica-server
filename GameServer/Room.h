@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "GameSession.h"
 #include "MapData.h"
+#include <optional>
 
 /*------------------------
 		Room (Base)
@@ -21,12 +22,10 @@ public:
 		size_t	capacity			= 200; // 최대 수용량
 		int		moveCooldownTicks	= 5;
 		int		rotateCooldownTicks	= 5;
-		int		spawnX				= 0;
-		int		spawnY				= 0;
 	};
 
 	explicit Room(Cfg cfg);
-	explicit Room(Cfg cfg, std::shared_ptr<const MapData> map);
+	explicit Room(Cfg cfg, std::shared_ptr<MapData> map);
 	virtual ~Room();
 	void StartTicking(); // 생성 직후 호출
 
@@ -62,10 +61,8 @@ public:
 	const std::string& Name() const noexcept { return _cfg.name; }
 	size_t PlayerCount() const noexcept { return _players.size(); }
 	size_t Capacity() const noexcept { return _cfg.capacity; }
-	int MoveCooldownTicks() const noexcept { return _cfg.moveCooldownTicks; }
-	int RotateCooldownTicks() const noexcept { return _cfg.rotateCooldownTicks; }
-	int SpawnX() const noexcept { return _cfg.spawnX; }
-	int SpawnY() const noexcept { return _cfg.spawnY; }
+	int moveCooldownTicks() const noexcept {return _cfg.moveCooldownTicks; }
+	int rotateCooldownTicks() const noexcept {return _cfg.rotateCooldownTicks;}
 
 /*----------------------------
 	Room Specifics Utils
@@ -78,20 +75,29 @@ public:
 
 	Protocol::EDirection DecideFacing(const PlayerRef& p, const Protocol::Vector2Info& clickWorldPos);
 
+	void RemovePlayerInternal(int playerId, std::string_view reason);
+	void AddPlayerInternal(PlayerRef p, SpawnPoint spawn, Protocol::EDirection dir);
+	Protocol::S_PlayerList BuildPlayerListSnapshot(const PlayerRef& forPlayer, bool includeSelf=true) const;
+
+	virtual std::optional<SpawnPoint> ResolveSpawn(int portalId) const; // 스폰
 /*--------------------------------------------
 	외부 진입점 [Room::Async()] 형태로 호출
 	(IOCP/패킷 스레드에서 호출)
 --------------------------------------------*/
 public:
-	void Enter(PlayerRef player, Protocol::EEnterReason reason = Protocol::EEnterReason::ENTER_UNKNOWN); // 반드시 Room::DoAsync() 형태로 호출 해야함
+	void Enter(PlayerRef player); // 반드시 Room::DoAsync() 형태로 호출 해야함
 	void Leave(PlayerRef player);
+	void ChangeRoomBegin(const PlayerRef& p, const PortalLink& link);
 	void OnRecvMoveReq(PlayerRef p, const Protocol::C_PlayerMoveRequest& req);
+	void ChangeRoomReady(const PlayerRef& p, const Protocol::C_ChangeRoomReady& pkt);
 
 /*--------------------------------------------
 	BroadCast
 --------------------------------------------*/
-protected:
+public:
 	void Broadcast(const SendBufferRef& pkt, PlayerId except = -1);
+	void BroadcastEnter(const PlayerRef& newcomer);
+	void BroadcastLeave(const PlayerRef& leaver);
 
 /*-----------------
 	Room Tick
@@ -111,7 +117,7 @@ protected:
 	// 파생 훅
 	virtual void OnEnter(const PlayerRef&) {}
 	virtual void OnLeave(const PlayerRef&) {}
-	virtual void OnEnterSetSpawn(const PlayerRef&) {}
+
 
 private:
 	// 예약 버퍼(간단 구현: 이번 틱 동안만 유효)
