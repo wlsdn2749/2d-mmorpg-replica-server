@@ -138,6 +138,15 @@ bool Handle_C_EnterGame(PacketSessionRef& session, Protocol::C_EnterGame& pkt)
 
 	int index = pkt.playerindex();
 
+	if (gameSession->_players.empty())
+	{
+		Protocol::S_EnterGame enterGamePkt;
+		enterGamePkt.set_success(false);
+		auto sendBuffer = ClientPacketHandler::MakeSendBuffer(enterGamePkt);
+		session->Send(sendBuffer);
+
+		return false;
+	}
 	gameSession->_currentPlayer = gameSession->_players[index];
 	
 

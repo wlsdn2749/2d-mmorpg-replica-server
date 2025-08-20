@@ -41,6 +41,12 @@ include
 __pycache__
 env
 
+# Unity
+Logs
+Library
+UserSettings
+
+
 
 # 서버 실행파일 해제
 # 하지만 AuthServer/bin/Debug/net8.0/은 추적
