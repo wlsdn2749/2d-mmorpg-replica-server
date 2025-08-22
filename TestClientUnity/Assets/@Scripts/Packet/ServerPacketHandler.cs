@@ -1,5 +1,6 @@
 ﻿using Google.Protobuf;
 using Google.Protobuf.Protocol;
+using Mmorpg2d.Auth;
 using Microsoft.VisualBasic;
 using ServerCore;
 using System;
@@ -34,16 +35,23 @@ namespace Packet
         {
             throw new NotImplementedException();
         }
-
+        internal static void HANDLE_S_RegisterReply(PacketSession sessionm, RegisterReply register)
+        {
+            switch (register.Success)
+            {
+                case true:
+                    break;
+            }
+        }
         internal static void HANDLE_S_JwtLoginReply(PacketSession session, S_JwtLoginReply reply)
         {
+            
             switch (reply.Result) // 프로토 C# 코드 생성 시 보통 PascalCase enum이 됩니다 (Success 등). 필요하면 이름 맞춰 수정
             {
                 case ELoginResult.Success: // 또는 LoginResult.Success
 
                     Console.WriteLine($"[JWT VALIDATION OK]");
-                    // Unity라면: Debug.Log($"[LOGIN OK] accountId={reply.AccountId}");
-
+                    // Debug.Log($"[LOGIN OK] accountId={reply.AccountId}");
                     // 다음 단계로 진행:
                     // - 캐릭터 리스트 요청
                     // - 바로 게임 입장 패킷 보내기 등

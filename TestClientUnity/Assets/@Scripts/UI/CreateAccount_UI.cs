@@ -1,8 +1,12 @@
 using System.Collections;
+using System.Net.Sockets;
 using System.Security;
 using TMPro;
+using Packet;
 using UnityEngine;
 using UnityEngine.UI;
+using Google.Protobuf.Protocol;
+using Mmorpg2d.Auth;
 
 public class CreateAccount_UI : MonoBehaviour
 {
@@ -63,6 +67,19 @@ public class CreateAccount_UI : MonoBehaviour
         {
             _idUseableText.text = "아이디를 입력해주세요!";
             _idUseableText.color = Color.red;
+        }
+        else
+        {
+            string id = _idField.text.Trim();
+            string password = _pwField.text;
+
+            var pkt = new RegisterRequest
+            {
+                Email = id,
+                Password = password
+            };
+            var sendBuffer = ServerPacketManager.MakeSendBuffer(pkt);
+            NetworkManager.Instance.Send(sendBuffer);
         }
         // TODO >> 입력받은 아이디 사용가능 여부에 따라 아이디 중복 확인 텍스트 결과값 갱신 >> 서버에서 전송받아야할 데이터임.
     }

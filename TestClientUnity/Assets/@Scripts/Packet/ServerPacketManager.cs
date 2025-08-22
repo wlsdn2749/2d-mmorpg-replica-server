@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using Google.Protobuf;
 using Google.Protobuf.Protocol;
+using Mmorpg2d.Auth;
 
 namespace Packet
 {
     public enum PacketID : ushort
     {
-	    PKT_C_JwtLoginRequest = 0,
+        PKT_C_JwtLoginRequest = 0,
 	    PKT_S_JwtLoginReply = 1,
 	    PKT_C_CreateCharacterRequest = 2,
 	    PKT_S_CreateCharacterReply = 3,
@@ -27,6 +28,8 @@ namespace Packet
 	    PKT_S_ChangeRoomBegin = 16,
 	    PKT_C_ChangeRoomReady = 17,
 	    PKT_S_ChangeRoomCommit = 18,
+        PKT_C_RegisterRequest = 19,
+        PKT_C_RegisterReply = 20,
     }
     public class ServerPacketManager
     {
@@ -52,6 +55,7 @@ namespace Packet
         Dictionary<ushort, Func<byte[], int, int, IMessage>> _messageParsers = new Dictionary<ushort, Func<byte[], int, int, IMessage>>();
 
         private readonly Dictionary<Type, ushort> _typeToId = new();
+        public static ArraySegment<byte> MakeSendBuffer(RegisterRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_RegisterRequest);
         public static ArraySegment<byte> MakeSendBuffer(C_JwtLoginRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_JwtLoginRequest);
         public static ArraySegment<byte> MakeSendBuffer(C_CreateCharacterRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_CreateCharacterRequest);
         public static ArraySegment<byte> MakeSendBuffer(C_CharacterListRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_CharacterListRequest);
@@ -66,6 +70,7 @@ namespace Packet
             {
                 _packetHandlers[i] = ServerPacketHandler.HANDLE_Invalid;
             }
+            RegisterHandler((ushort)PacketID.PKT_C_RegisterReply, ServerPacketHandler.HANDLE_S_RegisterReply, RegisterReply.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_JwtLoginReply, ServerPacketHandler.HANDLE_S_JwtLoginReply, S_JwtLoginReply.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_CreateCharacterReply, ServerPacketHandler.HANDLE_S_CreateCharacterReply, S_CreateCharacterReply.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_CharacterListReply, ServerPacketHandler.HANDLE_S_CharacterListReply, S_CharacterListReply.Parser);
