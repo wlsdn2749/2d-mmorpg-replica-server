@@ -132,6 +132,10 @@ namespace Packet
 
         internal static void HANDLE_S_BroadcastPlayerMove(PacketSession session, S_BroadcastPlayerMove move)
         {
+            foreach (var m in move)
+            
+                PlayerMAnager.Isntacen.Move(  m.PlayerId);
+            }
             int tick = move?.Tick ?? -1;
             Console.WriteLine($"[S_BroadcastPlayerMove] tick={tick} count={move.PlayerMoves.Count}");
 
