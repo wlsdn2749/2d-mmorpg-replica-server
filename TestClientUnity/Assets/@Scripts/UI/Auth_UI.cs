@@ -31,8 +31,7 @@ public class Auth_UI : MonoBehaviour
     void OnClickCreateAccount()
     {
         InitializeInputField();
-        _noticePanel.SetActive(true);
-        _noticePanel.GetComponent<Notice_UI>().ChangeNoticeCode(NoticeCode.OpenCreateAccountPanel);
+        _createAccountPanel.SetActive(true);
         this.gameObject.SetActive(false);
     }
     void OnClickLogin()
