@@ -36,14 +36,14 @@ namespace AuthServer.Server
             
 
             // Kestrel 서버 HTTPS/HTTP2 설정 (기본값으로 충분함)
-            builder.WebHost.ConfigureKestrel(options =>
-            {
-                // gRPC는 HTTP/2를 필요로 함
-                options.ListenAnyIP(8443, listenOptions =>
-                {
-                    listenOptions.Protocols = HttpProtocols.Http2;
-                });
-            });
+            //builder.WebHost.ConfigureKestrel(options =>
+            //{
+            //    // gRPC는 HTTP/2를 필요로 함
+            //    options.ListenAnyIP(8443, listenOptions =>
+            //    {
+            //        listenOptions.Protocols = HttpProtocols.Http2;
+            //    });
+            //});
 
             var app = builder.Build();
 

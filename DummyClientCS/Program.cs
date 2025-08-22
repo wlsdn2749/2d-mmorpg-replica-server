@@ -13,10 +13,10 @@ class Program
     static async Task Main()
     {
         using var channel = GrpcChannel.ForAddress(
-            "https://serotina.gyu.be:8443",
+            "http://localhost:8080",
             new GrpcChannelOptions
             {
-                //Credentials = Grpc.Core.ChannelCredentials.Insecure
+                Credentials = Grpc.Core.ChannelCredentials.Insecure
             });
 
         _client = new Auth.AuthClient(channel);
@@ -87,12 +87,8 @@ class Program
 
     static async Task ConnectToGameServer()
     {
-        string  host = "serotina.gyu.be";
-        int     port = 6201;
 
-        IPAddress ipAddr = (await Dns.GetHostAddressesAsync(host))[0];
-        IPEndPoint endPoint = new IPEndPoint(ipAddr, port);
-
+        IPEndPoint endPoint = new IPEndPoint(IPAddress.Loopback, 6201);
         Connector connector = new Connector();
 
         connector.Connect(endPoint,
