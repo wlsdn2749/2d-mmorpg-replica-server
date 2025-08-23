@@ -20,7 +20,7 @@ message S_RegisterReply {
   string detail  = 2;
 }
 
-message c_LoginRequest {
+message C_LoginRequest {
   string email = 1;
   string password = 2;
 }
