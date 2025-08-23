@@ -29,7 +29,7 @@ public class SimpleCall : MonoBehaviour
     {
         // gRPC 채널 생성
         using var handler = new YetAnotherHttpHandler() { Http2Only = true }; // Unity에서 HttpClient 호환을 위해 필요
-        using var channel = GrpcChannel.ForAddress("https://serotina.gyu.be:8443", new GrpcChannelOptions
+        using var channel = GrpcChannel.ForAddress("http://182.231.5.187:8080", new GrpcChannelOptions
         {
             HttpHandler = handler,
             DisposeHttpClient = true

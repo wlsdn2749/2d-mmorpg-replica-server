@@ -1,15 +1,51 @@
+using Cysharp.Net.Http;
+using Google.Protobuf.Protocol;
+using Grpc.Core;
+using Grpc.Net.Client;
+using Mmorpg2d.Auth;
+using Packet;
+using System;
 using System.Collections;
 using System.Net.Sockets;
 using System.Security;
+using System.Threading;
+using System.Threading.Tasks;
 using TMPro;
-using Packet;
 using UnityEngine;
 using UnityEngine.UI;
-using Google.Protobuf.Protocol;
-using Mmorpg2d.Auth;
-
+public static class Authenticate
+{
+    public static async Task<bool> DoCreateAccountAsync(Auth.AuthClient client, string id, string password)
+    {
+        try
+        {
+            var reply = await client.RegisterAsync(new C_RegisterRequest
+            {
+                Email = (id ?? "").Trim().ToLowerInvariant(),
+                Password = password ?? ""
+            });
+            Debug.Log($"[가입 결과] {reply.Success} / {reply.Detail}");
+            return reply.Success;
+        }
+        catch (RpcException ex)
+        {
+            Debug.LogError($"[가입 RPC 오류] {ex.StatusCode} / {ex.Status.Detail}");
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"[가입 예외] {ex.Message}");
+            return false;
+        }
+    }
+}
+    
 public class CreateAccount_UI : MonoBehaviour
 {
+    private YetAnotherHttpHandler _handler;
+    private GrpcChannel _channel;
+    private Auth.AuthClient _client;
+    private bool _checkID =false;
     #region InputFields
     [SerializeField] private TMP_InputField _idField;
     [SerializeField] private TMP_InputField _pwField;
@@ -30,26 +66,60 @@ public class CreateAccount_UI : MonoBehaviour
     #endregion
     private void Awake()
     {
+
         if (_createAccountBtn) _createAccountBtn.onClick.AddListener(OnClickCreateAccount);
         if (_ExitCreateAccountBtn) _ExitCreateAccountBtn.onClick.AddListener(OnClickExitCreateAccount);
-        if (_idDuplicateCheckBtn) _idDuplicateCheckBtn.onClick.AddListener(OnClickIdDuplicateCheck);
+        //if (_idDuplicateCheckBtn) _idDuplicateCheckBtn.onClick.AddListener(OnClickIdDuplicateCheck);
     }
-    void OnClickCreateAccount() // 계정 생성로직
+    void Start()
     {
-        // TODO >> 계정 생성 로직
-        
-        // 만약 계정 생성을 성공했다면  >>
-        if (_idField.text == "" || _pwField.text == "" || _pwCheckField.text == "" /* bool=> id중복확인 실패시*/)
-        {
-            _noticePanel.SetActive(true);
-            _noticePanel.GetComponent<Notice_UI>().ChangeNoticeCode(NoticeCode.CreateAccountFail);
-        }
-        else if(_idField.text == "" || _pwField.text == "" || _pwCheckField.text == ""/*bool=> id중복확인 성공시*/)
-        {
-            _noticePanel.SetActive(true);
-            _noticePanel.GetComponent<Notice_UI>().ChangeNoticeCode(NoticeCode.CreateAccountSucess);
-        }
+        _handler = new YetAnotherHttpHandler { Http2Only = true };
+        _channel = GrpcChannel.ForAddress("http://182.231.5.187:8080",
+            new GrpcChannelOptions 
+            { 
+                HttpHandler = _handler,
+                DisposeHttpClient = true 
+            });
+        _client = new Auth.AuthClient(_channel);
+        InitializePanel();
+        this.gameObject.SetActive(false);
+    }
+    private async void OnClickCreateAccount()
+    {
+        var id = _idField.text?.Trim();
+        var pw = _pwField.text ?? "";
+        var pw2 = _pwCheckField.text ?? "";
 
+        // 입력 검증
+        if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(pw) || string.IsNullOrEmpty(pw2))
+        {
+            ShowNotice(NoticeCode.CreateAccountFail);
+            return;
+        }
+        if (pw != pw2)
+        {
+            _pwRecheckText.text = "비밀번호가 일치하지 않습니다.";
+            ShowNotice(NoticeCode.CreateAccountFail);
+            return;
+        }
+        if (_checkID == false)
+        {
+            _idUseableText.text = "아이디 중복 확인이 필요합니다.";
+        }
+        _createAccountBtn.interactable = false;
+
+        // 실제 가입 호출
+        var ok = await Authenticate.DoCreateAccountAsync(_client, id, pw);
+
+        // UI 업데이트
+        ShowNotice(ok ? NoticeCode.CreateAccountSucess : NoticeCode.CreateAccountFail);
+
+        _createAccountBtn.interactable = true;
+    }
+    private void ShowNotice(NoticeCode code)
+    {
+        _noticePanel.SetActive(true);
+        _noticePanel.GetComponent<Notice_UI>()?.ChangeNoticeCode(code);
     }
     void OnClickExitCreateAccount() // 회원가입 패널 나가기
     {
@@ -61,28 +131,9 @@ public class CreateAccount_UI : MonoBehaviour
         _authorizePanel.SetActive(true);
         this.gameObject.SetActive(false); 
     }
-    void OnClickIdDuplicateCheck() //아이디 중복확인 버튼 이벤트
-    {
-        if (_idField.text == "") // 아이디 입력필드가 비어있을때
-        {
-            _idUseableText.text = "아이디를 입력해주세요!";
-            _idUseableText.color = Color.red;
-        }
-        else
-        {
-            string id = _idField.text.Trim();
-            string password = _pwField.text;
-
-            var pkt = new C_RegisterRequest
-            {
-                Email = id,
-                Password = password
-            };
-            var sendBuffer = ServerPacketManager.MakeSendBuffer(pkt);
-            NetworkManager.Instance.Send(sendBuffer);
-        }
-        // TODO >> 입력받은 아이디 사용가능 여부에 따라 아이디 중복 확인 텍스트 결과값 갱신 >> 서버에서 전송받아야할 데이터임.
-    }
+    //private async void OnClickIdDuplicateCheck() //아이디 중복확인 버튼 이벤트
+    //{
+    //}
     void CheckPassword()
     {
         if (_pwField.text == _pwCheckField.text && _pwField.text != "") // 비밀번호와 비밀번호 재확인 필드의 텍스트가 모두 같고 비어있지 않다면
@@ -104,11 +155,7 @@ public class CreateAccount_UI : MonoBehaviour
         _pwField.text = "";
         _pwCheckField.text = "";
     }
-    void Start()
-    {
-        InitializePanel();
-        this.gameObject.SetActive(false);
-    }
+    
     private void Update()
     {
         if (_pwCheckField.text == "") // 비밀번호체크 입력필드가 비어있다면
