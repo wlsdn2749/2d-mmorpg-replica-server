@@ -35,11 +35,12 @@ namespace Packet
         {
             throw new NotImplementedException();
         }
-        internal static void HANDLE_S_RegisterReply(PacketSession sessionm, RegisterReply register)
+        internal static void HANDLE_S_RegisterReply(PacketSession sessionm, S_RegisterReply register)
         {
             switch (register.Success)
             {
                 case true:
+                    
                     break;
             }
         }
@@ -132,10 +133,10 @@ namespace Packet
 
         internal static void HANDLE_S_BroadcastPlayerMove(PacketSession session, S_BroadcastPlayerMove move)
         {
-            foreach (var m in move)
-            
-                PlayerMAnager.Isntacen.Move(  m.PlayerId);
-            }
+            //foreach (var m in move)
+            //{ 
+            //    PlayerMAnager.Isntacen.Move(  m.PlayerId);
+            //}
             int tick = move?.Tick ?? -1;
             Console.WriteLine($"[S_BroadcastPlayerMove] tick={tick} count={move.PlayerMoves.Count}");
 

@@ -73,7 +73,7 @@ public class CreateAccount_UI : MonoBehaviour
             string id = _idField.text.Trim();
             string password = _pwField.text;
 
-            var pkt = new RegisterRequest
+            var pkt = new C_RegisterRequest
             {
                 Email = id,
                 Password = password

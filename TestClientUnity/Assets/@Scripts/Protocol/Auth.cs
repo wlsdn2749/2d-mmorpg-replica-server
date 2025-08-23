@@ -37,8 +37,8 @@ namespace Mmorpg2d.Auth {
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Mmorpg2d.Auth.RegisterRequest), global::Mmorpg2d.Auth.RegisterRequest.Parser, new[]{ "Email", "Password" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Mmorpg2d.Auth.RegisterReply), global::Mmorpg2d.Auth.RegisterReply.Parser, new[]{ "Success", "Detail" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Mmorpg2d.Auth.C_RegisterRequest), global::Mmorpg2d.Auth.C_RegisterRequest.Parser, new[]{ "Email", "Password" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Mmorpg2d.Auth.S_RegisterReply), global::Mmorpg2d.Auth.S_RegisterReply.Parser, new[]{ "Success", "Detail" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Mmorpg2d.Auth.LoginRequest), global::Mmorpg2d.Auth.LoginRequest.Parser, new[]{ "Email", "Password" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Mmorpg2d.Auth.LoginReply), global::Mmorpg2d.Auth.LoginReply.Parser, new[]{ "Success", "Detail", "Jwt" }, null, null, null, null)
           }));
@@ -48,16 +48,16 @@ namespace Mmorpg2d.Auth {
   }
   #region Messages
   [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
-  public sealed partial class RegisterRequest : pb::IMessage<RegisterRequest>
+  public sealed partial class C_RegisterRequest : pb::IMessage<C_RegisterRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<RegisterRequest> _parser = new pb::MessageParser<RegisterRequest>(() => new RegisterRequest());
+    private static readonly pb::MessageParser<C_RegisterRequest> _parser = new pb::MessageParser<C_RegisterRequest>(() => new C_RegisterRequest());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<RegisterRequest> Parser { get { return _parser; } }
+    public static pb::MessageParser<C_RegisterRequest> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -73,7 +73,7 @@ namespace Mmorpg2d.Auth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public RegisterRequest() {
+    public C_RegisterRequest() {
       OnConstruction();
     }
 
@@ -81,7 +81,7 @@ namespace Mmorpg2d.Auth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public RegisterRequest(RegisterRequest other) : this() {
+    public C_RegisterRequest(C_RegisterRequest other) : this() {
       email_ = other.email_;
       password_ = other.password_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -89,8 +89,8 @@ namespace Mmorpg2d.Auth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public RegisterRequest Clone() {
-      return new RegisterRequest(this);
+    public C_RegisterRequest Clone() {
+      return new C_RegisterRequest(this);
     }
 
     /// <summary>Field number for the "email" field.</summary>
@@ -123,12 +123,12 @@ namespace Mmorpg2d.Auth {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as RegisterRequest);
+      return Equals(other as C_RegisterRequest);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(RegisterRequest other) {
+    public bool Equals(C_RegisterRequest other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -214,7 +214,7 @@ namespace Mmorpg2d.Auth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(RegisterRequest other) {
+    public void MergeFrom(C_RegisterRequest other) {
       if (other == null) {
         return;
       }
@@ -286,16 +286,16 @@ namespace Mmorpg2d.Auth {
   }
 
   [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
-  public sealed partial class RegisterReply : pb::IMessage<RegisterReply>
+  public sealed partial class S_RegisterReply : pb::IMessage<S_RegisterReply>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<RegisterReply> _parser = new pb::MessageParser<RegisterReply>(() => new RegisterReply());
+    private static readonly pb::MessageParser<S_RegisterReply> _parser = new pb::MessageParser<S_RegisterReply>(() => new S_RegisterReply());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<RegisterReply> Parser { get { return _parser; } }
+    public static pb::MessageParser<S_RegisterReply> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -311,7 +311,7 @@ namespace Mmorpg2d.Auth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public RegisterReply() {
+    public S_RegisterReply() {
       OnConstruction();
     }
 
@@ -319,7 +319,7 @@ namespace Mmorpg2d.Auth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public RegisterReply(RegisterReply other) : this() {
+    public S_RegisterReply(S_RegisterReply other) : this() {
       success_ = other.success_;
       detail_ = other.detail_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -327,8 +327,8 @@ namespace Mmorpg2d.Auth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public RegisterReply Clone() {
-      return new RegisterReply(this);
+    public S_RegisterReply Clone() {
+      return new S_RegisterReply(this);
     }
 
     /// <summary>Field number for the "success" field.</summary>
@@ -358,12 +358,12 @@ namespace Mmorpg2d.Auth {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as RegisterReply);
+      return Equals(other as S_RegisterReply);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(RegisterReply other) {
+    public bool Equals(S_RegisterReply other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -449,7 +449,7 @@ namespace Mmorpg2d.Auth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(RegisterReply other) {
+    public void MergeFrom(S_RegisterReply other) {
       if (other == null) {
         return;
       }

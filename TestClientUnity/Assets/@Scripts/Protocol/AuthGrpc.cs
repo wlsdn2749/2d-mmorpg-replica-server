@@ -46,16 +46,16 @@ namespace Mmorpg2d.Auth {
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::Mmorpg2d.Auth.RegisterRequest> __Marshaller_mmorpg2d_auth_RegisterRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Mmorpg2d.Auth.RegisterRequest.Parser));
+    static readonly grpc::Marshaller<global::Mmorpg2d.Auth.C_RegisterRequest> __Marshaller_mmorpg2d_auth_RegisterRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Mmorpg2d.Auth.C_RegisterRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::Mmorpg2d.Auth.RegisterReply> __Marshaller_mmorpg2d_auth_RegisterReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Mmorpg2d.Auth.RegisterReply.Parser));
+    static readonly grpc::Marshaller<global::Mmorpg2d.Auth.S_RegisterReply> __Marshaller_mmorpg2d_auth_RegisterReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Mmorpg2d.Auth.S_RegisterReply.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Mmorpg2d.Auth.LoginRequest> __Marshaller_mmorpg2d_auth_LoginRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Mmorpg2d.Auth.LoginRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Mmorpg2d.Auth.LoginReply> __Marshaller_mmorpg2d_auth_LoginReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Mmorpg2d.Auth.LoginReply.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::Mmorpg2d.Auth.RegisterRequest, global::Mmorpg2d.Auth.RegisterReply> __Method_Register = new grpc::Method<global::Mmorpg2d.Auth.RegisterRequest, global::Mmorpg2d.Auth.RegisterReply>(
+    static readonly grpc::Method<global::Mmorpg2d.Auth.C_RegisterRequest, global::Mmorpg2d.Auth.S_RegisterReply> __Method_Register = new grpc::Method<global::Mmorpg2d.Auth.C_RegisterRequest, global::Mmorpg2d.Auth.S_RegisterReply>(
         grpc::MethodType.Unary,
         __ServiceName,
         "Register",
@@ -81,7 +81,7 @@ namespace Mmorpg2d.Auth {
     public abstract partial class AuthBase
     {
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task<global::Mmorpg2d.Auth.RegisterReply> Register(global::Mmorpg2d.Auth.RegisterRequest request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::Mmorpg2d.Auth.S_RegisterReply> Register(global::Mmorpg2d.Auth.C_RegisterRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -122,22 +122,22 @@ namespace Mmorpg2d.Auth {
       }
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Mmorpg2d.Auth.RegisterReply Register(global::Mmorpg2d.Auth.RegisterRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::Mmorpg2d.Auth.S_RegisterReply Register(global::Mmorpg2d.Auth.C_RegisterRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return Register(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Mmorpg2d.Auth.RegisterReply Register(global::Mmorpg2d.Auth.RegisterRequest request, grpc::CallOptions options)
+      public virtual global::Mmorpg2d.Auth.S_RegisterReply Register(global::Mmorpg2d.Auth.C_RegisterRequest request, grpc::CallOptions options)
       {
         return CallInvoker.BlockingUnaryCall(__Method_Register, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Mmorpg2d.Auth.RegisterReply> RegisterAsync(global::Mmorpg2d.Auth.RegisterRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::Mmorpg2d.Auth.S_RegisterReply> RegisterAsync(global::Mmorpg2d.Auth.C_RegisterRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return RegisterAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Mmorpg2d.Auth.RegisterReply> RegisterAsync(global::Mmorpg2d.Auth.RegisterRequest request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::Mmorpg2d.Auth.S_RegisterReply> RegisterAsync(global::Mmorpg2d.Auth.C_RegisterRequest request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncUnaryCall(__Method_Register, null, options, request);
       }
@@ -186,7 +186,7 @@ namespace Mmorpg2d.Auth {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     public static void BindService(grpc::ServiceBinderBase serviceBinder, AuthBase serviceImpl)
     {
-      serviceBinder.AddMethod(__Method_Register, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Mmorpg2d.Auth.RegisterRequest, global::Mmorpg2d.Auth.RegisterReply>(serviceImpl.Register));
+      serviceBinder.AddMethod(__Method_Register, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Mmorpg2d.Auth.C_RegisterRequest, global::Mmorpg2d.Auth.S_RegisterReply>(serviceImpl.Register));
       serviceBinder.AddMethod(__Method_Login, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Mmorpg2d.Auth.LoginRequest, global::Mmorpg2d.Auth.LoginReply>(serviceImpl.Login));
     }
 
