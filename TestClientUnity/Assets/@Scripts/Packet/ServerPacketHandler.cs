@@ -35,7 +35,7 @@ namespace Packet
         {
             throw new NotImplementedException();
         }
-        internal static void HANDLE_S_RegisterReply(PacketSession sessionm, S_RegisterReply register)
+        internal static void HANDLE_S_RegisterReply(PacketSession sessionm, RegisterReply register)
         {
             switch (register.Success)
             {

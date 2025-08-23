@@ -19,7 +19,7 @@ public static class Authenticate
     {
         try
         {
-            var reply = await client.RegisterAsync(new C_RegisterRequest
+            var reply = await client.RegisterAsync(new RegisterRequest
             {
                 Email = (id ?? "").Trim().ToLowerInvariant(),
                 Password = password ?? ""
