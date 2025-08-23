@@ -5,8 +5,8 @@ option csharp_namespace = "Mmorpg2d.Auth";
 package mmorpg2d.auth;
 
 service Auth {
-  rpc Register (C_RegisterRequest) returns (S_RegisterReply);
-  rpc Login    (C_LoginRequest)    returns (S_LoginReply);
+  rpc Register (RegisterRequest) returns (RegisterReply);
+  rpc Login    (LoginRequest)    returns (LoginReply);
   rpc CheckEmail     (CheckEmailRequest)        returns (CheckEmailReply);
 }
 
