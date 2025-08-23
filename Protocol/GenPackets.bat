@@ -12,8 +12,8 @@ set OUT_DIR_CS="./"
 
 IF ERRORLEVEL 1 PAUSE
 
-XCOPY /Y auth.cs "../gRPC-dummy-client\Protocol"
-XCOPY /Y authGrpc.cs "../gRPC-dummy-client\Protocol"
+XCOPY /Y auth.cs "../DummyClientCS\Protocol"
+XCOPY /Y authGrpc.cs "../DummyClientCS\Protocol"
 XCOPY /Y auth.cs "../AuthServer\Protocol"
 XCOPY /Y authGrpc.cs "../AuthServer\Protocol"
 

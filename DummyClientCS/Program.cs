@@ -31,14 +31,15 @@ class Program
             Console.WriteLine("\n===== gRPC 인증서버=====");
             Console.WriteLine("[1] 회원가입");
             Console.WriteLine("[2] 로그인");
+            Console.WriteLine("[3] 이메일 확인");
             Console.WriteLine("\n===== TCP 게임서버 =====");
-            Console.WriteLine("[3] JWT 검증:          --- 반드시 2번을 하고 해야함");
-            Console.WriteLine("[4] 캐릭터 생성 :         --- Input 입력");
-            Console.WriteLine("[5] 캐릭터 리스트 받기");
-            Console.WriteLine("[6] 게임 접속 :          --- Index = 0");
-            Console.WriteLine("[7] 상하좌우 움직이기:   --- 0,1,2,3 [상하좌우]");
-            Console.WriteLine("[8] 룸에서 나가기 : ");
-            Console.WriteLine("[0] 종료");
+            Console.WriteLine("[q] JWT 검증:          --- 반드시 2번을 하고 해야함");
+            Console.WriteLine("[w] 캐릭터 생성 :         --- Input 입력");
+            Console.WriteLine("[e] 캐릭터 리스트 받기");
+            Console.WriteLine("[r] 게임 접속 :          --- Index = 0");
+            Console.WriteLine("[t] 상하좌우 움직이기:   --- 0,1,2,3 [상하좌우]");
+            Console.WriteLine("[y] 룸에서 나가기 : ");
+            Console.WriteLine("[z] 종료");
             Console.Write("선택: ");
 
             var key = Console.ReadLine();
@@ -53,30 +54,32 @@ class Program
                     _jwt = await AuthUtil.DoLoginAsync(_client);
                     break;
                 case "3":
+                    await AuthUtil.DoCheckEmailAsync(_client);
+                    break;
+                case "q":
                     await SessionManager.Instance.SendForEachJWTLoginAsync(_jwt);
                     break;
-                case "4":
+                case "w":
                     Console.Write("Username : ");
                     var username = Console.ReadLine();
                     await SessionManager.Instance.SendForEachCreateCharacterAsync(username);
                     break;
-
-                case "5":
+                case "e":
                     await SessionManager.Instance.SendForEachGetCharacterList();
                     break;
-                case "6":
+                case "r":
                     await SessionManager.Instance.SendForEachEnterGame();
                     break;
-                case "7":
+                case "t":
                     Console.Write("Dir(상하좌우) 0,1,2,3:");
                     int dir;
                     Int32.TryParse(Console.ReadLine(), out dir);
                     await SessionManager.Instance.SendForEachMove(dir);
                     break;
-                case "8":
+                case "y":
                     await SessionManager.Instance.SendForLeave();
                     break;
-                case "0":
+                case "z":
                     return;
                 default:
                     Console.WriteLine("잘못된 입력입니다.");

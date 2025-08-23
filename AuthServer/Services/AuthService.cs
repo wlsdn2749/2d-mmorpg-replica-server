@@ -56,5 +56,15 @@ namespace AuthServer
 
             return new() { Success = true, Detail = "로그인 완료", Jwt = token };
         }
+
+        // 회원가입 시, 중복 이메일 여부 요청
+        public override async Task<CheckEmailReply> CheckEmail(CheckEmailRequest request, ServerCallContext context)
+        {
+            var exists = await _userRepository.ExistAsync(request.Email);
+            
+            return exists
+                ? new () { Available = false, Detail = "Email already exists" }
+                : new () { Available = true,  Detail = "Available" };
+        }
     }
 }
