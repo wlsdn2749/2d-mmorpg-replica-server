@@ -53,6 +53,10 @@ namespace Mmorpg2d.Auth {
     static readonly grpc::Marshaller<global::Mmorpg2d.Auth.LoginRequest> __Marshaller_mmorpg2d_auth_LoginRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Mmorpg2d.Auth.LoginRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Mmorpg2d.Auth.LoginReply> __Marshaller_mmorpg2d_auth_LoginReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Mmorpg2d.Auth.LoginReply.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Mmorpg2d.Auth.CheckEmailRequest> __Marshaller_mmorpg2d_auth_CheckEmailRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Mmorpg2d.Auth.CheckEmailRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Mmorpg2d.Auth.CheckEmailReply> __Marshaller_mmorpg2d_auth_CheckEmailReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Mmorpg2d.Auth.CheckEmailReply.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Mmorpg2d.Auth.RegisterRequest, global::Mmorpg2d.Auth.RegisterReply> __Method_Register = new grpc::Method<global::Mmorpg2d.Auth.RegisterRequest, global::Mmorpg2d.Auth.RegisterReply>(
@@ -69,6 +73,14 @@ namespace Mmorpg2d.Auth {
         "Login",
         __Marshaller_mmorpg2d_auth_LoginRequest,
         __Marshaller_mmorpg2d_auth_LoginReply);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Mmorpg2d.Auth.CheckEmailRequest, global::Mmorpg2d.Auth.CheckEmailReply> __Method_CheckEmail = new grpc::Method<global::Mmorpg2d.Auth.CheckEmailRequest, global::Mmorpg2d.Auth.CheckEmailReply>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "CheckEmail",
+        __Marshaller_mmorpg2d_auth_CheckEmailRequest,
+        __Marshaller_mmorpg2d_auth_CheckEmailReply);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -88,6 +100,12 @@ namespace Mmorpg2d.Auth {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::Mmorpg2d.Auth.LoginReply> Login(global::Mmorpg2d.Auth.LoginRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Mmorpg2d.Auth.CheckEmailReply> CheckEmail(global::Mmorpg2d.Auth.CheckEmailRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -161,6 +179,26 @@ namespace Mmorpg2d.Auth {
       {
         return CallInvoker.AsyncUnaryCall(__Method_Login, null, options, request);
       }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Mmorpg2d.Auth.CheckEmailReply CheckEmail(global::Mmorpg2d.Auth.CheckEmailRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return CheckEmail(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Mmorpg2d.Auth.CheckEmailReply CheckEmail(global::Mmorpg2d.Auth.CheckEmailRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_CheckEmail, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Mmorpg2d.Auth.CheckEmailReply> CheckEmailAsync(global::Mmorpg2d.Auth.CheckEmailRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return CheckEmailAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Mmorpg2d.Auth.CheckEmailReply> CheckEmailAsync(global::Mmorpg2d.Auth.CheckEmailRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_CheckEmail, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       protected override AuthClient NewInstance(ClientBaseConfiguration configuration)
@@ -176,7 +214,8 @@ namespace Mmorpg2d.Auth {
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
           .AddMethod(__Method_Register, serviceImpl.Register)
-          .AddMethod(__Method_Login, serviceImpl.Login).Build();
+          .AddMethod(__Method_Login, serviceImpl.Login)
+          .AddMethod(__Method_CheckEmail, serviceImpl.CheckEmail).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -188,6 +227,7 @@ namespace Mmorpg2d.Auth {
     {
       serviceBinder.AddMethod(__Method_Register, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Mmorpg2d.Auth.RegisterRequest, global::Mmorpg2d.Auth.RegisterReply>(serviceImpl.Register));
       serviceBinder.AddMethod(__Method_Login, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Mmorpg2d.Auth.LoginRequest, global::Mmorpg2d.Auth.LoginReply>(serviceImpl.Login));
+      serviceBinder.AddMethod(__Method_CheckEmail, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Mmorpg2d.Auth.CheckEmailRequest, global::Mmorpg2d.Auth.CheckEmailReply>(serviceImpl.CheckEmail));
     }
 
   }

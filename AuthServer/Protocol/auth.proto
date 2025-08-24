@@ -7,6 +7,7 @@ package mmorpg2d.auth;
 service Auth {
   rpc Register (RegisterRequest) returns (RegisterReply);
   rpc Login    (LoginRequest)    returns (LoginReply);
+  rpc CheckEmail (CheckEmailRequest) returns (CheckEmailReply);
 }
 
 message RegisterRequest {
@@ -28,4 +29,13 @@ message LoginReply {
   bool   success = 1;
   string detail  = 2;
   string jwt     = 3;
+}
+
+message CheckEmailRequest {
+	string email = 1;
+}
+
+message CheckEmailReply {
+	bool available = 1 ;
+	string detail = 2;
 }

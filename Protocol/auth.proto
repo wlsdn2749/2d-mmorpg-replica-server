@@ -7,7 +7,7 @@ package mmorpg2d.auth;
 service Auth {
   rpc Register (RegisterRequest) returns (RegisterReply);
   rpc Login    (LoginRequest)    returns (LoginReply);
-  rpc CheckEmail     (CheckEmailRequest)        returns (CheckEmailReply);
+  rpc CheckEmail (CheckEmailRequest) returns (CheckEmailReply);
 }
 
 message RegisterRequest {
@@ -32,10 +32,10 @@ message LoginReply {
 }
 
 message CheckEmailRequest {
-  string email = 1;
+	string email = 1;
 }
 
 message CheckEmailReply {
-  bool   available = 1; // true = 사용 가능, false = 이미 존재
-  string detail    = 2; // "Available" / "Email already exists"
+	bool available = 1 ;
+	string detail = 2;
 }

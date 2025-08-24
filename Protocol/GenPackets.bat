@@ -12,11 +12,10 @@ set OUT_DIR_CS="./"
 
 IF ERRORLEVEL 1 PAUSE
 
-XCOPY /Y auth.cs "../gRPC-dummy-client\Protocol"
-XCOPY /Y authGrpc.cs "../gRPC-dummy-client\Protocol"
+XCOPY /Y auth.cs "../DummyClientCS\Protocol"
+XCOPY /Y authGrpc.cs "../DummyClientCS\Protocol"
 XCOPY /Y auth.cs "../AuthServer\Protocol"
 XCOPY /Y authGrpc.cs "../AuthServer\Protocol"
-
 
 REM Game Proto 파일들 생성
 protoc.exe -I=./ --cpp_out=./ ./Protocol.proto
@@ -38,6 +37,13 @@ REM C# DummyClient
 XCOPY /Y Protocol.cs "../DummyClientCS/Protocol"
 
 XCOPY /Y ServerPacketManager.cs "../DummyClientCS/Packet"
+
+REM C# Unity Client
+
+XCOPY /Y auth.cs "../TestClientUnity/Assets/@Scripts/Protocol"
+XCOPY /Y authGrpc.cs "../TestClientUnity/Assets/@Scripts/Protocol"
+XCOPY /Y Protocol.cs "../TestClientUnity/Assets/@Scripts/Protocol"
+XCOPY /Y ServerPacketManager.cs "../TestClientUnity/Assets/@Scripts/Packet"
 
 DEL /Q /F *.pb.h
 DEL /Q /F *.pb.cc
