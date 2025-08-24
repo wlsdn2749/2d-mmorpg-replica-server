@@ -149,20 +149,15 @@ bool Handle_C_EnterGame(PacketSessionRef& session, Protocol::C_EnterGame& pkt)
 	}
 	gameSession->_currentPlayer = gameSession->_players[index];
 	
-
-	// 입장할 룸 결정
-	const int roomId = 0; // TODO: DB에서 받아 결정
+	const int roomId = 0;
 	RoomRef room = RoomManager::Instance().Find(roomId);
-	if (!room) {
-		std::cout << "존재하지 않는 룸" << std::endl; 
-	}
+	if (!room) 
+		std::cout << "Not Exsiting room" << std::endl; 
 
 	room->DoAsync(&Room::Enter, gameSession->_currentPlayer); 
 	
 
 	gameSession->SetState(GameSession::State::InRoom);
-	// Room에 들어왔음을 다른 플레이어에 알려야함 -- 이거 OnEnter()에서 진행함.
-	// GRoom->DoAsync(&Room::Enter, gameSession->_currentPlayer);
 
 	Protocol::S_EnterGame enterGamePkt;
 	enterGamePkt.set_success(true);
@@ -218,13 +213,11 @@ bool Handle_C_ChangeRoomReady(PacketSessionRef& session, Protocol::C_ChangeRoomR
 	PlayerRef player = gameSession->_currentPlayer;
 	if (!player) return false;
 	
-	// 여기서 룸 이동 요청을하고?
 
 	RoomRef room = player->GetRoom();
 	room->DoAsync([room, player, pkt] {
 		room->ChangeRoomReady(player, pkt); 
 	});
-	// 이동요청이 완료 되면 룸에서 S_ChangeRommCommit을 보냄
 
 	GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_ChangeRoomReady]: Client가 룸 이동 준비요청함 \n");
 }
