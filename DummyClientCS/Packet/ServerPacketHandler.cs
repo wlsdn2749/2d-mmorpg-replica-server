@@ -159,5 +159,30 @@ namespace Packet
         {
             Console.WriteLine($"[S_LeaveGame] Game Has left.");
         }
+
+        internal static void HANDLE_S_BroadcastMonsterDeath(PacketSession session, S_BroadcastMonsterDeath death)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void HANDLE_S_SpawnMonster(PacketSession session, S_SpawnMonster monster)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void HANDLE_S_DespawnMonster(PacketSession session, S_DespawnMonster monster)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void HANDLE_S_BroadcastMonsterMove(PacketSession session, S_BroadcastMonsterMove move)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void HANDLE_S_BroadcastMonsterAttack(PacketSession session, S_BroadcastMonsterAttack attack)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

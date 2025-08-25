@@ -103,11 +103,13 @@ bool Handle_C_CharacterListRequest(PacketSessionRef& session, Protocol::C_Charac
 		PlayerRef playerRef = MakeShared<Player>();
 		playerRef->playerId = character.characterId; // 나중에 CharacterId로 바꿔야함 DB에 있는
 		playerRef->username = character.username; // utf8
-		playerRef->posX = character.posX; // 나중에 posX로 바꿔야함 DB에 
-		playerRef->posY = character.posY; // 나중에 posY로 바꿔야함 DB에
 		playerRef->gender = character.gender;
 		playerRef->region = character.region;
-		playerRef->dir = character.dir;
+
+		playerRef->core.id = character.characterId;
+		playerRef->core.kind = EntityKind::Player;
+		playerRef->core.pos = {character.posX, character.posY};
+		playerRef->core.dir = character.dir; 
 		//playerRef->level = character.level; // TODO: 플레이어(캐릭터) 데이터 쪽으로 넘겨야함, level, exp, hp, mp
 		
 		playerRef->ownerSession = gameSession; // WeakPtr로 참조

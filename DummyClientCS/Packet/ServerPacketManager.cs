@@ -27,6 +27,11 @@ namespace Packet
 	    PKT_S_ChangeRoomBegin = 16,
 	    PKT_C_ChangeRoomReady = 17,
 	    PKT_S_ChangeRoomCommit = 18,
+	    PKT_S_SpawnMonster = 19,
+	    PKT_S_DespawnMonster = 20,
+	    PKT_S_BroadcastMonsterMove = 21,
+	    PKT_S_BroadcastMonsterAttack = 22,
+	    PKT_S_BroadcastMonsterDeath = 23,
     }
     public class ServerPacketManager
     {
@@ -78,6 +83,11 @@ namespace Packet
             RegisterHandler((ushort)PacketID.PKT_S_BroadcastPlayerMove, ServerPacketHandler.HANDLE_S_BroadcastPlayerMove, S_BroadcastPlayerMove.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_ChangeRoomBegin, ServerPacketHandler.HANDLE_S_ChangeRoomBegin, S_ChangeRoomBegin.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_ChangeRoomCommit, ServerPacketHandler.HANDLE_S_ChangeRoomCommit, S_ChangeRoomCommit.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_SpawnMonster, ServerPacketHandler.HANDLE_S_SpawnMonster, S_SpawnMonster.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_DespawnMonster, ServerPacketHandler.HANDLE_S_DespawnMonster, S_DespawnMonster.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_BroadcastMonsterMove, ServerPacketHandler.HANDLE_S_BroadcastMonsterMove, S_BroadcastMonsterMove.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_BroadcastMonsterAttack, ServerPacketHandler.HANDLE_S_BroadcastMonsterAttack, S_BroadcastMonsterAttack.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_BroadcastMonsterDeath, ServerPacketHandler.HANDLE_S_BroadcastMonsterDeath, S_BroadcastMonsterDeath.Parser);
             
                   
         }

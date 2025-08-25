@@ -27,23 +27,6 @@ PlayerRef Room::FindPlayer(PlayerId pid)
 }
 
 
-Protocol::EDirection Room::DecideFacing(const PlayerRef& p, const Protocol::Vector2Info& clickWorldPos)
-{
-	int dx = clickWorldPos.x() - p->posX;
-	int dy = clickWorldPos.y() - p->posY;
-
-	// 좌표계 정의: y가 위로 감소(타일맵 전통)라면 UP은 dy<0, DOWN은 dy>0
-	// 같은경우 좌우 우선
-	if (std::abs(dx) >= std::abs(dy)) 
-	{
-		return (dx >= 0) ? Protocol::EDirection::DIR_RIGHT : Protocol::EDirection::DIR_LEFT;
-	}
-	else 
-	{
-		return (dy >= 0) ? Protocol::EDirection::DIR_DOWN : Protocol::EDirection::DIR_UP;
-	}
-}
-
 void Room::RemovePlayerInternal(int playerId, std::string_view reason)
 {
     UNREFERENCED_PARAMETER(reason);
@@ -70,9 +53,9 @@ void Room::AddPlayerInternal(PlayerRef p, SpawnPoint spawn, Protocol::EDirection
     if (_players.find(p->playerId) != _players.end())
         return;
 
-    p->posX = spawn.x;
-    p->posY = spawn.y;
-    p->dir = dir;
+    p->core.pos.x = spawn.x;
+    p->core.pos.y = spawn.y;
+    p->core.dir = dir;
 
     // 룸 소유권
     p->SetRoom(SharedThis());
@@ -104,10 +87,10 @@ Protocol::S_PlayerList Room::BuildPlayerListSnapshot(const PlayerRef& forPlayer,
         info->set_username(other->username);
 
         auto* pos = info->mutable_pos();
-        pos->set_x(other->posX);
-        pos->set_y(other->posY);
+        pos->set_x(other->core.pos.x);
+        pos->set_y(other->core.pos.x);
 
-        info->set_direction(other->dir);
+        info->set_direction(other->core.dir);
     }
     return pkt;
 }
@@ -117,8 +100,8 @@ Protocol::S_PlayerList Room::BuildPlayerListSnapshot(const PlayerRef& forPlayer,
 ------------------------*/
 void Room::Enter(PlayerRef p)
 {
-    SpawnPoint spawn{ p->posX, p->posY };
-    AddPlayerInternal(p, spawn, p->dir);  // 내부 등록 (SetRoom 포함)
+    SpawnPoint spawn{ p->core.pos.x, p->core.pos.y };
+    AddPlayerInternal(p, spawn, p->core.dir);  // 내부 등록 (SetRoom 포함)
 
 	GConsoleLogger->WriteStdOut(Color::GREEN, L"Room에 ENter 입장\n");
 	OnEnter(p); // 여기서 모두에게 BroadCasting?
@@ -151,10 +134,10 @@ void Room::BroadcastEnter(const PlayerRef& newcomer)
     newcomerInfo->set_username(newcomer->username);
 
     auto* pos = newcomerInfo->mutable_pos();
-    pos->set_x(newcomer->posX);
-    pos->set_y(newcomer->posY);
+    pos->set_x(newcomer->core.pos.x);
+    pos->set_y(newcomer->core.pos.y);
 
-    newcomerInfo->set_direction(newcomer->dir);
+    newcomerInfo->set_direction(newcomer->core.dir);
 
     auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
     Broadcast(sendBuffer, newcomer->playerId);
@@ -187,10 +170,23 @@ void Room::OnTickTimer()
 	DoTimer(_cfg.tickMs, &Room::OnTickTimer);
 }
 
-
-bool Room::CanEnterTile(const PlayerRef& p, int nx, int ny) const
+// Room.cpp
+void Room::OnPlayerHpChanged(int playerId, int newHp)
 {
-    UNREFERENCED_PARAMETER(p);
+    UNREFERENCED_PARAMETER(playerId);
+    UNREFERENCED_PARAMETER(newHp);
+    // 기본: 아무것도 안 함. 파생(Room)에서 필요 시 오버라이드
+}
+
+void Room::OnPlayerDeath(int playerId, int killerMonsterId)
+{
+    UNREFERENCED_PARAMETER(playerId);
+    UNREFERENCED_PARAMETER(killerMonsterId);
+    // 기본: 아무것도 안 함. 파생(Room)에서 필요 시 오버라이드
+}
+
+bool Room::CanEnterTile(int nx, int ny) const
+{
     UNREFERENCED_PARAMETER(nx);
     UNREFERENCED_PARAMETER(ny);
     // 베이스는 항상 true. TownRoom 등에서 충돌/벽/경계 체크 구현
@@ -243,19 +239,20 @@ void Room::ProcessMovesTick()
         if (!st.pending.has) continue;          // 이번 틱 처리할 요청 없음
         st.pending.has = false;                  // 요청 소비
 
-        // 1) 원하는 방향
-        auto want = DecideFacing(p, st.pending.clickWorldPos);
+        // 1) 원하는 방향 TODO :: Direction
+        //auto want = FaceTo(p, st.pending.clickWorldPos); 
+        auto want = Protocol::EDirection::DIR_DOWN;
 
         Protocol::EMoveResult result = Protocol::EMoveResult::OK;
         bool anyChange = false;
-        int oldX = p->posX, oldY = p->posY;
+        int oldX = p->core.pos.x, oldY = p->core.pos.y;
 
         // 2) 회전 우선
-        if (p->dir != want)
+        if (p->core.dir != want)
         {
             if (_tick - st.lastActionTick >= _cfg.rotateCooldownTicks)
             {
-                p->dir = want;
+                p->core.dir = want;
                 st.lastActionTick = _tick;
                 anyChange = true;
             }
@@ -269,9 +266,9 @@ void Room::ProcessMovesTick()
             // 3) 이동 시도
             if (_tick - st.lastActionTick >= _cfg.moveCooldownTicks)
             {
-                int nx = p->posX;
-                int ny = p->posY;
-                switch (p->dir) {
+                int nx = p->core.pos.x;
+                int ny = p->core.pos.y;
+                switch (p->core.dir) {
                 case Protocol::EDirection::DIR_UP:    ny -= 1; break;
                 case Protocol::EDirection::DIR_DOWN:  ny += 1; break;
                 case Protocol::EDirection::DIR_LEFT:  nx -= 1; break;
@@ -280,10 +277,10 @@ void Room::ProcessMovesTick()
                 }
 
                 // 예약/충돌 체크
-                if (!IsTileReserved(nx, ny) && CanEnterTile(p, nx, ny))
+                if (!IsTileReserved(nx, ny) && CanEnterTile(nx, ny))
                 {
                     ReserveTile(nx, ny);
-                    p->posX = nx; p->posY = ny;
+                    p->core.pos.x = nx; p->core.pos.y = ny;
                     st.lastActionTick = _tick;
                     anyChange = true;
 
@@ -305,10 +302,10 @@ void Room::ProcessMovesTick()
         {
             Protocol::PlayerMoveInfo info;
             info.set_playerid(p->playerId);
-            info.set_direction(p->dir);
+            info.set_direction(p->core.dir);
             auto* pos = info.mutable_newpos();
-            pos->set_x(p->posX);
-            pos->set_y(p->posY);
+            pos->set_x(p->core.pos.x);
+            pos->set_y(p->core.pos.x);
             changed.emplace_back(std::move(info));
         }
 
@@ -364,7 +361,6 @@ void Room::ChangeRoomBegin(const PlayerRef& p, const PortalLink& link)
     GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_ChangeRoomBegin...]: Client는 Server에게 Ready 패킷을 보내야함 \n");
 }
 
-
 void Room::ChangeRoomReady(const PlayerRef& p, const Protocol::C_ChangeRoomReady& pkt)
 {
     // 유효성 확인
@@ -405,9 +401,9 @@ void Room::ChangeRoomReady(const PlayerRef& p, const Protocol::C_ChangeRoomReady
             }
 
             // 인메모리 좌표 반영 후 등록
-            p->posX = sp->x;
-            p->posY = sp->y;
-            dst->AddPlayerInternal(p, { sp->x, sp->y }, p->dir);
+            p->core.pos.x = sp->x;
+            p->core.pos.y = sp->y;
+            dst->AddPlayerInternal(p, { sp->x, sp->y }, p->core.dir);
 
             // Commit + 스냅샷(나 제외 권장)
             Protocol::S_ChangeRoomCommit commit;
@@ -436,9 +432,9 @@ void Room::SendMoveAck(PlayerRef p, int clientSeq, Protocol::EMoveResult result)
     reply.set_result(result);
     reply.set_tick(_tick);
     auto* pos = reply.mutable_newpos();
-    pos->set_x(p->posX);
-    pos->set_y(p->posY);
-    reply.set_direction(p->dir);
+    pos->set_x(p->core.pos.x);
+    pos->set_y(p->core.pos.y);
+    reply.set_direction(p->core.dir);
 
     if (auto s = p->ownerSession.lock())
     {

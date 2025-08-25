@@ -25,9 +25,6 @@
     <Filter Include="Repository">
       <UniqueIdentifier>{42e6fd31-6cb3-417c-a413-5cb20d70f5c2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Service">
-      <UniqueIdentifier>{e7f4e254-c0b8-4593-bb86-cb09bf9530c5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameContents\Accounts">
       <UniqueIdentifier>{bfb6b4ca-3b0f-41a2-bfd7-0f812b9dd008}</UniqueIdentifier>
     </Filter>
@@ -43,6 +40,18 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{42096fb5-3698-450a-b570-590d69d7fd0c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameSystems">
+      <UniqueIdentifier>{07b9e24e-d08e-4e86-88af-0277720775de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{3d0af478-f359-430b-b6e5-2395fa7f772c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameContents\Player">
+      <UniqueIdentifier>{a102bfec-bce0-4734-aa06-1b22ee2997a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameContents\Monster">
+      <UniqueIdentifier>{4472cb5b-d647-4954-b52f-e30866ba7f51}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameServer.cpp">
@@ -50,9 +59,6 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>GameContents</Filter>
     </ClCompile>
     <ClCompile Include="GameSession.cpp">
       <Filter>Session</Filter>
@@ -111,13 +117,37 @@
     <ClCompile Include="FieldRoom.cpp">
       <Filter>GameContents\Rooms</Filter>
     </ClCompile>
+    <ClCompile Include="EntityCore.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="GeometryCore.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeCore.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>GameContents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterContainer.cpp">
+      <Filter>GameContents\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterSpawnerSystem.cpp">
+      <Filter>GameContents\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterMovementSystem.cpp">
+      <Filter>GameContents\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterCombatSystem.cpp">
+      <Filter>GameContents\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterService.cpp">
+      <Filter>GameContents\Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
       <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>GameContents</Filter>
     </ClInclude>
     <ClInclude Include="GameSessionContainer.h">
       <Filter>Session</Filter>
@@ -187,6 +217,39 @@
     </ClInclude>
     <ClInclude Include="FieldRoom.h">
       <Filter>GameContents\Rooms</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeCore.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityCore.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryCore.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>GameContents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterTypes.h">
+      <Filter>GameContents\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterContainer.h">
+      <Filter>GameContents\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterPorts.h">
+      <Filter>GameContents\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterSpawnerSystem.h">
+      <Filter>GameContents\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterMovementSystem.h">
+      <Filter>GameContents\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterCombatSystem.h">
+      <Filter>GameContents\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterService.h">
+      <Filter>GameContents\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
