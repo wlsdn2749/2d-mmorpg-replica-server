@@ -5,6 +5,11 @@
 #include "RoomManager.h"
 
 
+bool TownRoom::CanEnterTile(int nx, int ny) const
+{
+	return !_map->IsBlocked(nx, ny);	
+}
+
 void TownRoom::StartTick()
 {
 	;

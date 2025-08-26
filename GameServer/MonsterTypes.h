@@ -7,7 +7,7 @@ enum class MState : uint8_t { Idle, Patrol, Chase, Return, Dead };
 struct MonsterStats {
 	int32_t maxHp{ 20 };
 	int32_t atk{ 3 };
-	int32_t moveSpeedTilesPerSec{ 3 };
+	int32_t moveSpeedTilesPerSec{ 1 };
 	int32_t attackRangeTiles{ 1 };
 	int32_t attackCooldownMs{ 1200 };
 	int32_t aggroRangeTiles{ 6 };

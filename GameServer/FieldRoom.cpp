@@ -8,7 +8,6 @@
 
 void FieldRoom::StartTick()
 {
-	InitMonsters();
 	_lastMonsterTickMs = _clock.NowMs(); // 첫 기준 시각
 }
 
@@ -51,6 +50,7 @@ void FieldRoom::OnRoomTick()
 // HP 변경시 알림
 void FieldRoom::OnPlayerHpChanged(int playerId, int newHp)
 {
+	GConsoleLogger->WriteStdOut(Color::GREEN, L"playerID: %d 가 newHp : %d가 OnPlayerHpChanged", playerId, newHp);
 	//Protocol::S_BroadcastPlayerHp pkt;
 	//pkt.set_playerid(playerId);
 	//pkt.set_hp(newHp);
@@ -124,6 +124,7 @@ void FieldRoom::MonsterBroadcasterImpl::SpawnMonster(const Monster& m)
 	pkt.set_x(m.core.pos.x);
 	pkt.set_y(m.core.pos.y);
 	pkt.set_dir(m.core.dir);
+	GConsoleLogger->WriteStdOut(Color::YELLOW, L"몬스터 스폰 Id: %d, x: %d, y: %d, dir: %d\n", m.core.id, m.core.pos.x, m.core.pos.y, (int)m.core.dir);
 	_r.Broadcast(ClientPacketHandler::MakeSendBuffer(pkt));
 }
 
@@ -140,6 +141,7 @@ void FieldRoom::MonsterBroadcasterImpl::BroadcastMonsterMove(EntityId id, int x,
 	Protocol::S_BroadcastMonsterMove pkt;
 	pkt.set_monsterid(id);
 	pkt.set_x(x); pkt.set_y(y); pkt.set_dir(dir);
+	//GConsoleLogger->WriteStdOut(Color::GREEN, L"몬스터 이동 Id: %d, x: %d, y: %d, dir: %d\n", id, x, y, (int) dir);
 	_r.Broadcast(ClientPacketHandler::MakeSendBuffer(pkt));
 }
 
@@ -182,7 +184,7 @@ void FieldRoom::InitMonsters()
 	cfg.statsByType.emplace(1001, MonsterStats(
 		30, // MaxHp
 		5, // atk
-		3, // init spawn
+		1, // move tile per sec
 		1, // atk range tile
 		1200, // leash Radius Tiles
 		6 // aggroRangeTile
@@ -193,7 +195,7 @@ void FieldRoom::InitMonsters()
 		20,  // x
 		15,  // y
 		5,   // maxAlive
-		3,   // initialSpawn
+		1,   // initialSpawn
 		8000,// respawnDelayMs
 		10,  // leashRadiusTiles
 		1001 // monsterTypeId

@@ -3,7 +3,8 @@
 
 void MonsterSpawnerSystem::Init(MonsterContainer& repo, const std::vector<SpawnPointCfg>& spawns,
 	const std::unordered_map<int, MonsterStats>& statsByType,
-	IMonsterBroadcaster& cast, IMonsterClock& clock) {
+	IMonsterBroadcaster& cast, IMonsterClock& clock) 
+{
 	_spawns = spawns;
 	_statsByType = statsByType;
 

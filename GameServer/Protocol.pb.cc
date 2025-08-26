@@ -372,6 +372,7 @@ PROTOBUF_CONSTEXPR PlayerMoveInfo::PlayerMoveInfo(
     /*decltype(_impl_.newpos_)*/nullptr
   , /*decltype(_impl_.playerid_)*/0
   , /*decltype(_impl_.direction_)*/0
+  , /*decltype(_impl_.result_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct PlayerMoveInfoDefaultTypeInternal {
   PROTOBUF_CONSTEXPR PlayerMoveInfoDefaultTypeInternal()
@@ -626,6 +627,7 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   PROTOBUF_FIELD_OFFSET(::Protocol::PlayerMoveInfo, _impl_.playerid_),
   PROTOBUF_FIELD_OFFSET(::Protocol::PlayerMoveInfo, _impl_.direction_),
   PROTOBUF_FIELD_OFFSET(::Protocol::PlayerMoveInfo, _impl_.newpos_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::PlayerMoveInfo, _impl_.result_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::CharacterSummaryInfo, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -674,8 +676,8 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 182, -1, -1, sizeof(::Protocol::S_BroadcastMonsterDeath)},
   { 189, -1, -1, sizeof(::Protocol::Vector2Info)},
   { 197, -1, -1, sizeof(::Protocol::PlayerMoveInfo)},
-  { 206, -1, -1, sizeof(::Protocol::CharacterSummaryInfo)},
-  { 216, -1, -1, sizeof(::Protocol::PlayerInfo)},
+  { 207, -1, -1, sizeof(::Protocol::CharacterSummaryInfo)},
+  { 217, -1, -1, sizeof(::Protocol::PlayerInfo)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -754,10 +756,11 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "ttack\022\021\n\tmonsterId\030\001 \001(\005\022\021\n\ttargetPid\030\002 "
   "\001(\005\",\n\027S_BroadcastMonsterDeath\022\021\n\tmonste"
   "rId\030\001 \001(\005\"#\n\013Vector2Info\022\t\n\001x\030\001 \001(\005\022\t\n\001y"
-  "\030\002 \001(\005\"r\n\016PlayerMoveInfo\022\020\n\010playerId\030\001 \001"
-  "(\005\022\'\n\tdirection\030\002 \001(\0162\024.Protocol.EDirect"
-  "ion\022%\n\006newPos\030\003 \001(\0132\025.Protocol.Vector2In"
-  "fo\"}\n\024CharacterSummaryInfo\022\020\n\010username\030\001"
+  "\030\002 \001(\005\"\231\001\n\016PlayerMoveInfo\022\020\n\010playerId\030\001 "
+  "\001(\005\022\'\n\tdirection\030\002 \001(\0162\024.Protocol.EDirec"
+  "tion\022%\n\006newPos\030\003 \001(\0132\025.Protocol.Vector2I"
+  "nfo\022%\n\006result\030\004 \001(\0162\025.Protocol.EMoveResu"
+  "lt\"}\n\024CharacterSummaryInfo\022\020\n\010username\030\001"
   " \001(\t\022\r\n\005level\030\002 \001(\005\022!\n\006gender\030\003 \001(\0162\021.Pr"
   "otocol.EGender\022!\n\006region\030\004 \001(\0162\021.Protoco"
   "l.ERegion\"w\n\nPlayerInfo\022\n\n\002id\030\001 \001(\005\022\020\n\010u"
@@ -788,16 +791,17 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "\020\001\022\014\n\010DIR_LEFT\020\002\022\r\n\tDIR_RIGHT\020\003*`\n\014ELeav"
   "eReason\022\021\n\rLEAVE_UNKNOWN\020\000\022\020\n\014LEAVE_LOGO"
   "UT\020\001\022\025\n\021LEAVE_CHANGE_ROOM\020\002\022\024\n\020LEAVE_DIS"
-  "CONNECT\020\003*0\n\013EMoveResult\022\006\n\002OK\020\000\022\014\n\010COOL"
-  "DOWN\020\001\022\013\n\007BLOCKED\020\002*I\n\014EEnterReason\022\021\n\rE"
-  "NTER_UNKNOWN\020\000\022\017\n\013ENTER_LOGIN\020\001\022\025\n\021ENTER"
-  "_CHANGE_ROOM\020\002*)\n\016EDespawnReason\022\013\n\007UNKN"
-  "OWN\020\000\022\n\n\006KILLED\020\001B\033\252\002\030Google.Protobuf.Pr"
-  "otocolb\006proto3"
+  "CONNECT\020\003*_\n\013EMoveResult\022\020\n\014MOVE_UNKNOWN"
+  "\020\000\022\013\n\007MOVE_OK\020\001\022\014\n\010MOVE_DIR\020\002\022\021\n\rMOVE_CO"
+  "OLDOWN\020\003\022\020\n\014MOVE_BLOCKED\020\004*I\n\014EEnterReas"
+  "on\022\021\n\rENTER_UNKNOWN\020\000\022\017\n\013ENTER_LOGIN\020\001\022\025"
+  "\n\021ENTER_CHANGE_ROOM\020\002*)\n\016EDespawnReason\022"
+  "\013\n\007UNKNOWN\020\000\022\n\n\006KILLED\020\001B\033\252\002\030Google.Prot"
+  "obuf.Protocolb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 3334, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 3421, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
     &descriptor_table_Protocol_2eproto_once, nullptr, 0, 28,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
@@ -934,6 +938,8 @@ bool EMoveResult_IsValid(int value) {
     case 0:
     case 1:
     case 2:
+    case 3:
+    case 4:
       return true;
     default:
       return false;
@@ -6146,6 +6152,7 @@ PlayerMoveInfo::PlayerMoveInfo(const PlayerMoveInfo& from)
       decltype(_impl_.newpos_){nullptr}
     , decltype(_impl_.playerid_){}
     , decltype(_impl_.direction_){}
+    , decltype(_impl_.result_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
@@ -6153,8 +6160,8 @@ PlayerMoveInfo::PlayerMoveInfo(const PlayerMoveInfo& from)
     _this->_impl_.newpos_ = new ::Protocol::Vector2Info(*from._impl_.newpos_);
   }
   ::memcpy(&_impl_.playerid_, &from._impl_.playerid_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.direction_) -
-    reinterpret_cast<char*>(&_impl_.playerid_)) + sizeof(_impl_.direction_));
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.result_) -
+    reinterpret_cast<char*>(&_impl_.playerid_)) + sizeof(_impl_.result_));
   // @@protoc_insertion_point(copy_constructor:Protocol.PlayerMoveInfo)
 }
 
@@ -6166,6 +6173,7 @@ inline void PlayerMoveInfo::SharedCtor(
       decltype(_impl_.newpos_){nullptr}
     , decltype(_impl_.playerid_){0}
     , decltype(_impl_.direction_){0}
+    , decltype(_impl_.result_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -6199,8 +6207,8 @@ void PlayerMoveInfo::Clear() {
   }
   _impl_.newpos_ = nullptr;
   ::memset(&_impl_.playerid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_impl_.direction_) -
-      reinterpret_cast<char*>(&_impl_.playerid_)) + sizeof(_impl_.direction_));
+      reinterpret_cast<char*>(&_impl_.result_) -
+      reinterpret_cast<char*>(&_impl_.playerid_)) + sizeof(_impl_.result_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -6232,6 +6240,15 @@ const char* PlayerMoveInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           ptr = ctx->ParseMessage(_internal_mutable_newpos(), ptr);
           CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .Protocol.EMoveResult result = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_result(static_cast<::Protocol::EMoveResult>(val));
         } else
           goto handle_unusual;
         continue;
@@ -6284,6 +6301,13 @@ uint8_t* PlayerMoveInfo::_InternalSerialize(
         _Internal::newpos(this).GetCachedSize(), target, stream);
   }
 
+  // .Protocol.EMoveResult result = 4;
+  if (this->_internal_result() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+      4, this->_internal_result(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -6318,6 +6342,12 @@ size_t PlayerMoveInfo::ByteSizeLong() const {
       ::_pbi::WireFormatLite::EnumSize(this->_internal_direction());
   }
 
+  // .Protocol.EMoveResult result = 4;
+  if (this->_internal_result() != 0) {
+    total_size += 1 +
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_result());
+  }
+
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
@@ -6346,6 +6376,9 @@ void PlayerMoveInfo::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const :
   if (from._internal_direction() != 0) {
     _this->_internal_set_direction(from._internal_direction());
   }
+  if (from._internal_result() != 0) {
+    _this->_internal_set_result(from._internal_result());
+  }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -6364,8 +6397,8 @@ void PlayerMoveInfo::InternalSwap(PlayerMoveInfo* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(PlayerMoveInfo, _impl_.direction_)
-      + sizeof(PlayerMoveInfo::_impl_.direction_)
+      PROTOBUF_FIELD_OFFSET(PlayerMoveInfo, _impl_.result_)
+      + sizeof(PlayerMoveInfo::_impl_.result_)
       - PROTOBUF_FIELD_OFFSET(PlayerMoveInfo, _impl_.newpos_)>(
           reinterpret_cast<char*>(&_impl_.newpos_),
           reinterpret_cast<char*>(&other->_impl_.newpos_));

@@ -26,7 +26,22 @@ PlayerRef Room::FindPlayer(PlayerId pid)
 	return (it == _players.end()) ? nullptr : it->second;
 }
 
+Protocol::EDirection Room::DecideFacing(const PlayerRef& p, const Protocol::Vector2Info& clickWorldPos)
+{
+    int dx = clickWorldPos.x() - p->core.pos.x;
+    int dy = clickWorldPos.y() - p->core.pos.y;
 
+    // 좌표계 정의: y가 위로 감소(타일맵 전통)라면 UP은 dy<0, DOWN은 dy>0
+    // 같은경우 좌우 우선
+    if (std::abs(dx) >= std::abs(dy))
+    {
+        return (dx >= 0) ? Protocol::EDirection::DIR_RIGHT : Protocol::EDirection::DIR_LEFT;
+    }
+    else
+    {
+        return (dy >= 0) ? Protocol::EDirection::DIR_DOWN : Protocol::EDirection::DIR_UP;
+    }
+}
 void Room::RemovePlayerInternal(int playerId, std::string_view reason)
 {
     UNREFERENCED_PARAMETER(reason);
@@ -240,10 +255,9 @@ void Room::ProcessMovesTick()
         st.pending.has = false;                  // 요청 소비
 
         // 1) 원하는 방향 TODO :: Direction
-        //auto want = FaceTo(p, st.pending.clickWorldPos); 
-        auto want = Protocol::EDirection::DIR_DOWN;
+        auto want = DecideFacing(p, st.pending.clickWorldPos);
 
-        Protocol::EMoveResult result = Protocol::EMoveResult::OK;
+        Protocol::EMoveResult result = Protocol::EMoveResult::MOVE_UNKNOWN;
         bool anyChange = false;
         int oldX = p->core.pos.x, oldY = p->core.pos.y;
 
@@ -254,11 +268,12 @@ void Room::ProcessMovesTick()
             {
                 p->core.dir = want;
                 st.lastActionTick = _tick;
+                result = Protocol::EMoveResult::MOVE_DIR;
                 anyChange = true;
             }
             else
             {
-                result = Protocol::EMoveResult::COOLDOWN;
+                result = Protocol::EMoveResult::MOVE_COOLDOWN;
             }
         }
         else
@@ -280,20 +295,21 @@ void Room::ProcessMovesTick()
                 if (!IsTileReserved(nx, ny) && CanEnterTile(nx, ny))
                 {
                     ReserveTile(nx, ny);
-                    p->core.pos.x = nx; p->core.pos.y = ny;
+                    p->core.pos.x = nx; 
+                    p->core.pos.y = ny;
                     st.lastActionTick = _tick;
                     anyChange = true;
-
+                    result = Protocol::EMoveResult::MOVE_OK;
                     OnPlayerMoved(p, oldX, oldY);
                 }
                 else
                 {
-                    result = Protocol::EMoveResult::BLOCKED;
+                    result = Protocol::EMoveResult::MOVE_BLOCKED;
                 }
             }
             else
             {
-                result = Protocol::EMoveResult::COOLDOWN;
+                result = Protocol::EMoveResult::MOVE_COOLDOWN;
             }
         }
 
@@ -305,12 +321,13 @@ void Room::ProcessMovesTick()
             info.set_direction(p->core.dir);
             auto* pos = info.mutable_newpos();
             pos->set_x(p->core.pos.x);
-            pos->set_y(p->core.pos.x);
+            pos->set_y(p->core.pos.y);
+            info.set_result(result);
             changed.emplace_back(std::move(info));
         }
 
         // ACK: 요청 보낸 본인에게만 전송
-        SendMoveAck(p, st.pending.clientSeq, anyChange ? Protocol::EMoveResult::OK : result);
+        SendMoveAck(p, st.pending.clientSeq, result);
     }
 
     if (!changed.empty())

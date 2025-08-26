@@ -345,15 +345,17 @@ inline bool ELeaveReason_Parse(
     ELeaveReason_descriptor(), name, value);
 }
 enum EMoveResult : int {
-  OK = 0,
-  COOLDOWN = 1,
-  BLOCKED = 2,
+  MOVE_UNKNOWN = 0,
+  MOVE_OK = 1,
+  MOVE_DIR = 2,
+  MOVE_COOLDOWN = 3,
+  MOVE_BLOCKED = 4,
   EMoveResult_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   EMoveResult_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool EMoveResult_IsValid(int value);
-constexpr EMoveResult EMoveResult_MIN = OK;
-constexpr EMoveResult EMoveResult_MAX = BLOCKED;
+constexpr EMoveResult EMoveResult_MIN = MOVE_UNKNOWN;
+constexpr EMoveResult EMoveResult_MAX = MOVE_BLOCKED;
 constexpr int EMoveResult_ARRAYSIZE = EMoveResult_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* EMoveResult_descriptor();
@@ -4548,6 +4550,7 @@ class PlayerMoveInfo final :
     kNewPosFieldNumber = 3,
     kPlayerIdFieldNumber = 1,
     kDirectionFieldNumber = 2,
+    kResultFieldNumber = 4,
   };
   // .Protocol.Vector2Info newPos = 3;
   bool has_newpos() const;
@@ -4585,6 +4588,15 @@ class PlayerMoveInfo final :
   void _internal_set_direction(::Protocol::EDirection value);
   public:
 
+  // .Protocol.EMoveResult result = 4;
+  void clear_result();
+  ::Protocol::EMoveResult result() const;
+  void set_result(::Protocol::EMoveResult value);
+  private:
+  ::Protocol::EMoveResult _internal_result() const;
+  void _internal_set_result(::Protocol::EMoveResult value);
+  public:
+
   // @@protoc_insertion_point(class_scope:Protocol.PlayerMoveInfo)
  private:
   class _Internal;
@@ -4596,6 +4608,7 @@ class PlayerMoveInfo final :
     ::Protocol::Vector2Info* newpos_;
     int32_t playerid_;
     int direction_;
+    int result_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -6591,6 +6604,26 @@ inline void PlayerMoveInfo::set_allocated_newpos(::Protocol::Vector2Info* newpos
   }
   _impl_.newpos_ = newpos;
   // @@protoc_insertion_point(field_set_allocated:Protocol.PlayerMoveInfo.newPos)
+}
+
+// .Protocol.EMoveResult result = 4;
+inline void PlayerMoveInfo::clear_result() {
+  _impl_.result_ = 0;
+}
+inline ::Protocol::EMoveResult PlayerMoveInfo::_internal_result() const {
+  return static_cast< ::Protocol::EMoveResult >(_impl_.result_);
+}
+inline ::Protocol::EMoveResult PlayerMoveInfo::result() const {
+  // @@protoc_insertion_point(field_get:Protocol.PlayerMoveInfo.result)
+  return _internal_result();
+}
+inline void PlayerMoveInfo::_internal_set_result(::Protocol::EMoveResult value) {
+  
+  _impl_.result_ = value;
+}
+inline void PlayerMoveInfo::set_result(::Protocol::EMoveResult value) {
+  _internal_set_result(value);
+  // @@protoc_insertion_point(field_set:Protocol.PlayerMoveInfo.result)
 }
 
 // -------------------------------------------------------------------

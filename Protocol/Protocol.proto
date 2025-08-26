@@ -188,6 +188,8 @@ message S_BroadcastMonsterDeath {
 	int32 monsterId = 1;
 }
 
+// TODO (25) 서버 -> 클라 : S_BroadcastPlayerHpChanged
+// TODO (26) 서버 -> 클라 : S_BroadcastPlayerDeath
 
 enum ELoginResult
 {
@@ -229,9 +231,11 @@ enum ELeaveReason
 
 enum EMoveResult
 {
-	OK = 0;
-	COOLDOWN = 1;
-	BLOCKED = 2;
+	MOVE_UNKNOWN = 0;
+	MOVE_OK = 1;
+	MOVE_DIR = 2;
+	MOVE_COOLDOWN = 3;
+	MOVE_BLOCKED = 4; 
 }
 
 enum EEnterReason
@@ -257,6 +261,7 @@ message PlayerMoveInfo
 	int32 playerId = 1;
 	EDirection direction = 2; 
 	Vector2Info newPos = 3;
+	EMoveResult result = 4;
 }
 
 message CharacterSummaryInfo

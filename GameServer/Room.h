@@ -72,6 +72,8 @@ public:
 		return std::static_pointer_cast<Room>(shared_from_this());
 	}
 	PlayerRef FindPlayer(PlayerId pid);
+	Protocol::EDirection DecideFacing(const PlayerRef& p, const Protocol::Vector2Info& clickWorldPos);
+
 	std::unordered_map<PlayerId, PlayerRef> Players() {return _players;}
 
 	void RemovePlayerInternal(int playerId, std::string_view reason);

@@ -60,7 +60,7 @@ void MonsterMovementSystem::TickOne(Monster& m,
 
 	if (outOfLeash) m.state = MState::Return;
 
-
+	auto monsterStats = spawner.GetStats(m.typeId);
 	switch (m.state)
 	{
 		case MState::Idle:
@@ -71,7 +71,7 @@ void MonsterMovementSystem::TickOne(Monster& m,
 			if (this->TryStep(m, dir, map, cast))
 			{
 				// 다음 이동 쿨다운(속도 기반): 1000 / tilesPerSec
-				int stepMs = 1000 / std::max(1, 3); // 기본값, 실제는 stats 참조 필요
+				int stepMs = 1000 / monsterStats.moveSpeedTilesPerSec;
 				m.nextMoveAtMs = clock.NowMs() + stepMs;
 			}
 			else
