@@ -28,6 +28,17 @@ namespace Packet
 
         public static string PosToStr(Vector2Info pos)
             => pos is null ? "(?,?)" : $"({pos.X},{pos.Y})";
+
+        public static string MoveResultToStr(EMoveResult moveResult) => moveResult switch
+        {
+            EMoveResult.MoveUnknown => "Unknown",
+            EMoveResult.MoveOk => "Ok",
+            EMoveResult.MoveDir => "Dir",
+            EMoveResult.MoveBlocked => "Blocked",
+            EMoveResult.MoveCooldown => "Cooldown",
+            _ => moveResult.ToString()
+
+        };
     }
     public class ServerPacketHandler
     {
@@ -111,6 +122,8 @@ namespace Packet
             var pos = reply.NewPos;
             var posStr = NetDebug.PosToStr(pos);
             var dirStr = NetDebug.DirToStr(reply.Direction);
+            var mResult = NetDebug.MoveResultToStr(reply.Result);
+            
 
             // result/tick 필드가 없을 수도 있으니 Try 포맷
             string resultStr = reply?.Result.ToString() ?? "N/A";
@@ -120,7 +133,7 @@ namespace Packet
 
             Console.WriteLine(
                 $"[S_PlayerMoveReply] pid={reply.PlayerId}{meTag} " +
-                $"dir={dirStr} pos={posStr} result={resultStr} tick={tick}");
+                $"dir={dirStr} pos={posStr} result={resultStr} tick={tick} mResult={mResult}" );
         }
 
         internal static void HANDLE_S_BroadcastPlayerMove(PacketSession session, S_BroadcastPlayerMove move)
@@ -133,9 +146,10 @@ namespace Packet
                 var pos = m.NewPos;
                 var posStr = NetDebug.PosToStr(pos);
                 var dirStr = NetDebug.DirToStr(m.Direction);
+                var mResult = NetDebug.MoveResultToStr(m.Result);
                 string meTag = (m.PlayerId == NetDebug.MyPlayerId && NetDebug.MyPlayerId >= 0) ? " (ME)" : "";
 
-                Console.WriteLine($"  - pid={m.PlayerId}{meTag} dir={dirStr} pos={posStr}");
+                Console.WriteLine($"  - pid={m.PlayerId}{meTag} dir={dirStr} pos={posStr} mResult={mResult}");
             }
         }
 
@@ -158,6 +172,31 @@ namespace Packet
         internal static void HANDLE_S_LeaveGame(PacketSession session, S_LeaveGame game)
         {
             Console.WriteLine($"[S_LeaveGame] Game Has left.");
+        }
+
+        internal static void HANDLE_S_BroadcastMonsterDeath(PacketSession session, S_BroadcastMonsterDeath death)
+        {
+            Console.WriteLine($"[S_BroadcastMonsterDeath] Monster Has been dead.");
+        }
+
+        internal static void HANDLE_S_SpawnMonster(PacketSession session, S_SpawnMonster monster)
+        {
+            Console.WriteLine($"[S_SpawnMonster] Monster Has been spawned");
+        }
+
+        internal static void HANDLE_S_DespawnMonster(PacketSession session, S_DespawnMonster monster)
+        {
+            Console.WriteLine($"[S_DespawnMonster] Monster Has been despawned");
+        }
+
+        internal static void HANDLE_S_BroadcastMonsterMove(PacketSession session, S_BroadcastMonsterMove move)
+        {
+            Console.WriteLine($"[S_BroadcastMonsterMove] Monster Has been moved");
+        }
+
+        internal static void HANDLE_S_BroadcastMonsterAttack(PacketSession session, S_BroadcastMonsterAttack attack)
+        {
+            Console.WriteLine($"[S_BroadcastMonsterAttack] Monster Has been Attacked");
         }
     }
 }

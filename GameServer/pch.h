@@ -16,6 +16,9 @@
 #include "Account.h"
 #include "StringConvert.h"
 
+#include "TypeCore.h"
+#include "GeometryCore.h"
+
 #include "Windows.h"
 #undef max
 #undef min

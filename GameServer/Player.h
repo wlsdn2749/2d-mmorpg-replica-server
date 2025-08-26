@@ -1,4 +1,7 @@
 #pragma once
+#include "TypeCore.h"       // EntityId, EntityKind
+#include "GeometryCore.h"   // Pos2, Dir
+#include "EntityCore.h"     // EntityCore
 
 class Room; // 전방 선언
 
@@ -17,23 +20,36 @@ class Player
 ----------------------------*/
 
 public:
-	uint64				playerId = 0; // DB에서 CharacterId임
+	EntityId			playerId { 0 }; // DB에서 CharacterId임
 	string				username;
 	Protocol::EGender	gender{ 0 }; // gender
 	Protocol::ERegion	region{ 0 }; // region
 
-/*----------------------------
-	Player Move Data
-----------------------------*/
-
+/*------------------------------------------
+	Player Move Data (Core) / (위치, 방향)
+------------------------------------------*/
 public:
-	int posX = 0;
-	int posY = 0;
+	EntityCore core{
+		/*id   */ 0,
+		/*kind */ EntityKind::Player,
+		/*pos  */ {0,0},
+		/*dir  */ Protocol::EDirection::DIR_DOWN
+	};
 
-	// 현재 바라보는 방향
-	Protocol::EDirection dir{ 0 };
+	inline Pos2 GetPos() const { return { core.pos.x, core.pos.y }; }
+	inline void SetPos(int x, int y) { core.pos = { x,y }; }
+	inline void SetDir(Protocol::EDirection d) { core.dir = d; }
 
-	// 레벨도 있어야 하긴하나, 나중에 구현
+/*-------------------------------
+	HP 등 나중에 수정 할 예정 
+-------------------------------*/
+public:
+	int _hp { 30 };
+	inline int Hp() const {return _hp; }
+	bool ApplyDamage(int dmg, int srcMonsterId) {
+		_hp = std::max(0, _hp - std::max(0, dmg));
+		return (_hp == 0); // dead?
+	}
 
 /*---------------------------------
 	Player Room Transitioning Data
@@ -60,6 +76,7 @@ private:
 	int _lastTransitionId = 0;
 	bool _transferring = false;
 	PendingRoomChange _pending;
+
 /*----------------------------
 	Player Runtime Links
 ----------------------------*/

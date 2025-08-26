@@ -72,8 +72,9 @@ public:
 		return std::static_pointer_cast<Room>(shared_from_this());
 	}
 	PlayerRef FindPlayer(PlayerId pid);
-
 	Protocol::EDirection DecideFacing(const PlayerRef& p, const Protocol::Vector2Info& clickWorldPos);
+
+	std::unordered_map<PlayerId, PlayerRef> Players() {return _players;}
 
 	void RemovePlayerInternal(int playerId, std::string_view reason);
 	void AddPlayerInternal(PlayerRef p, SpawnPoint spawn, Protocol::EDirection dir);
@@ -103,7 +104,7 @@ public:
 	Room Tick
 -----------------*/
 protected:
-	virtual bool CanEnterTile(const PlayerRef& p, int nx, int ny) const; // 벽/충돌/맵
+	virtual bool CanEnterTile(int nx, int ny) const; // 벽/충돌/맵
 	virtual void ReserveTile(int nx, int ny); // 이동 예약
 	virtual bool IsTileReserved(int nx, int ny) const; // Default = false
 	virtual void OnPlayerMoved(const PlayerRef& p, int ox, int oy); // 좌표로 이동한 후 
@@ -117,6 +118,8 @@ protected:
 	// 파생 훅
 	virtual void OnEnter(const PlayerRef&) {}
 	virtual void OnLeave(const PlayerRef&) {}
+	virtual void OnPlayerHpChanged(int playerId, int newHp);
+	virtual void OnPlayerDeath(int playerId, int killerMonsterId);
 
 
 private:

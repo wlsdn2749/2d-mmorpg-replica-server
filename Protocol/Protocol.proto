@@ -24,6 +24,11 @@ enum MsgId
 	S_CHANGE_ROOM_BEGIN = 16;
 	C_CHANGE_ROOM_READY = 17;
 	S_CHANGE_ROOM_COMMIT = 18;
+	S_SPAWN_MONSTER = 19;
+	S_DESPAWN_MONSTER = 20;
+	S_BROADCAST_MONSTER_MOVE = 21;
+	S_BROADCAST_MONSTER_ATTACK = 22;
+	S_BROADCAST_MONSTER_DEATH = 23;
 }
 
 // 클라 -> 게임 서버 jwt 로그인 인증 (0)
@@ -149,6 +154,43 @@ message S_ChangeRoomCommit {
   S_PlayerList snapshots = 2; // 들어오자마자 월드 동기화
 }
 
+// (19) 서버 -> 클라 : 몬스터 스폰 알림
+message S_SpawnMonster {
+	int32 monsterId = 1; // Entity Unique id
+	int32 monsterTypeId = 2; // Monster Type (Template or Resources Id)
+	int32 x = 3; // Tile Pos X
+	int32 y = 4; // Tile Pos Y
+	EDirection dir = 5; // 방향 
+}
+
+// (20) 서버 -> 클라 몬스터 디스폰(제거) 알림 
+message S_DespawnMonster {
+	int32 monsterId = 1;
+	EDespawnReason reason = 2; // 정수 코드 EDespawnReason 참고
+}
+
+// (21) 서버 -> 클라 : 몬스터 이동 브로드 캐스트
+message S_BroadcastMonsterMove {
+	int32 monsterId = 1;
+	int32 x			= 2; // 이동 위치 X
+	int32 y			= 3; // 이동 위치 Y
+	EDirection dir	= 4; // 방향
+}
+
+// (22) 서버 -> 클라 : 몬스터 공격 브로드 캐스트
+message S_BroadcastMonsterAttack {
+	int32 monsterId = 1;
+	int32 targetPid = 2; // 공격 대상 Player Id
+}
+
+// (23) 서버 -> 클라 : 몬스터 사망 브로드 캐스트
+message S_BroadcastMonsterDeath {
+	int32 monsterId = 1;
+}
+
+// TODO (25) 서버 -> 클라 : S_BroadcastPlayerHpChanged
+// TODO (26) 서버 -> 클라 : S_BroadcastPlayerDeath
+
 enum ELoginResult
 {
     SUCCESS = 0;
@@ -189,9 +231,11 @@ enum ELeaveReason
 
 enum EMoveResult
 {
-	OK = 0;
-	COOLDOWN = 1;
-	BLOCKED = 2;
+	MOVE_UNKNOWN = 0;
+	MOVE_OK = 1;
+	MOVE_DIR = 2;
+	MOVE_COOLDOWN = 3;
+	MOVE_BLOCKED = 4; 
 }
 
 enum EEnterReason
@@ -199,6 +243,12 @@ enum EEnterReason
 	ENTER_UNKNOWN = 0;
 	ENTER_LOGIN = 1;
 	ENTER_CHANGE_ROOM = 2;
+}
+
+enum EDespawnReason
+{
+	UNKNOWN = 0;
+	KILLED = 1;
 }
 message Vector2Info
 {
@@ -211,6 +261,7 @@ message PlayerMoveInfo
 	int32 playerId = 1;
 	EDirection direction = 2; 
 	Vector2Info newPos = 3;
+	EMoveResult result = 4;
 }
 
 message CharacterSummaryInfo

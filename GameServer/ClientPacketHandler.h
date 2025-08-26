@@ -26,6 +26,11 @@ enum : uint16
 	PKT_S_ChangeRoomBegin = 16,
 	PKT_C_ChangeRoomReady = 17,
 	PKT_S_ChangeRoomCommit = 18,
+	PKT_S_SpawnMonster = 19,
+	PKT_S_DespawnMonster = 20,
+	PKT_S_BroadcastMonsterMove = 21,
+	PKT_S_BroadcastMonsterAttack = 22,
+	PKT_S_BroadcastMonsterDeath = 23,
 
 };
 
@@ -76,6 +81,11 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerMove& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerMove); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_ChangeRoomBegin& pkt) { return MakeSendBuffer(pkt, PKT_S_ChangeRoomBegin); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_ChangeRoomCommit& pkt) { return MakeSendBuffer(pkt, PKT_S_ChangeRoomCommit); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_SpawnMonster& pkt) { return MakeSendBuffer(pkt, PKT_S_SpawnMonster); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_DespawnMonster& pkt) { return MakeSendBuffer(pkt, PKT_S_DespawnMonster); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastMonsterMove& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastMonsterMove); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastMonsterAttack& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastMonsterAttack); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastMonsterDeath& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastMonsterDeath); };
 
 private:
 	template<typename PacketType, typename ProcessFunc>

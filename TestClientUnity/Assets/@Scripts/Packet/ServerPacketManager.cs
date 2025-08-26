@@ -3,13 +3,12 @@ using System;
 using System.Collections.Generic;
 using Google.Protobuf;
 using Google.Protobuf.Protocol;
-using Mmorpg2d.Auth;
 
 namespace Packet
 {
     public enum PacketID : ushort
     {
-        PKT_C_JwtLoginRequest = 0,
+	    PKT_C_JwtLoginRequest = 0,
 	    PKT_S_JwtLoginReply = 1,
 	    PKT_C_CreateCharacterRequest = 2,
 	    PKT_S_CreateCharacterReply = 3,
@@ -28,8 +27,11 @@ namespace Packet
 	    PKT_S_ChangeRoomBegin = 16,
 	    PKT_C_ChangeRoomReady = 17,
 	    PKT_S_ChangeRoomCommit = 18,
-        PKT_C_RegisterRequest = 19,
-        PKT_S_RegisterReply = 20,
+	    PKT_S_SpawnMonster = 19,
+	    PKT_S_DespawnMonster = 20,
+	    PKT_S_BroadcastMonsterMove = 21,
+	    PKT_S_BroadcastMonsterAttack = 22,
+	    PKT_S_BroadcastMonsterDeath = 23,
     }
     public class ServerPacketManager
     {
@@ -55,7 +57,6 @@ namespace Packet
         Dictionary<ushort, Func<byte[], int, int, IMessage>> _messageParsers = new Dictionary<ushort, Func<byte[], int, int, IMessage>>();
 
         private readonly Dictionary<Type, ushort> _typeToId = new();
-        public static ArraySegment<byte> MakeSendBuffer(RegisterRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_RegisterRequest);
         public static ArraySegment<byte> MakeSendBuffer(C_JwtLoginRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_JwtLoginRequest);
         public static ArraySegment<byte> MakeSendBuffer(C_CreateCharacterRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_CreateCharacterRequest);
         public static ArraySegment<byte> MakeSendBuffer(C_CharacterListRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_CharacterListRequest);
@@ -70,7 +71,6 @@ namespace Packet
             {
                 _packetHandlers[i] = ServerPacketHandler.HANDLE_Invalid;
             }
-            RegisterHandler((ushort)PacketID.PKT_S_RegisterReply, ServerPacketHandler.HANDLE_S_RegisterReply, RegisterReply.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_JwtLoginReply, ServerPacketHandler.HANDLE_S_JwtLoginReply, S_JwtLoginReply.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_CreateCharacterReply, ServerPacketHandler.HANDLE_S_CreateCharacterReply, S_CreateCharacterReply.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_CharacterListReply, ServerPacketHandler.HANDLE_S_CharacterListReply, S_CharacterListReply.Parser);
@@ -83,6 +83,11 @@ namespace Packet
             RegisterHandler((ushort)PacketID.PKT_S_BroadcastPlayerMove, ServerPacketHandler.HANDLE_S_BroadcastPlayerMove, S_BroadcastPlayerMove.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_ChangeRoomBegin, ServerPacketHandler.HANDLE_S_ChangeRoomBegin, S_ChangeRoomBegin.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_ChangeRoomCommit, ServerPacketHandler.HANDLE_S_ChangeRoomCommit, S_ChangeRoomCommit.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_SpawnMonster, ServerPacketHandler.HANDLE_S_SpawnMonster, S_SpawnMonster.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_DespawnMonster, ServerPacketHandler.HANDLE_S_DespawnMonster, S_DespawnMonster.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_BroadcastMonsterMove, ServerPacketHandler.HANDLE_S_BroadcastMonsterMove, S_BroadcastMonsterMove.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_BroadcastMonsterAttack, ServerPacketHandler.HANDLE_S_BroadcastMonsterAttack, S_BroadcastMonsterAttack.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_BroadcastMonsterDeath, ServerPacketHandler.HANDLE_S_BroadcastMonsterDeath, S_BroadcastMonsterDeath.Parser);
             
                   
         }

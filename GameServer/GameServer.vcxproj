@@ -181,16 +181,22 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClCompile Include="AppConfig.cpp" />
     <ClCompile Include="CharacterRepository.cpp" />
     <ClCompile Include="ClientPacketHandler.cpp" />
+    <ClCompile Include="MonsterCombatSystem.cpp" />
     <ClCompile Include="DBDisPatcher.cpp" />
     <ClCompile Include="DBWorker.cpp" />
+    <ClCompile Include="EntityCore.cpp" />
     <ClCompile Include="FieldRoom.cpp" />
     <ClCompile Include="GameServer.cpp" />
     <ClCompile Include="GameSession.cpp" />
     <ClCompile Include="GameSessionAccessor.cpp" />
     <ClCompile Include="GameSessionContainer.cpp" />
+    <ClCompile Include="GeometryCore.cpp" />
     <ClCompile Include="GlobalQueueShard.cpp" />
     <ClCompile Include="JwtAuth.cpp" />
     <ClCompile Include="MapData.cpp" />
+    <ClCompile Include="MonsterContainer.cpp" />
+    <ClCompile Include="MonsterMovementSystem.cpp" />
+    <ClCompile Include="MonsterService.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -208,7 +214,9 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClCompile Include="RoomManager.cpp" />
     <ClCompile Include="ShardBoot.cpp" />
     <ClCompile Include="SharedOwner.cpp" />
+    <ClCompile Include="MonsterSpawnerSystem.cpp" />
     <ClCompile Include="TownRoom.cpp" />
+    <ClCompile Include="TypeCore.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Account.h" />
@@ -216,17 +224,25 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClInclude Include="AppConfig.h" />
     <ClInclude Include="CharacterRepository.h" />
     <ClInclude Include="ClientPacketHandler.h" />
+    <ClInclude Include="MonsterCombatSystem.h" />
     <ClInclude Include="DBDisPatcher.h" />
     <ClInclude Include="DBWorker.h" />
+    <ClInclude Include="EntityCore.h" />
     <ClInclude Include="FieldRoom.h" />
     <ClInclude Include="GameSession.h" />
     <ClInclude Include="GameSessionAccessor.h" />
     <ClInclude Include="GameSessionContainer.h" />
     <ClInclude Include="GenProcedures.h" />
+    <ClInclude Include="GeometryCore.h" />
     <ClInclude Include="GlobalQueueShard.h" />
     <ClInclude Include="IJobQueueOwner.h" />
     <ClInclude Include="JwtAuth.h" />
     <ClInclude Include="MapData.h" />
+    <ClInclude Include="MonsterPorts.h" />
+    <ClInclude Include="MonsterContainer.h" />
+    <ClInclude Include="MonsterService.h" />
+    <ClInclude Include="MonsterTypes.h" />
+    <ClInclude Include="MonsterMovementSystem.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Protocol.pb.h" />
@@ -234,8 +250,10 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClInclude Include="RoomManager.h" />
     <ClInclude Include="ShardBoot.h" />
     <ClInclude Include="SharedOwner.h" />
+    <ClInclude Include="MonsterSpawnerSystem.h" />
     <ClInclude Include="StringConvert.h" />
     <ClInclude Include="TownRoom.h" />
+    <ClInclude Include="TypeCore.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\iocp-server-unity-client-demo\iocp_server_cpp\Common\Procedures\GenProcs.bat" />

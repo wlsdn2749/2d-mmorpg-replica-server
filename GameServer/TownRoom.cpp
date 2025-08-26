@@ -5,6 +5,11 @@
 #include "RoomManager.h"
 
 
+bool TownRoom::CanEnterTile(int nx, int ny) const
+{
+	return !_map->IsBlocked(nx, ny);	
+}
+
 void TownRoom::StartTick()
 {
 	;
@@ -37,8 +42,8 @@ void TownRoom::OnRoomTick()
 void TownRoom::OnPlayerMoved(const PlayerRef& p, int ox, int oy)
 {
 	// 도착 타일이 만약 맵 이동 타일이라면?
-	const int toX = p->posX;
-	const int toY = p->posY;
+	const int toX = p->core.pos.x;
+	const int toY = p->core.pos.y;
 
 	if (const PortalLink* link = _map->GetPortalAt(toX, toY))
 	{

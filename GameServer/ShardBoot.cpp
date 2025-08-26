@@ -7,6 +7,7 @@
 #include "ThreadManager.h"
 #include "Room.h"
 #include "TownRoom.h"
+#include "FieldRoom.h"
 #include "RoomManager.h"
 
 
@@ -57,19 +58,19 @@ void CreateRooms()
         RoomManager::Instance().Add(town0);
     }
 
-    // 사냥터(1)
+    // 사냥터(0)
     {
-        auto town1Map = MapData::FromFile("./Resources/Maps/Map_002.txt");
-        auto town1 = std::make_shared<TownRoom>(Room::Cfg{ 1, "Field", 50, 200 }, town1Map);
-        town1Map->DefinePortal(PortalLink{
+        auto field0Map = MapData::FromFile("./Resources/Maps/Map_002.txt");
+        auto field0 = std::make_shared<FieldRoom>(Room::Cfg{ 1, "Field", 50, 200 }, field0Map);
+        field0Map->DefinePortal(PortalLink{
             2001, /* srcPortalId */
             0, /* dstMapId */
             1001, /*dstPortalId */
         });
-        town1Map->MapTileToPortal(3, 3, 2001);
-        town1->SetOwner(gQueues[OwnerIndexForRoom(town1->RoomId(), roomsPerQueue)].get());
-        town1->StartTicking(); // 매 틱마다 호출하는 함수
-        RoomManager::Instance().Add(town1);
+        field0Map->MapTileToPortal(3, 3, 2001);
+        field0->SetOwner(gQueues[OwnerIndexForRoom(field0->RoomId(), roomsPerQueue)].get());
+        field0->StartTicking(); // 매 틱마다 호출하는 함수
+        RoomManager::Instance().Add(field0);
     }
 }
 
