@@ -45,3 +45,12 @@ void MonsterSpawnerSystem::Tick(MonsterContainer& repo, IMonsterBroadcaster& cas
 		cast.SpawnMonster(m);
 	}
 }
+
+void MonsterSpawnerSystem::OnMonsterDeath(MonsterContainer& repo, int spawnPointId, IMonsterClock& clock)
+{
+	if (const SpawnPointCfg* sp = FindSpawn(spawnPointId))
+	{
+		const int64_t when = clock.NowMs() + sp->respawnDelayMs;
+		repo.EnqueueRespawn(when, *sp);
+	}
+}

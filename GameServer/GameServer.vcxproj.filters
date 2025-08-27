@@ -40,9 +40,6 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{42096fb5-3698-450a-b570-590d69d7fd0c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameSystems">
-      <UniqueIdentifier>{07b9e24e-d08e-4e86-88af-0277720775de}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{3d0af478-f359-430b-b6e5-2395fa7f772c}</UniqueIdentifier>
     </Filter>
@@ -143,6 +140,12 @@
     </ClCompile>
     <ClCompile Include="MonsterService.cpp">
       <Filter>GameContents\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCombatSystem.cpp">
+      <Filter>GameContents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeUtils.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +253,18 @@
     </ClInclude>
     <ClInclude Include="MonsterService.h">
       <Filter>GameContents\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerPorts.h">
+      <Filter>GameContents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCombatSystem.h">
+      <Filter>GameContents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ProtocolHelper.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeUtils.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

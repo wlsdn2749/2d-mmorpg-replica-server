@@ -40,7 +40,10 @@
     <Column name="gender" type="int" notnull="true"/>
     <Column name="region" type="int" notnull="true"/>
     <Column name="level" type="int" notnull="true" default="1"/>
-    <Column name="exp" type="int" notnull="true" default="0"/>
+    <Column name="hp" type="int" notnull="true" default="100"/>
+    <Column name="maxHp" type="int" notnull="true" default="100"/>
+    <Column name="atk" type="int" notnull="true" default="10"/>
+    <Column name="def" type="int" notnull="true" default="5"/>
     <Column name="lastZone" type="int" notnull="true"/>
     <Column name="posX" type="int" notnull="true" default="0"/>
     <Column name="posY" type="int" notnull="true" default="0"/>

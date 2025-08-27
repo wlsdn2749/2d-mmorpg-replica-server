@@ -217,9 +217,31 @@ bool Handle_C_ChangeRoomReady(PacketSessionRef& session, Protocol::C_ChangeRoomR
 	
 
 	RoomRef room = player->GetRoom();
-	room->DoAsync([room, player, pkt] {
+	//room->DoAsync(&Room::ChangeRoomReady, player, pkt);
+
+	room->DoAsync([room, player, pkt] 
+	{
 		room->ChangeRoomReady(player, pkt); 
 	});
 
 	GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_ChangeRoomReady]: Client가 룸 이동 준비요청함 \n");
+}
+
+bool Handle_C_PlayerAttackRequest(PacketSessionRef& session, Protocol::C_PlayerAttackRequest& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+	if (!player) return false;
+
+
+	RoomRef room = player->GetRoom();
+	room->DoAsync([room, player, pkt]
+	{
+		room->OnRecvAttackReq(player, pkt);
+	});
+	GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_PlayerAttackRequest]: Player가 공격 요청함 \n");
 }

@@ -31,7 +31,7 @@ void MonsterService::OnMonsterExternalKill(EntityId id) {
 	if (m.state == MState::Dead) return;
 	_container.Kill(id);
 	_cast.BroadcastMonsterDeath(id);
-	_cast.DespawnMonster(id, Protocol::EDespawnReason::UNKNOWN);
+	_cast.DespawnMonster(id, Protocol::EDespawnReason::DESPAWN_UNKNOWN);
 
 
 	// 리스폰 예약
@@ -44,4 +44,62 @@ void MonsterService::OnMonsterExternalKill(EntityId id) {
 		}
 	}
 	_container.Remove(id);
+}
+
+/* 읽기 뷰 (퍼사드) */
+void MonsterService::ForEachMonsterView(const std::function<void(const MonsterView&)>& fn) const
+{
+	_container.ForEachMonster([&](const Monster& m)
+		{
+			fn(MonsterView{ m.core.id, m.core.pos.x, m.core.pos.y, m.curHp, m.typeId });
+		});
+}
+
+bool MonsterService::TryGetMonsterView(EntityId id, MonsterView& out) const
+{
+	if (const Monster* m = _container.Find(id))
+	{
+		out = MonsterView{ m->core.id, m->core.pos.x, m->core.pos.y, m->curHp, m->typeId };
+		return true;
+	}
+	return false;
+}
+
+/* 쓰기 (퍼사드) */
+
+bool MonsterService::ApplyDamageToMonster(EntityId id, int dmg, int /*srcPlayerId*/, int& hpAfter)
+{
+	if (dmg <= 0) return false;
+
+	Monster* m = _container.Find(id);
+	if (!m) return false;
+
+	hpAfter -= dmg;
+	m->curHp = hpAfter;
+	if(m->curHp > 0)
+		return true;
+
+	// HP가 0이하면 사망처리
+	KillMonster(id, Protocol::EDespawnReason::DESPAWN_KILLED);
+	return true;
+}
+
+void MonsterService::KillMonster(EntityId id, Protocol::EDespawnReason reason)
+{
+	Monster* m = _container.Find(id);
+	if(!m) return;
+
+	const int spawnPointId = m->fromSpawnId; // 스폰 포인트 id
+
+	// 1) 디스폰 브로드 캐스트
+	_cast.DespawnMonster(id, reason);
+
+	// 2) 컨테이너에서 제거
+	_container.Remove(id);
+	// 
+	// 3) 리스폰 예약
+	_spawner.OnMonsterDeath(_container, spawnPointId, _clock);
+
+	// 4) 죽음 브로드캐스트
+	_cast.BroadcastMonsterDeath(id);
 }

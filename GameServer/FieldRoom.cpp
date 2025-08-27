@@ -9,6 +9,8 @@
 void FieldRoom::StartTick()
 {
 	_lastMonsterTickMs = _clock.NowMs(); // 첫 기준 시각
+	InitMonsters();
+	InitPCombat();
 }
 
 void FieldRoom::OnEnter(const PlayerRef& p)
@@ -81,6 +83,13 @@ void FieldRoom::OnPlayerMoved(const PlayerRef& p, int ox, int oy)
 		ChangeRoomBegin(p, *link); // S_ChangeRoomBegin -> Ready -> Commit
 		return;
 	}
+}
+
+void FieldRoom::OnRecvAttackReq(const PlayerRef& p, const Protocol::C_PlayerAttackRequest& req)
+{
+	if(!_pCombat) return;
+	const int64_t nowMs = Time::NowSteadyMs();
+	_pCombat->HandleAttack(p, nowMs);
 }
 
 /* 어댑터 */
@@ -206,4 +215,43 @@ void FieldRoom::InitMonsters()
 	// ★ 퍼사드 생성자 인자 타입이 새 포트명으로 맞춰져 있어야 함
 	_monsters = std::make_unique<MonsterService>(_mapQuery, _linker, _cast, _clock, _rng);
 	_monsters->Init(cfg);
+}
+
+void FieldRoom::InitPCombat()
+{
+	PlayerCombatSystem::Cfg cfg;
+	cfg.attackCooldownMs = 500; // PRD 1틱~2틱 안에 재공격 금지용 예시
+	_pCombat = std::make_unique<PlayerCombatSystem>(cfg, _pLinker, _pCaster);
+}
+
+/*--------------------------------
+		플레이어 어댑터
+--------------------------------*/
+void FieldRoom::PlayerMonsterLinkerImpl::ForEachMonsterInRange(int cx, int cy, int rangeTiles, std::function<void(const MonsterView&)>) const
+{
+	// TODO Implementation
+}
+
+bool FieldRoom::PlayerMonsterLinkerImpl::TryGetMonster(EntityId monsterId, MonsterView& outMv) const
+{
+	if(!_r._monsters->TryGetMonsterView(monsterId, outMv)) return false;
+	return true;
+}
+
+bool FieldRoom::PlayerMonsterLinkerImpl::ApplyDamageToMonster(int monsterId, int damage, int srcPlayerId)
+{
+	int hpAfter;
+	if(!_r._monsters->ApplyDamageToMonster(monsterId, damage, srcPlayerId, hpAfter)) return false;
+	return true;
+
+}
+
+void FieldRoom::PlayerCombatBroadcasterImpl::BroadcastPlayerAttack(int attackerId, int targetId, int damage, int hpAfter)
+{
+	Protocol::S_BroadcastPlayerAttack pkt;
+	pkt.set_playerid(attackerId);
+	pkt.set_targetid(targetId);
+	pkt.set_damage(damage);
+	pkt.set_hpafter(hpAfter);
+	_r.Broadcast(ClientPacketHandler::MakeSendBuffer(pkt));
 }

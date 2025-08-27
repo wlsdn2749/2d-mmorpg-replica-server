@@ -10,6 +10,9 @@
 #include "MonsterCombatSystem.h"
 #include "MonsterService.h"
 
+#include "PlayerPorts.h"
+#include "PlayerCombatSystem.h"
+
 
 // 마을 룸 :
 class FieldRoom : public Room
@@ -20,8 +23,9 @@ public:
         , _mapQuery(*this)
         , _linker(*this)
         , _cast(*this)
+        , _pLinker(*this)
+        , _pCaster(*this)
     {
-        InitMonsters();
     }
 
 	bool CanEnterTile(int nx, int ny) const override {
@@ -47,9 +51,14 @@ protected:
 
 	// 이동 로직
 	void OnPlayerMoved(const PlayerRef& p, int ox, int oy) override;
+    
+    // 공격 로직
+    void OnRecvAttackReq(const PlayerRef& p, const Protocol::C_PlayerAttackRequest& req) override;
 
 private:
-    // ==== 어댑터 구현들 ====
+/*--------------------------------
+        몬스터 어댑터
+--------------------------------*/
     class MonsterMapQueryImpl : public IMonsterMapQuery {
     public:
         explicit MonsterMapQueryImpl(const FieldRoom& r) : _r(r) {}
@@ -91,6 +100,27 @@ private:
         int NextInt(int minIncl, int maxIncl) override;
     };
 
+/*--------------------------------
+        플레이어 어댑터
+--------------------------------*/
+    class PlayerMonsterLinkerImpl : public IPlayerMonsterLinker {
+    public:
+        explicit PlayerMonsterLinkerImpl(FieldRoom& r) : _r(r) {}
+	    virtual void ForEachMonsterInRange(int cx, int cy, int rangeTiles, std::function<void(const MonsterView&)>) const override; 
+	    virtual bool TryGetMonster(EntityId monsterId, MonsterView& outMv) const override;
+	    virtual bool ApplyDamageToMonster(int monsterId, int damage, int srcPlayerId) override;
+    private:
+        FieldRoom& _r;
+    };
+
+    class PlayerCombatBroadcasterImpl : public IPlayerCombatBroadcaster {
+    public:
+        explicit PlayerCombatBroadcasterImpl(FieldRoom& r) : _r(r) {}
+        virtual void BroadcastPlayerAttack(int attackerId, int targetId, int damage, int hpAfter) override;
+    private:
+        FieldRoom& _r;
+    };
+
 private:
     // ==== 어댑터 인스턴스 & 몬스터 서비스 ====
     MonsterMapQueryImpl     _mapQuery;
@@ -103,6 +133,15 @@ private:
 
     void InitMonsters(); // 구성/초기 스폰
     int64_t _lastMonsterTickMs{ 0 }; // monster Dt 계산용
+
+
+    // ==== 플레이어 어댑터 ====
+    PlayerMonsterLinkerImpl _pLinker;
+    PlayerCombatBroadcasterImpl _pCaster;
+
+    std::unique_ptr<PlayerCombatSystem> _pCombat;
+
+    void InitPCombat();
 
 };
 

@@ -198,5 +198,10 @@ namespace Packet
         {
             Console.WriteLine($"[S_BroadcastMonsterAttack] Monster Has been Attacked");
         }
+
+        internal static void HANDLE_S_BroadcastPlayerAttack(PacketSession session, S_BroadcastPlayerAttack attack)
+        {
+            Console.WriteLine($"[S_BroadcastPlayerAttack] Other Player Attacked ");
+        }
     }
 }

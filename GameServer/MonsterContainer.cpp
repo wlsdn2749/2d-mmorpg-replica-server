@@ -6,6 +6,11 @@ const Monster* MonsterContainer::Find(EntityId id) const {
 	return (it == _monsters.end()) ? nullptr : &it->second;
 }
 
+Monster* MonsterContainer::Find(EntityId id) {
+	auto it = _monsters.find(id);
+	return (it == _monsters.end()) ? nullptr : &it->second;
+}
+
 
 Monster& MonsterContainer::CreateFromSpawn(const SpawnPointCfg& sp, const MonsterStats& stats,
 	EntityId newId, int64_t nowMs) {

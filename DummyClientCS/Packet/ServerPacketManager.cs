@@ -32,6 +32,8 @@ namespace Packet
 	    PKT_S_BroadcastMonsterMove = 21,
 	    PKT_S_BroadcastMonsterAttack = 22,
 	    PKT_S_BroadcastMonsterDeath = 23,
+	    PKT_C_PlayerAttackRequest = 24,
+	    PKT_S_BroadcastPlayerAttack = 25,
     }
     public class ServerPacketManager
     {
@@ -64,6 +66,7 @@ namespace Packet
         public static ArraySegment<byte> MakeSendBuffer(C_LeaveGame pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_LeaveGame);
         public static ArraySegment<byte> MakeSendBuffer(C_PlayerMoveRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PlayerMoveRequest);
         public static ArraySegment<byte> MakeSendBuffer(C_ChangeRoomReady pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_ChangeRoomReady);
+        public static ArraySegment<byte> MakeSendBuffer(C_PlayerAttackRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PlayerAttackRequest);
 
         void Register()
         {
@@ -88,6 +91,7 @@ namespace Packet
             RegisterHandler((ushort)PacketID.PKT_S_BroadcastMonsterMove, ServerPacketHandler.HANDLE_S_BroadcastMonsterMove, S_BroadcastMonsterMove.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_BroadcastMonsterAttack, ServerPacketHandler.HANDLE_S_BroadcastMonsterAttack, S_BroadcastMonsterAttack.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_BroadcastMonsterDeath, ServerPacketHandler.HANDLE_S_BroadcastMonsterDeath, S_BroadcastMonsterDeath.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_BroadcastPlayerAttack, ServerPacketHandler.HANDLE_S_BroadcastPlayerAttack, S_BroadcastPlayerAttack.Parser);
             
                   
         }

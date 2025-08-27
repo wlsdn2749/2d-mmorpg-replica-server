@@ -29,6 +29,8 @@ enum MsgId
 	S_BROADCAST_MONSTER_MOVE = 21;
 	S_BROADCAST_MONSTER_ATTACK = 22;
 	S_BROADCAST_MONSTER_DEATH = 23;
+	C_PLAYER_ATTACK_REQUEST = 24;
+	S_BROADCAST_PLAYER_ATTACK = 25;
 }
 
 // 클라 -> 게임 서버 jwt 로그인 인증 (0)
@@ -187,9 +189,21 @@ message S_BroadcastMonsterAttack {
 message S_BroadcastMonsterDeath {
 	int32 monsterId = 1;
 }
+// (24) 클라 -> 서버 : 플레이어 공격 서버 전송
+message C_PlayerAttackRequest {
 
-// TODO (25) 서버 -> 클라 : S_BroadcastPlayerHpChanged
-// TODO (26) 서버 -> 클라 : S_BroadcastPlayerDeath
+}
+
+
+// (25) 서버 -> 클라 : 플레이어 공격 브로드 캐스트
+message S_BroadcastPlayerAttack {
+	int32 playerId = 1;
+	int32 targetId = 2;
+	int32 damage = 3;
+	int32 hpAfter = 4;
+}
+// TODO (26) 서버 -> 클라 : S_BroadcastPlayerHpChanged
+// TODO (27) 서버 -> 클라 : S_BroadcastPlayerDeath
 
 enum ELoginResult
 {
@@ -247,8 +261,8 @@ enum EEnterReason
 
 enum EDespawnReason
 {
-	UNKNOWN = 0;
-	KILLED = 1;
+	DESPAWN_UNKNOWN = 0;
+	DESPAWN_KILLED = 1;
 }
 message Vector2Info
 {

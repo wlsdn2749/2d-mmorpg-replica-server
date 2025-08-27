@@ -206,6 +206,7 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerCombatSystem.cpp" />
     <ClCompile Include="Protocol.pb.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -215,6 +216,7 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClCompile Include="ShardBoot.cpp" />
     <ClCompile Include="SharedOwner.cpp" />
     <ClCompile Include="MonsterSpawnerSystem.cpp" />
+    <ClCompile Include="TimeUtils.cpp" />
     <ClCompile Include="TownRoom.cpp" />
     <ClCompile Include="TypeCore.cpp" />
   </ItemGroup>
@@ -245,13 +247,17 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClInclude Include="MonsterMovementSystem.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerCombatSystem.h" />
+    <ClInclude Include="PlayerPorts.h" />
     <ClInclude Include="Protocol.pb.h" />
+    <ClInclude Include="ProtocolHelper.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="RoomManager.h" />
     <ClInclude Include="ShardBoot.h" />
     <ClInclude Include="SharedOwner.h" />
     <ClInclude Include="MonsterSpawnerSystem.h" />
     <ClInclude Include="StringConvert.h" />
+    <ClInclude Include="TimeUtils.h" />
     <ClInclude Include="TownRoom.h" />
     <ClInclude Include="TypeCore.h" />
   </ItemGroup>

@@ -31,6 +31,8 @@ enum : uint16
 	PKT_S_BroadcastMonsterMove = 21,
 	PKT_S_BroadcastMonsterAttack = 22,
 	PKT_S_BroadcastMonsterDeath = 23,
+	PKT_C_PlayerAttackRequest = 24,
+	PKT_S_BroadcastPlayerAttack = 25,
 
 };
 
@@ -44,6 +46,7 @@ bool Handle_C_EnterGame(PacketSessionRef& session, Protocol::C_EnterGame& pkt);
 bool Handle_C_LeaveGame(PacketSessionRef& session, Protocol::C_LeaveGame& pkt);
 bool Handle_C_PlayerMoveRequest(PacketSessionRef& session, Protocol::C_PlayerMoveRequest& pkt);
 bool Handle_C_ChangeRoomReady(PacketSessionRef& session, Protocol::C_ChangeRoomReady& pkt);
+bool Handle_C_PlayerAttackRequest(PacketSessionRef& session, Protocol::C_PlayerAttackRequest& pkt);
 
 class ClientPacketHandler
 {
@@ -62,6 +65,7 @@ public:
 		GPacketHandler[PKT_C_LeaveGame] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_LeaveGame>(Handle_C_LeaveGame, session, buffer, len); };
 		GPacketHandler[PKT_C_PlayerMoveRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PlayerMoveRequest>(Handle_C_PlayerMoveRequest, session, buffer, len); };
 		GPacketHandler[PKT_C_ChangeRoomReady] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_ChangeRoomReady>(Handle_C_ChangeRoomReady, session, buffer, len); };
+		GPacketHandler[PKT_C_PlayerAttackRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PlayerAttackRequest>(Handle_C_PlayerAttackRequest, session, buffer, len); };
 		
 	}
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
@@ -86,6 +90,7 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastMonsterMove& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastMonsterMove); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastMonsterAttack& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastMonsterAttack); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastMonsterDeath& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastMonsterDeath); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerAttack& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerAttack); };
 
 private:
 	template<typename PacketType, typename ProcessFunc>

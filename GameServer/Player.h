@@ -36,20 +36,35 @@ public:
 		/*dir  */ Protocol::EDirection::DIR_DOWN
 	};
 
+	inline int PosX() const {return core.pos.x;}
+	inline int PosY() const {return core.pos.y;}
+	inline Protocol::EDirection Dir() const {return core.dir; }
 	inline Pos2 GetPos() const { return { core.pos.x, core.pos.y }; }
 	inline void SetPos(int x, int y) { core.pos = { x,y }; }
 	inline void SetDir(Protocol::EDirection d) { core.dir = d; }
 
 /*-------------------------------
-	HP 등 나중에 수정 할 예정 
+	HP 등 전투 수치 + 레벨
 -------------------------------*/
 public:
-	int _hp { 30 };
-	inline int Hp() const {return _hp; }
+	inline int Hp() const { return _hp; }
+	inline int Atk() const { return _atk; }
+	inline int Def() const {return _def; }
+	inline int Level() const {return _level; }
+
 	bool ApplyDamage(int dmg, int srcMonsterId) {
 		_hp = std::max(0, _hp - std::max(0, dmg));
 		return (_hp == 0); // dead?
 	}
+
+public: // TODO 나중에 private로 수정 필
+	int _hp { 30 };
+	int _maxHp { 30 };
+	int _atk { 10 };
+	int _def { 5 };
+	int _level { 1 };
+	int _exp { 0 };
+
 
 /*---------------------------------
 	Player Room Transitioning Data

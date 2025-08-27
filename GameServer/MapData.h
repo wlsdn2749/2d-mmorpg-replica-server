@@ -28,7 +28,7 @@ struct MapData
 
 	inline bool InBounds(int x, int y) const
 	{
-		return (x >= minX && x <= maxX && y >= minY && y <= maxY);
+		return (minX <= x && x <= maxX && minY <= y && y <= maxY);
 	}
 
 	inline int Index(int x, int y) const

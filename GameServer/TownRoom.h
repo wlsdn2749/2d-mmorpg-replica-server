@@ -7,9 +7,7 @@ class TownRoom : public Room
 public:
 	using Room::Room; // Room::Cfg 생성자를 상속함.
 
-	bool CanEnterTile(int nx, int ny) const override {
-		return !_map->IsBlocked(nx, ny);
-	}
+	bool CanEnterTile(int nx, int ny) const override;
 
 	// Chat
 
