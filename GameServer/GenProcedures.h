@@ -31,14 +31,14 @@ namespace SP
     	void ParamIn_Gender(int32&& v) { _gender = std::move(v); BindParam(2, _gender); };
     	void ParamIn_Region(int32& v) { BindParam(3, v); };
     	void ParamIn_Region(int32&& v) { _region = std::move(v); BindParam(3, _region); };
-    	void ParamIn_LastZone(int32& v) { BindParam(4, v); };
-    	void ParamIn_LastZone(int32&& v) { _lastZone = std::move(v); BindParam(4, _lastZone); };
+    	void ParamIn_LastRoom(int32& v) { BindParam(4, v); };
+    	void ParamIn_LastRoom(int32&& v) { _lastRoom = std::move(v); BindParam(4, _lastRoom); };
 
     private:
     	int32 _userId = {};
     	int32 _gender = {};
     	int32 _region = {};
-    	int32 _lastZone = {};
+    	int32 _lastRoom = {};
     };
 
     class CharacterUsernameExists : public DBBind<2,0>
@@ -72,6 +72,38 @@ namespace SP
 
     private:
     	int32 _userId = {};
+    };
+
+    class UpdateCharacterStats : public DBBind<8,0>
+    {
+    public:
+    	UpdateCharacterStats(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spUpdateCharacterStats(?,?,?,?,?,?,?,?)}") { }
+    	void ParamIn_CharacterId(int32& v) { BindParam(0, v); };
+    	void ParamIn_CharacterId(int32&& v) { _characterId = std::move(v); BindParam(0, _characterId); };
+    	void ParamIn_PosX(int32& v) { BindParam(1, v); };
+    	void ParamIn_PosX(int32&& v) { _posX = std::move(v); BindParam(1, _posX); };
+    	void ParamIn_PosY(int32& v) { BindParam(2, v); };
+    	void ParamIn_PosY(int32&& v) { _posY = std::move(v); BindParam(2, _posY); };
+    	void ParamIn_Dir(int32& v) { BindParam(3, v); };
+    	void ParamIn_Dir(int32&& v) { _dir = std::move(v); BindParam(3, _dir); };
+    	void ParamIn_LastRoom(int32& v) { BindParam(4, v); };
+    	void ParamIn_LastRoom(int32&& v) { _lastRoom = std::move(v); BindParam(4, _lastRoom); };
+    	void ParamIn_Hp(int32& v) { BindParam(5, v); };
+    	void ParamIn_Hp(int32&& v) { _hp = std::move(v); BindParam(5, _hp); };
+    	void ParamIn_Level(int32& v) { BindParam(6, v); };
+    	void ParamIn_Level(int32&& v) { _level = std::move(v); BindParam(6, _level); };
+    	void ParamIn_Exp(int32& v) { BindParam(7, v); };
+    	void ParamIn_Exp(int32&& v) { _exp = std::move(v); BindParam(7, _exp); };
+
+    private:
+    	int32 _characterId = {};
+    	int32 _posX = {};
+    	int32 _posY = {};
+    	int32 _dir = {};
+    	int32 _lastRoom = {};
+    	int32 _hp = {};
+    	int32 _level = {};
+    	int32 _exp = {};
     };
 
     class InsertGold : public DBBind<3,0>

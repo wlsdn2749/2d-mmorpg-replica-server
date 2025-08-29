@@ -8,7 +8,6 @@ using MonsterView = MonsterService::MonsterView;
 // ===== Room이 제공해야하는 포트 ====
 struct IPlayerMonsterLinker {
 	
-
 	virtual ~IPlayerMonsterLinker() = default;
 	
 	// 범위 내 몬스터 정보

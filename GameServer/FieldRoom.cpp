@@ -246,6 +246,7 @@ bool FieldRoom::PlayerMonsterLinkerImpl::ApplyDamageToMonster(int monsterId, int
 
 }
 
+
 void FieldRoom::PlayerCombatBroadcasterImpl::BroadcastPlayerAttack(int attackerId, int targetId, int damage, int hpAfter)
 {
 	Protocol::S_BroadcastPlayerAttack pkt;

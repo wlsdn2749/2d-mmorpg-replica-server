@@ -2,7 +2,7 @@
 #include "TypeCore.h"       // EntityId, EntityKind
 #include "GeometryCore.h"   // Pos2, Dir
 #include "EntityCore.h"     // EntityCore
-
+#include "CharacterRepository.h"
 class Room; // 전방 선언
 
 struct PendingRoomChange {
@@ -51,6 +51,7 @@ public:
 	inline int Atk() const { return _atk; }
 	inline int Def() const {return _def; }
 	inline int Level() const {return _level; }
+	inline int Exp() const {return _exp; }
 
 	bool ApplyDamage(int dmg, int srcMonsterId) {
 		_hp = std::max(0, _hp - std::max(0, dmg));
@@ -65,7 +66,11 @@ public: // TODO 나중에 private로 수정 필
 	int _level { 1 };
 	int _exp { 0 };
 
-
+/*---------------------------------
+	DB Packer
+----------------------------------*/
+public:
+	void GetCharacterStat(CharacterRepository::CharacterStat& outStat) const;
 /*---------------------------------
 	Player Room Transitioning Data
 ---------------------------------*/

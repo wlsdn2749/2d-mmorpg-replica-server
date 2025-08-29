@@ -40,11 +40,12 @@
     <Column name="gender" type="int" notnull="true"/>
     <Column name="region" type="int" notnull="true"/>
     <Column name="level" type="int" notnull="true" default="1"/>
+    <Column name="exp" type="int" notnull="true" default="0"/>
     <Column name="hp" type="int" notnull="true" default="100"/>
     <Column name="maxHp" type="int" notnull="true" default="100"/>
     <Column name="atk" type="int" notnull="true" default="10"/>
     <Column name="def" type="int" notnull="true" default="5"/>
-    <Column name="lastZone" type="int" notnull="true"/>
+    <Column name="lastRoom" type="int" notnull="true"/>
     <Column name="posX" type="int" notnull="true" default="0"/>
     <Column name="posY" type="int" notnull="true" default="0"/>
     <Column name="dir" type="int" notnull="true" default="0"/>
@@ -65,14 +66,14 @@
     <Param name="@username" type="nvarchar(32)"/>
     <Param name="@gender" type="int"/>
     <Param name="@region" type="int"/>
-    <Param name="@lastZone" type="int"/>
+    <Param name="@lastRoom" type="int"/>
     <Body>
       <![CDATA[
        SET NOCOUNT ON;
        SET XACT_ABORT ON;
        
-       INSERT INTO [dbo].[Characters] ([userId], [username], [gender], [region], [lastZone])
-       VALUES (@userId, @username, @gender, @region, @lastZone);       
+       INSERT INTO [dbo].[Characters] ([userId], [username], [gender], [region], [lastRoom])
+       VALUES (@userId, @username, @gender, @region, @lastRoom);       
       ]]>
     </Body>
   </Procedure>
@@ -104,6 +105,33 @@
         WHERE [userId] = @userId
         ORDER BY [level] DESC;
       ]]>
+    </Body>
+  </Procedure>
+  <Procedure name="spUpdateCharacterStats">
+    <Param name="@characterId" type="int"/>
+    <Param name="@posX" type="int"/>
+    <Param name="@posY" type="int"/>
+    <Param name="@dir" type="int"/>
+    <Param name="@lastRoom" type="int"/>
+    <Param name="@hp" type="int"/>
+    <Param name="@level" type="int"/>
+    <Param name="@exp" type="int"/>
+    <Body>
+      <![CDATA[
+      SET NOCOUNT ON;
+      SET XACT_ABORT ON;
+      
+      UPDATE [dbo].[Characters]
+      SET 
+          posX = @posX,
+          posY = @posY,
+          dir = @dir,
+          lastRoom = @lastRoom,
+          hp = @hp,
+          level = @level,
+          exp = @exp
+      WHERE characterId = @characterId;
+    ]]>
     </Body>
   </Procedure>
   

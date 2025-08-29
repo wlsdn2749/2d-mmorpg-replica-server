@@ -170,5 +170,21 @@ namespace DummyClientCS
                 }
             }
         }
+
+        public async Task SendForEachAttack()
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_PlayerAttackRequest
+                    {
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                }
+            }
+        }
     }
 }

@@ -54,7 +54,7 @@ void CreateRooms()
         auto town0 = std::make_shared<TownRoom>(Room::Cfg{ 0, "Town", 50, 200 }, town0Map);
         
         town0->SetOwner(gQueues[OwnerIndexForRoom(town0->RoomId(), roomsPerQueue)].get());
-        town0->StartTicking(); // 매 틱마다 호출하는 함수
+        town0->Init(); // 매 틱마다 호출하는 함수
         RoomManager::Instance().Add(town0);
     }
 
@@ -69,7 +69,7 @@ void CreateRooms()
         });
         field0Map->MapTileToPortal(3, 3, 2001);
         field0->SetOwner(gQueues[OwnerIndexForRoom(field0->RoomId(), roomsPerQueue)].get());
-        field0->StartTicking(); // 매 틱마다 호출하는 함수
+        field0->Init(); // 매 틱마다 호출하는 함수
         RoomManager::Instance().Add(field0);
     }
 }

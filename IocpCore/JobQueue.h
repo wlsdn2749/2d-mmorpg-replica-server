@@ -77,12 +77,50 @@ public:
 		GJobTimer->Reserve(tickAfter, shared_from_this(), job);
 	}
 
-	template<typename T, typename Ret, typename... Args>
-	void DoTimer(uint64 tickAfter, Ret(T::* memFunc)(Args...), Args... args)
+	//template<typename T, typename Ret, typename... Args>
+	//void DoTimer(uint64 tickAfter, Ret(T::* memFunc)(Args...), Args... args)
+	//{
+	//	shared_ptr<T> owner = static_pointer_cast<T>(shared_from_this());
+	//	JobRef job = ObjectPool<Job>::MakeShared(owner, memFunc, std::forward<Args>(args)...);
+	//	GJobTimer->Reserve(tickAfter, shared_from_this(), job);
+	//}
+
+	// 일반 함수/람다 버전
+	template<typename F>
+	void DoTimer(uint64 tickAfter, F&& f)
 	{
-		shared_ptr<T> owner = static_pointer_cast<T>(shared_from_this());
-		JobRef job = ObjectPool<Job>::MakeShared(owner, memFunc, std::forward<Args>(args)...);
+		JobRef job = ObjectPool<Job>::MakeShared(std::forward<F>(f));
 		GJobTimer->Reserve(tickAfter, shared_from_this(), job);
+	}
+
+	// non-const 멤버 함수 버전
+	template<typename T, typename Ret, typename... FArgs, typename... CallArgs>
+	void DoTimer(uint64 tickAfter, Ret(T::* memFunc)(FArgs...), CallArgs&&... callArgs)
+	{
+		std::shared_ptr<T> owner = std::static_pointer_cast<T>(shared_from_this());
+		auto task = [owner = std::move(owner), memFunc,
+			tup = std::make_tuple(std::forward<CallArgs>(callArgs)...)]() mutable
+			{
+				std::apply([&](auto&&... args) {
+					std::invoke(memFunc, owner.get(), std::forward<decltype(args)>(args)...);
+					}, tup);
+			};
+		DoTimer(tickAfter, std::move(task)); // 첫 번째 오버로드로 위임
+	}
+
+	// const 멤버 함수 버전
+	template<typename T, typename Ret, typename... FArgs, typename... CallArgs>
+	void DoTimer(uint64 tickAfter, Ret(T::* memFunc)(FArgs...) const, CallArgs&&... callArgs)
+	{
+		std::shared_ptr<const T> owner = std::static_pointer_cast<const T>(shared_from_this());
+		auto task = [owner = std::move(owner), memFunc,
+			tup = std::make_tuple(std::forward<CallArgs>(callArgs)...)]() mutable
+			{
+				std::apply([&](auto&&... args) {
+					std::invoke(memFunc, owner.get(), std::forward<decltype(args)>(args)...);
+					}, tup);
+			};
+		DoTimer(tickAfter, std::move(task)); // 첫 번째 오버로드로 위임
 	}
 
 	void CledrJobs() {_jobs.Clear(); }

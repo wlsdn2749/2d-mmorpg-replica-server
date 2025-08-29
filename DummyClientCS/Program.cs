@@ -38,6 +38,7 @@ class Program
             Console.WriteLine("[e] 캐릭터 리스트 받기");
             Console.WriteLine("[r] 게임 접속 :          --- Index = 0");
             Console.WriteLine("[t] 상하좌우 움직이기:   --- 0,1,2,3 [상하좌우]");
+            Console.WriteLine("[a] 공격 보내기 : --- 기본공격");
             Console.WriteLine("[y] 룸에서 나가기 : ");
             Console.WriteLine("[z] 종료");
             Console.Write("선택: ");
@@ -76,9 +77,13 @@ class Program
                     Int32.TryParse(Console.ReadLine(), out dir);
                     await SessionManager.Instance.SendForEachMove(dir);
                     break;
+                case "a":
+                    await SessionManager.Instance.SendForEachAttack();
+                    break;
                 case "y":
                     await SessionManager.Instance.SendForLeave();
                     break;
+
                 case "z":
                     return;
                 default:

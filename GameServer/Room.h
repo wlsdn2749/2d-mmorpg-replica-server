@@ -22,12 +22,15 @@ public:
 		size_t	capacity			= 200; // 최대 수용량
 		int		moveCooldownTicks	= 5;
 		int		rotateCooldownTicks	= 5;
+		int		periodicSaveTicksMs = 180 * 1000;
 	};
 
 	explicit Room(Cfg cfg);
 	explicit Room(Cfg cfg, std::shared_ptr<MapData> map);
 	virtual ~Room();
+	void Init(); // StartXX 함수 호출
 	void StartTicking(); // 생성 직후 호출
+	
 
 protected:
 	Cfg _cfg;
@@ -63,6 +66,11 @@ public:
 	size_t Capacity() const noexcept { return _cfg.capacity; }
 	int moveCooldownTicks() const noexcept {return _cfg.moveCooldownTicks; }
 	int rotateCooldownTicks() const noexcept {return _cfg.rotateCooldownTicks;}
+
+/*-------------- DB Update---------------*/
+public:
+	virtual void StartPeriodicSave();
+	virtual void SaveAllActivePlayers();
 
 /*----------------------------
 	Room Specifics Utils

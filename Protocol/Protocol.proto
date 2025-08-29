@@ -194,7 +194,6 @@ message C_PlayerAttackRequest {
 
 }
 
-
 // (25) 서버 -> 클라 : 플레이어 공격 브로드 캐스트
 message S_BroadcastPlayerAttack {
 	int32 playerId = 1;

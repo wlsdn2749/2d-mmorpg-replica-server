@@ -21,6 +21,8 @@
 
 #include "TimeUtils.h"
 
+#include "CharacterRepository.h"
+
 #include "Windows.h"
 #undef max
 #undef min

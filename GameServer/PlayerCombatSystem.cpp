@@ -10,6 +10,7 @@ void PlayerCombatSystem::HandleAttack(const PlayerRef& player, int64 nowMs)
 	if(!player) return;
 
 	auto pid = player->core.id;
+
 	// 1) 쿨다운 체크
 	if (!AttackCooldownReady(pid, nowMs)) return; // 쿨 안됬으면 공격 무효 처리
 
@@ -20,7 +21,6 @@ void PlayerCombatSystem::HandleAttack(const PlayerRef& player, int64 nowMs)
 	// 3) 타겟 조회
 	auto targetMonsterId = mv.id;
 	if(!_pLinker.TryGetMonster(targetMonsterId, mv)) return; // 몬스터 없으면 공격 무효
-
 
 	// 4) 데미지 판정 = monsterHp = monsterHp - player.Atk
 	const int damage = player->Atk();
