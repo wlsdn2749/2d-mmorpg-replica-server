@@ -11,6 +11,7 @@ using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Windows;
@@ -147,7 +148,7 @@ public class CreateAccount_UI : MonoBehaviour
         }
         if (_checkID == false)
         {
-            _idUseableText.text = "아이디 중복 확인이 필요합니다.";
+            _idUseableText.text = "Email 중복 확인이 필요합니다.";
             _idUseableText.color = Color.red;
             return;
         }
@@ -189,7 +190,7 @@ public class CreateAccount_UI : MonoBehaviour
         _checkID = false;
         if (_checkID == false)
         {
-            _idUseableText.text = "ID중복확인이 필요합니다.";
+            _idUseableText.text = "Email 중복확인이 필요합니다.";
             _idUseableText.color= Color.red;
         }
     }
@@ -220,7 +221,7 @@ public class CreateAccount_UI : MonoBehaviour
             }
             else
             {
-                _idUseableText.text = "중복된 ID입니다!";
+                _idUseableText.text = "이미 존재하는 Email입니다!";
                 _idUseableText.color = Color.red;
                 _checkID = false;
             }

@@ -20,7 +20,7 @@ public class SimpleNetworkUI : MonoBehaviour
         // 버튼 바인딩
         
         if (enterGameButton) enterGameButton.onClick.AddListener(OnClickEnterGame);
-        if (characterListReqButton) characterListReqButton.onClick.AddListener(onClickCharacterListReqButton);
+        if (characterListReqButton) characterListReqButton.onClick.AddListener(OnClickCharacterListReqButton);
     }
     // Update is called once per frame
     void Update()
@@ -41,7 +41,7 @@ public class SimpleNetworkUI : MonoBehaviour
         Debug.Log($"[UI] 게임 접속 요청 전송: playerIndex={0}, len={sendBuffer.Count}");
     }
 
-    void onClickCharacterListReqButton()
+    void OnClickCharacterListReqButton()
     {
         var req = new C_CharacterListRequest() { };
         var sendBuffer = ServerPacketManager.MakeSendBuffer(req); // PKT_C_CharacterListRequest로 매핑됨

@@ -70,10 +70,11 @@ namespace Packet
         internal static void HANDLE_S_CreateCharacterReply(PacketSession session, S_CreateCharacterReply reply)
         {
             var result = reply;
-            Console.WriteLine($"[CreateCharacterReply] 결과: {result.Success}.");
-            Console.WriteLine($"[CreateCharacterReply] 결과: {result.Detail}.");
+            AuthNotice_UI.Instance.gameObject.SetActive(true);
+            AuthNotice_UI.Instance.ShowNotice(NoticeCode.CreateCharacterSuccess);
             UnityEngine.Debug.Log($"[CreateCharacterReply] 결과: {result.Success}.");
             UnityEngine.Debug.Log($"[CreateCharacterReply] 결과: {result.Detail}.");
+            
         }  
 
         internal static void HANDLE_S_CharacterListReply(PacketSession session, S_CharacterListReply reply)
@@ -90,22 +91,25 @@ namespace Packet
 
         internal static void HANDLE_S_EnterGame(PacketSession session, S_EnterGame game)
         {
+            AuthNotice_UI.Instance.gameObject.SetActive(false);
             Console.WriteLine("[S_EnterGame] 게임 접속 완료");
+            Debug.Log("[S_EnterGame] 게임 접속 완료");
         }
 
         internal static void HANDLE_S_PlayerList(PacketSession session, S_PlayerList list)
         {
             Console.WriteLine("[S_PlayerList] 내가 접속해서 다른사람의 리스트 받아옴");
+            Debug.Log("[S_PlayerList] 내가 접속해서 다른사람의 리스트 받아옴");
         }
 
         internal static void HANDLE_S_BroadcastPlayerEnter(PacketSession session, S_BroadcastPlayerEnter enter)
         {
-            Console.WriteLine("[S_BroadcastPlayerEnter] 누군가 접속해서 그 정보를 받아옴");
+            Debug.Log("[S_BroadcastPlayerEnter] 누군가 접속해서 그 정보를 받아옴");
         }
 
         internal static void HANDLE_S_BroadcastPlayerLeave(PacketSession session, S_BroadcastPlayerLeave leave)
         {
-            Console.WriteLine("[S_BroadcastPlayerLeave] 누군가 나가서 그 정보를 받아옴");
+            Debug.Log("[S_BroadcastPlayerLeave] 누군가 나가서 그 정보를 받아옴");
         }
 
         internal static void HANDLE_S_PlayerMoveReply(PacketSession session, S_PlayerMoveReply reply)
@@ -120,7 +124,9 @@ namespace Packet
             int tick = reply?.Tick ?? -1;
 
             string meTag = (reply.PlayerId == NetDebug.MyPlayerId && NetDebug.MyPlayerId >= 0) ? " (ME)" : "";
-
+            Debug.Log(
+                $"[S_PlayerMoveReply] pid={reply.PlayerId}{meTag} " +
+                $"dir={dirStr} pos={posStr} result={resultStr} tick={tick}");
             Console.WriteLine(
                 $"[S_PlayerMoveReply] pid={reply.PlayerId}{meTag} " +
                 $"dir={dirStr} pos={posStr} result={resultStr} tick={tick}");
