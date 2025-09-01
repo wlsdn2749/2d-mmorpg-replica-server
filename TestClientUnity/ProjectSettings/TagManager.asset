@@ -44,5 +44,11 @@ TagManager:
   - name: Particles
     uniqueID: 3571347033
     locked: 0
+  - name: Ground
+    uniqueID: 3433078009
+    locked: 0
+  - name: Struct
+    uniqueID: 3578241605
+    locked: 0
   m_RenderingLayers:
   - Default
