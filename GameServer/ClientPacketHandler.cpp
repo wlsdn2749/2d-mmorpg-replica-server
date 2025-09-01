@@ -11,7 +11,6 @@
 
 PacketHandlerFunc GPacketHandler[UINT16_MAX];
 
-
 bool Handle_Invalid(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
 	GConsoleLogger->WriteStdOut(Color::RED, L"Handle INVALID \n");
