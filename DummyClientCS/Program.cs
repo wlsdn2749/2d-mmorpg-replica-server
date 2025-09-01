@@ -39,7 +39,12 @@ class Program
             Console.WriteLine("[r] 게임 접속 :          --- Index = 0");
             Console.WriteLine("[t] 상하좌우 움직이기:   --- 0,1,2,3 [상하좌우]");
             Console.WriteLine("[a] 공격 보내기 : --- 기본공격");
-            Console.WriteLine("[y] 룸에서 나가기 : ");
+            Console.WriteLine("\n===== 인벤토리 테스트 =====");
+            Console.WriteLine("[i] 인벤토리 조회하기");
+            Console.WriteLine("[u] 퀵슬롯 사용 (1~9)");
+            Console.WriteLine("[o] 슬롯 지정 아이템 사용");
+            Console.WriteLine("\n===== 종료 로직 =====");
+            Console.WriteLine("[x] 룸에서 나가기");
             Console.WriteLine("[z] 종료");
             Console.Write("선택: ");
 
@@ -80,10 +85,37 @@ class Program
                 case "a":
                     await SessionManager.Instance.SendForEachAttack();
                     break;
-                case "y":
+                case "i":
+                    await SessionManager.Instance.SendInventoryRequest();
+                    break;
+                case "u":
+                    Console.Write("퀵슬롯 번호 (1~9): ");
+                    int quickSlotNum;
+                    if (Int32.TryParse(Console.ReadLine(), out quickSlotNum) && quickSlotNum >= 1 && quickSlotNum <= 9)
+                    {
+                        int quickSlotIndex = 30 + (quickSlotNum - 1); // 1->30, 2->31, ..., 9->38
+                        await SessionManager.Instance.SendItemUseRequest(quickSlotIndex);
+                    }
+                    else
+                    {
+                        Console.WriteLine("잘못된 퀵슬롯 번호입니다. (1~9)");
+                    }
+                    break;
+                case "o":
+                    Console.Write("사용할 슬롯 번호 (0~39): ");
+                    int slotIndex;
+                    if (Int32.TryParse(Console.ReadLine(), out slotIndex))
+                    {
+                        await SessionManager.Instance.SendItemUseRequest(slotIndex);
+                    }
+                    else
+                    {
+                        Console.WriteLine("잘못된 슬롯 번호입니다.");
+                    }
+                    break;
+                case "x":
                     await SessionManager.Instance.SendForLeave();
                     break;
-
                 case "z":
                     return;
                 default:

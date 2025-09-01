@@ -33,6 +33,11 @@ enum : uint16
 	PKT_S_BroadcastMonsterDeath = 23,
 	PKT_C_PlayerAttackRequest = 24,
 	PKT_S_BroadcastPlayerAttack = 25,
+	PKT_C_InventoryRequest = 26,
+	PKT_S_InventoryReply = 27,
+	PKT_C_ItemUseRequest = 28,
+	PKT_S_ItemUseReply = 29,
+	PKT_S_InventoryUpdate = 30,
 
 };
 
@@ -47,6 +52,8 @@ bool Handle_C_LeaveGame(PacketSessionRef& session, Protocol::C_LeaveGame& pkt);
 bool Handle_C_PlayerMoveRequest(PacketSessionRef& session, Protocol::C_PlayerMoveRequest& pkt);
 bool Handle_C_ChangeRoomReady(PacketSessionRef& session, Protocol::C_ChangeRoomReady& pkt);
 bool Handle_C_PlayerAttackRequest(PacketSessionRef& session, Protocol::C_PlayerAttackRequest& pkt);
+bool Handle_C_InventoryRequest(PacketSessionRef& session, Protocol::C_InventoryRequest& pkt);
+bool Handle_C_ItemUseRequest(PacketSessionRef& session, Protocol::C_ItemUseRequest& pkt);
 
 class ClientPacketHandler
 {
@@ -66,6 +73,8 @@ public:
 		GPacketHandler[PKT_C_PlayerMoveRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PlayerMoveRequest>(Handle_C_PlayerMoveRequest, session, buffer, len); };
 		GPacketHandler[PKT_C_ChangeRoomReady] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_ChangeRoomReady>(Handle_C_ChangeRoomReady, session, buffer, len); };
 		GPacketHandler[PKT_C_PlayerAttackRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PlayerAttackRequest>(Handle_C_PlayerAttackRequest, session, buffer, len); };
+		GPacketHandler[PKT_C_InventoryRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_InventoryRequest>(Handle_C_InventoryRequest, session, buffer, len); };
+		GPacketHandler[PKT_C_ItemUseRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_ItemUseRequest>(Handle_C_ItemUseRequest, session, buffer, len); };
 		
 	}
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
@@ -91,6 +100,9 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastMonsterAttack& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastMonsterAttack); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastMonsterDeath& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastMonsterDeath); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerAttack& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerAttack); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_InventoryReply& pkt) { return MakeSendBuffer(pkt, PKT_S_InventoryReply); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_ItemUseReply& pkt) { return MakeSendBuffer(pkt, PKT_S_ItemUseReply); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_InventoryUpdate& pkt) { return MakeSendBuffer(pkt, PKT_S_InventoryUpdate); };
 
 private:
 	template<typename PacketType, typename ProcessFunc>

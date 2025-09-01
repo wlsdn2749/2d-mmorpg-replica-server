@@ -181,6 +181,9 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClCompile Include="AppConfig.cpp" />
     <ClCompile Include="CharacterRepository.cpp" />
     <ClCompile Include="ClientPacketHandler.cpp" />
+    <ClCompile Include="InventoryRepository.cpp" />
+    <ClCompile Include="InventorySystem.cpp" />
+    <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="MonsterCombatSystem.cpp" />
     <ClCompile Include="DBDisPatcher.cpp" />
     <ClCompile Include="DBWorker.cpp" />
@@ -226,6 +229,10 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClInclude Include="AppConfig.h" />
     <ClInclude Include="CharacterRepository.h" />
     <ClInclude Include="ClientPacketHandler.h" />
+    <ClInclude Include="InventoryCore.h" />
+    <ClInclude Include="InventoryRepository.h" />
+    <ClInclude Include="InventorySystem.h" />
+    <ClInclude Include="ItemManager.h" />
     <ClInclude Include="MonsterCombatSystem.h" />
     <ClInclude Include="DBDisPatcher.h" />
     <ClInclude Include="DBWorker.h" />
@@ -263,6 +270,7 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\iocp-server-unity-client-demo\iocp_server_cpp\Common\Procedures\GenProcs.bat" />
+    <None Include="..\Doc\Plan\inventory-test-data.sql" />
     <None Include="..\Protocol\Protocol.proto" />
     <None Include="appsettings.json" />
   </ItemGroup>

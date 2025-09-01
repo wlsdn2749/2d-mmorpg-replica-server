@@ -49,6 +49,12 @@
     <Filter Include="GameContents\Monster">
       <UniqueIdentifier>{4472cb5b-d647-4954-b52f-e30866ba7f51}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameContents\Item">
+      <UniqueIdentifier>{6d144498-0fc3-4deb-a542-dcc1aafae33b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DB\Test">
+      <UniqueIdentifier>{97c68b7d-8fc0-4bda-a7e6-a52e29c3574d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameServer.cpp">
@@ -146,6 +152,15 @@
     </ClCompile>
     <ClCompile Include="TimeUtils.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="InventorySystem.cpp">
+      <Filter>GameContents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryRepository.cpp">
+      <Filter>Repository</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>GameContents\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -266,6 +281,18 @@
     <ClInclude Include="TimeUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="InventoryCore.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryRepository.h">
+      <Filter>Repository</Filter>
+    </ClInclude>
+    <ClInclude Include="InventorySystem.h">
+      <Filter>GameContents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>GameContents\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="appsettings.json">
@@ -276,6 +303,9 @@
     </None>
     <None Include="..\Protocol\Protocol.proto">
       <Filter>Protocol</Filter>
+    </None>
+    <None Include="..\Doc\Plan\inventory-test-data.sql">
+      <Filter>DB\Test</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

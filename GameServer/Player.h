@@ -3,6 +3,8 @@
 #include "GeometryCore.h"   // Pos2, Dir
 #include "EntityCore.h"     // EntityCore
 #include "CharacterRepository.h"
+#include "InventorySystem.h"
+#include "InventoryRepository.h"
 class Room; // 전방 선언
 
 struct PendingRoomChange {
@@ -65,6 +67,69 @@ public: // TODO 나중에 private로 수정 필
 	int _def { 5 };
 	int _level { 1 };
 	int _exp { 0 };
+
+/*---------------------------------
+	Inventory System
+----------------------------------*/
+public:
+	// 인벤토리 접근자
+	InventorySystem& GetInventory() { return _inventory; }
+	const InventorySystem& GetInventory() const { return _inventory; }
+	
+	// 인벤토리 DB 연동
+	std::future<void> LoadInventoryFromDB();
+	std::future<void> SaveInventoryToDB();
+
+	// 인벤토리 편의 메서드
+	EAddItemResult AddItem(int itemId, int count) {
+		auto result = _inventory.AddItem(itemId, count);
+		if (result == EAddItemResult::Success) {
+			SaveChangedSlotsToDB();
+		}
+		return result;
+	}
+
+	ERemoveItemResult RemoveItem(int slotIndex, int count) {
+		auto result = _inventory.RemoveItem(slotIndex, count);
+		if (result == ERemoveItemResult::Success) {
+			SaveSlotToDB(slotIndex);
+		}
+		return result;
+	}
+
+	EUseItemResult UseItem(int slotIndex) {
+		auto result = _inventory.UseItem(slotIndex);
+		if (result == EUseItemResult::Success) {
+			SaveSlotToDB(slotIndex);
+		}
+		return result;
+	}
+
+private:
+	// 개별 슬롯 저장 (효율적)
+	void SaveSlotToDB(int slotIndex) {
+		int characterId = static_cast<int>(playerId);
+		const ItemSlot& slot = _inventory.GetSlot(slotIndex);
+		
+		if (slot.IsEmpty()) {
+			// 빈 슬롯이면 DB에서 삭제
+			InventoryRepository::DeleteInventorySlotAsync(characterId, slotIndex);
+		} else {
+			// 슬롯에 아이템이 있으면 저장
+			InventoryRepository::SaveInventorySlotAsync(characterId, slot);
+		}
+	}
+	
+	// AddItem은 여러 슬롯에 영향을 줄 수 있으므로 변경된 슬롯들만 저장
+	void SaveChangedSlotsToDB() {
+		// AddItem 구현이 복잡하므로 현재는 전체 저장
+		// TODO: 나중에 변경된 슬롯만 추적하도록 개선
+		SaveInventoryToDB();
+	}
+
+private:
+	InventorySystem _inventory;
+
 
 /*---------------------------------
 	DB Packer

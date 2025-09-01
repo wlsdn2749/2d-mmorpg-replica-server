@@ -36,6 +36,7 @@
 #include "RoomManager.h"
 
 #include "ShardBoot.h"
+#include "ItemManager.h"
 
 enum
 {
@@ -72,6 +73,9 @@ int main()
 	// Initalize Handler & Valiator
 	ClientPacketHandler::init(); // 핸들러와 Wrapper 매핑 필수
 	JwtAuth::Init(s.jwtSecret);
+
+	// ItemManager 초기화 (DB 로딩 포함)
+	ItemManager::Instance().Initialize();
 
 	// 샤드 기반 워커 로직
 	const int totalRooms = 2;
