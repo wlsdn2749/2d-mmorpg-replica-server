@@ -139,6 +139,58 @@ namespace SP
     	int32 _gold = {};
     };
 
+    class GetCharacterInventory : public DBBind<1,4>
+    {
+    public:
+    	GetCharacterInventory(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spGetCharacterInventory(?)}") { }
+    	void ParamIn_CharacterId(int32& v) { BindParam(0, v); };
+    	void ParamIn_CharacterId(int32&& v) { _characterId = std::move(v); BindParam(0, _characterId); };
+    	void ColumnOut_SlotIndex(OUT int32& v) { BindCol(0, v); };
+    	void ColumnOut_ItemId(OUT int32& v) { BindCol(1, v); };
+    	void ColumnOut_Count(OUT int32& v) { BindCol(2, v); };
+    	void ColumnOut_IsQuickslot(OUT int32& v) { BindCol(3, v); };
+
+    private:
+    	int32 _characterId = {};
+    };
+
+    class SaveInventorySlot : public DBBind<5,0>
+    {
+    public:
+    	SaveInventorySlot(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spSaveInventorySlot(?,?,?,?,?)}") { }
+    	void ParamIn_CharacterId(int32& v) { BindParam(0, v); };
+    	void ParamIn_CharacterId(int32&& v) { _characterId = std::move(v); BindParam(0, _characterId); };
+    	void ParamIn_SlotIndex(int32& v) { BindParam(1, v); };
+    	void ParamIn_SlotIndex(int32&& v) { _slotIndex = std::move(v); BindParam(1, _slotIndex); };
+    	void ParamIn_ItemId(int32& v) { BindParam(2, v); };
+    	void ParamIn_ItemId(int32&& v) { _itemId = std::move(v); BindParam(2, _itemId); };
+    	void ParamIn_Count(int32& v) { BindParam(3, v); };
+    	void ParamIn_Count(int32&& v) { _count = std::move(v); BindParam(3, _count); };
+    	void ParamIn_IsQuickslot(int32& v) { BindParam(4, v); };
+    	void ParamIn_IsQuickslot(int32&& v) { _isQuickslot = std::move(v); BindParam(4, _isQuickslot); };
+
+    private:
+    	int32 _characterId = {};
+    	int32 _slotIndex = {};
+    	int32 _itemId = {};
+    	int32 _count = {};
+    	int32 _isQuickslot = {};
+    };
+
+    class DeleteInventorySlot : public DBBind<2,0>
+    {
+    public:
+    	DeleteInventorySlot(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spDeleteInventorySlot(?,?)}") { }
+    	void ParamIn_CharacterId(int32& v) { BindParam(0, v); };
+    	void ParamIn_CharacterId(int32&& v) { _characterId = std::move(v); BindParam(0, _characterId); };
+    	void ParamIn_SlotIndex(int32& v) { BindParam(1, v); };
+    	void ParamIn_SlotIndex(int32&& v) { _slotIndex = std::move(v); BindParam(1, _slotIndex); };
+
+    private:
+    	int32 _characterId = {};
+    	int32 _slotIndex = {};
+    };
+
 
      
 };

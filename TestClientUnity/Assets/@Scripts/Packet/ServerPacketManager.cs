@@ -34,6 +34,11 @@ namespace Packet
 	    PKT_S_BroadcastMonsterDeath = 23,
 	    PKT_C_PlayerAttackRequest = 24,
 	    PKT_S_BroadcastPlayerAttack = 25,
+	    PKT_C_InventoryRequest = 26,
+	    PKT_S_InventoryReply = 27,
+	    PKT_C_ItemUseRequest = 28,
+	    PKT_S_ItemUseReply = 29,
+	    PKT_S_InventoryUpdate = 30,
     }
     public class ServerPacketManager
     {
@@ -67,6 +72,8 @@ namespace Packet
         public static ArraySegment<byte> MakeSendBuffer(C_PlayerMoveRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PlayerMoveRequest);
         public static ArraySegment<byte> MakeSendBuffer(C_ChangeRoomReady pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_ChangeRoomReady);
         public static ArraySegment<byte> MakeSendBuffer(C_PlayerAttackRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PlayerAttackRequest);
+        public static ArraySegment<byte> MakeSendBuffer(C_InventoryRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_InventoryRequest);
+        public static ArraySegment<byte> MakeSendBuffer(C_ItemUseRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_ItemUseRequest);
 
         void Register()
         {
@@ -92,6 +99,9 @@ namespace Packet
             RegisterHandler((ushort)PacketID.PKT_S_BroadcastMonsterAttack, ServerPacketHandler.HANDLE_S_BroadcastMonsterAttack, S_BroadcastMonsterAttack.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_BroadcastMonsterDeath, ServerPacketHandler.HANDLE_S_BroadcastMonsterDeath, S_BroadcastMonsterDeath.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_BroadcastPlayerAttack, ServerPacketHandler.HANDLE_S_BroadcastPlayerAttack, S_BroadcastPlayerAttack.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_InventoryReply, ServerPacketHandler.HANDLE_S_InventoryReply, S_InventoryReply.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_ItemUseReply, ServerPacketHandler.HANDLE_S_ItemUseReply, S_ItemUseReply.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_InventoryUpdate, ServerPacketHandler.HANDLE_S_InventoryUpdate, S_InventoryUpdate.Parser);
             
                   
         }
