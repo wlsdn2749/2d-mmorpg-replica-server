@@ -24,9 +24,9 @@ struct Pos2 {
 
 static inline Pos2 DirToDelta4(Protocol::EDirection d) {
 	switch (d) {
-	case Protocol::EDirection::DIR_UP:    return { 0,-1 };
+	case Protocol::EDirection::DIR_UP:    return { 0,1 };
 	case Protocol::EDirection::DIR_RIGHT: return { 1,0 };
-	case Protocol::EDirection::DIR_DOWN:  return { 0,1 };
+	case Protocol::EDirection::DIR_DOWN:  return { 0,-1 };
 	case Protocol::EDirection::DIR_LEFT:  return { -1,0 };
 	}
 	return { 0,0 };

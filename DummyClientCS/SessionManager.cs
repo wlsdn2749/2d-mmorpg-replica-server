@@ -89,7 +89,7 @@ namespace DummyClientCS
             }
         }
 
-        public async Task SendForEachEnterGame()
+        public async Task SendForEachEnterGame(int idx)
         {
             if (!_canSendPackets) return;
 
@@ -99,7 +99,7 @@ namespace DummyClientCS
                 {
                     var pkt = new Google.Protobuf.Protocol.C_EnterGame
                     {
-                        PlayerIndex = 0
+                        PlayerIndex = idx
                     };
                     session.Send(ServerPacketManager.MakeSendBuffer(pkt));
                 }
@@ -125,11 +125,11 @@ namespace DummyClientCS
                     {
                         case 0: // UP
                             clickPos.X = 0;
-                            clickPos.Y = -targetY;
+                            clickPos.Y = +targetY;
                             break;
                         case 1: // DOWN
                             clickPos.X = 0;
-                            clickPos.Y = targetY;
+                            clickPos.Y = -targetY;
                             break;
                         case 2: // LEFT
                             clickPos.X = -targetX;

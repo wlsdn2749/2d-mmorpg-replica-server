@@ -16,6 +16,19 @@ void Player::GetCharacterStat(CharacterRepository::CharacterStat& outStat) const
 	outStat.exp = Exp();
 }
 
+void Player::LoadCharacterStat(const CharacterRepository::CharacterStat& stat)
+{
+	core.id = static_cast<int>(stat.characterId);
+	playerId = stat.characterId;
+	core.pos.x = stat.posX;
+	core.pos.y = stat.posY;
+	core.dir = stat.dir;
+	SetLastRoomId(stat.lastRoom);
+	SetHp(stat.hp);
+	SetLevel(stat.level);
+	SetExp(stat.exp);
+}
+
 std::future<void> Player::LoadInventoryFromDB()
 {
 	int characterId = static_cast<int>(playerId);

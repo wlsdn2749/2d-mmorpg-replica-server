@@ -44,6 +44,16 @@ public:
 	inline Pos2 GetPos() const { return { core.pos.x, core.pos.y }; }
 	inline void SetPos(int x, int y) { core.pos = { x,y }; }
 	inline void SetDir(Protocol::EDirection d) { core.dir = d; }
+/*----------------------------------------
+	Player Room 데이터 
+----------------------------------------*/
+
+public:
+	inline void SetLastRoomId(int lastRoomId) { _lastRoomId = lastRoomId; }
+	inline int LastRoomId() const {return _lastRoomId; } 
+
+private:
+	int _lastRoomId { 0 };
 
 /*-------------------------------
 	HP 등 전투 수치 + 레벨
@@ -54,6 +64,12 @@ public:
 	inline int Def() const {return _def; }
 	inline int Level() const {return _level; }
 	inline int Exp() const {return _exp; }
+
+	void SetHp(int hp) {_hp = hp; }
+	void SetAtk(int atk) {_atk = atk;}
+	void SetDef(int def) {_def = def;}
+	void SetLevel(int level) {_level = level;}
+	void SetExp(int exp) {_exp = exp;}
 
 	bool ApplyDamage(int dmg, int srcMonsterId) {
 		_hp = std::max(0, _hp - std::max(0, dmg));
@@ -106,7 +122,6 @@ public:
 	}
 
 private:
-	// 개별 슬롯 저장 (효율적)
 	void SaveSlotToDB(int slotIndex) {
 		int characterId = static_cast<int>(playerId);
 		const ItemSlot& slot = _inventory.GetSlot(slotIndex);
@@ -136,6 +151,8 @@ private:
 ----------------------------------*/
 public:
 	void GetCharacterStat(CharacterRepository::CharacterStat& outStat) const;
+	void LoadCharacterStat(const CharacterRepository::CharacterStat& stat);
+
 /*---------------------------------
 	Player Room Transitioning Data
 ---------------------------------*/

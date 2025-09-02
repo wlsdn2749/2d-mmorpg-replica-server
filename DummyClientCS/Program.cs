@@ -36,7 +36,7 @@ class Program
             Console.WriteLine("[q] JWT 검증:          --- 반드시 2번을 하고 해야함");
             Console.WriteLine("[w] 캐릭터 생성 :         --- Input 입력");
             Console.WriteLine("[e] 캐릭터 리스트 받기");
-            Console.WriteLine("[r] 게임 접속 :          --- Index = 0");
+            Console.WriteLine("[r] 게임 접속 :          --- Index 입력");
             Console.WriteLine("[t] 상하좌우 움직이기:   --- 0,1,2,3 [상하좌우]");
             Console.WriteLine("[a] 공격 보내기 : --- 기본공격");
             Console.WriteLine("\n===== 인벤토리 테스트 =====");
@@ -74,7 +74,10 @@ class Program
                     await SessionManager.Instance.SendForEachGetCharacterList();
                     break;
                 case "r":
-                    await SessionManager.Instance.SendForEachEnterGame();
+                    Console.Write("PlayerIdx : ");
+                    int idx;
+                    Int32.TryParse(Console.ReadLine(), out idx);
+                    await SessionManager.Instance.SendForEachEnterGame(idx);
                     break;
                 case "t":
                     Console.Write("Dir(상하좌우) 0,1,2,3:");

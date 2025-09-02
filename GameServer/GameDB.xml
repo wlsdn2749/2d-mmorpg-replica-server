@@ -122,7 +122,7 @@
       SET XACT_ABORT ON;
       
       UPDATE [dbo].[Characters]
-      SET 
+      SET
           posX = @posX,
           posY = @posY,
           dir = @dir,
@@ -132,6 +132,19 @@
           exp = @exp
       WHERE characterId = @characterId;
     ]]>
+    </Body>
+  </Procedure>
+  <Procedure name="spGetCharacterStats">
+    <Param name="@characterId" type="int"/>
+    <Body>
+      <![CDATA[
+      SET NOCOUNT ON;
+      SET XACT_ABORT ON;
+      SELECT
+        posX, posY, dir, lastRoom, hp, level, exp
+      FROM [dbo].[Characters]
+      WHERE [characterId] = @characterId
+     ]]>
     </Body>
   </Procedure>
   

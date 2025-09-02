@@ -184,6 +184,7 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClCompile Include="InventoryRepository.cpp" />
     <ClCompile Include="InventorySystem.cpp" />
     <ClCompile Include="ItemManager.cpp" />
+    <ClCompile Include="JsonFileUtils.cpp" />
     <ClCompile Include="MonsterCombatSystem.cpp" />
     <ClCompile Include="DBDisPatcher.cpp" />
     <ClCompile Include="DBWorker.cpp" />
@@ -233,6 +234,7 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClInclude Include="InventoryRepository.h" />
     <ClInclude Include="InventorySystem.h" />
     <ClInclude Include="ItemManager.h" />
+    <ClInclude Include="JsonFileUtils.h" />
     <ClInclude Include="MonsterCombatSystem.h" />
     <ClInclude Include="DBDisPatcher.h" />
     <ClInclude Include="DBWorker.h" />

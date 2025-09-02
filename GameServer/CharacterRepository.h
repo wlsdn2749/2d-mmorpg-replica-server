@@ -209,5 +209,35 @@ public:
                 return UpdateCharacterStats_DB(c, statCopy);
             });
     }
+
+public:
+    static CharacterStat GetCharacterStats_DB(DBConnection& conn, int characterId)
+    {
+        CharacterStat stat{};
+        int32 _dir;
+        SP::GetCharacterStats sp(conn);
+        sp.ParamIn_CharacterId(characterId);
+        sp.ColumnOut_PosX(OUT stat.posX);
+        sp.ColumnOut_PosY(OUT stat.posY);
+        sp.ColumnOut_Dir(OUT _dir);
+        sp.ColumnOut_LastRoom(OUT stat.lastRoom);
+        sp.ColumnOut_Hp(OUT stat.hp);
+        sp.ColumnOut_Level(OUT stat.level);
+        sp.ColumnOut_Exp(OUT stat.exp);
+        sp.Execute();
+        if (sp.Fetch())
+        {
+            stat.characterId = characterId;
+            stat.dir = static_cast<Protocol::EDirection>(_dir);
+        }
+        return stat;
+    }
+    static std::future<CharacterStat> GetCharacterStatsAsync(int characterId)
+    {
+        return DbDispatcher::EnqueueRet([characterId](DBConnection& c)
+            {
+                return GetCharacterStats_DB(c, characterId);
+            });
+    }
 };
 

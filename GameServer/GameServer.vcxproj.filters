@@ -162,6 +162,9 @@
     <ClCompile Include="ItemManager.cpp">
       <Filter>GameContents\Item</Filter>
     </ClCompile>
+    <ClCompile Include="JsonFileUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -292,6 +295,9 @@
     </ClInclude>
     <ClInclude Include="ItemManager.h">
       <Filter>GameContents\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonFileUtils.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

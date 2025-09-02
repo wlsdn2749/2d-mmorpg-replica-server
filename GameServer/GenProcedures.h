@@ -106,6 +106,24 @@ namespace SP
     	int32 _exp = {};
     };
 
+    class GetCharacterStats : public DBBind<1,7>
+    {
+    public:
+    	GetCharacterStats(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spGetCharacterStats(?)}") { }
+    	void ParamIn_CharacterId(int32& v) { BindParam(0, v); };
+    	void ParamIn_CharacterId(int32&& v) { _characterId = std::move(v); BindParam(0, _characterId); };
+    	void ColumnOut_PosX(OUT int32& v) { BindCol(0, v); };
+    	void ColumnOut_PosY(OUT int32& v) { BindCol(1, v); };
+    	void ColumnOut_Dir(OUT int32& v) { BindCol(2, v); };
+    	void ColumnOut_LastRoom(OUT int32& v) { BindCol(3, v); };
+    	void ColumnOut_Hp(OUT int32& v) { BindCol(4, v); };
+    	void ColumnOut_Level(OUT int32& v) { BindCol(5, v); };
+    	void ColumnOut_Exp(OUT int32& v) { BindCol(6, v); };
+
+    private:
+    	int32 _characterId = {};
+    };
+
     class InsertGold : public DBBind<3,0>
     {
     public:

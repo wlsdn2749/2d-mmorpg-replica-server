@@ -110,7 +110,8 @@ bool Handle_C_CharacterListRequest(PacketSessionRef& session, Protocol::C_Charac
 		playerRef->core.kind = EntityKind::Player;
 		playerRef->core.pos = {character.posX, character.posY};
 		playerRef->core.dir = character.dir; 
-		//playerRef->level = character.level; // TODO: 플레이어(캐릭터) 데이터 쪽으로 넘겨야함, level, exp, hp, mp
+		//playerRef->SetHp(character) = character.level; // TODO: character가 hp, atk, level ... 등을 가져오도록 해야함 아직 안돼있음
+
 		
 		playerRef->ownerSession = gameSession; // WeakPtr로 참조
 
@@ -149,18 +150,25 @@ bool Handle_C_EnterGame(PacketSessionRef& session, Protocol::C_EnterGame& pkt)
 
 		return false;
 	}
-	gameSession->_currentPlayer = gameSession->_players[index];
 	
-	const int roomId = 0;
+	gameSession->_currentPlayer = gameSession->_players[index];
+	PlayerRef player = gameSession->_currentPlayer;
+
+	auto characterId = player->playerId;
+	auto fut = CharacterRepository::GetCharacterStatsAsync(characterId);
+	auto stat = fut.get();
+
+	player->LoadCharacterStat(stat);
+
+	const int roomId = player->LastRoomId();
 	RoomRef room = RoomManager::Instance().Find(roomId);
 	if (!room) 
 		std::cout << "Not Exsiting room" << std::endl; 
 
-	room->DoAsync(&Room::Enter, gameSession->_currentPlayer); // 룸 입장 성공
-	gameSession->_currentPlayer->LoadInventoryFromDB(); // DB에서 인벤토리 로딩 (접속 시)
+	room->DoAsync(&Room::Enter, player); // 룸 입장 성공
+	player->LoadInventoryFromDB(); // DB에서 인벤토리 로딩 (접속 시)
 
 	
-
 	gameSession->SetState(GameSession::State::InRoom);
 
 	Protocol::S_EnterGame enterGamePkt;
@@ -172,6 +180,7 @@ bool Handle_C_EnterGame(PacketSessionRef& session, Protocol::C_EnterGame& pkt)
 
 	return true;
 }
+
 bool Handle_C_LeaveGame(PacketSessionRef& session, Protocol::C_LeaveGame& pkt)
 {
 	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
@@ -191,6 +200,7 @@ bool Handle_C_LeaveGame(PacketSessionRef& session, Protocol::C_LeaveGame& pkt)
 	session->Send(sendBuffer);
 	return true;
 }
+
 bool Handle_C_PlayerMoveRequest(PacketSessionRef& session, Protocol::C_PlayerMoveRequest& pkt)
 {
 	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
