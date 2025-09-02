@@ -84,6 +84,7 @@
     <Compile Include="Assets\@Scripts\Packet\ServerPacketManager.cs" />
     <Compile Include="Assets\@Scripts\Packet\ServerPacketHandler.cs" />
     <Compile Include="Assets\@Scripts\Network\Connector.cs" />
+    <Compile Include="Assets\@Scripts\Utill\TilemapJsonExporter.cs" />
     <Compile Include="Assets\@Scripts\PacketQueue.cs" />
     <Compile Include="Assets\@Scripts\UI\CharacterSlot_UI.cs" />
     <Compile Include="Assets\@Scripts\NetworkManager.cs" />
