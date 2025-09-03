@@ -10,8 +10,8 @@ using UnityEngine.Tilemaps;
 public static class TilemapJsonExporter
 {
     // 충돌로 취급할 타일맵 이름들 (필요시 추가)
-    private static readonly string[] BlockLayerNames = { "Collision", "Water", "Cliff" };
-
+    private static readonly string[] BlockLayerNames = { "Collision", "Water", "Cliff","Portal" };
+    private static readonly string[] PortalName = { "Portal" };
     [MenuItem("Tools/Export/Tilemap → JSON (0-based normalized)")]
     public static void ExportActiveSceneTilemapToJson()
     {
@@ -99,9 +99,11 @@ public static class TilemapJsonExporter
 
         // 6) 스폰 포인트(태그): Spawn.Player / Spawn.Monster / Spawn.Item
         var spawns = new List<SpawnPoint>();
+        var portals = new List<PortalPoint>();
         AppendSpawnsByTagWorld("Spawn.Player", "Player", spawns);
         AppendSpawnsByTagWorld("Spawn.Monster", "Monster", spawns);
         AppendSpawnsByTagWorld("Spawn.Item", "Item", spawns);
+        AppendSpawnsByTagWorld("Spawn.Portal","Portal", spawns);
         float cellW = grid.cellSize.x;
         float cellH = grid.cellSize.y;
         Vector3 tlWorld = Vector3.zero;
@@ -120,6 +122,7 @@ public static class TilemapJsonExporter
             height = height,
             passableRowsTopDown = rows.ToArray(),
             spawns = spawns.ToArray(),
+            portals = portals.ToArray(),
             mapOffset = new int[] { total.xMin, total.yMin },         // 씬(Grid) 기준 오프셋
             worldTopLeft = new int[] { tlX, tlY },
             worldBottomRight = new int[] { brX, brY },
@@ -151,6 +154,57 @@ public static class TilemapJsonExporter
             });
         }
     }
+    private static void AppendPortalsByTagWorld(string tag, List<PortalPoint> outList)
+    {
+        GameObject[] gos;
+        try { gos = GameObject.FindGameObjectsWithTag(tag); }
+        catch { return; } // 태그 없으면 무시
+
+        // 이름이 같은 포탈이 여러 개일 때 고유 id 보장
+        var nameCount = new Dictionary<string, int>(StringComparer.Ordinal);
+
+        // 출력 안정성을 위해 이름→위치순으로 정렬(선택)
+        Array.Sort(gos, (a, b) =>
+        {
+            int cmp = string.Compare(a.name, b.name, StringComparison.Ordinal);
+            if (cmp != 0) return cmp;
+            // 이름이 같으면 좌표로 정렬
+            var pa = a.transform.position; var pb = b.transform.position;
+            cmp = pa.x.CompareTo(pb.x);
+            return (cmp != 0) ? cmp : pa.y.CompareTo(pb.y);
+        });
+
+        foreach (var go in gos)
+        {
+            var p = go.transform.position;
+
+            // 고유 id 만들기
+            string baseName = go.name;
+            if (!nameCount.TryGetValue(baseName, out int n)) n = 0;
+            nameCount[baseName] = n + 1;
+            string uniqueId = (n == 0) ? baseName : $"{baseName}_{n}";
+
+            // 선택 메타: PortalMeta 컴포넌트가 있으면 읽기
+            string destScene = null, destMapId = null, destPortalId = null;
+            var meta = go.GetComponent<PortalMeta>(); // 없으면 null
+            if (meta != null)
+            {
+                destScene = string.IsNullOrWhiteSpace(meta.DestScene) ? null : meta.DestScene;
+                destMapId = string.IsNullOrWhiteSpace(meta.DestMapId) ? null : meta.DestMapId;
+                destPortalId = string.IsNullOrWhiteSpace(meta.DestPortalId) ? null : meta.DestPortalId;
+            }
+
+            outList.Add(new PortalPoint
+            {
+                id = uniqueId,
+                x = Mathf.RoundToInt(p.x),
+                y = Mathf.RoundToInt(p.y),
+                destScene = destScene,
+                destMapId = destMapId,
+                destPortalId = destPortalId
+            });
+        }
+    }
     private static Vector3Int WorldToCell(Grid grid, Vector3 worldPos)
     {
         var localPos = grid.WorldToLocal(worldPos);
@@ -167,6 +221,7 @@ public static class TilemapJsonExporter
         public int height;            // number of rows
         public string[] passableRowsTopDown; // '1'=pass, '0'=block (top row first)
         public SpawnPoint[] spawns;   // normalized cell coords
+        public PortalPoint[] portals;
         public int[] mapOffset;       // [minCellX, minCellY] in scene (for reverse mapping)
         public int[] worldTopLeft;     // [x, y] (int)
         public int[] worldBottomRight; // [x, y] (int)
@@ -178,6 +233,17 @@ public static class TilemapJsonExporter
         public string type; // "Player", "Monster", "Item", ...
         public int x;       // normalized cell x (0..width-1)
         public int y;       // normalized cell y (0..height-1)
+    }
+    [Serializable]
+    private class PortalPoint
+    {
+        public string id;   // 고유 식별자 (GameObject 이름 중복 시 자동 번호)
+        public int x;       // 월드 X (int)
+        public int y;       // 월드 Y (int)
+                            // 선택 메타(있으면 내보냄)
+        public string destScene;
+        public string destMapId;
+        public string destPortalId;
     }
 }
 #endif

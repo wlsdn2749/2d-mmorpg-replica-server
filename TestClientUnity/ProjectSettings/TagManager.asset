@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Spawn.Player
+  - Spawn.Portal
   layers:
   - Default
   - TransparentFX
