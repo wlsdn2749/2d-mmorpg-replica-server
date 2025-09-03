@@ -29,6 +29,13 @@ enum MsgId
 	S_BROADCAST_MONSTER_MOVE = 21;
 	S_BROADCAST_MONSTER_ATTACK = 22;
 	S_BROADCAST_MONSTER_DEATH = 23;
+	C_PLAYER_ATTACK_REQUEST = 24;
+	S_BROADCAST_PLAYER_ATTACK = 25;
+	C_INVENTORY_REQUEST = 26;
+	S_INVENTORY_REPLY = 27;
+	C_ITEM_USE_REQUEST = 28;
+	S_ITEM_USE_REPLY = 29;
+	S_INVENTORY_UPDATE = 30;
 }
 
 // 클라 -> 게임 서버 jwt 로그인 인증 (0)
@@ -187,9 +194,46 @@ message S_BroadcastMonsterAttack {
 message S_BroadcastMonsterDeath {
 	int32 monsterId = 1;
 }
+// (24) 클라 -> 서버 : 플레이어 공격 서버 전송
+message C_PlayerAttackRequest {
 
-// TODO (25) 서버 -> 클라 : S_BroadcastPlayerHpChanged
-// TODO (26) 서버 -> 클라 : S_BroadcastPlayerDeath
+}
+
+// (25) 서버 -> 클라 : 플레이어 공격 브로드 캐스트
+message S_BroadcastPlayerAttack {
+	int32 playerId = 1;
+	int32 targetId = 2;
+	int32 damage = 3;
+	int32 hpAfter = 4;
+}
+// (26) 클라 -> 서버 : 인벤토리 조회 요청
+message C_InventoryRequest {
+
+}
+
+// (27) 서버 -> 클라 : 인벤토리 응답
+message S_InventoryReply {
+	repeated InventorySlotInfo slots = 1;
+}
+
+// (28) 클라 -> 서버 : 아이템 사용 요청
+message C_ItemUseRequest {
+	int32 slotIndex = 1;
+}
+
+// (29) 서버 -> 클라 : 아이템 사용 응답
+message S_ItemUseReply {
+	bool success = 1;
+	string errorMessage = 2;
+}
+
+// (30) 서버 -> 클라 : 인벤토리 업데이트 브로드캐스트
+message S_InventoryUpdate {
+	repeated InventorySlotInfo changedSlots = 1;
+}
+
+// TODO (31) 서버 -> 클라 : S_BroadcastPlayerHpChanged
+// TODO (32) 서버 -> 클라 : S_BroadcastPlayerDeath
 
 enum ELoginResult
 {
@@ -247,8 +291,17 @@ enum EEnterReason
 
 enum EDespawnReason
 {
-	UNKNOWN = 0;
-	KILLED = 1;
+	DESPAWN_UNKNOWN = 0;
+	DESPAWN_KILLED = 1;
+}
+
+enum EItemType
+{
+	ITEM_TYPE_UNKNOWN = 0;
+	ITEM_TYPE_CONSUMABLE = 1;   // 소비형 아이템 (포션 등)
+	ITEM_TYPE_EQUIPMENT = 2;    // 장비 아이템
+	ITEM_TYPE_QUEST = 3;        // 퀘스트 아이템
+	ITEM_TYPE_MISC = 4;         // 기타 아이템
 }
 message Vector2Info
 {
@@ -279,4 +332,12 @@ message PlayerInfo
 
 	Vector2Info pos = 3;
 	EDirection direction = 4;
+}
+
+message InventorySlotInfo
+{
+	int32 slotIndex = 1;
+	int32 itemId = 2;
+	int32 count = 3;
+	bool isQuickslot = 4;
 }

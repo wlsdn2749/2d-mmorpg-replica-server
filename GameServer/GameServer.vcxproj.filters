@@ -40,9 +40,6 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{42096fb5-3698-450a-b570-590d69d7fd0c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameSystems">
-      <UniqueIdentifier>{07b9e24e-d08e-4e86-88af-0277720775de}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{3d0af478-f359-430b-b6e5-2395fa7f772c}</UniqueIdentifier>
     </Filter>
@@ -51,6 +48,15 @@
     </Filter>
     <Filter Include="GameContents\Monster">
       <UniqueIdentifier>{4472cb5b-d647-4954-b52f-e30866ba7f51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameContents\Item">
+      <UniqueIdentifier>{6d144498-0fc3-4deb-a542-dcc1aafae33b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DB\Test">
+      <UniqueIdentifier>{97c68b7d-8fc0-4bda-a7e6-a52e29c3574d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{9445d0d6-324f-442b-ab37-9fa994cae27f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +149,24 @@
     </ClCompile>
     <ClCompile Include="MonsterService.cpp">
       <Filter>GameContents\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCombatSystem.cpp">
+      <Filter>GameContents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="InventorySystem.cpp">
+      <Filter>GameContents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryRepository.cpp">
+      <Filter>Repository</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>GameContents\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonFileUtils.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -251,6 +275,33 @@
     <ClInclude Include="MonsterService.h">
       <Filter>GameContents\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerPorts.h">
+      <Filter>GameContents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCombatSystem.h">
+      <Filter>GameContents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ProtocolHelper.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryCore.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryRepository.h">
+      <Filter>Repository</Filter>
+    </ClInclude>
+    <ClInclude Include="InventorySystem.h">
+      <Filter>GameContents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>GameContents\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonFileUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="appsettings.json">
@@ -261,6 +312,18 @@
     </None>
     <None Include="..\Protocol\Protocol.proto">
       <Filter>Protocol</Filter>
+    </None>
+    <None Include="..\Doc\Plan\inventory-test-data.sql">
+      <Filter>DB\Test</Filter>
+    </None>
+    <None Include="Resources\Maps\고구려_Tilemap_Info.json">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Resources\Maps\백제_Tilemap_Info.json">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Resources\Maps\사냥터_Tilemap_Info.json">
+      <Filter>Resources</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

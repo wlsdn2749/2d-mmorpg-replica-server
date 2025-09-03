@@ -2,7 +2,9 @@
 #include "TypeCore.h"       // EntityId, EntityKind
 #include "GeometryCore.h"   // Pos2, Dir
 #include "EntityCore.h"     // EntityCore
-
+#include "CharacterRepository.h"
+#include "InventorySystem.h"
+#include "InventoryRepository.h"
 class Room; // 전방 선언
 
 struct PendingRoomChange {
@@ -36,20 +38,120 @@ public:
 		/*dir  */ Protocol::EDirection::DIR_DOWN
 	};
 
+	inline int PosX() const {return core.pos.x;}
+	inline int PosY() const {return core.pos.y;}
+	inline Protocol::EDirection Dir() const {return core.dir; }
 	inline Pos2 GetPos() const { return { core.pos.x, core.pos.y }; }
 	inline void SetPos(int x, int y) { core.pos = { x,y }; }
 	inline void SetDir(Protocol::EDirection d) { core.dir = d; }
+/*----------------------------------------
+	Player Room 데이터 
+----------------------------------------*/
+
+public:
+	inline void SetLastRoomId(int lastRoomId) { _lastRoomId = lastRoomId; }
+	inline int LastRoomId() const {return _lastRoomId; } 
+
+private:
+	int _lastRoomId { 0 };
 
 /*-------------------------------
-	HP 등 나중에 수정 할 예정 
+	HP 등 전투 수치 + 레벨
 -------------------------------*/
 public:
-	int _hp { 30 };
-	inline int Hp() const {return _hp; }
+	inline int Hp() const { return _hp; }
+	inline int Atk() const { return _atk; }
+	inline int Def() const {return _def; }
+	inline int Level() const {return _level; }
+	inline int Exp() const {return _exp; }
+
+	void SetHp(int hp) {_hp = hp; }
+	void SetAtk(int atk) {_atk = atk;}
+	void SetDef(int def) {_def = def;}
+	void SetLevel(int level) {_level = level;}
+	void SetExp(int exp) {_exp = exp;}
+
 	bool ApplyDamage(int dmg, int srcMonsterId) {
 		_hp = std::max(0, _hp - std::max(0, dmg));
 		return (_hp == 0); // dead?
 	}
+
+public: // TODO 나중에 private로 수정 필
+	int _hp { 30 };
+	int _maxHp { 30 };
+	int _atk { 10 };
+	int _def { 5 };
+	int _level { 1 };
+	int _exp { 0 };
+
+/*---------------------------------
+	Inventory System
+----------------------------------*/
+public:
+	// 인벤토리 접근자
+	InventorySystem& GetInventory() { return _inventory; }
+	const InventorySystem& GetInventory() const { return _inventory; }
+	
+	// 인벤토리 DB 연동
+	std::future<void> LoadInventoryFromDB();
+	std::future<void> SaveInventoryToDB();
+
+	// 인벤토리 편의 메서드
+	EAddItemResult AddItem(int itemId, int count) {
+		auto result = _inventory.AddItem(itemId, count);
+		if (result == EAddItemResult::Success) {
+			SaveChangedSlotsToDB();
+		}
+		return result;
+	}
+
+	ERemoveItemResult RemoveItem(int slotIndex, int count) {
+		auto result = _inventory.RemoveItem(slotIndex, count);
+		if (result == ERemoveItemResult::Success) {
+			SaveSlotToDB(slotIndex);
+		}
+		return result;
+	}
+
+	EUseItemResult UseItem(int slotIndex) {
+		auto result = _inventory.UseItem(slotIndex);
+		if (result == EUseItemResult::Success) {
+			SaveSlotToDB(slotIndex);
+		}
+		return result;
+	}
+
+private:
+	void SaveSlotToDB(int slotIndex) {
+		int characterId = static_cast<int>(playerId);
+		const ItemSlot& slot = _inventory.GetSlot(slotIndex);
+		
+		if (slot.IsEmpty()) {
+			// 빈 슬롯이면 DB에서 삭제
+			InventoryRepository::DeleteInventorySlotAsync(characterId, slotIndex);
+		} else {
+			// 슬롯에 아이템이 있으면 저장
+			InventoryRepository::SaveInventorySlotAsync(characterId, slot);
+		}
+	}
+	
+	// AddItem은 여러 슬롯에 영향을 줄 수 있으므로 변경된 슬롯들만 저장
+	void SaveChangedSlotsToDB() {
+		// AddItem 구현이 복잡하므로 현재는 전체 저장
+		// TODO: 나중에 변경된 슬롯만 추적하도록 개선
+		SaveInventoryToDB();
+	}
+
+private:
+	InventorySystem _inventory;
+
+
+/*---------------------------------
+	DB Packer
+----------------------------------*/
+public:
+	void GetCharacterStat(CharacterRepository::CharacterStat& outStat) const;
+	void LoadCharacterStat(const CharacterRepository::CharacterStat& stat);
 
 /*---------------------------------
 	Player Room Transitioning Data

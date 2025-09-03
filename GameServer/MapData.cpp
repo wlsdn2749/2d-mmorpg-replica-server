@@ -1,56 +1,143 @@
 #include "pch.h"
 #include "MapData.h"
-
+#include <rapidjson/document.h>
+#include <rapidjson/filereadstream.h>
+#include <rapidjson/filewritestream.h>
+#include <rapidjson/writer.h>
+#include <rapidjson/stringbuffer.h>
+#include <rapidjson/prettywriter.h>
 #include <fstream>
+#include "JsonFileUtils.h"
 
-std::shared_ptr<MapData> MapData::FromFile(const std::string& path)
+std::shared_ptr<MapData> MapData::LoadMapFromJsonFile(const std::string& path)
 {
-    auto map = std::make_shared<MapData>();
+    auto mapData = std::make_shared<MapData>();
 
-    std::ifstream in(path);
-    if (!in.is_open())
-        throw std::runtime_error("Failed to open map file: " + path);
+    std::ifstream file(path, std::ios::binary);
+    if (!file.is_open())
+        throw std::runtime_error("Failed to open mapfile: " + path);;
 
-    in >> map->minX >> map->maxX >> map->minY >> map->maxY;
+    file.seekg(0, std::ios::end);
+    size_t fileSize = file.tellg();
+    file.seekg(0, std::ios::beg);
 
-    // 남은 줄은 0/1 문자열
-    std::string line;
-    std::vector<std::string> lines;
-    lines.reserve(256);
+    std::string jsonContent;
+    jsonContent.reserve(fileSize);
 
-    while (in >> line)
-        lines.push_back(std::move(line));
+    // 파일 내용을 string으로 읽기
+    jsonContent.assign((std::istreambuf_iterator<char>(file)),
+        std::istreambuf_iterator<char>());
+    file.close();
 
-    map->height = static_cast<int>(lines.size());
-    if (map->height <= 0)
+    Document document;
+    document.Parse(jsonContent.c_str());
+
+    if (document.HasParseError()) {
+        throw std::runtime_error("문자열 파싱 실패 (오류 코드: " +
+            std::to_string(document.GetParseError()) + ")");
+    }
+
+    // 기본 정보 파싱
+    mapData->version = document["Version"].GetInt();
+
+    // cellSize 배열 파싱
+    auto cellSize = JsonFileUtils::parseArray2<float>(document["CellSize"]);
+    mapData->cellSizeX = cellSize.first;
+    mapData->cellSizeY = cellSize.second;
+
+    // origin 배열 파싱
+    auto origin = JsonFileUtils::parseArray2<int>(document["Origin"]);
+    mapData->originX = origin.first;
+    mapData->originY = origin.second;
+
+    mapData->width = document["Width"].GetInt();
+    mapData->height = document["Height"].GetInt();
+
+    if (mapData->height <= 0)
         throw std::runtime_error("Empty map data: " + path);
 
-    map->width = static_cast<int>(lines[0].size());
-    map->tiles.resize(map->width * map->height);
+    mapData->tiles.resize(mapData->width * mapData->height);
 
-    for (int r = 0; r < map->height; ++r)
+    const Value& passableRows = document["PassableRowsTopDown"];
+    if (passableRows.IsArray())
     {
-        if ((int)lines[r].size() != map->width)
-            throw std::runtime_error("Irregular row width in map: " + path);
-
-        for (int c = 0; c < map->width; ++c)
+        if (passableRows.Size() != mapData->height)
         {
-            const char ch = lines[r][c];
-            if (ch != '0' && ch != '1')
-                throw std::runtime_error("Invalid tile char (expect 0/1): " + path);
+            throw std::runtime_error("Irregular row height in map: " + path);
+        }
 
-            map->tiles[r * map->width + c] = static_cast<uint8_t>(ch - '0');
+        for (int r = 0; r < passableRows.Size(); ++r)
+        {
+            const string line = passableRows[r].GetString();
+            if (line.length() != mapData->width)
+            {
+                throw std::runtime_error("Irregular row width in map: " + path);
+            }
+            for (int c = 0; c < line.length(); ++c)
+            {
+                const char ch = line[c];
+                if(ch != '0' && ch != '1' && ch != '2')
+                    throw std::runtime_error("Irregular tile char (expect 0/1/2): " + path);
+
+                mapData->tiles[r * mapData->width + c] = static_cast<uint8_t>(ch - '0');
+            }
         }
     }
 
-    // 경계와 실제 배열 크기가 일치하는지(디버그용) 간단 검증
-    const int expectW = map->maxX - map->minX + 1;
-    const int expectH = map->maxY - map->minY + 1;
-    if (expectW != map->width || expectH != map->height)
+    const Value& spawns = document["Spawns"];
+    if (spawns.IsArray()) 
     {
-        // 치명은 아니고 경고로 볼 수도 있음. 일단 예외로 막아두면 디버깅 편함.
-        throw std::runtime_error("Bounds/array size mismatch in map: " + path);
+        for (SizeType i = 0; i < spawns.Size(); i++) 
+        {
+            const Value& spawn = spawns[i];
+            SpawnPoint spawnPoint;
+            spawnPoint.spawnType = GetESpawnType(spawn["Type"].GetString());
+            spawnPoint.x = spawn["X"].GetInt();
+            spawnPoint.y = spawn["Y"].GetInt();
+            mapData->spawnPoints.insert({i, spawnPoint});
+        }
     }
 
-    return map;
+    const Value& portals = document["Portals"];
+    if (portals.IsArray())
+    {
+        for (SizeType i = 0; i < portals.Size(); i++)
+        {
+            const Value& portal = portals[i];
+            const int srcPortalId = stoi(portal["SrcPortalId"].GetString());
+            const int dstMapId = stoi(portal["DstMapId"].GetString());
+            const int dstPortalId = stoi(portal["DstPortalId"].GetString());
+            const int x = portal["X"].GetInt();
+            const int y = portal["Y"].GetInt();
+            mapData->DefinePortal(PortalLink {srcPortalId, dstMapId, dstPortalId} );
+            mapData->MapTileToPortal(ESpawnType::PORTAL, x, y, srcPortalId);
+        }
+    }
+
+    // mapOffset 배열 파싱
+    //auto mapOffset = JsonFileUtils::parseArray2<int>(document["mapOffset"]);
+    //mapData->mapOffsetX = mapOffset.first;
+    //mapData->mapOffsetY = mapOffset.second;
+
+    // worldTopLeft 배열 파싱
+    auto worldTopLeft = JsonFileUtils::parseArray2<int>(document["WorldTopLeft"]);
+    mapData->worldTopLeftX = worldTopLeft.first;
+    mapData->worldTopLeftY = worldTopLeft.second;
+    mapData->minX = mapData->worldTopLeftX;
+    mapData->maxY = mapData->worldTopLeftY;
+
+    // worldBottomRight 배열 파싱
+    auto worldBottomRight = JsonFileUtils::parseArray2<int>(document["WorldBottomRight"]);
+    mapData->worldBottomRightX = worldBottomRight.first;
+    mapData->worldBottomRightY = worldBottomRight.second;
+    mapData->maxX = mapData->worldBottomRightX;
+    mapData->minY = mapData->worldBottomRightY;
+
+    return mapData;
+}
+
+ESpawnType MapData::GetESpawnType(string type)
+{
+    if(type == "Player") return ESpawnType::PLAYER_SPAWN;
+    if(type == "Portal") return ESpawnType::PORTAL;
 }

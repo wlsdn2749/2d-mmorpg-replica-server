@@ -26,24 +26,35 @@ struct CharacterRepository
         int level;
     };
 
+    struct CharacterStat
+    {
+        int characterId;
+        int posX;
+        int posY;
+        Protocol::EDirection dir;
+        int lastRoom;
+        int hp;
+        int level;
+        int exp;
+    };
+
 /* 캐릭터 생성 요청*/
 public:
-	static void CreateCharacter_DB(DBConnection& conn, int userId, String username, Protocol::EGender gender, Protocol::ERegion region)
+	static void CreateCharacter_DB(DBConnection& conn, int userId, String username, Protocol::EGender gender, Protocol::ERegion region, int lastRoom)
 	{
         SP::CreateCharacter sp(conn);
         sp.ParamIn_UserId(userId); // ForeignKey
         sp.ParamIn_Username(username.c_str(), static_cast<int>(username.size()));
         sp.ParamIn_Gender(gender);
         sp.ParamIn_Region(region);
-        sp.ParamIn_LastZone(0);
+        sp.ParamIn_LastRoom(lastRoom);
         sp.Execute();
 	}
-
-    static std::future<void> CreateCharacterAsync(int userId, wstring_view username, Protocol::EGender gender, Protocol::ERegion region)
+    static std::future<void> CreateCharacterAsync(int userId, wstring_view username, Protocol::EGender gender, Protocol::ERegion region, int lastRoom)
     {
         auto w_username = String(username);
-        return DbDispatcher::EnqueueRet([userId, w_username, gender, region](DBConnection& c) {
-            CreateCharacter_DB(c, userId, w_username, gender, region);
+        return DbDispatcher::EnqueueRet([userId, w_username, gender, region, lastRoom](DBConnection& c) {
+            CreateCharacter_DB(c, userId, w_username, gender, region, lastRoom);
             });
     }
 /* 동일 Username 존재 판단*/
@@ -170,6 +181,62 @@ public:
     {
         return DbDispatcher::EnqueueRet([userId](DBConnection& c) {
             return GetCharactersByUser_DB(c, userId);
+            });
+    }
+
+/* 캐릭터 정보 업데이트*/
+public:
+    static void UpdateCharacterStats_DB(DBConnection& conn, const CharacterStat& stat)
+    {
+        SP::UpdateCharacterStats sp(conn);
+
+        // const_cast 사용: BindParam은 읽기 전용이므로 안전
+        sp.ParamIn_CharacterId(const_cast<int32&>(stat.characterId));
+        sp.ParamIn_PosX(const_cast<int32&>(stat.posX));
+        sp.ParamIn_PosY(const_cast<int32&>(stat.posY));
+        sp.ParamIn_Dir(const_cast<int32&>(static_cast<const int32&>(stat.dir)));
+        sp.ParamIn_LastRoom(const_cast<int32&>(stat.lastRoom));
+        sp.ParamIn_Hp(const_cast<int32&>(stat.hp));
+        sp.ParamIn_Level(const_cast<int32&>(stat.level));
+        sp.ParamIn_Exp(const_cast<int32&>(stat.exp));
+        sp.Execute();
+    }
+
+    static std::future<void> UpdateCharacterStatsAsync(const CharacterStat &stat)
+    {
+        return DbDispatcher::Enqueue([statCopy = stat](DBConnection& c)
+            {
+                return UpdateCharacterStats_DB(c, statCopy);
+            });
+    }
+
+public:
+    static CharacterStat GetCharacterStats_DB(DBConnection& conn, int characterId)
+    {
+        CharacterStat stat{};
+        int32 _dir;
+        SP::GetCharacterStats sp(conn);
+        sp.ParamIn_CharacterId(characterId);
+        sp.ColumnOut_PosX(OUT stat.posX);
+        sp.ColumnOut_PosY(OUT stat.posY);
+        sp.ColumnOut_Dir(OUT _dir);
+        sp.ColumnOut_LastRoom(OUT stat.lastRoom);
+        sp.ColumnOut_Hp(OUT stat.hp);
+        sp.ColumnOut_Level(OUT stat.level);
+        sp.ColumnOut_Exp(OUT stat.exp);
+        sp.Execute();
+        if (sp.Fetch())
+        {
+            stat.characterId = characterId;
+            stat.dir = static_cast<Protocol::EDirection>(_dir);
+        }
+        return stat;
+    }
+    static std::future<CharacterStat> GetCharacterStatsAsync(int characterId)
+    {
+        return DbDispatcher::EnqueueRet([characterId](DBConnection& c)
+            {
+                return GetCharacterStats_DB(c, characterId);
             });
     }
 };

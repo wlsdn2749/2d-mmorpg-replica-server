@@ -89,7 +89,7 @@ namespace DummyClientCS
             }
         }
 
-        public async Task SendForEachEnterGame()
+        public async Task SendForEachEnterGame(int idx)
         {
             if (!_canSendPackets) return;
 
@@ -99,7 +99,7 @@ namespace DummyClientCS
                 {
                     var pkt = new Google.Protobuf.Protocol.C_EnterGame
                     {
-                        PlayerIndex = 0
+                        PlayerIndex = idx
                     };
                     session.Send(ServerPacketManager.MakeSendBuffer(pkt));
                 }
@@ -125,11 +125,11 @@ namespace DummyClientCS
                     {
                         case 0: // UP
                             clickPos.X = 0;
-                            clickPos.Y = -targetY;
+                            clickPos.Y = +targetY;
                             break;
                         case 1: // DOWN
                             clickPos.X = 0;
-                            clickPos.Y = targetY;
+                            clickPos.Y = -targetY;
                             break;
                         case 2: // LEFT
                             clickPos.X = -targetX;
@@ -167,6 +167,85 @@ namespace DummyClientCS
                         Reason = 0
                     };
                     session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                }
+            }
+        }
+
+        public async Task SendForEachAttack()
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_PlayerAttackRequest
+                    {
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                }
+            }
+        }
+
+        // 인벤토리 조회 요청
+        public async Task SendInventoryRequest()
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_InventoryRequest
+                    {
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.WriteLine("인벤토리 조회 요청을 전송했습니다.");
+                }
+            }
+        }
+
+        // 퀵슬롯 포션 사용 (슬롯 30번 - 체력 회복 포션)
+        public async Task SendUseQuickSlotPotion()
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    // 퀵슬롯 30번 (체력 회복 포션) 사용
+                    var pkt = new Google.Protobuf.Protocol.C_ItemUseRequest
+                    {
+                        SlotIndex = 30
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.WriteLine("퀵슬롯 30번 체력 포션 사용 요청을 전송했습니다.");
+                }
+            }
+        }
+
+        // 지정된 슬롯의 아이템 사용
+        public async Task SendItemUseRequest(int slotIndex)
+        {
+            if (!_canSendPackets) return;
+
+            if (slotIndex < 0 || slotIndex > 39)
+            {
+                Console.WriteLine("❌ 슬롯 번호는 0~39 사이여야 합니다.");
+                return;
+            }
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_ItemUseRequest
+                    {
+                        SlotIndex = slotIndex
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.WriteLine($"슬롯 {slotIndex}번 아이템 사용 요청을 전송했습니다.");
                 }
             }
         }

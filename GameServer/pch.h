@@ -19,6 +19,10 @@
 #include "TypeCore.h"
 #include "GeometryCore.h"
 
+#include "TimeUtils.h"
+
+#include "CharacterRepository.h"
+
 #include "Windows.h"
 #undef max
 #undef min
@@ -30,3 +34,6 @@ using AccountRef		= shared_ptr<Account>;
 
 using GameSessionContainerRef = shared_ptr<class GameSessionContainer>;
 using GameSessionAccessorRef = shared_ptr<class GameSessionAccessor>;
+
+
+using namespace std::chrono;

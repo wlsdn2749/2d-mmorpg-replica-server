@@ -198,5 +198,73 @@ namespace Packet
         {
             Console.WriteLine($"[S_BroadcastMonsterAttack] Monster Has been Attacked");
         }
+
+        internal static void HANDLE_S_BroadcastPlayerAttack(PacketSession session, S_BroadcastPlayerAttack attack)
+        {
+            Console.WriteLine($"[S_BroadcastPlayerAttack] Other Player Attacked ");
+        }
+
+        // 인벤토리 조회 응답 처리
+        internal static void HANDLE_S_InventoryReply(PacketSession session, S_InventoryReply reply)
+        {
+            Console.WriteLine("=== 인벤토리 정보 ===");
+            Console.WriteLine($"총 {reply.Slots.Count}개의 아이템이 있습니다.");
+            
+            if (reply.Slots.Count == 0)
+            {
+                Console.WriteLine("인벤토리가 비어있습니다.");
+                return;
+            }
+
+            // 일반 슬롯 (0~29)
+            Console.WriteLine("\n일반 슬롯:");
+            var normalSlots = reply.Slots.Where(s => !s.IsQuickslot).OrderBy(s => s.SlotIndex);
+            foreach (var slot in normalSlots)
+            {
+                Console.WriteLine($"  슬롯[{slot.SlotIndex:D2}] 아이템ID:{slot.ItemId} 수량:{slot.Count}");
+            }
+
+            // 퀵 슬롯 (30~39)  
+            Console.WriteLine("\n퀵 슬롯:");
+            var quickSlots = reply.Slots.Where(s => s.IsQuickslot).OrderBy(s => s.SlotIndex);
+            foreach (var slot in quickSlots)
+            {
+                Console.WriteLine($"  퀵슬롯[{slot.SlotIndex:D2}] 아이템ID:{slot.ItemId} 수량:{slot.Count}");
+            }
+            Console.WriteLine("========================");
+        }
+
+        // 아이템 사용 응답 처리
+        internal static void HANDLE_S_ItemUseReply(PacketSession session, S_ItemUseReply reply)
+        {
+            if (reply.Success)
+            {
+                Console.WriteLine("아이템 사용 성공!");
+                Console.WriteLine("HP가 회복되었습니다!");
+            }
+            else
+            {
+                Console.WriteLine("아이템 사용 실패!");
+                Console.WriteLine($"오류: {reply.ErrorMessage}");
+            }
+        }
+
+        // 인벤토리 업데이트 브로드캐스트 처리
+        internal static void HANDLE_S_InventoryUpdate(PacketSession session, S_InventoryUpdate update)
+        {
+            Console.WriteLine("인벤토리가 업데이트되었습니다:");
+            foreach (var slot in update.ChangedSlots)
+            {
+                if (slot.Count > 0)
+                {
+                    string slotType = slot.IsQuickslot ? "퀵슬롯" : "일반슬롯";
+                    Console.WriteLine($"  {slotType}[{slot.SlotIndex}] 아이템ID:{slot.ItemId} 수량:{slot.Count}");
+                }
+                else
+                {
+                    Console.WriteLine($"  슬롯[{slot.SlotIndex}] 비어짐");
+                }
+            }
+        }
     }
 }

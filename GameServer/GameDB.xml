@@ -41,7 +41,11 @@
     <Column name="region" type="int" notnull="true"/>
     <Column name="level" type="int" notnull="true" default="1"/>
     <Column name="exp" type="int" notnull="true" default="0"/>
-    <Column name="lastZone" type="int" notnull="true"/>
+    <Column name="hp" type="int" notnull="true" default="100"/>
+    <Column name="maxHp" type="int" notnull="true" default="100"/>
+    <Column name="atk" type="int" notnull="true" default="10"/>
+    <Column name="def" type="int" notnull="true" default="5"/>
+    <Column name="lastRoom" type="int" notnull="true" default="1"/>
     <Column name="posX" type="int" notnull="true" default="0"/>
     <Column name="posY" type="int" notnull="true" default="0"/>
     <Column name="dir" type="int" notnull="true" default="0"/>
@@ -54,7 +58,7 @@
             refTable="Accounts"
             onDelete="NO_ACTION"
             onUpdate="NO_ACTION">
-      <Column local="userId" ref="userId"/>
+     <Column local="userId" ref="userId"/>
     </ForeignKey>
   </Table>
   <Procedure name="spCreateCharacter">
@@ -62,14 +66,14 @@
     <Param name="@username" type="nvarchar(32)"/>
     <Param name="@gender" type="int"/>
     <Param name="@region" type="int"/>
-    <Param name="@lastZone" type="int"/>
+    <Param name="@lastRoom" type="int"/>
     <Body>
       <![CDATA[
        SET NOCOUNT ON;
        SET XACT_ABORT ON;
        
-       INSERT INTO [dbo].[Characters] ([userId], [username], [gender], [region], [lastZone])
-       VALUES (@userId, @username, @gender, @region, @lastZone);       
+       INSERT INTO [dbo].[Characters] ([userId], [username], [gender], [region], [lastRoom])
+       VALUES (@userId, @username, @gender, @region, @lastRoom);       
       ]]>
     </Body>
   </Procedure>
@@ -103,8 +107,86 @@
       ]]>
     </Body>
   </Procedure>
+  <Procedure name="spUpdateCharacterStats">
+    <Param name="@characterId" type="int"/>
+    <Param name="@posX" type="int"/>
+    <Param name="@posY" type="int"/>
+    <Param name="@dir" type="int"/>
+    <Param name="@lastRoom" type="int"/>
+    <Param name="@hp" type="int"/>
+    <Param name="@level" type="int"/>
+    <Param name="@exp" type="int"/>
+    <Body>
+      <![CDATA[
+      SET NOCOUNT ON;
+      SET XACT_ABORT ON;
+      
+      UPDATE [dbo].[Characters]
+      SET
+          posX = @posX,
+          posY = @posY,
+          dir = @dir,
+          lastRoom = @lastRoom,
+          hp = @hp,
+          level = @level,
+          exp = @exp
+      WHERE characterId = @characterId;
+    ]]>
+    </Body>
+  </Procedure>
+  <Procedure name="spGetCharacterStats">
+    <Param name="@characterId" type="int"/>
+    <Body>
+      <![CDATA[
+      SET NOCOUNT ON;
+      SET XACT_ABORT ON;
+      SELECT
+        posX, posY, dir, lastRoom, hp, level, exp
+      FROM [dbo].[Characters]
+      WHERE [characterId] = @characterId
+     ]]>
+    </Body>
+  </Procedure>
   
   
+  <!--===== 인벤토리 관련 DB =====-->
+  <Table name="ItemData">
+    <Column name="itemId" type="int" notnull="true"/>
+    <Column name="name" type="nvarchar(64)" notnull="true"/>
+    <Column name="description" type="nvarchar(256)" notnull="false"/>
+    <Column name="isStackable" type="int" notnull="true" default="0"/>
+    <Column name="maxStack" type="int" notnull="true" default="99"/>
+    <Column name="itemType" type="int" notnull="true" default="0"/>
+    <Index type="clustered">
+      <PrimaryKey/>
+      <Column name="itemId"/>
+    </Index>
+  </Table>
+  <Table name="CharacterInventory">
+    <Column name="characterId" type="int" notnull="true"/>
+    <Column name="slotIndex" type="int" notnull="true"/>
+    <Column name="itemId" type="int" notnull="true"/>
+    <Column name="count" type="int" notnull="true" default="1"/>
+    <Column name="isQuickslot" type="int" notnull="true" default="0"/>
+    <Index type="clustered">
+      <PrimaryKey/>
+      <Column name="characterId"/>
+      <Column name="slotIndex"/>
+    </Index>
+    <ForeignKey name="FK_CharacterInventory_characterId_Characters_characterId"
+            refTable="Characters"
+            onDelete="CASCADE"
+            onUpdate="NO_ACTION">
+      <Column local="characterId" ref="characterId"/>
+    </ForeignKey>
+    <ForeignKey name="FK_CharacterInventory_itemId_ItemData_itemId"
+            refTable="ItemData"
+            onDelete="NO_ACTION"
+            onUpdate="NO_ACTION">
+     <Column local="itemId" ref="itemId"/>
+    </ForeignKey>
+  </Table>
+
   <!-- 아래 Procedures는 예시임 -->
   <Table name="Gold">
     <Column name="id" type="int" notnull="true" identity="1,1"/>
@@ -131,6 +213,63 @@
     <Body>
       <![CDATA[
        SELECT id, gold, name, createDate FROM [dbo].[Gold] where gold = (@gold)
+      ]]>
+    </Body>
+  </Procedure>
+  
+  <!-- 인벤토리 관련 저장 프로시저 -->
+  <Procedure name="spGetCharacterInventory">
+    <Param name="@characterId" type="int"/>
+    <Body>
+      <![CDATA[
+        SET NOCOUNT ON;
+        
+        SELECT 
+            slotIndex,
+            itemId,
+            count,
+            isQuickslot
+        FROM [dbo].[CharacterInventory]
+        WHERE characterId = @characterId
+        ORDER BY slotIndex;
+      ]]>
+    </Body>
+  </Procedure>
+  <Procedure name="spSaveInventorySlot">
+    <Param name="@characterId" type="int"/>
+    <Param name="@slotIndex" type="int"/>
+    <Param name="@itemId" type="int"/>
+    <Param name="@count" type="int"/>
+    <Param name="@isQuickslot" type="int"/>
+    <Body>
+      <![CDATA[
+        SET NOCOUNT ON;
+        SET XACT_ABORT ON;
+        
+        MERGE [dbo].[CharacterInventory] AS target
+        USING (SELECT @characterId, @slotIndex, @itemId, @count, @isQuickslot) AS source(characterId, slotIndex, itemId, count, isQuickslot)
+        ON target.characterId = source.characterId AND target.slotIndex = source.slotIndex
+        WHEN MATCHED THEN
+            UPDATE SET 
+                itemId = source.itemId,
+                count = source.count,
+                isQuickslot = source.isQuickslot
+        WHEN NOT MATCHED THEN
+            INSERT (characterId, slotIndex, itemId, count, isQuickslot)
+            VALUES (source.characterId, source.slotIndex, source.itemId, source.count, source.isQuickslot);
+      ]]>
+    </Body>
+  </Procedure>
+  <Procedure name="spDeleteInventorySlot">
+    <Param name="@characterId" type="int"/>
+    <Param name="@slotIndex" type="int"/>
+    <Body>
+      <![CDATA[
+        SET NOCOUNT ON;
+        SET XACT_ABORT ON;
+        
+        DELETE FROM [dbo].[CharacterInventory]
+        WHERE characterId = @characterId AND slotIndex = @slotIndex;
       ]]>
     </Body>
   </Procedure>

@@ -2,7 +2,6 @@
 #include "Room.h"
 #include "ClientPacketHandler.h"
 #include "MapData.h"
-
 #include "RoomManager.h"
 
 // ctor/dtor
@@ -14,10 +13,34 @@ Room::Room(Cfg cfg, std::shared_ptr<MapData> map)
 }
 Room::~Room() = default;
 
+void Room::Init()
+{
+    StartTicking();
+    StartPeriodicSave();
+}
 void Room::StartTicking()
 {
 	// 첫 틱 예약 (이후 OnTickTimer에서 자기 재등록)
 	DoTimer(_cfg.tickMs, &Room::OnTickTimer);
+}
+
+void Room::StartPeriodicSave()
+{
+    DoTimer(_cfg.periodicSaveTicksMs, &Room::SaveAllActivePlayers);
+}
+
+void Room::SaveAllActivePlayers()
+{
+    GConsoleLogger->WriteStdOut(Color::YELLOW, L"플레이어 정보 업데이트 시작\n");
+    // Active 구현을 해야하지만 일단은 모든 플레이어 대상으로
+    for (auto& [pid, p] : _players)
+    {
+        CharacterRepository::CharacterStat stat;  // 스택에 한 번만 생성
+        p->GetCharacterStat(stat);  // 복사 없이 직접 할당
+        CharacterRepository::UpdateCharacterStatsAsync(stat); // const& 전달
+    }
+
+    DoTimer(_cfg.periodicSaveTicksMs, &Room::SaveAllActivePlayers);
 }
 
 PlayerRef Room::FindPlayer(PlayerId pid)
@@ -31,7 +54,7 @@ Protocol::EDirection Room::DecideFacing(const PlayerRef& p, const Protocol::Vect
     int dx = clickWorldPos.x() - p->core.pos.x;
     int dy = clickWorldPos.y() - p->core.pos.y;
 
-    // 좌표계 정의: y가 위로 감소(타일맵 전통)라면 UP은 dy<0, DOWN은 dy>0
+    // 좌표계 정의: y가 위로 감소(타일맵 전통)라면 UP은 dy>0, DOWN은 dy<0
     // 같은경우 좌우 우선
     if (std::abs(dx) >= std::abs(dy))
     {
@@ -39,7 +62,7 @@ Protocol::EDirection Room::DecideFacing(const PlayerRef& p, const Protocol::Vect
     }
     else
     {
-        return (dy >= 0) ? Protocol::EDirection::DIR_DOWN : Protocol::EDirection::DIR_UP;
+        return (dy >= 0) ? Protocol::EDirection::DIR_UP : Protocol::EDirection::DIR_DOWN;
     }
 }
 void Room::RemovePlayerInternal(int playerId, std::string_view reason)
@@ -115,7 +138,19 @@ Protocol::S_PlayerList Room::BuildPlayerListSnapshot(const PlayerRef& forPlayer,
 ------------------------*/
 void Room::Enter(PlayerRef p)
 {
-    SpawnPoint spawn{ p->core.pos.x, p->core.pos.y };
+    // 처음 들어왔으면 스폰 포인트 조정... 
+    if (p->core.pos.x == 0 && p->core.pos.y == 0)
+    {
+        auto sp = ResolveSpawn(0); // 0은 항상 SpawnPoint
+        if (sp == nullopt)
+        {
+            throw std::runtime_error("NOT EXISTING SPAWN POINT");
+        }
+        p->core.pos.x = sp->x;
+        p->core.pos.y = sp->y;
+    }
+
+    SpawnPoint spawn { ESpawnType::PLAYER_SPAWN, p->core.pos.x, p->core.pos.y };
     AddPlayerInternal(p, spawn, p->core.dir);  // 내부 등록 (SetRoom 포함)
 
 	GConsoleLogger->WriteStdOut(Color::GREEN, L"Room에 ENter 입장\n");
@@ -284,8 +319,8 @@ void Room::ProcessMovesTick()
                 int nx = p->core.pos.x;
                 int ny = p->core.pos.y;
                 switch (p->core.dir) {
-                case Protocol::EDirection::DIR_UP:    ny -= 1; break;
-                case Protocol::EDirection::DIR_DOWN:  ny += 1; break;
+                case Protocol::EDirection::DIR_UP:    ny += 1; break;
+                case Protocol::EDirection::DIR_DOWN:  ny -= 1; break;
                 case Protocol::EDirection::DIR_LEFT:  nx -= 1; break;
                 case Protocol::EDirection::DIR_RIGHT: nx += 1; break;
                 default: break;
@@ -420,12 +455,17 @@ void Room::ChangeRoomReady(const PlayerRef& p, const Protocol::C_ChangeRoomReady
             // 인메모리 좌표 반영 후 등록
             p->core.pos.x = sp->x;
             p->core.pos.y = sp->y;
-            dst->AddPlayerInternal(p, { sp->x, sp->y }, p->core.dir);
+            dst->AddPlayerInternal(p, {ESpawnType::PLAYER_SPAWN, sp->x, sp->y }, p->core.dir);
 
             // Commit + 스냅샷(나 제외 권장)
             Protocol::S_ChangeRoomCommit commit;
             commit.set_transitionid(pend.transitionId);
             *commit.mutable_snapshots() = dst->BuildPlayerListSnapshot(p, /*includeSelf=*/false);
+            
+            // DB에 저장
+            CharacterRepository::CharacterStat stat;  // 스택에 한 번만 생성
+            p->GetCharacterStat(stat);  // 복사 없이 직접 할당
+            CharacterRepository::UpdateCharacterStatsAsync(stat); // const& 전달
 
             if (auto s = p->ownerSession.lock())
             {

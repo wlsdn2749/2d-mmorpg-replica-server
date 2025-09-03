@@ -14,6 +14,7 @@ public:
 	bool Exists(EntityId id) const { return _monsters.find(id) != _monsters.end(); }
 	Monster& Get(EntityId id) { return _monsters.at(id); }
 	const Monster* Find(EntityId id) const;
+	Monster* Find(EntityId id);
 
 
 	void Kill(EntityId id); // 상태만 Dead로, 브로드캐스트/리스폰은 시스템에서
