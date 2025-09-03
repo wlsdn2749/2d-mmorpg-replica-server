@@ -10,7 +10,7 @@ using UnityEngine.Tilemaps;
 public static class TilemapJsonExporter
 {
     // 충돌로 취급할 타일맵 이름들 (필요시 추가)
-    private static readonly string[] BlockLayerNames = { "Collision", "Water", "Cliff","Portal" };
+    private static readonly string[] BlockLayerNames = { "Collision", "Water", "Cliff"};
     private static readonly string[] PortalName = { "Portal" };
     [MenuItem("Tools/Export/Tilemap → JSON (0-based normalized)")]
     public static void ExportActiveSceneTilemapToJson()
@@ -103,7 +103,7 @@ public static class TilemapJsonExporter
         AppendSpawnsByTagWorld("Spawn.Player", "Player", spawns);
         AppendSpawnsByTagWorld("Spawn.Monster", "Monster", spawns);
         AppendSpawnsByTagWorld("Spawn.Item", "Item", spawns);
-        AppendSpawnsByTagWorld("Spawn.Portal","Portal", spawns);
+        AppendPortalsByTagWorld("Portal", portals);
         float cellW = grid.cellSize.x;
         float cellH = grid.cellSize.y;
         Vector3 tlWorld = Vector3.zero;
@@ -115,17 +115,17 @@ public static class TilemapJsonExporter
         // 7) DTO 구성 ? origin은 0,0으로 고정, 씬 오프셋은 mapOffset에 저장
         var dto = new MapDTO
         {
-            version = 1,
-            cellSize = new float[] { grid.cellSize.x, grid.cellSize.y },
-            origin = new int[] { 0, 0 }, // JSON 내부 좌표계의 원점
-            width = width,
-            height = height,
-            passableRowsTopDown = rows.ToArray(),
-            spawns = spawns.ToArray(),
-            portals = portals.ToArray(),
-            mapOffset = new int[] { total.xMin, total.yMin },         // 씬(Grid) 기준 오프셋
-            worldTopLeft = new int[] { tlX, tlY },
-            worldBottomRight = new int[] { brX, brY },
+            Version = 1,
+            CellSize = new float[] { grid.cellSize.x, grid.cellSize.y },
+            Origin = new int[] { 0, 0 }, // JSON 내부 좌표계의 원점
+            Width = width,
+            Height = height,
+            PassableRowsTopDown = rows.ToArray(),
+            Spawns = spawns.ToArray(),
+            Portals = portals.ToArray(),
+            MapOffset = new int[] { total.xMin, total.yMin },         // 씬(Grid) 기준 오프셋
+            WorldTopLeft = new int[] { tlX, tlY },
+            WorldBottomRight = new int[] { brX, brY },
         };
 
         // 8) 저장
@@ -148,9 +148,9 @@ public static class TilemapJsonExporter
             Vector3 pos = go.transform.position;
             outList.Add(new SpawnPoint
             {
-                type = typeName,
-                x = Mathf.RoundToInt(pos.x),
-                y = Mathf.RoundToInt(pos.y)
+                Type = typeName,
+                X = Mathf.RoundToInt(pos.x),
+                Y = Mathf.RoundToInt(pos.y)
             });
         }
     }
@@ -185,23 +185,22 @@ public static class TilemapJsonExporter
             string uniqueId = (n == 0) ? baseName : $"{baseName}_{n}";
 
             // 선택 메타: PortalMeta 컴포넌트가 있으면 읽기
-            string destScene = null, destMapId = null, destPortalId = null;
+            string srcPortalId = null, dstMapId = null, dstPortalId = null;
             var meta = go.GetComponent<PortalMeta>(); // 없으면 null
             if (meta != null)
             {
-                destScene = string.IsNullOrWhiteSpace(meta.DestScene) ? null : meta.DestScene;
-                destMapId = string.IsNullOrWhiteSpace(meta.DestMapId) ? null : meta.DestMapId;
-                destPortalId = string.IsNullOrWhiteSpace(meta.DestPortalId) ? null : meta.DestPortalId;
+                srcPortalId = string.IsNullOrWhiteSpace(meta.SrcPortalId) ? null : meta.SrcPortalId;
+                dstMapId = string.IsNullOrWhiteSpace(meta.DstMapId) ? null : meta.DstMapId;
+                dstPortalId = string.IsNullOrWhiteSpace(meta.DstPortalId) ? null : meta.DstPortalId;
             }
 
             outList.Add(new PortalPoint
             {
-                id = uniqueId,
-                x = Mathf.RoundToInt(p.x),
-                y = Mathf.RoundToInt(p.y),
-                destScene = destScene,
-                destMapId = destMapId,
-                destPortalId = destPortalId
+                X = Mathf.RoundToInt(p.x),
+                Y = Mathf.RoundToInt(p.y),
+                SrcPortalID = srcPortalId,
+                DstMapId = dstMapId,
+                DstPortalId = dstPortalId
             });
         }
     }
@@ -214,36 +213,36 @@ public static class TilemapJsonExporter
     [Serializable]
     private class MapDTO
     {
-        public int version;
-        public float[] cellSize;      // [x, y] (world size of one cell)
-        public int[] origin;          // [0, 0] ? always 0-based in JSON
-        public int width;             // number of columns
-        public int height;            // number of rows
-        public string[] passableRowsTopDown; // '1'=pass, '0'=block (top row first)
-        public SpawnPoint[] spawns;   // normalized cell coords
-        public PortalPoint[] portals;
-        public int[] mapOffset;       // [minCellX, minCellY] in scene (for reverse mapping)
-        public int[] worldTopLeft;     // [x, y] (int)
-        public int[] worldBottomRight; // [x, y] (int)
+        public int Version;
+        public float[] CellSize;      // [x, y] (world size of one cell)
+        public int[] Origin;          // [0, 0] ? always 0-based in JSON
+        public int Width;             // number of columns
+        public int Height;            // number of rows
+        public string[] PassableRowsTopDown; // '1'=pass, '0'=block (top row first)
+        public SpawnPoint[] Spawns;   // normalized cell coords
+        public PortalPoint[] Portals;
+        public int[] MapOffset;       // [minCellX, minCellY] in scene (for reverse mapping)
+        public int[] WorldTopLeft;     // [x, y] (int)
+        public int[] WorldBottomRight; // [x, y] (int)
     }
 
     [Serializable]
     private class SpawnPoint
     {
-        public string type; // "Player", "Monster", "Item", ...
-        public int x;       // normalized cell x (0..width-1)
-        public int y;       // normalized cell y (0..height-1)
+        public string Type; // "Player", "Monster", "Item", ...
+        public int X;       // normalized cell x (0..width-1)
+        public int Y;       // normalized cell y (0..height-1)
     }
     [Serializable]
     private class PortalPoint
     {
-        public string id;   // 고유 식별자 (GameObject 이름 중복 시 자동 번호)
-        public int x;       // 월드 X (int)
-        public int y;       // 월드 Y (int)
+        
+        public int X;       // 월드 X (int)
+        public int Y;       // 월드 Y (int)
                             // 선택 메타(있으면 내보냄)
-        public string destScene;
-        public string destMapId;
-        public string destPortalId;
+        public string SrcPortalID;
+        public string DstMapId;
+        public string DstPortalId;
     }
 }
 #endif

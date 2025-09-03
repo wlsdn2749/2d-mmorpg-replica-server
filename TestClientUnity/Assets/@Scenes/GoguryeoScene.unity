@@ -2304,7 +2304,7 @@ Sprite:
         format: 0
         dimension: 0
       m_DataSize: 80
-      _typelessdata: 000000bf0000003f000000000000003f0000003f00000000000000bf000000bf000000000000003f000000bf000000000000000000000000000000000000000000000000000000000000000000000000
+      _typelessdata: 000000bf0000003f000000000000003f0000003f00000000000000bf000000bf000000000000003f000000bf00000000000000000000803f0000803f0000803f00000000000000000000803f00000000
     m_Bindpose: []
     textureRect:
       serializedVersion: 2
@@ -2392,72 +2392,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 578501561}
-  - component: {fileID: 578501560}
   m_Layer: 0
-  m_Name: Square
+  m_Name: PlayerSpawnPoint
   m_TagString: Spawn.Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!212 &578501560
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 578501559}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -716725691
-  m_SortingLayer: 3
-  m_SortingOrder: 12
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
 --- !u!4 &578501561
 Transform:
   m_ObjectHideFlags: 0
@@ -49777,8 +49718,8 @@ Tilemap:
   - first: {x: -9, y: 10, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 119
-      m_TileSpriteIndex: 119
+      m_TileIndex: 52
+      m_TileSpriteIndex: 76
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -51720,7 +51661,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: d6312e9c4ab401a4a972a5c819fac575, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 1b02fa7ea870e3b46a28ef3f5d732863, type: 2}
-  - m_RefCount: 1
+  - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: 0e03dc9a4bbfd42459783f9895d67d6c, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 1c9a233f16362ec4093b35fb79a5de27, type: 2}
@@ -51854,7 +51795,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 5e17c46ee0195e145a310ea7646bcb05, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 8071e7b9a5aad1c43b4cdfded1aac19b, type: 2}
-  - m_RefCount: 4
+  - m_RefCount: 3
     m_Data: {fileID: 11400000, guid: 19abe1419e8968b41983d4c58ca2bcee, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 887b80e93b2ec44478677eba1ffe71cc, type: 2}
@@ -52079,7 +52020,7 @@ Tilemap:
     m_Data: {fileID: 54601083, guid: 294738e878369214ab90096d0263bb84, type: 3}
   - m_RefCount: 3
     m_Data: {fileID: 664265051, guid: 294738e878369214ab90096d0263bb84, type: 3}
-  - m_RefCount: 1
+  - m_RefCount: 2
     m_Data: {fileID: -921012714, guid: 294738e878369214ab90096d0263bb84, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 1008643472, guid: 294738e878369214ab90096d0263bb84, type: 3}
@@ -52165,7 +52106,7 @@ Tilemap:
     m_Data: {fileID: -4777915, guid: 000ab50665b6de44ba2b6337ecae332a, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -1058326655, guid: bb1d5ec76b4bdf64c8bf4a39cb844c75, type: 3}
-  - m_RefCount: 4
+  - m_RefCount: 3
     m_Data: {fileID: 433287501, guid: bb1d5ec76b4bdf64c8bf4a39cb844c75, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 1064247491, guid: bb1d5ec76b4bdf64c8bf4a39cb844c75, type: 3}
@@ -53442,6 +53383,53 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &2116287051
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2116287054}
+  - component: {fileID: 2116287053}
+  m_Layer: 0
+  m_Name: Goto_HuntingField
+  m_TagString: Portal
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2116287053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116287051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7026029edcb6447bbff5369dc02cf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PortalMeta
+  SrcPortalId: 1003
+  DstMapId: 3
+  DstPortalId: 3001
+--- !u!4 &2116287054
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116287051}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 21, y: -34, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -53449,3 +53437,4 @@ SceneRoots:
   - {fileID: 236988473}
   - {fileID: 1673096217}
   - {fileID: 578501561}
+  - {fileID: 2116287054}
