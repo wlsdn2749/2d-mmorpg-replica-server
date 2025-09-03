@@ -76,8 +76,12 @@ bool Handle_C_CreateCharacterRequest(PacketSessionRef& session, Protocol::C_Crea
 	// 검증 통과하면 진짜로 캐릭터 만들고 성공 리턴 
 	// 여기서 실패할 수도 있으나, 나중에 판단..
 	
+	// 여기 캐릭터만들때 LastRoom 정보도 넣어야겠네... roomId 찾아서?
+
+	int roomId = RoomManager::Instance().GetRoomIdByRegion(pkt.region());
+	
 	String username = StrToWstr(pkt.username());
-	auto fut = CharacterRepository::CreateCharacterAsync(userId, username, pkt.gender(), pkt.region());
+	auto fut = CharacterRepository::CreateCharacterAsync(userId, username, pkt.gender(), pkt.region(), roomId);
 
 	Protocol::S_CreateCharacterReply replyPkt;
 	replyPkt.set_success(true);
@@ -163,7 +167,7 @@ bool Handle_C_EnterGame(PacketSessionRef& session, Protocol::C_EnterGame& pkt)
 	const int roomId = player->LastRoomId();
 	RoomRef room = RoomManager::Instance().Find(roomId);
 	if (!room) 
-		std::cout << "Not Exsiting room" << std::endl; 
+		throw std::exception("Not Exsiting room");
 
 	room->DoAsync(&Room::Enter, player); // 룸 입장 성공
 	player->LoadInventoryFromDB(); // DB에서 인벤토리 로딩 (접속 시)

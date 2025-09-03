@@ -55,6 +55,9 @@
     <Filter Include="DB\Test">
       <UniqueIdentifier>{97c68b7d-8fc0-4bda-a7e6-a52e29c3574d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{9445d0d6-324f-442b-ab37-9fa994cae27f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameServer.cpp">
@@ -312,6 +315,15 @@
     </None>
     <None Include="..\Doc\Plan\inventory-test-data.sql">
       <Filter>DB\Test</Filter>
+    </None>
+    <None Include="Resources\Maps\고구려_Tilemap_Info.json">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Resources\Maps\백제_Tilemap_Info.json">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Resources\Maps\사냥터_Tilemap_Info.json">
+      <Filter>Resources</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

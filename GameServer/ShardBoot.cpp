@@ -42,36 +42,34 @@ void StartShardedQueues(int totalRooms, int roomsPerQueue, uint32 timeBudgetMs)
 void CreateRooms()
 {
     const int roomsPerQueue = 2;
+
+
     // 마을(0)
     {
-        auto town0Map = MapData::LoadMapFromJsonFile("./Resources/Maps/Goguryeo_Tile_Info.json");
-        town0Map->DefinePortal(PortalLink{
-            1001, /* srcPortalId */
-            1, /* dstMapId */
-            2001, /*dstPortalId */
-            });
-        town0Map->MapTileToPortal(ESpawnType::PORTAL, 2, 2, 1001);
-        auto town0 = std::make_shared<TownRoom>(Room::Cfg{ 0, "Town", 50, 200 }, town0Map);
-        
+        auto town0Map = MapData::LoadMapFromJsonFile("./Resources/Maps/고구려_Tilemap_Info.json");
+        auto town0 = std::make_shared<TownRoom>(Room::Cfg{ 1, "Goguryeo", 50, 200 }, town0Map);
         town0->SetOwner(gQueues[OwnerIndexForRoom(town0->RoomId(), roomsPerQueue)].get());
         town0->Init(); // 매 틱마다 호출하는 함수
         RoomManager::Instance().Add(town0);
     }
 
-    // 사냥터(0)
-    //{
-    //    auto field0Map = MapData::LoadMapFromJsonFile("./Resources/Maps/Map_002.txt");
-    //    auto field0 = std::make_shared<FieldRoom>(Room::Cfg{ 1, "Field", 50, 200 }, field0Map);
-    //    field0Map->DefinePortal(PortalLink{
-    //        2001, /* srcPortalId */
-    //        0, /* dstMapId */
-    //        1001, /*dstPortalId */
-    //    });
-    //    field0Map->MapTileToPortal(ESpawnType::PORTAL, 3, 3, 2001);
-    //    field0->SetOwner(gQueues[OwnerIndexForRoom(field0->RoomId(), roomsPerQueue)].get());
-    //    field0->Init(); // 매 틱마다 호출하는 함수
-    //    RoomManager::Instance().Add(field0);
-    //}
+    // 마을(1)
+    {
+        auto town1Map = MapData::LoadMapFromJsonFile("./Resources/Maps/백제_Tilemap_Info.json");
+        auto town1 = std::make_shared<TownRoom>(Room::Cfg{ 2, "Baekje", 50, 200 }, town1Map);
+        town1->SetOwner(gQueues[OwnerIndexForRoom(town1->RoomId(), roomsPerQueue)].get());
+        town1->Init(); // 매 틱마다 호출하는 함수
+        RoomManager::Instance().Add(town1);
+    }
+
+    //사냥터(0)
+    {
+        auto field0Map = MapData::LoadMapFromJsonFile("./Resources/Maps/사냥터_Tilemap_Info.json");
+        auto field0 = std::make_shared<FieldRoom>(Room::Cfg{ 3, "Field", 50, 200 }, field0Map);
+        field0->SetOwner(gQueues[OwnerIndexForRoom(field0->RoomId(), roomsPerQueue)].get());
+        field0->Init(); // 매 틱마다 호출하는 함수
+        RoomManager::Instance().Add(field0);
+    }
 }
 
 void StopShardedQueues()

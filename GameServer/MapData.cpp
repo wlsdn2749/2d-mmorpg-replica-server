@@ -38,27 +38,27 @@ std::shared_ptr<MapData> MapData::LoadMapFromJsonFile(const std::string& path)
     }
 
     // 기본 정보 파싱
-    mapData->version = document["version"].GetInt();
+    mapData->version = document["Version"].GetInt();
 
     // cellSize 배열 파싱
-    auto cellSize = JsonFileUtils::parseArray2<float>(document["cellSize"]);
+    auto cellSize = JsonFileUtils::parseArray2<float>(document["CellSize"]);
     mapData->cellSizeX = cellSize.first;
     mapData->cellSizeY = cellSize.second;
 
     // origin 배열 파싱
-    auto origin = JsonFileUtils::parseArray2<int>(document["origin"]);
+    auto origin = JsonFileUtils::parseArray2<int>(document["Origin"]);
     mapData->originX = origin.first;
     mapData->originY = origin.second;
 
-    mapData->width = document["width"].GetInt();
-    mapData->height = document["height"].GetInt();
+    mapData->width = document["Width"].GetInt();
+    mapData->height = document["Height"].GetInt();
 
     if (mapData->height <= 0)
         throw std::runtime_error("Empty map data: " + path);
 
     mapData->tiles.resize(mapData->width * mapData->height);
 
-    const Value& passableRows = document["passableRowsTopDown"];
+    const Value& passableRows = document["PassableRowsTopDown"];
     if (passableRows.IsArray())
     {
         if (passableRows.Size() != mapData->height)
@@ -84,15 +84,33 @@ std::shared_ptr<MapData> MapData::LoadMapFromJsonFile(const std::string& path)
         }
     }
 
-    const Value& spawns = document["spawns"];
-    if (spawns.IsArray()) {
-        for (SizeType i = 0; i < spawns.Size(); i++) {
+    const Value& spawns = document["Spawns"];
+    if (spawns.IsArray()) 
+    {
+        for (SizeType i = 0; i < spawns.Size(); i++) 
+        {
             const Value& spawn = spawns[i];
             SpawnPoint spawnPoint;
-            spawnPoint.spawnType = GetESpawnType(spawn["type"].GetString());
-            spawnPoint.x = spawn["x"].GetInt();
-            spawnPoint.y = spawn["y"].GetInt();
+            spawnPoint.spawnType = GetESpawnType(spawn["Type"].GetString());
+            spawnPoint.x = spawn["X"].GetInt();
+            spawnPoint.y = spawn["Y"].GetInt();
             mapData->spawnPoints.insert({i, spawnPoint});
+        }
+    }
+
+    const Value& portals = document["Portals"];
+    if (portals.IsArray())
+    {
+        for (SizeType i = 0; i < portals.Size(); i++)
+        {
+            const Value& portal = portals[i];
+            const int srcPortalId = stoi(portal["SrcPortalId"].GetString());
+            const int dstMapId = stoi(portal["DstMapId"].GetString());
+            const int dstPortalId = stoi(portal["DstPortalId"].GetString());
+            const int x = portal["X"].GetInt();
+            const int y = portal["Y"].GetInt();
+            mapData->DefinePortal(PortalLink {srcPortalId, dstMapId, dstPortalId} );
+            mapData->MapTileToPortal(ESpawnType::PORTAL, x, y, srcPortalId);
         }
     }
 
@@ -102,14 +120,14 @@ std::shared_ptr<MapData> MapData::LoadMapFromJsonFile(const std::string& path)
     //mapData->mapOffsetY = mapOffset.second;
 
     // worldTopLeft 배열 파싱
-    auto worldTopLeft = JsonFileUtils::parseArray2<int>(document["worldTopLeft"]);
+    auto worldTopLeft = JsonFileUtils::parseArray2<int>(document["WorldTopLeft"]);
     mapData->worldTopLeftX = worldTopLeft.first;
     mapData->worldTopLeftY = worldTopLeft.second;
     mapData->minX = mapData->worldTopLeftX;
     mapData->maxY = mapData->worldTopLeftY;
 
     // worldBottomRight 배열 파싱
-    auto worldBottomRight = JsonFileUtils::parseArray2<int>(document["worldBottomRight"]);
+    auto worldBottomRight = JsonFileUtils::parseArray2<int>(document["WorldBottomRight"]);
     mapData->worldBottomRightX = worldBottomRight.first;
     mapData->worldBottomRightY = worldBottomRight.second;
     mapData->maxX = mapData->worldBottomRightX;
@@ -120,6 +138,6 @@ std::shared_ptr<MapData> MapData::LoadMapFromJsonFile(const std::string& path)
 
 ESpawnType MapData::GetESpawnType(string type)
 {
-    if(type == "PLAYER") return ESpawnType::PLAYER_SPAWN;
-    if(type == "PORTAL") return ESpawnType::PORTAL;
+    if(type == "Player") return ESpawnType::PLAYER_SPAWN;
+    if(type == "Portal") return ESpawnType::PORTAL;
 }

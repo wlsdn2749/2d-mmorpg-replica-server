@@ -40,21 +40,21 @@ struct CharacterRepository
 
 /* 캐릭터 생성 요청*/
 public:
-	static void CreateCharacter_DB(DBConnection& conn, int userId, String username, Protocol::EGender gender, Protocol::ERegion region)
+	static void CreateCharacter_DB(DBConnection& conn, int userId, String username, Protocol::EGender gender, Protocol::ERegion region, int lastRoom)
 	{
         SP::CreateCharacter sp(conn);
         sp.ParamIn_UserId(userId); // ForeignKey
         sp.ParamIn_Username(username.c_str(), static_cast<int>(username.size()));
         sp.ParamIn_Gender(gender);
         sp.ParamIn_Region(region);
-        sp.ParamIn_LastRoom(0);
+        sp.ParamIn_LastRoom(lastRoom);
         sp.Execute();
 	}
-    static std::future<void> CreateCharacterAsync(int userId, wstring_view username, Protocol::EGender gender, Protocol::ERegion region)
+    static std::future<void> CreateCharacterAsync(int userId, wstring_view username, Protocol::EGender gender, Protocol::ERegion region, int lastRoom)
     {
         auto w_username = String(username);
-        return DbDispatcher::EnqueueRet([userId, w_username, gender, region](DBConnection& c) {
-            CreateCharacter_DB(c, userId, w_username, gender, region);
+        return DbDispatcher::EnqueueRet([userId, w_username, gender, region, lastRoom](DBConnection& c) {
+            CreateCharacter_DB(c, userId, w_username, gender, region, lastRoom);
             });
     }
 /* 동일 Username 존재 판단*/
