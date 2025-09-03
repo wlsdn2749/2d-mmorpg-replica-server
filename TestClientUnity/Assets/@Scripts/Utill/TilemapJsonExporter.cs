@@ -198,7 +198,7 @@ public static class TilemapJsonExporter
             {
                 X = Mathf.RoundToInt(p.x),
                 Y = Mathf.RoundToInt(p.y),
-                SrcPortalID = srcPortalId,
+                SrcPortalId = srcPortalId,
                 DstMapId = dstMapId,
                 DstPortalId = dstPortalId
             });
@@ -240,7 +240,7 @@ public static class TilemapJsonExporter
         public int X;       // 월드 X (int)
         public int Y;       // 월드 Y (int)
                             // 선택 메타(있으면 내보냄)
-        public string SrcPortalID;
+        public string SrcPortalId;
         public string DstMapId;
         public string DstPortalId;
     }
