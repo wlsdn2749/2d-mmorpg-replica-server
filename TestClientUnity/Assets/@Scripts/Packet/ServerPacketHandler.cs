@@ -1,14 +1,10 @@
 ﻿using Google.Protobuf;
 using Google.Protobuf.Protocol;
-using Mmorpg2d.Auth;
-using Microsoft.VisualBasic;
 using ServerCore;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Unity.VisualScripting.Antlr3.Runtime;
+using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 namespace Packet
 {
@@ -29,88 +25,91 @@ namespace Packet
         public static string PosToStr(Vector2Info pos)
             => pos is null ? "(?,?)" : $"({pos.X},{pos.Y})";
     }
-    public class ServerPacketHandler
+    public class ServerPacketHandler 
     {
         internal static void HANDLE_Invalid(PacketSession session, IMessage message)
         {
             throw new NotImplementedException();
         }
-        internal static void HANDLE_S_RegisterReply(PacketSession sessionm, RegisterReply register)
-        {
-            switch (register.Success)
-            {
-                case true:
-                    
-                    break;
-            }
-        }
         internal static void HANDLE_S_JwtLoginReply(PacketSession session, S_JwtLoginReply reply)
         {
-            
             switch (reply.Result) // 프로토 C# 코드 생성 시 보통 PascalCase enum이 됩니다 (Success 등). 필요하면 이름 맞춰 수정
             {
                 case ELoginResult.Success: // 또는 LoginResult.Success
 
-                    Console.WriteLine($"[JWT VALIDATION OK]");
-                    // Debug.Log($"[LOGIN OK] accountId={reply.AccountId}");
-                    // 다음 단계로 진행:
-                    // - 캐릭터 리스트 요청
-                    // - 바로 게임 입장 패킷 보내기 등
-                    // Send_C_CHARACTER_LIST_REQUEST(session);
+                    //Console.WriteLine($"[JWT VALIDATION OK]");
+                   
+                    UnityEngine.Debug.Log($"[LOGIN OK] accountId={reply.Result}");
+                    AuthNotice_UI.Instance.gameObject.SetActive(true);
+                    AuthNotice_UI.Instance.ShowNotice(NoticeCode.LoginSuccess);
+                    CharacterList_UI.Instance.gameObject.SetActive(true);
                     break;
 
                 case ELoginResult.InvalidToken: // InvalidToken
 
-                    Console.WriteLine("[JWT VALIDATION] Invalid token. Please re-auth.");
-                    // 토큰 재발급 UX로 전환
+                    //Console.WriteLine("[JWT VALIDATION] Invalid token. Please re-auth.");
+                    UnityEngine.Debug.Log("[JWT VALIDATION] Invalid token. Please re-auth.");
+                    //토큰 재발급 UX로 전환
                     break;
 
                 case ELoginResult.TokenExpired: // TokenExpired
 
                     Console.WriteLine("[JWT VALIDATION] Token expired. Get a new token.");
+                    UnityEngine.Debug.Log("[JWT VALIDATION] Token expired. Get a new token.");
                     // 리프레시 토큰/재로그인 유도
                     break;
 
                 case ELoginResult.ServerError: // ServerError
                 default:
 
-                    Console.WriteLine($"[JWT VALIDATION] Server error (code={(int)reply.Result}). Try again later.");
+                    //Console.WriteLine($"[JWT VALIDATION] Server error (code={(int)reply.Result}). Try again later.");
+                    UnityEngine.Debug.Log($"[JWT VALIDATION] Server error (code={(int)reply.Result}). Try again later.");
                     break;
             }
         }
         internal static void HANDLE_S_CreateCharacterReply(PacketSession session, S_CreateCharacterReply reply)
         {
             var result = reply;
-            Console.WriteLine($"[CreateCharacterReply] 결과: {result.Success}.");
-            Console.WriteLine($"[CreateCharacterReply] 결과: {result.Detail}.");
-        }
+            AuthNotice_UI.Instance.gameObject.SetActive(true);
+            AuthNotice_UI.Instance.ShowNotice(NoticeCode.CreateCharacterSuccess);
+            UnityEngine.Debug.Log($"[CreateCharacterReply] 결과: {result.Success}.");
+            UnityEngine.Debug.Log($"[CreateCharacterReply] 결과: {result.Detail}.");
+            
+        }  
 
         internal static void HANDLE_S_CharacterListReply(PacketSession session, S_CharacterListReply reply)
         {
-            foreach(var character in reply.Characters)
+            UnityEngine.Debug.Log($"[S_CharacterListReply] 전송받음");
+            AuthNotice_UI.Instance.gameObject.SetActive(true); 
+            AuthNotice_UI.Instance.ShowNotice(NoticeCode.RecvCharacterListSuccess);
+            if (reply.Characters == null)
             {
-                Console.WriteLine(character);
+                UnityEngine.Debug.Log("계정 내 생성된 캐릭터가 없습니다.");
             }
+            CharacterList_UI.Instance.SetCharacterList(reply.Characters);
         }
 
         internal static void HANDLE_S_EnterGame(PacketSession session, S_EnterGame game)
         {
+            AuthNotice_UI.Instance.gameObject.SetActive(false);
             Console.WriteLine("[S_EnterGame] 게임 접속 완료");
+            Debug.Log("[S_EnterGame] 게임 접속 완료");
         }
 
         internal static void HANDLE_S_PlayerList(PacketSession session, S_PlayerList list)
         {
             Console.WriteLine("[S_PlayerList] 내가 접속해서 다른사람의 리스트 받아옴");
+            Debug.Log("[S_PlayerList] 내가 접속해서 다른사람의 리스트 받아옴");
         }
 
         internal static void HANDLE_S_BroadcastPlayerEnter(PacketSession session, S_BroadcastPlayerEnter enter)
         {
-            Console.WriteLine("[S_BroadcastPlayerEnter] 누군가 접속해서 그 정보를 받아옴");
+            Debug.Log("[S_BroadcastPlayerEnter] 누군가 접속해서 그 정보를 받아옴");
         }
 
         internal static void HANDLE_S_BroadcastPlayerLeave(PacketSession session, S_BroadcastPlayerLeave leave)
         {
-            Console.WriteLine("[S_BroadcastPlayerLeave] 누군가 나가서 그 정보를 받아옴");
+            Debug.Log("[S_BroadcastPlayerLeave] 누군가 나가서 그 정보를 받아옴");
         }
 
         internal static void HANDLE_S_PlayerMoveReply(PacketSession session, S_PlayerMoveReply reply)
@@ -125,7 +124,9 @@ namespace Packet
             int tick = reply?.Tick ?? -1;
 
             string meTag = (reply.PlayerId == NetDebug.MyPlayerId && NetDebug.MyPlayerId >= 0) ? " (ME)" : "";
-
+            Debug.Log(
+                $"[S_PlayerMoveReply] pid={reply.PlayerId}{meTag} " +
+                $"dir={dirStr} pos={posStr} result={resultStr} tick={tick}");
             Console.WriteLine(
                 $"[S_PlayerMoveReply] pid={reply.PlayerId}{meTag} " +
                 $"dir={dirStr} pos={posStr} result={resultStr} tick={tick}");

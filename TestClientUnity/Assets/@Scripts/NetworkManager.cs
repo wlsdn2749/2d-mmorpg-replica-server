@@ -39,7 +39,7 @@ public class NetworkManager : MonoBehaviour
     
     async Task Start()
     {
-        string  host = "serotina.gyu.be";
+        string  host = "127.0.0.1";
         int     port = 6201;
         
         Debug.Log("NetworkSession Start");
