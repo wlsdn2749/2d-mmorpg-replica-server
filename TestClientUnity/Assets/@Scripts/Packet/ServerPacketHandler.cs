@@ -100,10 +100,10 @@ namespace Packet
         internal static void HANDLE_S_PlayerList(PacketSession session, S_PlayerList list)
         {
             Console.WriteLine("[S_PlayerList] 플레이어 리스트 및 맵 정보 수신");
-            Console.WriteLine($"현재 맵ID: {list.MapId}");
+           // Console.WriteLine($"현재 맵ID: {list.MapId}");
             // 맵ID에 따른 씬 로딩 시뮬레이션
-            string sceneName = GetSceneNameByMapId(list.MapId);
-            Console.WriteLine($">>> 씬 로딩 시뮬레이션: '{sceneName}' 로딩 중...");
+            //string sceneName = GetSceneNameByMapId(list.MapId);
+            //Console.WriteLine($">>> 씬 로딩 시뮬레이션: '{sceneName}' 로딩 중...");
             Console.WriteLine($">>> 맵 배경 및 UI 초기화 완료");
 
             // 내 플레이어 ID 저장
