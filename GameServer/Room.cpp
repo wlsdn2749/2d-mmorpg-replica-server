@@ -111,6 +111,7 @@ Protocol::S_PlayerList Room::BuildPlayerListSnapshot(const PlayerRef& forPlayer,
 {
     Protocol::S_PlayerList pkt;
     pkt.set_myplayerid(forPlayer ? forPlayer->playerId : 0);
+    pkt.set_mapid(RoomId());
 
     auto* out = pkt.mutable_players();
     out->Reserve(static_cast<int>(_players.size()));
@@ -460,6 +461,7 @@ void Room::ChangeRoomReady(const PlayerRef& p, const Protocol::C_ChangeRoomReady
             // Commit + 스냅샷(나 제외 권장)
             Protocol::S_ChangeRoomCommit commit;
             commit.set_transitionid(pend.transitionId);
+            commit.set_mapid(dst->RoomId());
             *commit.mutable_snapshots() = dst->BuildPlayerListSnapshot(p, /*includeSelf=*/false);
             
             // DB에 저장

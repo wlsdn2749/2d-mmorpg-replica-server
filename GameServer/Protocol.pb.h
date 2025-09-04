@@ -1824,10 +1824,11 @@ class S_PlayerList final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kPlayersFieldNumber = 2,
+    kPlayersFieldNumber = 3,
     kMyPlayerIdFieldNumber = 1,
+    kMapIdFieldNumber = 2,
   };
-  // repeated .Protocol.PlayerInfo players = 2;
+  // repeated .Protocol.PlayerInfo players = 3;
   int players_size() const;
   private:
   int _internal_players_size() const;
@@ -1854,6 +1855,15 @@ class S_PlayerList final :
   void _internal_set_myplayerid(int32_t value);
   public:
 
+  // int32 mapId = 2;
+  void clear_mapid();
+  int32_t mapid() const;
+  void set_mapid(int32_t value);
+  private:
+  int32_t _internal_mapid() const;
+  void _internal_set_mapid(int32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:Protocol.S_PlayerList)
  private:
   class _Internal;
@@ -1864,6 +1874,7 @@ class S_PlayerList final :
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::PlayerInfo > players_;
     int32_t myplayerid_;
+    int32_t mapid_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -3448,10 +3459,11 @@ class S_ChangeRoomCommit final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kSnapshotsFieldNumber = 2,
+    kSnapshotsFieldNumber = 3,
     kTransitionIdFieldNumber = 1,
+    kMapIdFieldNumber = 2,
   };
-  // .Protocol.S_PlayerList snapshots = 2;
+  // .Protocol.S_PlayerList snapshots = 3;
   bool has_snapshots() const;
   private:
   bool _internal_has_snapshots() const;
@@ -3478,6 +3490,15 @@ class S_ChangeRoomCommit final :
   void _internal_set_transitionid(int32_t value);
   public:
 
+  // int32 mapId = 2;
+  void clear_mapid();
+  int32_t mapid() const;
+  void set_mapid(int32_t value);
+  private:
+  int32_t _internal_mapid() const;
+  void _internal_set_mapid(int32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:Protocol.S_ChangeRoomCommit)
  private:
   class _Internal;
@@ -3488,6 +3509,7 @@ class S_ChangeRoomCommit final :
   struct Impl_ {
     ::Protocol::S_PlayerList* snapshots_;
     int32_t transitionid_;
+    int32_t mapid_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -6659,7 +6681,27 @@ inline void S_PlayerList::set_myplayerid(int32_t value) {
   // @@protoc_insertion_point(field_set:Protocol.S_PlayerList.myPlayerId)
 }
 
-// repeated .Protocol.PlayerInfo players = 2;
+// int32 mapId = 2;
+inline void S_PlayerList::clear_mapid() {
+  _impl_.mapid_ = 0;
+}
+inline int32_t S_PlayerList::_internal_mapid() const {
+  return _impl_.mapid_;
+}
+inline int32_t S_PlayerList::mapid() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_PlayerList.mapId)
+  return _internal_mapid();
+}
+inline void S_PlayerList::_internal_set_mapid(int32_t value) {
+  
+  _impl_.mapid_ = value;
+}
+inline void S_PlayerList::set_mapid(int32_t value) {
+  _internal_set_mapid(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_PlayerList.mapId)
+}
+
+// repeated .Protocol.PlayerInfo players = 3;
 inline int S_PlayerList::_internal_players_size() const {
   return _impl_.players_.size();
 }
@@ -7329,7 +7371,27 @@ inline void S_ChangeRoomCommit::set_transitionid(int32_t value) {
   // @@protoc_insertion_point(field_set:Protocol.S_ChangeRoomCommit.transitionId)
 }
 
-// .Protocol.S_PlayerList snapshots = 2;
+// int32 mapId = 2;
+inline void S_ChangeRoomCommit::clear_mapid() {
+  _impl_.mapid_ = 0;
+}
+inline int32_t S_ChangeRoomCommit::_internal_mapid() const {
+  return _impl_.mapid_;
+}
+inline int32_t S_ChangeRoomCommit::mapid() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_ChangeRoomCommit.mapId)
+  return _internal_mapid();
+}
+inline void S_ChangeRoomCommit::_internal_set_mapid(int32_t value) {
+  
+  _impl_.mapid_ = value;
+}
+inline void S_ChangeRoomCommit::set_mapid(int32_t value) {
+  _internal_set_mapid(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_ChangeRoomCommit.mapId)
+}
+
+// .Protocol.S_PlayerList snapshots = 3;
 inline bool S_ChangeRoomCommit::_internal_has_snapshots() const {
   return this != internal_default_instance() && _impl_.snapshots_ != nullptr;
 }
