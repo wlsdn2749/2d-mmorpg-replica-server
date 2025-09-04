@@ -103,7 +103,37 @@ namespace Packet
 
         internal static void HANDLE_S_PlayerList(PacketSession session, S_PlayerList list)
         {
-            Console.WriteLine("[S_PlayerList] 내가 접속해서 다른사람의 리스트 받아옴");
+            Console.WriteLine("[S_PlayerList] 플레이어 리스트 및 맵 정보 수신");
+            Console.WriteLine($"현재 맵ID: {list.MapId}");
+            
+            // 맵ID에 따른 씬 로딩 시뮬레이션
+            string sceneName = GetSceneNameByMapId(list.MapId);
+            Console.WriteLine($">>> 씬 로딩 시뮬레이션: '{sceneName}' 로딩 중...");
+            Console.WriteLine($">>> 맵 배경 및 UI 초기화 완료");
+            
+            // 내 플레이어 ID 저장
+            NetDebug.MyPlayerId = list.MyPlayerId;
+            Console.WriteLine($"내 플레이어 ID: {list.MyPlayerId}");
+            
+            // 다른 플레이어 정보
+            Console.WriteLine($"현재 룸에 있는 다른 플레이어 수: {list.Players.Count}");
+            foreach (var player in list.Players)
+            {
+                var pos = NetDebug.PosToStr(player.Pos);
+                var dir = NetDebug.DirToStr(player.Direction);
+                Console.WriteLine($"  - 플레이어ID: {player.Id}, 이름: {player.Username}, 위치: {pos}, 방향: {dir}");
+            }
+        }
+
+        private static string GetSceneNameByMapId(int mapId)
+        {
+            return mapId switch
+            {
+                1 => "고구려 마을",
+                2 => "백제 마을", 
+                3 => "사냥터",
+                _ => $"알 수 없는 맵 (ID: {mapId})"
+            };
         }
 
         internal static void HANDLE_S_BroadcastPlayerEnter(PacketSession session, S_BroadcastPlayerEnter enter)
@@ -166,7 +196,29 @@ namespace Packet
 
         internal static void HANDLE_S_ChangeRoomCommit(PacketSession session, S_ChangeRoomCommit commit)
         {
-            Console.WriteLine($"[S_ChangeRoomCommit] Room Has Change into ...");
+            Console.WriteLine($"[S_ChangeRoomCommit] 방 이동 완료!");
+            Console.WriteLine($"새로운 맵ID: {commit.MapId}");
+            
+            // 새로운 맵에 따른 씬 로딩 시뮬레이션
+            string newSceneName = GetSceneNameByMapId(commit.MapId);
+            Console.WriteLine($">>> 씬 전환: '{newSceneName}' 로딩 중...");
+            Console.WriteLine($">>> 새로운 맵 환경 및 UI 초기화 완료");
+            
+            // 새로운 룸의 플레이어 정보 처리
+            if (commit.Snapshots != null)
+            {
+                var snapshots = commit.Snapshots;
+                NetDebug.MyPlayerId = snapshots.MyPlayerId;
+                Console.WriteLine($"내 플레이어 ID: {snapshots.MyPlayerId}");
+                Console.WriteLine($"새로운 룸의 다른 플레이어 수: {snapshots.Players.Count}");
+                
+                foreach (var player in snapshots.Players)
+                {
+                    var pos = NetDebug.PosToStr(player.Pos);
+                    var dir = NetDebug.DirToStr(player.Direction);
+                    Console.WriteLine($"  - 플레이어ID: {player.Id}, 이름: {player.Username}, 위치: {pos}, 방향: {dir}");
+                }
+            }
         }
 
         internal static void HANDLE_S_LeaveGame(PacketSession session, S_LeaveGame game)
