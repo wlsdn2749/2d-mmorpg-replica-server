@@ -3,8 +3,10 @@ using Google.Protobuf.Protocol;
 using Mono.Cecil.Cil;
 using ServerCore;
 using System;
+using System.Linq;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.TextCore.Text;
 
 namespace Packet
@@ -90,54 +92,109 @@ namespace Packet
             CharacterList_UI.Instance.SetCharacterList(reply.Characters);
         }
 
-        internal static void HANDLE_S_EnterGame(PacketSession session, S_EnterGame game)
+        internal static void HANDLE_S_EnterGame(PacketSession session, S_EnterGame enter)
         {
             AuthNotice_UI.Instance.gameObject.SetActive(false);
-            Console.WriteLine("[S_EnterGame] 게임 접속 완료");
+            if (enter.Success != 1)
+            {
+                UnityEngine.Debug.LogError("EnterGame 실패");
+                return;
+            }
+            //Console.WriteLine("[S_EnterGame] 게임 접속 완료");
             Debug.Log("[S_EnterGame] 게임 접속 완료");
         }
 
         internal static void HANDLE_S_PlayerList(PacketSession session, S_PlayerList list)
         {
-            Console.WriteLine("[S_PlayerList] 플레이어 리스트 및 맵 정보 수신");
-           // Console.WriteLine($"현재 맵ID: {list.MapId}");
+            foreach (var p in list.Players)
+            {
+                bool isLocal = (p.Id == list.MyPlayerId);
+                Debug.Log($"이전 버전 {p.Pos.X},{p.Pos.Y}");
+            }
+            GetSceneNameByMapId(list.MapId);
+            LoadingSceneManager.LoadScene(list.MapId);
+            var palyer = list.Players;
+            
+
+            Debug.Log("맵 씬 로딩 시작");
+            // 2) 실제 맵 씬 활성 직후 전체 스폰
+            SceneTransition.RunAfterGameplaySceneLoaded(() =>
+            {
+                Debug.Log("씬 로딩 완료 후 플레이어 스폰 처리");
+                foreach (var p in list.Players)
+                {
+                    bool isLocal = (p.Id == list.MyPlayerId);
+                    PlayerSpawner.SafeSpawn(p, isLocal);
+                    Debug.Log($"{p.Pos.X},{p.Pos.Y}");
+                    Debug.Log($"플레이어 스폰 처리: {p.Username} (ID: {p.Id}) {(isLocal ? "(ME)" : "")}");
+                }
+            });
+            #region 디버깅용        
             // 맵ID에 따른 씬 로딩 시뮬레이션
             //string sceneName = GetSceneNameByMapId(list.MapId);
-            //Console.WriteLine($">>> 씬 로딩 시뮬레이션: '{sceneName}' 로딩 중...");
-            Console.WriteLine($">>> 맵 배경 및 UI 초기화 완료");
+            //Debug.Log($">>> 씬 로딩 시뮬레이션: '{sceneName}' 로딩 중...");
+            //Debug.Log($">>> 맵 배경 및 UI 초기화 완료");
 
-            // 내 플레이어 ID 저장
-            NetDebug.MyPlayerId = list.MyPlayerId;
-            Console.WriteLine($"내 플레이어 ID: {list.MyPlayerId}");
+            //// 내 플레이어 ID 저장
+            //NetDebug.MyPlayerId = list.MyPlayerId;
+            //Debug.Log($"내 플레이어 ID: {list.MyPlayerId}");
 
-            // 다른 플레이어 정보
-            Console.WriteLine($"현재 룸에 있는 다른 플레이어 수: {list.Players.Count}");
-            foreach (var player in list.Players)
-            {
-                var pos = NetDebug.PosToStr(player.Pos);
-                var dir = NetDebug.DirToStr(player.Direction);
-                Console.WriteLine($"  - 플레이어ID: {player.Id}, 이름: {player.Username}, 위치: {pos}, 방향: {dir}");
-            }
+            //// 다른 플레이어 정보
+            //Debug.Log($"현재 룸에 있는 다른 플레이어 수: {list.Players.Count-1}");
+            //foreach (var player in list.Players)
+            //{
+            //    var pos = NetDebug.PosToStr(player.Pos);
+            //    var dir = NetDebug.DirToStr(player.Direction);
+            //    Debug.Log($"  - 플레이어ID: {player.Id}, 이름: {player.Username}, 위치: {pos}, 방향: {dir}");
+            //}
+            #endregion
         }
 
         private static string GetSceneNameByMapId(int mapId)
         {
             return mapId switch
             {
-                1 => "고구려 마을",
-                2 => "백제 마을",
-                3 => "사냥터",
+                1 => "GoguryeoScene",
+                2 => "BaekjeScene",
+                3 => "FieldScene",
                 _ => $"알 수 없는 맵 (ID: {mapId})"
             };
         }
+        static void SafeSpawn(PlayerInfo info, bool isLocal)
+        {
+            if (PlayerSpawner.HasInstance)
+            {
+                PlayerSpawner.Instance.SpawnNow(info, isLocal);
+                Debug.Log("세이프 스폰 호출");
+            }
+            else
+            {
+                SceneTransition.RunAfterGameplaySceneLoaded(() =>
+                    PlayerSpawner.Instance.SpawnNow(info, isLocal));
+            }
+        }
 
-        internal static void HANDLE_S_BroadcastPlayerEnter(PacketSession session, S_BroadcastPlayerEnter enter)
+        static void SafeRemove(int id)
+        {
+            if (PlayerSpawner.HasInstance)
+            {
+                PlayerSpawner.RemovePlayer(id);
+            }
+            else
+            {
+                SceneTransition.RunAfterGameplaySceneLoaded(() =>
+                    PlayerSpawner.RemovePlayer(id));
+            }
+        }
+        internal static void HANDLE_S_BroadcastPlayerEnter(PacketSession session, S_BroadcastPlayerEnter broadEnter)
         {
             Debug.Log("[S_BroadcastPlayerEnter] 누군가 접속해서 그 정보를 받아옴");
+            SafeSpawn(broadEnter.Player, isLocal: false);
         }
 
         internal static void HANDLE_S_BroadcastPlayerLeave(PacketSession session, S_BroadcastPlayerLeave leave)
         {
+            SafeRemove(leave.PlayerId);
             Debug.Log("[S_BroadcastPlayerLeave] 누군가 나가서 그 정보를 받아옴");
         }
 
