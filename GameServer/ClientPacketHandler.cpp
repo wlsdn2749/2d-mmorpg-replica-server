@@ -75,8 +75,6 @@ bool Handle_C_CreateCharacterRequest(PacketSessionRef& session, Protocol::C_Crea
 
 	// 검증 통과하면 진짜로 캐릭터 만들고 성공 리턴 
 	// 여기서 실패할 수도 있으나, 나중에 판단..
-	
-	// 여기 캐릭터만들때 LastRoom 정보도 넣어야겠네... roomId 찾아서?
 
 	int roomId = RoomManager::Instance().GetRoomIdByRegion(pkt.region());
 	
