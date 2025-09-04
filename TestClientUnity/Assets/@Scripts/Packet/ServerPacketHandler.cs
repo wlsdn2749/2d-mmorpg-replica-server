@@ -1,5 +1,6 @@
 ﻿using Google.Protobuf;
 using Google.Protobuf.Protocol;
+using Mono.Cecil.Cil;
 using ServerCore;
 using System;
 using Unity.VisualScripting.Antlr3.Runtime;
@@ -98,8 +99,36 @@ namespace Packet
 
         internal static void HANDLE_S_PlayerList(PacketSession session, S_PlayerList list)
         {
-            Console.WriteLine("[S_PlayerList] 내가 접속해서 다른사람의 리스트 받아옴");
-            Debug.Log("[S_PlayerList] 내가 접속해서 다른사람의 리스트 받아옴");
+            Console.WriteLine("[S_PlayerList] 플레이어 리스트 및 맵 정보 수신");
+            Console.WriteLine($"현재 맵ID: {list.MapId}");
+            // 맵ID에 따른 씬 로딩 시뮬레이션
+            string sceneName = GetSceneNameByMapId(list.MapId);
+            Console.WriteLine($">>> 씬 로딩 시뮬레이션: '{sceneName}' 로딩 중...");
+            Console.WriteLine($">>> 맵 배경 및 UI 초기화 완료");
+
+            // 내 플레이어 ID 저장
+            NetDebug.MyPlayerId = list.MyPlayerId;
+            Console.WriteLine($"내 플레이어 ID: {list.MyPlayerId}");
+
+            // 다른 플레이어 정보
+            Console.WriteLine($"현재 룸에 있는 다른 플레이어 수: {list.Players.Count}");
+            foreach (var player in list.Players)
+            {
+                var pos = NetDebug.PosToStr(player.Pos);
+                var dir = NetDebug.DirToStr(player.Direction);
+                Console.WriteLine($"  - 플레이어ID: {player.Id}, 이름: {player.Username}, 위치: {pos}, 방향: {dir}");
+            }
+        }
+
+        private static string GetSceneNameByMapId(int mapId)
+        {
+            return mapId switch
+            {
+                1 => "고구려 마을",
+                2 => "백제 마을",
+                3 => "사냥터",
+                _ => $"알 수 없는 맵 (ID: {mapId})"
+            };
         }
 
         internal static void HANDLE_S_BroadcastPlayerEnter(PacketSession session, S_BroadcastPlayerEnter enter)
@@ -171,6 +200,42 @@ namespace Packet
         internal static void HANDLE_S_LeaveGame(PacketSession session, S_LeaveGame game)
         {
             Console.WriteLine($"[S_LeaveGame] Game Has left.");
+        }
+        internal static void HANDLE_S_SpawnMonster(PacketSession session, S_SpawnMonster spawnMonster)
+        {
+            
+        }
+        internal static void HANDLE_S_DespawnMonster(PacketSession session, S_DespawnMonster despawnMonster)
+        {
+
+        }
+        internal static void HANDLE_S_BroadcastMonsterMove(PacketSession session, S_BroadcastMonsterMove broadMonsterMove)
+        {
+
+        }
+        internal static void HANDLE_S_BroadcastMonsterAttack(PacketSession session, S_BroadcastMonsterAttack broadMonsterAtk)
+        {
+
+        }
+        internal static void HANDLE_S_BroadcastMonsterDeath(PacketSession session, S_BroadcastMonsterDeath broadMonsterDeath)
+        {
+
+        }
+        internal static void HANDLE_S_BroadcastPlayerAttack(PacketSession session, S_BroadcastPlayerAttack broadPlayerAtk)
+        {
+
+        }
+        internal static void HANDLE_S_InventoryReply(PacketSession session, S_InventoryReply invenApply)
+        {
+
+        }
+        internal static void HANDLE_S_ItemUseReply(PacketSession session, S_ItemUseReply useItemApply)
+        {
+
+        }
+        internal static void HANDLE_S_InventoryUpdate(PacketSession session, S_InventoryUpdate invenUpdate)
+        {
+
         }
     }
 }

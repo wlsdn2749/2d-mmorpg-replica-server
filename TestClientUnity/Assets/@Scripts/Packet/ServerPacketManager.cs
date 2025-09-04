@@ -27,7 +27,6 @@ namespace Packet
 	    PKT_S_ChangeRoomBegin = 16,
 	    PKT_C_ChangeRoomReady = 17,
 	    PKT_S_ChangeRoomCommit = 18,
-
 	    PKT_S_SpawnMonster = 19,
 	    PKT_S_DespawnMonster = 20,
 	    PKT_S_BroadcastMonsterMove = 21,
@@ -40,7 +39,6 @@ namespace Packet
 	    PKT_C_ItemUseRequest = 28,
 	    PKT_S_ItemUseReply = 29,
 	    PKT_S_InventoryUpdate = 30,
-
     }
     public class ServerPacketManager
     {

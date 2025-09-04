@@ -75,31 +75,31 @@ void ItemManager::LoadAllItemData_DB(DBConnection& conn)
     _itemDataMap.clear();
     
     // 소비형 아이템 (포션류) - itemType 1 = ITEM_TYPE_CONSUMABLE
-    AddItemData(ItemData{1, "체력 회복 포션", "HP를 50 회복시킵니다.", true, 99, Protocol::EItemType::ITEM_TYPE_CONSUMABLE});
-    AddItemData(ItemData{2, "마나 회복 포션", "MP를 30 회복시킵니다.", true, 99, Protocol::EItemType::ITEM_TYPE_CONSUMABLE});
-    AddItemData(ItemData{3, "고급 체력 포션", "HP를 100 회복시킵니다.", true, 50, Protocol::EItemType::ITEM_TYPE_CONSUMABLE});
-    AddItemData(ItemData{4, "전투 자극제", "공격력을 일시적으로 증가시킵니다.", true, 20, Protocol::EItemType::ITEM_TYPE_CONSUMABLE});
-    AddItemData(ItemData{5, "방어 물약", "방어력을 일시적으로 증가시킵니다.", true, 20, Protocol::EItemType::ITEM_TYPE_CONSUMABLE});
-    
-    // 장비 아이템 - itemType 2 = ITEM_TYPE_EQUIPMENT
-    AddItemData(ItemData{10, "초보자 검", "새로운 모험가를 위한 기본 검입니다.", false, 1, Protocol::EItemType::ITEM_TYPE_EQUIPMENT});
-    AddItemData(ItemData{11, "철검", "튼튼한 철로 제작된 검입니다.", false, 1, Protocol::EItemType::ITEM_TYPE_EQUIPMENT});
-    AddItemData(ItemData{12, "은검", "아름다운 은으로 제작된 검입니다.", false, 1, Protocol::EItemType::ITEM_TYPE_EQUIPMENT});
-    AddItemData(ItemData{13, "가죽 갑옷", "기본적인 방어력을 제공하는 가죽 갑옷입니다.", false, 1, Protocol::EItemType::ITEM_TYPE_EQUIPMENT});
-    AddItemData(ItemData{14, "철갑옷", "높은 방어력을 자랑하는 철갑옷입니다.", false, 1, Protocol::EItemType::ITEM_TYPE_EQUIPMENT});
-    AddItemData(ItemData{15, "마법 방패", "마법 공격을 막아주는 신비한 방패입니다.", false, 1, Protocol::EItemType::ITEM_TYPE_EQUIPMENT});
-    
-    // 퀘스트 아이템 - itemType 3 = ITEM_TYPE_QUEST  
-    AddItemData(ItemData{20, "잃어버린 편지", "중요한 내용이 담긴 편지입니다.", false, 1, Protocol::EItemType::ITEM_TYPE_QUEST});
-    AddItemData(ItemData{21, "고대 유물 조각", "고대 문명의 흔적이 담긴 신비한 조각입니다.", false, 1, Protocol::EItemType::ITEM_TYPE_QUEST});
-    AddItemData(ItemData{22, "수상한 열쇠", "어떤 문을 열 수 있을지 모르는 열쇠입니다.", false, 1, Protocol::EItemType::ITEM_TYPE_QUEST});
-    
-    // 기타 아이템 - itemType 4로 가정 (ITEM_TYPE_MISC 없으면 ITEM_TYPE_CONSUMABLE 사용)
-    AddItemData(ItemData{30, "마을 귀환 주문서", "마을로 순간이동할 수 있는 주문서입니다.", true, 10, Protocol::EItemType::ITEM_TYPE_CONSUMABLE});
-    AddItemData(ItemData{31, "던전 입장권", "특별한 던전에 입장할 수 있는 티켓입니다.", true, 5, Protocol::EItemType::ITEM_TYPE_CONSUMABLE});
-    AddItemData(ItemData{32, "경험치 북", "사용하면 경험치를 획득할 수 있습니다.", true, 20, Protocol::EItemType::ITEM_TYPE_CONSUMABLE});
-    AddItemData(ItemData{33, "금화 주머니", "소량의 금화가 들어있는 주머니입니다.", true, 99, Protocol::EItemType::ITEM_TYPE_CONSUMABLE});
-    
+    //AddItemData(ItemData{1, "체력 회복 포션", "HP를 50 회복시킵니다.", true, 99, Protocol::EItemType::ITEM_TYPE_CONSUMABLE});
+    //AddItemData(ItemData{2, "마나 회복 포션", "MP를 30 회복시킵니다.", true, 99, Protocol::EItemType::ITEM_TYPE_CONSUMABLE});
+    //AddItemData(ItemData{3, "고급 체력 포션", "HP를 100 회복시킵니다.", true, 50, Protocol::EItemType::ITEM_TYPE_CONSUMABLE});
+    //AddItemData(ItemData{4, "전투 자극제", "공격력을 일시적으로 증가시킵니다.", true, 20, Protocol::EItemType::ITEM_TYPE_CONSUMABLE});
+    //AddItemData(ItemData{5, "방어 물약", "방어력을 일시적으로 증가시킵니다.", true, 20, Protocol::EItemType::ITEM_TYPE_CONSUMABLE});
+    //
+    //// 장비 아이템 - itemType 2 = ITEM_TYPE_EQUIPMENT
+    //AddItemData(ItemData{10, "초보자 검", "새로운 모험가를 위한 기본 검입니다.", false, 1, Protocol::EItemType::ITEM_TYPE_EQUIPMENT});
+    //AddItemData(ItemData{11, "철검", "튼튼한 철로 제작된 검입니다.", false, 1, Protocol::EItemType::ITEM_TYPE_EQUIPMENT});
+    //AddItemData(ItemData{12, "은검", "아름다운 은으로 제작된 검입니다.", false, 1, Protocol::EItemType::ITEM_TYPE_EQUIPMENT});
+    //AddItemData(ItemData{13, "가죽 갑옷", "기본적인 방어력을 제공하는 가죽 갑옷입니다.", false, 1, Protocol::EItemType::ITEM_TYPE_EQUIPMENT});
+    //AddItemData(ItemData{14, "철갑옷", "높은 방어력을 자랑하는 철갑옷입니다.", false, 1, Protocol::EItemType::ITEM_TYPE_EQUIPMENT});
+    //AddItemData(ItemData{15, "마법 방패", "마법 공격을 막아주는 신비한 방패입니다.", false, 1, Protocol::EItemType::ITEM_TYPE_EQUIPMENT});
+    //
+    //// 퀘스트 아이템 - itemType 3 = ITEM_TYPE_QUEST  
+    //AddItemData(ItemData{20, "잃어버린 편지", "중요한 내용이 담긴 편지입니다.", false, 1, Protocol::EItemType::ITEM_TYPE_QUEST});
+    //AddItemData(ItemData{21, "고대 유물 조각", "고대 문명의 흔적이 담긴 신비한 조각입니다.", false, 1, Protocol::EItemType::ITEM_TYPE_QUEST});
+    //AddItemData(ItemData{22, "수상한 열쇠", "어떤 문을 열 수 있을지 모르는 열쇠입니다.", false, 1, Protocol::EItemType::ITEM_TYPE_QUEST});
+    //
+    //// 기타 아이템 - itemType 4로 가정 (ITEM_TYPE_MISC 없으면 ITEM_TYPE_CONSUMABLE 사용)
+    //AddItemData(ItemData{30, "마을 귀환 주문서", "마을로 순간이동할 수 있는 주문서입니다.", true, 10, Protocol::EItemType::ITEM_TYPE_CONSUMABLE});
+    //AddItemData(ItemData{31, "던전 입장권", "특별한 던전에 입장할 수 있는 티켓입니다.", true, 5, Protocol::EItemType::ITEM_TYPE_CONSUMABLE});
+    //AddItemData(ItemData{32, "경험치 북", "사용하면 경험치를 획득할 수 있습니다.", true, 20, Protocol::EItemType::ITEM_TYPE_CONSUMABLE});
+    //AddItemData(ItemData{33, "금화 주머니", "소량의 금화가 들어있는 주머니입니다.", true, 99, Protocol::EItemType::ITEM_TYPE_CONSUMABLE});
+    //
     GConsoleLogger->WriteStdOut(Color::GREEN, L"ItemManager: Loaded %d items from database.\n", 
                                static_cast<int>(_itemDataMap.size()));
 }

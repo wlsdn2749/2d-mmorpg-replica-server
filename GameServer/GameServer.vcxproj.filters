@@ -316,13 +316,13 @@
     <None Include="..\Doc\Plan\inventory-test-data.sql">
       <Filter>DB\Test</Filter>
     </None>
-    <None Include="Resources\Maps\고구려_Tilemap_Info.json">
+    <None Include="Resources\Maps\HuntingField_Tilemap_Info.json">
       <Filter>Resources</Filter>
     </None>
-    <None Include="Resources\Maps\백제_Tilemap_Info.json">
+    <None Include="Resources\Maps\Baekje_Tilemap_Info.json">
       <Filter>Resources</Filter>
     </None>
-    <None Include="Resources\Maps\사냥터_Tilemap_Info.json">
+    <None Include="Resources\Maps\Goguryeo_Tilemap_Info.json">
       <Filter>Resources</Filter>
     </None>
   </ItemGroup>
