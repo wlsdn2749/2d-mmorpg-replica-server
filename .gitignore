@@ -84,3 +84,7 @@ third_party/grpc/
 # !_Client/Win.zip
 
 # Build.zip
+
+# CLAUDE
+.claude
+CLAUDE.md

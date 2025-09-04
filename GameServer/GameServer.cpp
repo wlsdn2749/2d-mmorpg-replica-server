@@ -36,6 +36,7 @@
 #include "RoomManager.h"
 
 #include "ShardBoot.h"
+#include "ItemManager.h"
 
 enum
 {
@@ -73,16 +74,17 @@ int main()
 	ClientPacketHandler::init(); // 핸들러와 Wrapper 매핑 필수
 	JwtAuth::Init(s.jwtSecret);
 
+	// ItemManager 초기화 (DB 로딩 포함)
+	ItemManager::Instance().Initialize();
+
 	// 샤드 기반 워커 로직
-	const int totalRooms = 2;
+	const int totalRooms = 3;
 	const int roomPersQueue = 2;
-	const UINT32 budgetMs = 30; // 한 워커의 Slice 
+	const UINT32 budgetMs = 30; // 한 워커의 수행시간 Slice 
 	StartShardedQueues(totalRooms, roomPersQueue, budgetMs);
 
 	// 룸 생성/배정/틱 시작
 	CreateRooms();
-
-
 
 	// Session & Service
 	GameSessionContainerRef container = MakeShared<GameSessionContainer>();

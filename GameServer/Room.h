@@ -22,12 +22,15 @@ public:
 		size_t	capacity			= 200; // 최대 수용량
 		int		moveCooldownTicks	= 5;
 		int		rotateCooldownTicks	= 5;
+		int		periodicSaveTicksMs = 180 * 1000;
 	};
 
 	explicit Room(Cfg cfg);
 	explicit Room(Cfg cfg, std::shared_ptr<MapData> map);
 	virtual ~Room();
+	void Init(); // StartXX 함수 호출
 	void StartTicking(); // 생성 직후 호출
+	
 
 protected:
 	Cfg _cfg;
@@ -64,6 +67,11 @@ public:
 	int moveCooldownTicks() const noexcept {return _cfg.moveCooldownTicks; }
 	int rotateCooldownTicks() const noexcept {return _cfg.rotateCooldownTicks;}
 
+/*-------------- DB Update---------------*/
+public:
+	virtual void StartPeriodicSave();
+	virtual void SaveAllActivePlayers();
+
 /*----------------------------
 	Room Specifics Utils
 ----------------------------*/
@@ -72,8 +80,9 @@ public:
 		return std::static_pointer_cast<Room>(shared_from_this());
 	}
 	PlayerRef FindPlayer(PlayerId pid);
-
 	Protocol::EDirection DecideFacing(const PlayerRef& p, const Protocol::Vector2Info& clickWorldPos);
+
+	std::unordered_map<PlayerId, PlayerRef> Players() {return _players;}
 
 	void RemovePlayerInternal(int playerId, std::string_view reason);
 	void AddPlayerInternal(PlayerRef p, SpawnPoint spawn, Protocol::EDirection dir);
@@ -90,6 +99,7 @@ public:
 	void ChangeRoomBegin(const PlayerRef& p, const PortalLink& link);
 	void OnRecvMoveReq(PlayerRef p, const Protocol::C_PlayerMoveRequest& req);
 	void ChangeRoomReady(const PlayerRef& p, const Protocol::C_ChangeRoomReady& pkt);
+	virtual void OnRecvAttackReq(const PlayerRef& p, const Protocol::C_PlayerAttackRequest& pkt) {}
 
 /*--------------------------------------------
 	BroadCast
@@ -103,7 +113,7 @@ public:
 	Room Tick
 -----------------*/
 protected:
-	virtual bool CanEnterTile(const PlayerRef& p, int nx, int ny) const; // 벽/충돌/맵
+	virtual bool CanEnterTile(int nx, int ny) const; // 벽/충돌/맵
 	virtual void ReserveTile(int nx, int ny); // 이동 예약
 	virtual bool IsTileReserved(int nx, int ny) const; // Default = false
 	virtual void OnPlayerMoved(const PlayerRef& p, int ox, int oy); // 좌표로 이동한 후 
@@ -117,6 +127,8 @@ protected:
 	// 파생 훅
 	virtual void OnEnter(const PlayerRef&) {}
 	virtual void OnLeave(const PlayerRef&) {}
+	virtual void OnPlayerHpChanged(int playerId, int newHp);
+	virtual void OnPlayerDeath(int playerId, int killerMonsterId);
 
 
 private:

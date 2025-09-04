@@ -181,16 +181,26 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClCompile Include="AppConfig.cpp" />
     <ClCompile Include="CharacterRepository.cpp" />
     <ClCompile Include="ClientPacketHandler.cpp" />
+    <ClCompile Include="InventoryRepository.cpp" />
+    <ClCompile Include="InventorySystem.cpp" />
+    <ClCompile Include="ItemManager.cpp" />
+    <ClCompile Include="JsonFileUtils.cpp" />
+    <ClCompile Include="MonsterCombatSystem.cpp" />
     <ClCompile Include="DBDisPatcher.cpp" />
     <ClCompile Include="DBWorker.cpp" />
+    <ClCompile Include="EntityCore.cpp" />
     <ClCompile Include="FieldRoom.cpp" />
     <ClCompile Include="GameServer.cpp" />
     <ClCompile Include="GameSession.cpp" />
     <ClCompile Include="GameSessionAccessor.cpp" />
     <ClCompile Include="GameSessionContainer.cpp" />
+    <ClCompile Include="GeometryCore.cpp" />
     <ClCompile Include="GlobalQueueShard.cpp" />
     <ClCompile Include="JwtAuth.cpp" />
     <ClCompile Include="MapData.cpp" />
+    <ClCompile Include="MonsterContainer.cpp" />
+    <ClCompile Include="MonsterMovementSystem.cpp" />
+    <ClCompile Include="MonsterService.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -200,6 +210,7 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerCombatSystem.cpp" />
     <ClCompile Include="Protocol.pb.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -208,7 +219,10 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClCompile Include="RoomManager.cpp" />
     <ClCompile Include="ShardBoot.cpp" />
     <ClCompile Include="SharedOwner.cpp" />
+    <ClCompile Include="MonsterSpawnerSystem.cpp" />
+    <ClCompile Include="TimeUtils.cpp" />
     <ClCompile Include="TownRoom.cpp" />
+    <ClCompile Include="TypeCore.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Account.h" />
@@ -216,31 +230,54 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClInclude Include="AppConfig.h" />
     <ClInclude Include="CharacterRepository.h" />
     <ClInclude Include="ClientPacketHandler.h" />
+    <ClInclude Include="InventoryCore.h" />
+    <ClInclude Include="InventoryRepository.h" />
+    <ClInclude Include="InventorySystem.h" />
+    <ClInclude Include="ItemManager.h" />
+    <ClInclude Include="JsonFileUtils.h" />
+    <ClInclude Include="MonsterCombatSystem.h" />
     <ClInclude Include="DBDisPatcher.h" />
     <ClInclude Include="DBWorker.h" />
+    <ClInclude Include="EntityCore.h" />
     <ClInclude Include="FieldRoom.h" />
     <ClInclude Include="GameSession.h" />
     <ClInclude Include="GameSessionAccessor.h" />
     <ClInclude Include="GameSessionContainer.h" />
     <ClInclude Include="GenProcedures.h" />
+    <ClInclude Include="GeometryCore.h" />
     <ClInclude Include="GlobalQueueShard.h" />
     <ClInclude Include="IJobQueueOwner.h" />
     <ClInclude Include="JwtAuth.h" />
     <ClInclude Include="MapData.h" />
+    <ClInclude Include="MonsterPorts.h" />
+    <ClInclude Include="MonsterContainer.h" />
+    <ClInclude Include="MonsterService.h" />
+    <ClInclude Include="MonsterTypes.h" />
+    <ClInclude Include="MonsterMovementSystem.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerCombatSystem.h" />
+    <ClInclude Include="PlayerPorts.h" />
     <ClInclude Include="Protocol.pb.h" />
+    <ClInclude Include="ProtocolHelper.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="RoomManager.h" />
     <ClInclude Include="ShardBoot.h" />
     <ClInclude Include="SharedOwner.h" />
+    <ClInclude Include="MonsterSpawnerSystem.h" />
     <ClInclude Include="StringConvert.h" />
+    <ClInclude Include="TimeUtils.h" />
     <ClInclude Include="TownRoom.h" />
+    <ClInclude Include="TypeCore.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\iocp-server-unity-client-demo\iocp_server_cpp\Common\Procedures\GenProcs.bat" />
+    <None Include="..\Doc\Plan\inventory-test-data.sql" />
     <None Include="..\Protocol\Protocol.proto" />
     <None Include="appsettings.json" />
+    <None Include="Resources\Maps\백제_Tilemap_Info.json" />
+    <None Include="Resources\Maps\사냥터_Tilemap_Info.json" />
+    <None Include="Resources\Maps\고구려_Tilemap_Info.json" />
   </ItemGroup>
   <ItemGroup>
     <UpToDateCheckInput Include="..\Protocol\Protocol.proto" />

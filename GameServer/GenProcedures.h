@@ -31,14 +31,14 @@ namespace SP
     	void ParamIn_Gender(int32&& v) { _gender = std::move(v); BindParam(2, _gender); };
     	void ParamIn_Region(int32& v) { BindParam(3, v); };
     	void ParamIn_Region(int32&& v) { _region = std::move(v); BindParam(3, _region); };
-    	void ParamIn_LastZone(int32& v) { BindParam(4, v); };
-    	void ParamIn_LastZone(int32&& v) { _lastZone = std::move(v); BindParam(4, _lastZone); };
+    	void ParamIn_LastRoom(int32& v) { BindParam(4, v); };
+    	void ParamIn_LastRoom(int32&& v) { _lastRoom = std::move(v); BindParam(4, _lastRoom); };
 
     private:
     	int32 _userId = {};
     	int32 _gender = {};
     	int32 _region = {};
-    	int32 _lastZone = {};
+    	int32 _lastRoom = {};
     };
 
     class CharacterUsernameExists : public DBBind<2,0>
@@ -74,6 +74,56 @@ namespace SP
     	int32 _userId = {};
     };
 
+    class UpdateCharacterStats : public DBBind<8,0>
+    {
+    public:
+    	UpdateCharacterStats(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spUpdateCharacterStats(?,?,?,?,?,?,?,?)}") { }
+    	void ParamIn_CharacterId(int32& v) { BindParam(0, v); };
+    	void ParamIn_CharacterId(int32&& v) { _characterId = std::move(v); BindParam(0, _characterId); };
+    	void ParamIn_PosX(int32& v) { BindParam(1, v); };
+    	void ParamIn_PosX(int32&& v) { _posX = std::move(v); BindParam(1, _posX); };
+    	void ParamIn_PosY(int32& v) { BindParam(2, v); };
+    	void ParamIn_PosY(int32&& v) { _posY = std::move(v); BindParam(2, _posY); };
+    	void ParamIn_Dir(int32& v) { BindParam(3, v); };
+    	void ParamIn_Dir(int32&& v) { _dir = std::move(v); BindParam(3, _dir); };
+    	void ParamIn_LastRoom(int32& v) { BindParam(4, v); };
+    	void ParamIn_LastRoom(int32&& v) { _lastRoom = std::move(v); BindParam(4, _lastRoom); };
+    	void ParamIn_Hp(int32& v) { BindParam(5, v); };
+    	void ParamIn_Hp(int32&& v) { _hp = std::move(v); BindParam(5, _hp); };
+    	void ParamIn_Level(int32& v) { BindParam(6, v); };
+    	void ParamIn_Level(int32&& v) { _level = std::move(v); BindParam(6, _level); };
+    	void ParamIn_Exp(int32& v) { BindParam(7, v); };
+    	void ParamIn_Exp(int32&& v) { _exp = std::move(v); BindParam(7, _exp); };
+
+    private:
+    	int32 _characterId = {};
+    	int32 _posX = {};
+    	int32 _posY = {};
+    	int32 _dir = {};
+    	int32 _lastRoom = {};
+    	int32 _hp = {};
+    	int32 _level = {};
+    	int32 _exp = {};
+    };
+
+    class GetCharacterStats : public DBBind<1,7>
+    {
+    public:
+    	GetCharacterStats(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spGetCharacterStats(?)}") { }
+    	void ParamIn_CharacterId(int32& v) { BindParam(0, v); };
+    	void ParamIn_CharacterId(int32&& v) { _characterId = std::move(v); BindParam(0, _characterId); };
+    	void ColumnOut_PosX(OUT int32& v) { BindCol(0, v); };
+    	void ColumnOut_PosY(OUT int32& v) { BindCol(1, v); };
+    	void ColumnOut_Dir(OUT int32& v) { BindCol(2, v); };
+    	void ColumnOut_LastRoom(OUT int32& v) { BindCol(3, v); };
+    	void ColumnOut_Hp(OUT int32& v) { BindCol(4, v); };
+    	void ColumnOut_Level(OUT int32& v) { BindCol(5, v); };
+    	void ColumnOut_Exp(OUT int32& v) { BindCol(6, v); };
+
+    private:
+    	int32 _characterId = {};
+    };
+
     class InsertGold : public DBBind<3,0>
     {
     public:
@@ -105,6 +155,58 @@ namespace SP
 
     private:
     	int32 _gold = {};
+    };
+
+    class GetCharacterInventory : public DBBind<1,4>
+    {
+    public:
+    	GetCharacterInventory(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spGetCharacterInventory(?)}") { }
+    	void ParamIn_CharacterId(int32& v) { BindParam(0, v); };
+    	void ParamIn_CharacterId(int32&& v) { _characterId = std::move(v); BindParam(0, _characterId); };
+    	void ColumnOut_SlotIndex(OUT int32& v) { BindCol(0, v); };
+    	void ColumnOut_ItemId(OUT int32& v) { BindCol(1, v); };
+    	void ColumnOut_Count(OUT int32& v) { BindCol(2, v); };
+    	void ColumnOut_IsQuickslot(OUT int32& v) { BindCol(3, v); };
+
+    private:
+    	int32 _characterId = {};
+    };
+
+    class SaveInventorySlot : public DBBind<5,0>
+    {
+    public:
+    	SaveInventorySlot(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spSaveInventorySlot(?,?,?,?,?)}") { }
+    	void ParamIn_CharacterId(int32& v) { BindParam(0, v); };
+    	void ParamIn_CharacterId(int32&& v) { _characterId = std::move(v); BindParam(0, _characterId); };
+    	void ParamIn_SlotIndex(int32& v) { BindParam(1, v); };
+    	void ParamIn_SlotIndex(int32&& v) { _slotIndex = std::move(v); BindParam(1, _slotIndex); };
+    	void ParamIn_ItemId(int32& v) { BindParam(2, v); };
+    	void ParamIn_ItemId(int32&& v) { _itemId = std::move(v); BindParam(2, _itemId); };
+    	void ParamIn_Count(int32& v) { BindParam(3, v); };
+    	void ParamIn_Count(int32&& v) { _count = std::move(v); BindParam(3, _count); };
+    	void ParamIn_IsQuickslot(int32& v) { BindParam(4, v); };
+    	void ParamIn_IsQuickslot(int32&& v) { _isQuickslot = std::move(v); BindParam(4, _isQuickslot); };
+
+    private:
+    	int32 _characterId = {};
+    	int32 _slotIndex = {};
+    	int32 _itemId = {};
+    	int32 _count = {};
+    	int32 _isQuickslot = {};
+    };
+
+    class DeleteInventorySlot : public DBBind<2,0>
+    {
+    public:
+    	DeleteInventorySlot(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spDeleteInventorySlot(?,?)}") { }
+    	void ParamIn_CharacterId(int32& v) { BindParam(0, v); };
+    	void ParamIn_CharacterId(int32&& v) { _characterId = std::move(v); BindParam(0, _characterId); };
+    	void ParamIn_SlotIndex(int32& v) { BindParam(1, v); };
+    	void ParamIn_SlotIndex(int32&& v) { _slotIndex = std::move(v); BindParam(1, _slotIndex); };
+
+    private:
+    	int32 _characterId = {};
+    	int32 _slotIndex = {};
     };
 
 

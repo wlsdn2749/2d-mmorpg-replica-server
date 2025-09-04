@@ -8,9 +8,9 @@
 #include "Player.h"
 
 #include "RoomManager.h"
+#include "ItemManager.h"
 
 PacketHandlerFunc GPacketHandler[UINT16_MAX];
-
 
 bool Handle_Invalid(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
@@ -76,8 +76,12 @@ bool Handle_C_CreateCharacterRequest(PacketSessionRef& session, Protocol::C_Crea
 	// 검증 통과하면 진짜로 캐릭터 만들고 성공 리턴 
 	// 여기서 실패할 수도 있으나, 나중에 판단..
 	
+	// 여기 캐릭터만들때 LastRoom 정보도 넣어야겠네... roomId 찾아서?
+
+	int roomId = RoomManager::Instance().GetRoomIdByRegion(pkt.region());
+	
 	String username = StrToWstr(pkt.username());
-	auto fut = CharacterRepository::CreateCharacterAsync(userId, username, pkt.gender(), pkt.region());
+	auto fut = CharacterRepository::CreateCharacterAsync(userId, username, pkt.gender(), pkt.region(), roomId);
 
 	Protocol::S_CreateCharacterReply replyPkt;
 	replyPkt.set_success(true);
@@ -103,12 +107,15 @@ bool Handle_C_CharacterListRequest(PacketSessionRef& session, Protocol::C_Charac
 		PlayerRef playerRef = MakeShared<Player>();
 		playerRef->playerId = character.characterId; // 나중에 CharacterId로 바꿔야함 DB에 있는
 		playerRef->username = character.username; // utf8
-		playerRef->posX = character.posX; // 나중에 posX로 바꿔야함 DB에 
-		playerRef->posY = character.posY; // 나중에 posY로 바꿔야함 DB에
 		playerRef->gender = character.gender;
 		playerRef->region = character.region;
-		playerRef->dir = character.dir;
-		//playerRef->level = character.level; // TODO: 플레이어(캐릭터) 데이터 쪽으로 넘겨야함, level, exp, hp, mp
+
+		playerRef->core.id = character.characterId;
+		playerRef->core.kind = EntityKind::Player;
+		playerRef->core.pos = {character.posX, character.posY};
+		playerRef->core.dir = character.dir; 
+		//playerRef->SetHp(character) = character.level; // TODO: character가 hp, atk, level ... 등을 가져오도록 해야함 아직 안돼있음
+
 		
 		playerRef->ownerSession = gameSession; // WeakPtr로 참조
 
@@ -147,16 +154,25 @@ bool Handle_C_EnterGame(PacketSessionRef& session, Protocol::C_EnterGame& pkt)
 
 		return false;
 	}
-	gameSession->_currentPlayer = gameSession->_players[index];
 	
-	const int roomId = 0;
+	gameSession->_currentPlayer = gameSession->_players[index];
+	PlayerRef player = gameSession->_currentPlayer;
+
+	auto characterId = player->playerId;
+	auto fut = CharacterRepository::GetCharacterStatsAsync(characterId);
+	auto stat = fut.get();
+
+	player->LoadCharacterStat(stat);
+
+	const int roomId = player->LastRoomId();
 	RoomRef room = RoomManager::Instance().Find(roomId);
 	if (!room) 
-		std::cout << "Not Exsiting room" << std::endl; 
+		throw std::exception("Not Exsiting room");
 
-	room->DoAsync(&Room::Enter, gameSession->_currentPlayer); 
+	room->DoAsync(&Room::Enter, player); // 룸 입장 성공
+	player->LoadInventoryFromDB(); // DB에서 인벤토리 로딩 (접속 시)
+
 	
-
 	gameSession->SetState(GameSession::State::InRoom);
 
 	Protocol::S_EnterGame enterGamePkt;
@@ -168,6 +184,7 @@ bool Handle_C_EnterGame(PacketSessionRef& session, Protocol::C_EnterGame& pkt)
 
 	return true;
 }
+
 bool Handle_C_LeaveGame(PacketSessionRef& session, Protocol::C_LeaveGame& pkt)
 {
 	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
@@ -176,6 +193,9 @@ bool Handle_C_LeaveGame(PacketSessionRef& session, Protocol::C_LeaveGame& pkt)
 	RoomRef room = player->GetRoom();
 
 	room->DoAsync(&Room::Leave, player);
+	
+	player->SaveInventoryToDB(); // DB에 인벤토리 저장
+
 	GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_LeaveGame]: Client가 Room에서 나감 \n");
 	
 	Protocol::S_LeaveGame leaveGamePkt;
@@ -184,6 +204,7 @@ bool Handle_C_LeaveGame(PacketSessionRef& session, Protocol::C_LeaveGame& pkt)
 	session->Send(sendBuffer);
 	return true;
 }
+
 bool Handle_C_PlayerMoveRequest(PacketSessionRef& session, Protocol::C_PlayerMoveRequest& pkt)
 {
 	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
@@ -215,9 +236,138 @@ bool Handle_C_ChangeRoomReady(PacketSessionRef& session, Protocol::C_ChangeRoomR
 	
 
 	RoomRef room = player->GetRoom();
-	room->DoAsync([room, player, pkt] {
+	//room->DoAsync(&Room::ChangeRoomReady, player, pkt);
+
+	room->DoAsync([room, player, pkt] 
+	{
 		room->ChangeRoomReady(player, pkt); 
 	});
 
 	GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_ChangeRoomReady]: Client가 룸 이동 준비요청함 \n");
+}
+
+bool Handle_C_PlayerAttackRequest(PacketSessionRef& session, Protocol::C_PlayerAttackRequest& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+	if (!player) return false;
+
+
+	RoomRef room = player->GetRoom();
+	room->DoAsync([room, player, pkt]
+	{
+		room->OnRecvAttackReq(player, pkt);
+	});
+	GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_PlayerAttackRequest]: Player가 공격 요청함 \n");
+	return true;
+}
+
+bool Handle_C_InventoryRequest(PacketSessionRef& session, Protocol::C_InventoryRequest& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+	if (!player) 
+		return false;
+
+	GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_InventoryRequest]: Player가 인벤토리 조회 요청함 \n");
+
+	// 플레이어의 인벤토리 정보를 가져와서 응답 패킷 생성
+	const InventorySystem& inventory = player->GetInventory();
+	auto slots = inventory.ToProtocolSlots();
+
+	Protocol::S_InventoryReply replyPkt;
+	for (const auto& slotInfo : slots)
+	{
+		*replyPkt.add_slots() = slotInfo;
+	}
+
+	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
+	session->Send(sendBuffer);
+
+	return true;
+}
+
+bool Handle_C_ItemUseRequest(PacketSessionRef& session, Protocol::C_ItemUseRequest& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+	if (!player)
+		return false;
+
+	int slotIndex = pkt.slotindex();
+	
+	GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_ItemUseRequest]: Player가 슬롯[%d] 아이템 사용 요청함 \n", slotIndex);
+
+	// 아이템 사용 처리
+	EUseItemResult result = player->UseItem(slotIndex);
+
+	Protocol::S_ItemUseReply replyPkt;
+	replyPkt.set_success(result == EUseItemResult::Success);
+
+	// 실패 시 에러 메시지 설정
+	switch (result)
+	{
+		case EUseItemResult::Success:
+			replyPkt.set_errormessage("");
+			break;
+		case EUseItemResult::ItemNotFound:
+			replyPkt.set_errormessage("아이템을 찾을 수 없습니다.");
+			break;
+		case EUseItemResult::ItemNotUsable:
+			replyPkt.set_errormessage("사용할 수 없는 아이템입니다.");
+			break;
+		case EUseItemResult::CooldownActive:
+			replyPkt.set_errormessage("아이템이 쿨다운 중입니다.");
+			break;
+		case EUseItemResult::InvalidCondition:
+			replyPkt.set_errormessage("사용 조건을 만족하지 않습니다.");
+			break;
+		default:
+			replyPkt.set_errormessage("알 수 없는 오류가 발생했습니다.");
+			break;
+	}
+
+	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
+	session->Send(sendBuffer);
+
+	// 아이템 사용 성공 시 인벤토리 업데이트 브로드캐스트
+	if (result == EUseItemResult::Success)
+	{
+		// Room에 있는 모든 플레이어에게 인벤토리 변경 사항을 브로드캐스트
+		RoomRef room = player->GetRoom();
+		if (room)
+		{
+			room->DoAsync([room, player]()
+			{
+				Protocol::S_InventoryUpdate updatePkt;
+				auto slots = player->GetInventory().ToProtocolSlots();
+				for (const auto& slotInfo : slots)
+				{
+					*updatePkt.add_changedslots() = slotInfo;
+				}
+
+				auto sendBuffer = ClientPacketHandler::MakeSendBuffer(updatePkt);
+				
+				// 해당 플레이어에게만 전송 (인벤토리는 개인 정보)
+				if (auto gameSession = player->ownerSession.lock())
+				{
+					gameSession->Send(sendBuffer);
+				}
+			});
+		}
+	}
+
+	return true;
 }

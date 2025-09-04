@@ -28,6 +28,17 @@ namespace Packet
 
         public static string PosToStr(Vector2Info pos)
             => pos is null ? "(?,?)" : $"({pos.X},{pos.Y})";
+
+        public static string MoveResultToStr(EMoveResult moveResult) => moveResult switch
+        {
+            EMoveResult.MoveUnknown => "Unknown",
+            EMoveResult.MoveOk => "Ok",
+            EMoveResult.MoveDir => "Dir",
+            EMoveResult.MoveBlocked => "Blocked",
+            EMoveResult.MoveCooldown => "Cooldown",
+            _ => moveResult.ToString()
+
+        };
     }
     public class ServerPacketHandler
     {
@@ -92,7 +103,37 @@ namespace Packet
 
         internal static void HANDLE_S_PlayerList(PacketSession session, S_PlayerList list)
         {
-            Console.WriteLine("[S_PlayerList] 내가 접속해서 다른사람의 리스트 받아옴");
+            Console.WriteLine("[S_PlayerList] 플레이어 리스트 및 맵 정보 수신");
+            Console.WriteLine($"현재 맵ID: {list.MapId}");
+            
+            // 맵ID에 따른 씬 로딩 시뮬레이션
+            string sceneName = GetSceneNameByMapId(list.MapId);
+            Console.WriteLine($">>> 씬 로딩 시뮬레이션: '{sceneName}' 로딩 중...");
+            Console.WriteLine($">>> 맵 배경 및 UI 초기화 완료");
+            
+            // 내 플레이어 ID 저장
+            NetDebug.MyPlayerId = list.MyPlayerId;
+            Console.WriteLine($"내 플레이어 ID: {list.MyPlayerId}");
+            
+            // 다른 플레이어 정보
+            Console.WriteLine($"현재 룸에 있는 다른 플레이어 수: {list.Players.Count}");
+            foreach (var player in list.Players)
+            {
+                var pos = NetDebug.PosToStr(player.Pos);
+                var dir = NetDebug.DirToStr(player.Direction);
+                Console.WriteLine($"  - 플레이어ID: {player.Id}, 이름: {player.Username}, 위치: {pos}, 방향: {dir}");
+            }
+        }
+
+        private static string GetSceneNameByMapId(int mapId)
+        {
+            return mapId switch
+            {
+                1 => "고구려 마을",
+                2 => "백제 마을", 
+                3 => "사냥터",
+                _ => $"알 수 없는 맵 (ID: {mapId})"
+            };
         }
 
         internal static void HANDLE_S_BroadcastPlayerEnter(PacketSession session, S_BroadcastPlayerEnter enter)
@@ -111,6 +152,8 @@ namespace Packet
             var pos = reply.NewPos;
             var posStr = NetDebug.PosToStr(pos);
             var dirStr = NetDebug.DirToStr(reply.Direction);
+            var mResult = NetDebug.MoveResultToStr(reply.Result);
+            
 
             // result/tick 필드가 없을 수도 있으니 Try 포맷
             string resultStr = reply?.Result.ToString() ?? "N/A";
@@ -120,7 +163,7 @@ namespace Packet
 
             Console.WriteLine(
                 $"[S_PlayerMoveReply] pid={reply.PlayerId}{meTag} " +
-                $"dir={dirStr} pos={posStr} result={resultStr} tick={tick}");
+                $"dir={dirStr} pos={posStr} result={resultStr} tick={tick} mResult={mResult}" );
         }
 
         internal static void HANDLE_S_BroadcastPlayerMove(PacketSession session, S_BroadcastPlayerMove move)
@@ -133,9 +176,10 @@ namespace Packet
                 var pos = m.NewPos;
                 var posStr = NetDebug.PosToStr(pos);
                 var dirStr = NetDebug.DirToStr(m.Direction);
+                var mResult = NetDebug.MoveResultToStr(m.Result);
                 string meTag = (m.PlayerId == NetDebug.MyPlayerId && NetDebug.MyPlayerId >= 0) ? " (ME)" : "";
 
-                Console.WriteLine($"  - pid={m.PlayerId}{meTag} dir={dirStr} pos={posStr}");
+                Console.WriteLine($"  - pid={m.PlayerId}{meTag} dir={dirStr} pos={posStr} mResult={mResult}");
             }
         }
 
@@ -152,12 +196,127 @@ namespace Packet
 
         internal static void HANDLE_S_ChangeRoomCommit(PacketSession session, S_ChangeRoomCommit commit)
         {
-            Console.WriteLine($"[S_ChangeRoomCommit] Room Has Change into ...");
+            Console.WriteLine($"[S_ChangeRoomCommit] 방 이동 완료!");
+            Console.WriteLine($"새로운 맵ID: {commit.MapId}");
+            
+            // 새로운 맵에 따른 씬 로딩 시뮬레이션
+            string newSceneName = GetSceneNameByMapId(commit.MapId);
+            Console.WriteLine($">>> 씬 전환: '{newSceneName}' 로딩 중...");
+            Console.WriteLine($">>> 새로운 맵 환경 및 UI 초기화 완료");
+            
+            // 새로운 룸의 플레이어 정보 처리
+            if (commit.Snapshots != null)
+            {
+                var snapshots = commit.Snapshots;
+                NetDebug.MyPlayerId = snapshots.MyPlayerId;
+                Console.WriteLine($"내 플레이어 ID: {snapshots.MyPlayerId}");
+                Console.WriteLine($"새로운 룸의 다른 플레이어 수: {snapshots.Players.Count}");
+                
+                foreach (var player in snapshots.Players)
+                {
+                    var pos = NetDebug.PosToStr(player.Pos);
+                    var dir = NetDebug.DirToStr(player.Direction);
+                    Console.WriteLine($"  - 플레이어ID: {player.Id}, 이름: {player.Username}, 위치: {pos}, 방향: {dir}");
+                }
+            }
         }
 
         internal static void HANDLE_S_LeaveGame(PacketSession session, S_LeaveGame game)
         {
             Console.WriteLine($"[S_LeaveGame] Game Has left.");
+        }
+
+        internal static void HANDLE_S_BroadcastMonsterDeath(PacketSession session, S_BroadcastMonsterDeath death)
+        {
+            Console.WriteLine($"[S_BroadcastMonsterDeath] Monster Has been dead.");
+        }
+
+        internal static void HANDLE_S_SpawnMonster(PacketSession session, S_SpawnMonster monster)
+        {
+            Console.WriteLine($"[S_SpawnMonster] Monster Has been spawned");
+        }
+
+        internal static void HANDLE_S_DespawnMonster(PacketSession session, S_DespawnMonster monster)
+        {
+            Console.WriteLine($"[S_DespawnMonster] Monster Has been despawned");
+        }
+
+        internal static void HANDLE_S_BroadcastMonsterMove(PacketSession session, S_BroadcastMonsterMove move)
+        {
+            Console.WriteLine($"[S_BroadcastMonsterMove] Monster Has been moved");
+        }
+
+        internal static void HANDLE_S_BroadcastMonsterAttack(PacketSession session, S_BroadcastMonsterAttack attack)
+        {
+            Console.WriteLine($"[S_BroadcastMonsterAttack] Monster Has been Attacked");
+        }
+
+        internal static void HANDLE_S_BroadcastPlayerAttack(PacketSession session, S_BroadcastPlayerAttack attack)
+        {
+            Console.WriteLine($"[S_BroadcastPlayerAttack] Other Player Attacked ");
+        }
+
+        // 인벤토리 조회 응답 처리
+        internal static void HANDLE_S_InventoryReply(PacketSession session, S_InventoryReply reply)
+        {
+            Console.WriteLine("=== 인벤토리 정보 ===");
+            Console.WriteLine($"총 {reply.Slots.Count}개의 아이템이 있습니다.");
+            
+            if (reply.Slots.Count == 0)
+            {
+                Console.WriteLine("인벤토리가 비어있습니다.");
+                return;
+            }
+
+            // 일반 슬롯 (0~29)
+            Console.WriteLine("\n일반 슬롯:");
+            var normalSlots = reply.Slots.Where(s => !s.IsQuickslot).OrderBy(s => s.SlotIndex);
+            foreach (var slot in normalSlots)
+            {
+                Console.WriteLine($"  슬롯[{slot.SlotIndex:D2}] 아이템ID:{slot.ItemId} 수량:{slot.Count}");
+            }
+
+            // 퀵 슬롯 (30~39)  
+            Console.WriteLine("\n퀵 슬롯:");
+            var quickSlots = reply.Slots.Where(s => s.IsQuickslot).OrderBy(s => s.SlotIndex);
+            foreach (var slot in quickSlots)
+            {
+                Console.WriteLine($"  퀵슬롯[{slot.SlotIndex:D2}] 아이템ID:{slot.ItemId} 수량:{slot.Count}");
+            }
+            Console.WriteLine("========================");
+        }
+
+        // 아이템 사용 응답 처리
+        internal static void HANDLE_S_ItemUseReply(PacketSession session, S_ItemUseReply reply)
+        {
+            if (reply.Success)
+            {
+                Console.WriteLine("아이템 사용 성공!");
+                Console.WriteLine("HP가 회복되었습니다!");
+            }
+            else
+            {
+                Console.WriteLine("아이템 사용 실패!");
+                Console.WriteLine($"오류: {reply.ErrorMessage}");
+            }
+        }
+
+        // 인벤토리 업데이트 브로드캐스트 처리
+        internal static void HANDLE_S_InventoryUpdate(PacketSession session, S_InventoryUpdate update)
+        {
+            Console.WriteLine("인벤토리가 업데이트되었습니다:");
+            foreach (var slot in update.ChangedSlots)
+            {
+                if (slot.Count > 0)
+                {
+                    string slotType = slot.IsQuickslot ? "퀵슬롯" : "일반슬롯";
+                    Console.WriteLine($"  {slotType}[{slot.SlotIndex}] 아이템ID:{slot.ItemId} 수량:{slot.Count}");
+                }
+                else
+                {
+                    Console.WriteLine($"  슬롯[{slot.SlotIndex}] 비어짐");
+                }
+            }
         }
     }
 }
