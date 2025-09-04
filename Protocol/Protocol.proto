@@ -93,7 +93,8 @@ message S_EnterGame
 message S_PlayerList
 {
 	int32 myPlayerId = 1;
-	repeated PlayerInfo players = 2;
+	int32 mapId = 2;
+	repeated PlayerInfo players = 3;
 }
 
 // (9)
@@ -158,7 +159,8 @@ message C_ChangeRoomReady {
 // (18) 서버가 최종 스폰 좌표/스냅샷 확정
 message S_ChangeRoomCommit {
   int32 transitionId = 1;
-  S_PlayerList snapshots = 2; // 들어오자마자 월드 동기화
+  int32 mapId = 2;
+  S_PlayerList snapshots = 3; // 들어오자마자 월드 동기화
 }
 
 // (19) 서버 -> 클라 : 몬스터 스폰 알림
