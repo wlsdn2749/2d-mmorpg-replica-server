@@ -92,7 +92,7 @@ public class Auth_UI : MonoBehaviour
         {
             Debug.LogError(rEX.StatusCode);
             AuthNotice_UI.Instance.gameObject.SetActive(true);
-            AuthNotice_UI.Instance.ShowNotice(NoticeCode.LoginFailNullAccount);
+            AuthNotice_UI.Instance.ShowNotice(NoticeCode.LoginFailGrpcError);
         }
         catch (Exception ex)
         {

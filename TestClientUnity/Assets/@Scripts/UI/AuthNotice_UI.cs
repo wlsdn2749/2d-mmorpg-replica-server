@@ -15,6 +15,7 @@ public enum NoticeCode
     CreateAccountSucess, 
     LoginFailNullID ,
     LoginFailNullPW,
+    LoginFailGrpcError,
     LoginFailNullAccount,
     DoLogin,
     LoginSuccess,
@@ -77,7 +78,11 @@ public class AuthNotice_UI : MonoBehaviour
                 _noticeText.text = "로그인을 진행중입니다. 잠시만 기다려주세요.";
                 _noticeText.color = Color.white;
                 break;
-
+            case NoticeCode.LoginFailGrpcError:
+                _noticeText.text = "서버와 연결이 원활하지 않습니다.\n같은 현상이 반복되면 고객센터로 연락해주시기 바랍니다.";
+                _noticeText.color = Color.red;
+                ShowOkButton();
+                break;
             case NoticeCode.LoginFailNullAccount:
                 _noticeText.text = "존재하지 않는 계정입니다.\n회원가입을 진행하거나 로그인 정보를 다시 입력해주세요.";
                 _noticeText.color = Color.red;

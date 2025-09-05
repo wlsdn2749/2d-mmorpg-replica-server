@@ -109,7 +109,7 @@ namespace Packet
             foreach (var p in list.Players)
             {
                 bool isLocal = (p.Id == list.MyPlayerId);
-                Debug.Log($"이전 버전 {p.Pos.X},{p.Pos.Y}");
+                Debug.Log($" {p.Pos.X},{p.Pos.Y}");
             }
             GetSceneNameByMapId(list.MapId);
             LoadingSceneManager.LoadScene(list.MapId);
@@ -117,7 +117,7 @@ namespace Packet
             
 
             Debug.Log("맵 씬 로딩 시작");
-            // 2) 실제 맵 씬 활성 직후 전체 스폰
+            //맵 씬 활성 직후 전체 스폰
             SceneTransition.RunAfterGameplaySceneLoaded(() =>
             {
                 Debug.Log("씬 로딩 완료 후 플레이어 스폰 처리");
@@ -200,30 +200,121 @@ namespace Packet
 
         internal static void HANDLE_S_PlayerMoveReply(PacketSession session, S_PlayerMoveReply reply)
         {
-            // 안전하게 널 체크
+
             var pos = reply.NewPos;
             var posStr = NetDebug.PosToStr(pos);
             var dirStr = NetDebug.DirToStr(reply.Direction);
 
-            // result/tick 필드가 없을 수도 있으니 Try 포맷
             string resultStr = reply?.Result.ToString() ?? "N/A";
             int tick = reply?.Tick ?? -1;
 
             string meTag = (reply.PlayerId == NetDebug.MyPlayerId && NetDebug.MyPlayerId >= 0) ? " (ME)" : "";
-            Debug.Log(
-                $"[S_PlayerMoveReply] pid={reply.PlayerId}{meTag} " +
-                $"dir={dirStr} pos={posStr} result={resultStr} tick={tick}");
-            Console.WriteLine(
-                $"[S_PlayerMoveReply] pid={reply.PlayerId}{meTag} " +
-                $"dir={dirStr} pos={posStr} result={resultStr} tick={tick}");
+
+            Debug.Log($"[S_PlayerMoveReply] pid={reply.PlayerId}{meTag} " +
+                      $"dir={dirStr} pos={posStr} result={resultStr} tick={tick}");
+
+            switch (reply.Result)
+            {
+                case EMoveResult.MoveOk:
+                    // 정상 이동
+                    var go = PlayerSpawner.Get(reply.PlayerId);
+                    if (go)
+                    {
+                        var avatar = go.GetComponent<PlayerAvatar>();
+                        avatar?.SetDirection(reply.Direction);
+
+                        var newPos = new Vector3(reply.NewPos.X, reply.NewPos.Y, 0);
+                        if ((go.transform.position - newPos).sqrMagnitude < 0.25f)
+                            avatar?.SmoothMoveTo(newPos);
+                        else
+                            go.transform.position = newPos;
+
+                        go.GetComponent<PlayerIdentity>()?.SetLastServerTick(reply.Tick);
+                    }
+                    break;
+
+                case EMoveResult.MoveBlocked:
+                    Debug.LogWarning("[MoveResult] 이동이 막혔습니다.");
+                    // 예: 벽 충돌 애니메이션, 경고 UI
+                    break;
+
+                case EMoveResult.MoveCooldown:
+                    Debug.LogWarning("[MoveResult] 이동 쿨다운 중.");
+                    // 예: UI 알림
+                    break;
+
+                case EMoveResult.MoveDir:
+                    Debug.Log("[MoveResult] 단순 방향 전환.");
+                    // 방향 전환만 반영
+                    var dirGo = PlayerSpawner.Get(reply.PlayerId);
+                    dirGo?.GetComponent<PlayerAvatar>()?.SetDirection(reply.Direction);
+                    break;
+
+                case EMoveResult.MoveUnknown:
+                default:
+                    Debug.LogError("[MoveResult] 알 수 없는 이동 응답.");
+                    break;
+            }
+            //if (reply.Result != EMoveResult.MoveOk)
+            //{
+            //    Debug.Log("")
+            //}
+            //Debug.Log($"[S_PlayerMoveReply] recv pid={reply.PlayerId}  selected={SessionStore.SelectedCharId}");
+            //if ((int)SessionStore.SelectedCharId != reply.PlayerId) return;
+            //var newPos = new Vector3(reply.NewPos.X, reply.NewPos.Y, 0);
+            //var my = PlayerSpawner.Get(reply.PlayerId);     // 네 스포너/레지스트리에서 꺼내는 함수로 대체
+            //if (!my) return;
+
+            //// 방향 세팅(애니메이션)
+            //my.GetComponent<PlayerAvatar>()?.SetDirection(reply.Direction);
+            //var cur = my.transform.position;
+            //if ((cur - newPos).sqrMagnitude < 0.25f)
+            //    my.GetComponent<PlayerAvatar>()?.SmoothMoveTo(newPos); // 선택: 보간 이동 API
+            //else
+            //    my.transform.position = newPos;
+
+            //// 입력 예측 중이면 종료
+            ////my.GetComponent<PlayerController>()?.StopPreviewAndSnap(newPos);
+
+            //// (선택) 최신 tick 기록해서 과거 브로드캐스트 무시
+            //my.GetComponent<PlayerIdentity>()?.SetLastServerTick(reply.Tick);
+            #region 디버깅용
+            // 안전하게 널 체크
+            //var pos = reply.NewPos;
+            //var posStr = NetDebug.PosToStr(pos);
+            //var dirStr = NetDebug.DirToStr(reply.Direction);
+
+            //// result/tick 필드가 없을 수도 있으니 Try 포맷
+            //string resultStr = reply?.Result.ToString() ?? "N/A";
+            //int tick = reply?.Tick ?? -1;
+
+            //string meTag = (reply.PlayerId == NetDebug.MyPlayerId && NetDebug.MyPlayerId >= 0) ? " (ME)" : "";
+            //Debug.Log(
+            //    $"[S_PlayerMoveReply] pid={reply.PlayerId}{meTag} " +
+            //    $"dir={dirStr} pos={posStr} result={resultStr} tick={tick}");
+            //Console.WriteLine(
+            //    $"[S_PlayerMoveReply] pid={reply.PlayerId}{meTag} " +
+            //    $"dir={dirStr} pos={posStr} result={resultStr} tick={tick}");
+            #endregion
         }
 
         internal static void HANDLE_S_BroadcastPlayerMove(PacketSession session, S_BroadcastPlayerMove move)
         {
-            //foreach (var m in move)
-            //{ 
-            //    PlayerMAnager.Isntacen.Move(  m.PlayerId);
-            //}
+            foreach (var mv in move.PlayerMoves)
+            {
+                var go = PlayerSpawner.Get(mv.PlayerId);
+                if (!go) continue;
+
+                // 내 캐릭이면 서버 reply에서 이미 처리했을 가능성 큼 → tick 비교해서 오래된 건 무시
+                var id = go.GetComponent<PlayerIdentity>();
+                if (id && id.LastServerTick > move.Tick) continue;
+
+                var target = new Vector3(mv.NewPos.X, mv.NewPos.Y, 0);
+                go.GetComponent<PlayerAvatar>()?.SetDirection(mv.Direction);
+                go.GetComponent<PlayerAvatar>()?.SmoothMoveTo(target); // 보간 이동 (다른 유저는 항상 보간 추천)
+                id?.SetLastServerTick(move.Tick);
+            }
+            #region 디버깅
             int tick = move?.Tick ?? -1;
             Console.WriteLine($"[S_BroadcastPlayerMove] tick={tick} count={move.PlayerMoves.Count}");
 
@@ -236,6 +327,7 @@ namespace Packet
 
                 Console.WriteLine($"  - pid={m.PlayerId}{meTag} dir={dirStr} pos={posStr}");
             }
+            #endregion
         }
 
         internal static void HANDLE_S_ChangeRoomBegin(PacketSession session, S_ChangeRoomBegin begin)
@@ -252,11 +344,15 @@ namespace Packet
         internal static void HANDLE_S_ChangeRoomCommit(PacketSession session, S_ChangeRoomCommit commit)
         {
             Console.WriteLine($"[S_ChangeRoomCommit] Room Has Change into ...");
+            
+            Debug.Log($"[S_ChangeRoomCommit] Room Has Change into ...");
+
         }
 
         internal static void HANDLE_S_LeaveGame(PacketSession session, S_LeaveGame game)
         {
             Console.WriteLine($"[S_LeaveGame] Game Has left.");
+            Debug.Log($"[S_LeaveGame] Game Has left.");
         }
         internal static void HANDLE_S_SpawnMonster(PacketSession session, S_SpawnMonster spawnMonster)
         {
