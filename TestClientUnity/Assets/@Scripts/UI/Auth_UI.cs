@@ -6,10 +6,7 @@ using Mmorpg2d.Auth;
 using Packet;
 using System;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Apple.ReplayKit;
-using UnityEngine.Networking.PlayerConnection;
 using UnityEngine.UI;
 public class Auth_UI : MonoBehaviour
 {

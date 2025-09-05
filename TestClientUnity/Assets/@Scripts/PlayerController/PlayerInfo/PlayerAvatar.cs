@@ -3,15 +3,14 @@ using UnityEngine;
 
 public class PlayerAvatar : MonoBehaviour
 {
-    [SerializeField] float moveLerpSpeed = 12f;
-    Vector3? _lerpTarget;
+    [SerializeField] float moveSpeed = 4f;       // MoveTowards용: 초당 m
+    [SerializeField] float arriveEps = 0.01f;     // 도착 판정 허용 오차
+    Vector3? _target;
     [SerializeField] private string initialState = "Idle";
     private Animator _animator;
-    private SpriteRenderer _spriteRenderer;
     void Start()
     {
         _animator = GetComponent<Animator>();   
-        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
     public void ApplyAppearance(int Id, string userName)
     {
@@ -23,8 +22,13 @@ public class PlayerAvatar : MonoBehaviour
             _animator.Play(initialState,0,0);   
         }
     }
-    public void SmoothMoveTo(Vector3 worldPos) => _lerpTarget = worldPos;
-
+    public void SmoothMoveTo(Vector3 worldPos) => _target = worldPos;
+    public void HardSnap(Vector3 worldPos)
+    {
+        transform.position = worldPos;
+        _target = null;
+    }
+    
     public void SetDirection(EDirection dir)
     {
         switch (dir)
@@ -47,13 +51,21 @@ public class PlayerAvatar : MonoBehaviour
 
     void Update()
     {
-        if (_lerpTarget.HasValue)
-        {
-            var pos = transform.position;
-            var target = _lerpTarget.Value;
-            transform.position = Vector3.MoveTowards(pos, target, moveLerpSpeed * Time.deltaTime);
-            if ((transform.position - target).sqrMagnitude < 0.0004f)
-                _lerpTarget = null;
+        if (!_target.HasValue) return;
+
+        var cur = transform.position;
+        var dst = _target.Value;
+
+        Vector3 next;
+        // 일정 속도 이동
+        next = Vector3.MoveTowards(cur, dst, moveSpeed * Time.deltaTime);
+        _animator.SetBool("IsMoving", true);
+        transform.position = next;
+
+        if ((next - dst).sqrMagnitude <= arriveEps * arriveEps)
+        { 
+            _target = null; // 도착
+            _animator.SetBool("IsMoving", false);
         }
     }
 }

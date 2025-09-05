@@ -19,12 +19,17 @@ public class NetworkManager : MonoBehaviour
     void Awake()
     {
         // 중복 인스턴스 방지
-        if (Instance != null && Instance != this)
+        if (Instance == null)
         {
-            Destroy(gameObject);
-            return;
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // 씬 전환 시에도 파괴되지 않도록 설정
+            Debug.Log("NetworkManager Awake() 호출됨");
         }
-        
+        else
+        {
+            Destroy(gameObject); // 이미 인스턴스가 존재하면 자신을 파괴합니다.
+        }
+
         // OnDestoryLoad ... 씬 바뀔때 사라지지 않게 처리하는 것도 필요할 수 있음.
         Instance = this;
         Application.targetFrameRate = 60;

@@ -1,11 +1,8 @@
 using Google.Protobuf.Protocol;
 using Packet;
-using ServerCore;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class CharacterList_UI : MonoBehaviour

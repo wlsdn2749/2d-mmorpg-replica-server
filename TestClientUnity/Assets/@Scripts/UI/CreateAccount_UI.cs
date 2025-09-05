@@ -1,20 +1,12 @@
 using Cysharp.Net.Http;
-using Google.Protobuf.Protocol;
 using Grpc.Core;
 using Grpc.Net.Client;
 using Mmorpg2d.Auth;
-using Packet;
 using System;
-using System.Collections;
-using System.Net.Sockets;
-using System.Security;
-using System.Threading;
 using System.Threading.Tasks;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Windows;
 public static class Authenticate 
 {
     public static string Jwt = "";

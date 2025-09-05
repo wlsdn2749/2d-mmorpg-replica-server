@@ -4,8 +4,6 @@ using UnityEngine;
 using Google.Protobuf.Protocol;
 using Unity.Cinemachine;
 using System.Collections;
-using UnityEngine.PlayerLoop;
-using UnityEditor.ShaderGraph;
 /// <summary>
 /// 서버에서 내려오는 PlayerInfo로 플레이어 프리팹을 스폰/제거.
 /// 로컬 플레이어가 스폰되면 Cinemachine vcam의 Follow/LookAt을 자동 연결.

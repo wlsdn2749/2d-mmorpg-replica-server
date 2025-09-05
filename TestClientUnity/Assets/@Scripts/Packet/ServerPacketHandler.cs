@@ -1,13 +1,8 @@
 ﻿using Google.Protobuf;
 using Google.Protobuf.Protocol;
-using Mono.Cecil.Cil;
 using ServerCore;
 using System;
-using System.Linq;
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.TextCore.Text;
 
 namespace Packet
 {
@@ -218,19 +213,15 @@ namespace Packet
                 case EMoveResult.MoveOk:
                     // 정상 이동
                     var go = PlayerSpawner.Get(reply.PlayerId);
-                    if (go)
-                    {
-                        var avatar = go.GetComponent<PlayerAvatar>();
-                        avatar?.SetDirection(reply.Direction);
+                    if (!go) break;
+                    var target = new Vector3(reply.NewPos.X, reply.NewPos.Y, 0);
 
-                        var newPos = new Vector3(reply.NewPos.X, reply.NewPos.Y, 0);
-                        if ((go.transform.position - newPos).sqrMagnitude < 0.25f)
-                            avatar?.SmoothMoveTo(newPos);
-                        else
-                            go.transform.position = newPos;
+                    var mover = go.GetComponent<PlayerAvatar>();
+                    if (!mover) mover = go.AddComponent<PlayerAvatar>();
 
-                        go.GetComponent<PlayerIdentity>()?.SetLastServerTick(reply.Tick);
-                    }
+                    mover.SmoothMoveTo(target); //  목표만 지정 → Update에서 부드럽게 이동
+
+                    go.GetComponent<PlayerIdentity>()?.SetLastServerTick(reply.Tick);
                     break;
 
                 case EMoveResult.MoveBlocked:
