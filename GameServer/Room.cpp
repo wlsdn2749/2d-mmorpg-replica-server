@@ -127,7 +127,7 @@ Protocol::S_PlayerList Room::BuildPlayerListSnapshot(const PlayerRef& forPlayer,
 
         auto* pos = info->mutable_pos();
         pos->set_x(other->core.pos.x);
-        pos->set_y(other->core.pos.x);
+        pos->set_y(other->core.pos.y);
 
         info->set_direction(other->core.dir);
     }
