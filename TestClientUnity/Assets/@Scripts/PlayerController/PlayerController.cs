@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
 
             var world = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             world.z = 0;
-
+            Debug.Log($" {(int)world.x},{(int)world.y}");
             
             var req = new C_PlayerMoveRequest
             {
