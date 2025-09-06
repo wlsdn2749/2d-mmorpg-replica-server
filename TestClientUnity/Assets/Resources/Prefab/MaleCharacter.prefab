@@ -326,10 +326,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 464baffeabed5924cba3acd08e6c37b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAvatar
-  moveSpeed: 6
-  smoothK: 12
+  moveSpeed: 4
   arriveEps: 0.01
-  useExpLerp: 0
   initialState: Idle
 --- !u!114 &6923634569787037221
 MonoBehaviour:

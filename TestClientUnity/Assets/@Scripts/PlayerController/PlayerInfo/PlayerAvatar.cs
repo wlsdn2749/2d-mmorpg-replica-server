@@ -1,51 +1,61 @@
-using Google.Protobuf.Protocol;
-using UnityEngine;
+Ôªøusing UnityEngine;
+using Google.Protobuf.Protocol; // EDirection
 
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(PlayerIdentity))]
 public class PlayerAvatar : MonoBehaviour
 {
-    [SerializeField] float moveSpeed = 4f;       // MoveTowardsøÎ: √ ¥Á m
-    [SerializeField] float arriveEps = 0.01f;     // µµ¬¯ ∆«¡§ «„øÎ ø¿¬˜
-    Vector3? _target;
+    [SerializeField] float moveSpeed = 4f;
+    [SerializeField] float arriveEps = 0.01f;
     [SerializeField] private string initialState = "Idle";
+
+    private Vector3? _target;
     private Animator _animator;
-    void Start()
+    private PlayerIdentity _identity;
+
+    void Awake()
     {
-        _animator = GetComponent<Animator>();   
-    }
-    public void ApplyAppearance(int Id, string userName)
-    {
-        var id = GetComponent<PlayerIdentity>()??gameObject. AddComponent<PlayerIdentity>();
-        id.Id = Id;
-        id.Username = userName ?? $"Player_{Id}";   
+        _animator = GetComponent<Animator>();
+        _identity = GetComponent<PlayerIdentity>();
         if (!string.IsNullOrEmpty(initialState))
-        {
-            _animator.Play(initialState,0,0);   
-        }
+            _animator.Play(initialState, 0, 0f);
     }
+
+    // ‚úÖ Ïô∏Î∂ÄÏóêÏÑúÎäî PlayerIdentity.InitÎßå Ìò∏Ï∂úÌïòÏÑ∏Ïöî. Ï§ëÎ≥µ ÏÑ∏ÌåÖ Í∏àÏßÄ.
+    // ApplyAppearance Ï†úÍ±∞(ÌòºÏÑ†ÏùÑ ÎßâÍ∏∞ ÏúÑÌï¥)
+
     public void SmoothMoveTo(Vector3 worldPos) => _target = worldPos;
+
     public void HardSnap(Vector3 worldPos)
     {
         transform.position = worldPos;
         _target = null;
+        _animator.SetBool("IsMoving", false);
     }
-    
+
+    public void PlayerAttackAnimation()
+    {
+        // TODO: Ìä∏Î¶¨Í±∞Îßå Ìò∏Ï∂ú
+        //_animator.SetTrigger("Attack");
+    }
+
     public void SetDirection(EDirection dir)
     {
+        // Animator Ï†ïÏàò ÌååÎùºÎØ∏ÌÑ∞ "Dir" ÏÇ¨Ïö©
         switch (dir)
         {
-            case EDirection.DirUp:
-                _animator.SetInteger("Dir", 0);
-                break;
-            case EDirection.DirDown:
-                _animator.SetInteger("Dir", 1);
-                break;
-            case EDirection.DirLeft:
-                _animator.SetInteger("Dir", 2);
-                break;
-            case EDirection.DirRight:
-                _animator.SetInteger("Dir", 3);
-                break;
-                // UP/DOWN¿∫ Animator ∆ƒ∂ÛπÃ≈Õ∑Œ √≥∏Æ ±«¿Â
+            case EDirection.DirUp: _animator.SetInteger("Dir", 0); break;
+            case EDirection.DirDown: _animator.SetInteger("Dir", 1); break;
+            case EDirection.DirLeft: _animator.SetInteger("Dir", 2); break;
+            case EDirection.DirRight: _animator.SetInteger("Dir", 3); break;
+        }
+
+        // ÌïÑÏöîÏãú Ï¢åÏö∞ Î∞òÏ†Ñ
+        if (dir == EDirection.DirLeft || dir == EDirection.DirRight)
+        {
+            var s = transform.localScale;
+            s.x = (dir == EDirection.DirLeft) ? -Mathf.Abs(s.x) : Mathf.Abs(s.x);
+            transform.localScale = s;
         }
     }
 
@@ -53,18 +63,13 @@ public class PlayerAvatar : MonoBehaviour
     {
         if (!_target.HasValue) return;
 
-        var cur = transform.position;
-        var dst = _target.Value;
-
-        Vector3 next;
-        // ¿œ¡§ º”µµ ¿Ãµø
-        next = Vector3.MoveTowards(cur, dst, moveSpeed * Time.deltaTime);
+        var next = Vector3.MoveTowards(transform.position, _target.Value, moveSpeed * Time.deltaTime);
         _animator.SetBool("IsMoving", true);
         transform.position = next;
 
-        if ((next - dst).sqrMagnitude <= arriveEps * arriveEps)
-        { 
-            _target = null; // µµ¬¯
+        if ((next - _target.Value).sqrMagnitude <= arriveEps * arriveEps)
+        {
+            _target = null;
             _animator.SetBool("IsMoving", false);
         }
     }

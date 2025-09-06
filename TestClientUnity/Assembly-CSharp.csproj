@@ -83,7 +83,9 @@
     <Compile Include="Assets\@Scripts\PlayerController\PlayerInfo\PlayerAvatar.cs" />
     <Compile Include="Assets\@Scripts\UI\CreateAccount_UI.cs" />
     <Compile Include="Assets\@Scripts\Protocol\AuthGrpc.cs" />
+    <Compile Include="Assets\@Scripts\PlayerController\PlayerAttackController.cs" />
     <Compile Include="Assets\@Scripts\Packet\ServerPacketManager.cs" />
+    <Compile Include="Assets\@Scripts\PlayerController\SimpleMover.cs" />
     <Compile Include="Assets\@Scripts\PlayerController\PlayerInfo\PlayerSpawn.cs" />
     <Compile Include="Assets\@Scripts\Packet\ServerPacketHandler.cs" />
     <Compile Include="Assets\@Scripts\Network\Connector.cs" />
