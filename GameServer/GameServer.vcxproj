@@ -181,6 +181,8 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClCompile Include="AppConfig.cpp" />
     <ClCompile Include="CharacterRepository.cpp" />
     <ClCompile Include="ClientPacketHandler.cpp" />
+    <ClCompile Include="DropManager.cpp" />
+    <ClCompile Include="DropTableRepository.cpp" />
     <ClCompile Include="InventoryRepository.cpp" />
     <ClCompile Include="InventorySystem.cpp" />
     <ClCompile Include="ItemManager.cpp" />
@@ -215,6 +217,7 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="RandomUtils.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomManager.cpp" />
     <ClCompile Include="ShardBoot.cpp" />
@@ -230,6 +233,8 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClInclude Include="AppConfig.h" />
     <ClInclude Include="CharacterRepository.h" />
     <ClInclude Include="ClientPacketHandler.h" />
+    <ClInclude Include="DropManager.h" />
+    <ClInclude Include="DropTableRepository.h" />
     <ClInclude Include="InventoryCore.h" />
     <ClInclude Include="InventoryRepository.h" />
     <ClInclude Include="InventorySystem.h" />
@@ -260,6 +265,7 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClInclude Include="PlayerPorts.h" />
     <ClInclude Include="Protocol.pb.h" />
     <ClInclude Include="ProtocolHelper.h" />
+    <ClInclude Include="RandomUtils.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="RoomManager.h" />
     <ClInclude Include="ShardBoot.h" />

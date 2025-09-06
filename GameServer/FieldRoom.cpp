@@ -4,7 +4,96 @@
 #include "FieldRoom.h"
 #include "ClientPacketHandler.h"
 #include "RoomManager.h"
+#include "DropManager.h"
+#include "ItemManager.h"
 #include <random>
+
+
+bool FieldRoom::ProcessMonsterDropInRoom(EntityId monsterId, int killerPlayerId)
+{
+	// 드랍 아이템, 플레이어 얻기
+	auto droppedItems = DropManager::Instance().ProcessAllDrops(monsterId);
+	auto player = FindPlayer(killerPlayerId);
+
+	// 실패 여부 먼저 판정
+	if(!player || droppedItems.empty()) return false;
+	
+	int successCount = 0;
+	int failCount = 0;
+	std::string failedItems ;
+
+	for (const auto& item : droppedItems)
+	{
+		auto result = player->AddItem(item.itemId, item.count);
+
+		if (result == EAddItemResult::Success)
+		{
+			++successCount;
+			GConsoleLogger->WriteStdOut(Color::GREEN,
+				L"Drop Success: PlayerId[%d] ItemId[%d] Count[%d]\n",
+				killerPlayerId, item.itemId, item.count); // 성공 로그
+		}
+		else {
+			// 실패 로그
+			++failCount;
+
+			std::string itemName = "Unknown Item";
+			if (const ItemData* itemData = ItemManager::Instance().GetItemData(item.itemId)) {
+				itemName = itemData->name;
+			}
+			if (!failedItems.empty()) failedItems += ", ";
+			failedItems += itemName + " x" + std::to_string(item.count);
+
+
+			GConsoleLogger->WriteStdOut(Color::RED,
+				L"Drop Failed: PlayerId[%d] ItemId[%d] Reason[%s]\n",
+				killerPlayerId, item.itemId, result, toString(result));
+		}
+	}
+
+	// 성공한 아이템이 있으면 인벤토리 업데이트
+	if (successCount > 0) {
+		SendInventoryUpdateToPlayer(killerPlayerId);
+	}
+
+	// 실패한 아이템이 있으면 알림 전송
+	if (failCount > 0) {
+		std::string message = "인벤토리가 가득 참: " + failedItems;
+		SendSystemMessageToPlayer(killerPlayerId, message, Protocol::EMessageType::MESSAGE_WARNING);
+	}
+
+	return true;
+}
+
+void FieldRoom::SendInventoryUpdateToPlayer(int killPlayerId)
+{
+	auto player = FindPlayer(killPlayerId);
+	if (!player) return;
+
+	Protocol::S_InventoryUpdate updatePkt;
+	auto slots = player->GetInventory().ToProtocolSlots();
+	for (const auto& slotInfo : slots) {
+		*updatePkt.add_changedslots() = slotInfo;
+	}
+
+	if (auto gameSession = player->ownerSession.lock()) {
+		gameSession->Send(ClientPacketHandler::MakeSendBuffer(updatePkt));
+	}
+}
+
+void FieldRoom::SendSystemMessageToPlayer(int playerId, const std::string& message, Protocol::EMessageType type)
+{
+	auto player = FindPlayer(playerId);
+	if (!player) return;
+
+	Protocol::S_SystemMessage pkt;
+	pkt.set_message(message);
+	pkt.set_type(type);
+
+	if (auto gameSession = player->ownerSession.lock()) {
+		gameSession->Send(ClientPacketHandler::MakeSendBuffer(pkt));
+	}
+}
 
 void FieldRoom::StartTick()
 {
@@ -240,9 +329,19 @@ bool FieldRoom::PlayerMonsterLinkerImpl::TryGetMonster(EntityId monsterId, Monst
 
 bool FieldRoom::PlayerMonsterLinkerImpl::ApplyDamageToMonster(int monsterId, int damage, int srcPlayerId)
 {
+	MonsterService::MonsterView mv;
+	if (!_r._monsters->TryGetMonsterView(monsterId, mv)) return false;
+
 	int hpAfter;
-	if(!_r._monsters->ApplyDamageToMonster(monsterId, damage, srcPlayerId, hpAfter)) return false;
-	return true;
+	bool result = !_r._monsters->ApplyDamageToMonster(monsterId, damage, srcPlayerId, hpAfter);
+
+	// 몬스터가 죽었는지 확인 (hpAfter <= 0)
+	if (result && hpAfter <= 0)
+	{
+		_r.ProcessMonsterDropInRoom(mv.typeId, srcPlayerId); // 플레이어에게 드랍 
+	}
+	
+	return result;
 
 }
 

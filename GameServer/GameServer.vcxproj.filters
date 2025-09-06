@@ -49,14 +49,14 @@
     <Filter Include="GameContents\Monster">
       <UniqueIdentifier>{4472cb5b-d647-4954-b52f-e30866ba7f51}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameContents\Item">
-      <UniqueIdentifier>{6d144498-0fc3-4deb-a542-dcc1aafae33b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="DB\Test">
       <UniqueIdentifier>{97c68b7d-8fc0-4bda-a7e6-a52e29c3574d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resources">
       <UniqueIdentifier>{9445d0d6-324f-442b-ab37-9fa994cae27f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameContents\Manager">
+      <UniqueIdentifier>{de48bc72-53d2-43b5-b759-a3608cbedad6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -103,9 +103,6 @@
       <Filter>GameContents\Rooms</Filter>
     </ClCompile>
     <ClCompile Include="TownRoom.cpp">
-      <Filter>GameContents\Rooms</Filter>
-    </ClCompile>
-    <ClCompile Include="RoomManager.cpp">
       <Filter>GameContents\Rooms</Filter>
     </ClCompile>
     <ClCompile Include="ShardBoot.cpp">
@@ -162,10 +159,22 @@
     <ClCompile Include="InventoryRepository.cpp">
       <Filter>Repository</Filter>
     </ClCompile>
-    <ClCompile Include="ItemManager.cpp">
-      <Filter>GameContents\Item</Filter>
-    </ClCompile>
     <ClCompile Include="JsonFileUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomManager.cpp">
+      <Filter>GameContents\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="DropManager.cpp">
+      <Filter>GameContents\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="DropTableRepository.cpp">
+      <Filter>Repository</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>GameContents\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
@@ -219,9 +228,6 @@
       <Filter>GameContents\Rooms</Filter>
     </ClInclude>
     <ClInclude Include="TownRoom.h">
-      <Filter>GameContents\Rooms</Filter>
-    </ClInclude>
-    <ClInclude Include="RoomManager.h">
       <Filter>GameContents\Rooms</Filter>
     </ClInclude>
     <ClInclude Include="IJobQueueOwner.h">
@@ -296,10 +302,22 @@
     <ClInclude Include="InventorySystem.h">
       <Filter>GameContents\Player</Filter>
     </ClInclude>
-    <ClInclude Include="ItemManager.h">
-      <Filter>GameContents\Item</Filter>
-    </ClInclude>
     <ClInclude Include="JsonFileUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomManager.h">
+      <Filter>GameContents\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="DropManager.h">
+      <Filter>GameContents\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="DropTableRepository.h">
+      <Filter>Repository</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>GameContents\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>

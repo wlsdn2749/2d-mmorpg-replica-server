@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "MonsterService.h"
+#include "DropManager.h"
 
 
 void MonsterService::Init(const Cfg& cfg) {
@@ -67,7 +68,7 @@ bool MonsterService::TryGetMonsterView(EntityId id, MonsterView& out) const
 
 /* 쓰기 (퍼사드) */
 
-bool MonsterService::ApplyDamageToMonster(EntityId id, int dmg, int /*srcPlayerId*/, int& hpAfter)
+bool MonsterService::ApplyDamageToMonster(EntityId id, int dmg, int srcPlayerId, int& hpAfter)
 {
 	if (dmg <= 0) return false;
 
@@ -79,7 +80,6 @@ bool MonsterService::ApplyDamageToMonster(EntityId id, int dmg, int /*srcPlayerI
 	if(m->curHp > 0)
 		return true;
 
-	// HP가 0이하면 사망처리
 	KillMonster(id, Protocol::EDespawnReason::DESPAWN_KILLED);
 	return true;
 }
