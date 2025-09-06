@@ -218,7 +218,6 @@ bool Handle_C_PlayerMoveRequest(PacketSessionRef& session, Protocol::C_PlayerMov
 		room->OnRecvMoveReq(player, pkt);
 	});
 
-	GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_PlayerMoveReqeust]: Client가 Room에 이동요청함 \n");
 	return true;
 }
 

@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "GameSession.h"
 #include "ClientPacketHandler.h"
-
 #include "Player.h"
+#include "RoomManager.h"
 
 void GameSession::OnConnected()
 {
@@ -17,6 +17,10 @@ void GameSession::OnDisconnected()
 		CharacterRepository::CharacterStat stat;
 		_currentPlayer->GetCharacterStat(stat);
 		CharacterRepository::UpdateCharacterStatsAsync(stat); // 연결종료 시, Stats 저장
+		_currentPlayer->SaveInventoryToDB(); // 연결 종료시, DB 저장
+		
+		RoomRef room = _currentPlayer->GetRoom();
+		room->DoAsync(&Room::Leave, _currentPlayer);
 	}
 	_gameSessionContainer->Remove(static_pointer_cast<GameSession>(shared_from_this()));
 
