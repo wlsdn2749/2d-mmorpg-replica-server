@@ -302,6 +302,8 @@ void Room::ProcessMovesTick()
         {
             if (_tick - st.lastActionTick >= _cfg.rotateCooldownTicks)
             {
+                GConsoleLogger->WriteStdOut(Color::GREEN, L"[ProcessMovesTick] Player %d [%s] rotating from %d to %d\n", 
+                    p->playerId, StrToWstr(p->username).c_str(), (int)p->core.dir, (int)want);
                 p->core.dir = want;
                 st.lastActionTick = _tick;
                 result = Protocol::EMoveResult::MOVE_DIR;
@@ -309,6 +311,7 @@ void Room::ProcessMovesTick()
             }
             else
             {
+                GConsoleLogger->WriteStdOut(Color::RED, L"[ProcessMovesTick] Player %d [%s] rotation blocked by cooldown\n", p->playerId, StrToWstr(p->username).c_str());
                 result = Protocol::EMoveResult::MOVE_COOLDOWN;
             }
         }
@@ -330,6 +333,8 @@ void Room::ProcessMovesTick()
                 // 예약/충돌 체크
                 if (!IsTileReserved(nx, ny) && CanEnterTile(nx, ny))
                 {
+                    GConsoleLogger->WriteStdOut(Color::GREEN, L"[ProcessMovesTick] Player %d [%s] moving from (%d,%d) to (%d,%d)\n", 
+                        p->playerId, StrToWstr(p->username).c_str(), oldX, oldY, nx, ny);
                     ReserveTile(nx, ny);
                     p->core.pos.x = nx; 
                     p->core.pos.y = ny;
@@ -340,11 +345,14 @@ void Room::ProcessMovesTick()
                 }
                 else
                 {
+                    GConsoleLogger->WriteStdOut(Color::RED, L"[ProcessMovesTick] Player %d [%s] movement blocked at (%d,%d)\n", 
+                        p->playerId, StrToWstr(p->username).c_str(), nx, ny);
                     result = Protocol::EMoveResult::MOVE_BLOCKED;
                 }
             }
             else
             {
+                GConsoleLogger->WriteStdOut(Color::RED, L"[ProcessMovesTick] Player %d [%s] movement blocked by cooldown\n", p->playerId, StrToWstr(p->username).c_str());
                 result = Protocol::EMoveResult::MOVE_COOLDOWN;
             }
         }
