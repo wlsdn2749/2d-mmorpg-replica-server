@@ -36,6 +36,7 @@ enum MsgId
 	C_ITEM_USE_REQUEST = 28;
 	S_ITEM_USE_REPLY = 29;
 	S_INVENTORY_UPDATE = 30;
+	S_SYSTEM_MESSAGE = 31;
 }
 
 // 클라 -> 게임 서버 jwt 로그인 인증 (0)
@@ -234,8 +235,14 @@ message S_InventoryUpdate {
 	repeated InventorySlotInfo changedSlots = 1;
 }
 
-// TODO (31) 서버 -> 클라 : S_BroadcastPlayerHpChanged
-// TODO (32) 서버 -> 클라 : S_BroadcastPlayerDeath
+// (31) 서버 -> 클라 : 시스템 메시지 (드랍,.. 등등)
+message S_SystemMessage{
+	string message = 1;
+	EMessageType type = 2;
+}
+
+// TODO (32) 서버 -> 클라 : S_BroadcastPlayerHpChanged
+// TODO (33) 서버 -> 클라 : S_BroadcastPlayerDeath
 
 enum ELoginResult
 {
@@ -305,6 +312,15 @@ enum EItemType
 	ITEM_TYPE_QUEST = 3;        // 퀘스트 아이템
 	ITEM_TYPE_MISC = 4;         // 기타 아이템
 }
+
+enum EMessageType
+{
+	MESSAGE_INFO = 0;
+	MESSAGE_WARNING = 1;
+	MESSAGE_ERROR = 2;
+	MESSAGE_DROP_FAILED = 3;
+}
+
 message Vector2Info
 {
 	int32 x = 1;

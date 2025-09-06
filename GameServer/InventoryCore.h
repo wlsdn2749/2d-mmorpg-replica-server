@@ -69,6 +69,20 @@ enum class EAddItemResult {
     ExceedsMaxStack
 };
 
+const std::unordered_map<EAddItemResult, std::string> addItemResultToString = 
+{
+    {EAddItemResult::Success, "Success"},
+    {EAddItemResult::InventoryFull, "InventoryFull"},
+    {EAddItemResult::InvalidItem, "InvalidItem"},
+    {EAddItemResult::ExceedsMaxStack, "ExceedsMaxStack"}
+};
+
+static inline std::string toString(EAddItemResult addItemResult)
+{
+    auto it = addItemResultToString.find(addItemResult);
+    return (it != addItemResultToString.end()) ? it->second : "Unknown";
+}
+
 // 아이템 제거 결과  
 enum class ERemoveItemResult {
     Success,

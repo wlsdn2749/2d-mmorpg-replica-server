@@ -149,7 +149,7 @@
   </Procedure>
   
   
-  <!--===== 인벤토리 관련 DB =====-->
+  <!--===== 아이템, 인벤토리 관련 DB =====-->
   <Table name="ItemData">
     <Column name="itemId" type="int" notnull="true"/>
     <Column name="name" type="nvarchar(64)" notnull="true"/>
@@ -186,7 +186,40 @@
      <Column local="itemId" ref="itemId"/>
     </ForeignKey>
   </Table>
-
+  <!-- ===== 드랍 시스템 관련 DB===== -->
+  <Table name="MonsterDropItem">
+    <Column name="id" type="int" notnull="true" identity="1,1"/>
+    <Column name="monsterId" type="int" notnull="true"/>
+    <Column name="itemId" type="int" notnull="true"/>
+    <Column name="dropRate" type="int" notnull="true"/>
+    <Column name="minCount" type="int" notnull="true" default="1"/>
+    <Column name="maxCount" type="int" notnull="true" default="1"/>
+    <Column name="isEnabled" type="int" notnull="true" default="1"/>
+    <Index type="clustered">
+      <PrimaryKey/>
+      <Column name="id"/>
+    </Index>
+    <ForeignKey name="FK_MonsterDropItem_itemId_ItemData_itemId"
+            refTable="ItemData"
+            onDelete="NO_ACTION"
+            onUpdate="NO_ACTION">
+      <Column local="itemId" ref="itemId"/>
+    </ForeignKey>    
+  </Table>
+  <Procedure name="spGetMonsterDropItems">
+    <Body>
+      <![CDATA[
+       SET NOCOUNT ON;
+       SET XACT_ABORT ON;
+       
+       SELECT 
+         id, monsterId, itemId, dropRate, minCount, maxCount, isEnabled
+       FROM [dbo].[MonsterDropItem]
+       WHERE isEnabled = 1
+       ORDER BY MonsterId, DropRate DESC;
+      ]]>
+    </Body>
+  </Procedure>
   <!-- 아래 Procedures는 예시임 -->
   <Table name="Gold">
     <Column name="id" type="int" notnull="true" identity="1,1"/>

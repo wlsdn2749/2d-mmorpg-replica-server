@@ -152,6 +152,9 @@ extern S_PlayerMoveReplyDefaultTypeInternal _S_PlayerMoveReply_default_instance_
 class S_SpawnMonster;
 struct S_SpawnMonsterDefaultTypeInternal;
 extern S_SpawnMonsterDefaultTypeInternal _S_SpawnMonster_default_instance_;
+class S_SystemMessage;
+struct S_SystemMessageDefaultTypeInternal;
+extern S_SystemMessageDefaultTypeInternal _S_SystemMessage_default_instance_;
 class Vector2Info;
 struct Vector2InfoDefaultTypeInternal;
 extern Vector2InfoDefaultTypeInternal _Vector2Info_default_instance_;
@@ -192,6 +195,7 @@ template<> ::Protocol::S_LeaveGame* Arena::CreateMaybeMessage<::Protocol::S_Leav
 template<> ::Protocol::S_PlayerList* Arena::CreateMaybeMessage<::Protocol::S_PlayerList>(Arena*);
 template<> ::Protocol::S_PlayerMoveReply* Arena::CreateMaybeMessage<::Protocol::S_PlayerMoveReply>(Arena*);
 template<> ::Protocol::S_SpawnMonster* Arena::CreateMaybeMessage<::Protocol::S_SpawnMonster>(Arena*);
+template<> ::Protocol::S_SystemMessage* Arena::CreateMaybeMessage<::Protocol::S_SystemMessage>(Arena*);
 template<> ::Protocol::Vector2Info* Arena::CreateMaybeMessage<::Protocol::Vector2Info>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace Protocol {
@@ -228,12 +232,13 @@ enum MsgId : int {
   C_ITEM_USE_REQUEST = 28,
   S_ITEM_USE_REPLY = 29,
   S_INVENTORY_UPDATE = 30,
+  S_SYSTEM_MESSAGE = 31,
   MsgId_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   MsgId_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool MsgId_IsValid(int value);
 constexpr MsgId MsgId_MIN = C_JWT_LOGIN_REQUEST;
-constexpr MsgId MsgId_MAX = S_INVENTORY_UPDATE;
+constexpr MsgId MsgId_MAX = S_SYSTEM_MESSAGE;
 constexpr int MsgId_ARRAYSIZE = MsgId_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MsgId_descriptor();
@@ -489,6 +494,33 @@ inline bool EItemType_Parse(
     ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, EItemType* value) {
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<EItemType>(
     EItemType_descriptor(), name, value);
+}
+enum EMessageType : int {
+  MESSAGE_INFO = 0,
+  MESSAGE_WARNING = 1,
+  MESSAGE_ERROR = 2,
+  MESSAGE_DROP_FAILED = 3,
+  EMessageType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  EMessageType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool EMessageType_IsValid(int value);
+constexpr EMessageType EMessageType_MIN = MESSAGE_INFO;
+constexpr EMessageType EMessageType_MAX = MESSAGE_DROP_FAILED;
+constexpr int EMessageType_ARRAYSIZE = EMessageType_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* EMessageType_descriptor();
+template<typename T>
+inline const std::string& EMessageType_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, EMessageType>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function EMessageType_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    EMessageType_descriptor(), enum_t_value);
+}
+inline bool EMessageType_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, EMessageType* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<EMessageType>(
+    EMessageType_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -5399,6 +5431,170 @@ class S_InventoryUpdate final :
 };
 // -------------------------------------------------------------------
 
+class S_SystemMessage final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.S_SystemMessage) */ {
+ public:
+  inline S_SystemMessage() : S_SystemMessage(nullptr) {}
+  ~S_SystemMessage() override;
+  explicit PROTOBUF_CONSTEXPR S_SystemMessage(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  S_SystemMessage(const S_SystemMessage& from);
+  S_SystemMessage(S_SystemMessage&& from) noexcept
+    : S_SystemMessage() {
+    *this = ::std::move(from);
+  }
+
+  inline S_SystemMessage& operator=(const S_SystemMessage& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline S_SystemMessage& operator=(S_SystemMessage&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const S_SystemMessage& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const S_SystemMessage* internal_default_instance() {
+    return reinterpret_cast<const S_SystemMessage*>(
+               &_S_SystemMessage_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    31;
+
+  friend void swap(S_SystemMessage& a, S_SystemMessage& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(S_SystemMessage* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(S_SystemMessage* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  S_SystemMessage* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<S_SystemMessage>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const S_SystemMessage& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const S_SystemMessage& from) {
+    S_SystemMessage::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S_SystemMessage* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.S_SystemMessage";
+  }
+  protected:
+  explicit S_SystemMessage(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kMessageFieldNumber = 1,
+    kTypeFieldNumber = 2,
+  };
+  // string message = 1;
+  void clear_message();
+  const std::string& message() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_message(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_message();
+  PROTOBUF_NODISCARD std::string* release_message();
+  void set_allocated_message(std::string* message);
+  private:
+  const std::string& _internal_message() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_message(const std::string& value);
+  std::string* _internal_mutable_message();
+  public:
+
+  // .Protocol.EMessageType type = 2;
+  void clear_type();
+  ::Protocol::EMessageType type() const;
+  void set_type(::Protocol::EMessageType value);
+  private:
+  ::Protocol::EMessageType _internal_type() const;
+  void _internal_set_type(::Protocol::EMessageType value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Protocol.S_SystemMessage)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr message_;
+    int type_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_Protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
 class Vector2Info final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.Vector2Info) */ {
  public:
@@ -5447,7 +5643,7 @@ class Vector2Info final :
                &_Vector2Info_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    31;
+    32;
 
   friend void swap(Vector2Info& a, Vector2Info& b) {
     a.Swap(&b);
@@ -5606,7 +5802,7 @@ class PlayerMoveInfo final :
                &_PlayerMoveInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    32;
+    33;
 
   friend void swap(PlayerMoveInfo& a, PlayerMoveInfo& b) {
     a.Swap(&b);
@@ -5796,7 +5992,7 @@ class CharacterSummaryInfo final :
                &_CharacterSummaryInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    33;
+    34;
 
   friend void swap(CharacterSummaryInfo& a, CharacterSummaryInfo& b) {
     a.Swap(&b);
@@ -5982,7 +6178,7 @@ class PlayerInfo final :
                &_PlayerInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    34;
+    35;
 
   friend void swap(PlayerInfo& a, PlayerInfo& b) {
     a.Swap(&b);
@@ -6177,7 +6373,7 @@ class InventorySlotInfo final :
                &_InventorySlotInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    35;
+    36;
 
   friend void swap(InventorySlotInfo& a, InventorySlotInfo& b) {
     a.Swap(&b);
@@ -8061,6 +8257,80 @@ S_InventoryUpdate::changedslots() const {
 
 // -------------------------------------------------------------------
 
+// S_SystemMessage
+
+// string message = 1;
+inline void S_SystemMessage::clear_message() {
+  _impl_.message_.ClearToEmpty();
+}
+inline const std::string& S_SystemMessage::message() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_SystemMessage.message)
+  return _internal_message();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void S_SystemMessage::set_message(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.message_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Protocol.S_SystemMessage.message)
+}
+inline std::string* S_SystemMessage::mutable_message() {
+  std::string* _s = _internal_mutable_message();
+  // @@protoc_insertion_point(field_mutable:Protocol.S_SystemMessage.message)
+  return _s;
+}
+inline const std::string& S_SystemMessage::_internal_message() const {
+  return _impl_.message_.Get();
+}
+inline void S_SystemMessage::_internal_set_message(const std::string& value) {
+  
+  _impl_.message_.Set(value, GetArenaForAllocation());
+}
+inline std::string* S_SystemMessage::_internal_mutable_message() {
+  
+  return _impl_.message_.Mutable(GetArenaForAllocation());
+}
+inline std::string* S_SystemMessage::release_message() {
+  // @@protoc_insertion_point(field_release:Protocol.S_SystemMessage.message)
+  return _impl_.message_.Release();
+}
+inline void S_SystemMessage::set_allocated_message(std::string* message) {
+  if (message != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.message_.SetAllocated(message, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.message_.IsDefault()) {
+    _impl_.message_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:Protocol.S_SystemMessage.message)
+}
+
+// .Protocol.EMessageType type = 2;
+inline void S_SystemMessage::clear_type() {
+  _impl_.type_ = 0;
+}
+inline ::Protocol::EMessageType S_SystemMessage::_internal_type() const {
+  return static_cast< ::Protocol::EMessageType >(_impl_.type_);
+}
+inline ::Protocol::EMessageType S_SystemMessage::type() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_SystemMessage.type)
+  return _internal_type();
+}
+inline void S_SystemMessage::_internal_set_type(::Protocol::EMessageType value) {
+  
+  _impl_.type_ = value;
+}
+inline void S_SystemMessage::set_type(::Protocol::EMessageType value) {
+  _internal_set_type(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_SystemMessage.type)
+}
+
+// -------------------------------------------------------------------
+
 // Vector2Info
 
 // int32 x = 1;
@@ -8712,6 +8982,8 @@ inline void InventorySlotInfo::set_isquickslot(bool value) {
 
 // -------------------------------------------------------------------
 
+// -------------------------------------------------------------------
+
 
 // @@protoc_insertion_point(namespace_scope)
 
@@ -8768,6 +9040,11 @@ template <> struct is_proto_enum< ::Protocol::EItemType> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::EItemType>() {
   return ::Protocol::EItemType_descriptor();
+}
+template <> struct is_proto_enum< ::Protocol::EMessageType> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::EMessageType>() {
+  return ::Protocol::EMessageType_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

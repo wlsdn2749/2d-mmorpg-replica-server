@@ -32,6 +32,11 @@ public:
 		return !_map->IsBlocked(nx, ny);
 	}
 
+    bool ProcessMonsterDropInRoom(EntityId typeId, int srcPlayerId); // 플레이어에게 드랍 
+
+    void SendInventoryUpdateToPlayer(int killPlayerId);
+    void SendSystemMessageToPlayer(int playerId, const std::string& message, Protocol::EMessageType type);
+
 protected:
 	// 최초 1회 초기화
 	void StartTick() override;
