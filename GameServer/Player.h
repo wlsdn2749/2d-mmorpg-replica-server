@@ -112,7 +112,7 @@ public:
 		}
 		return result;
 	}
-
+	
 	EUseItemResult UseItem(int slotIndex) {
 		auto result = _inventory.UseItem(slotIndex);
 		if (result == EUseItemResult::Success) {

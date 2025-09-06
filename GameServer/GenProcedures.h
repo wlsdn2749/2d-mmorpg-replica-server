@@ -124,6 +124,21 @@ namespace SP
     	int32 _characterId = {};
     };
 
+    class GetMonsterDropItems : public DBBind<0,7>
+    {
+    public:
+    	GetMonsterDropItems(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spGetMonsterDropItems}") { }
+    	void ColumnOut_Id(OUT int32& v) { BindCol(0, v); };
+    	void ColumnOut_MonsterId(OUT int32& v) { BindCol(1, v); };
+    	void ColumnOut_ItemId(OUT int32& v) { BindCol(2, v); };
+    	void ColumnOut_DropRate(OUT int32& v) { BindCol(3, v); };
+    	void ColumnOut_MinCount(OUT int32& v) { BindCol(4, v); };
+    	void ColumnOut_MaxCount(OUT int32& v) { BindCol(5, v); };
+    	void ColumnOut_IsEnabled(OUT int32& v) { BindCol(6, v); };
+
+    private:
+    };
+
     class InsertGold : public DBBind<3,0>
     {
     public:

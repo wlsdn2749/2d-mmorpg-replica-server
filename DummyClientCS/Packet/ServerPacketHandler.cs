@@ -318,5 +318,10 @@ namespace Packet
                 }
             }
         }
+
+        internal static void HANDLE_S_SystemMessage(PacketSession session, S_SystemMessage message)
+        {
+            Console.WriteLine($"[SystemMessage] Type: {message.Type}, Message: {message.Message}");
+        }
     }
 }
