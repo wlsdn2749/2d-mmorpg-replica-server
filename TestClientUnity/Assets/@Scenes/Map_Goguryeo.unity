@@ -912,7 +912,7 @@ TilemapRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 4
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0.5, y: 0.34375, z: 0}
+  m_ChunkCullingBounds: {x: 0.4638554, y: 0.313253, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 2
@@ -48403,7 +48403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSpawner
   playerPrefab: {fileID: 3887942126045356216, guid: 1dacfcfa77bbeac4292b1bde1bd8d21b, type: 3}
-  vcam: {fileID: 0}
+  vcam: {fileID: 1458474420}
 --- !u!4 &1391087477
 Transform:
   m_ObjectHideFlags: 0

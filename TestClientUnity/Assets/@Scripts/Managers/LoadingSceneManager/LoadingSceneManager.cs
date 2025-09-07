@@ -1,38 +1,39 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class LoadingSceneManager : MonoBehaviour
 {
-    // === ·Îµù¾À ÀÌ¸§ °íÁ¤ ===
+    // === ë¡œë”©ì”¬ ì´ë¦„ ê³ ì • ===
     public const string LOADING_SCENE_NAME = "LoadingScene";
+    public static Action OnSceneActivated; // ìƒˆ ì”¬ì´ 'í™œì„±í™”'ëœ ì§í›„ 1íšŒ í˜¸ì¶œ
 
-    // === ¿ÜºÎ¿¡¼­ ¼¼ÆÃµÇ´Â ´ÙÀ½ ¾À Á¤º¸(Á¤Àû) ===
+    // === ì™¸ë¶€ì—ì„œ ì„¸íŒ…ë˜ëŠ” ë‹¤ìŒ ì”¬ ì •ë³´(ì •ì ) ===
     public static string nextSceneName = null;
     public static int nextSceneIndex = -1;
-
-    // === UI ·¹ÆÛ·±½º ===
+    // === UI ë ˆí¼ëŸ°ìŠ¤ ===
     [Header("UI")]
-    [SerializeField] private Image progressBar;     // 0~1 ¹üÀ§ Fill
-    [SerializeField] private TMP_Text loadingText;  // "Loading..." µî
-    [SerializeField] private string[] loadingTextVariations; // ["Loading", "Preparing", "Almost there"] µî
+    [SerializeField] private Image progressBar;     // 0~1 ë²”ìœ„ Fill
+    [SerializeField] private TMP_Text loadingText;  // "Loading..." ë“±
+    [SerializeField] private string[] loadingTextVariations; // ["Loading", "Preparing", "Almost there"] ë“±
 
-    [Header("¿É¼Ç")]
-    [Tooltip("ÃÖ¼Ò ·Îµù È­¸é ³ëÃâ ½Ã°£(ÃÊ)")]
+    [Header("ì˜µì…˜")]
+    [Tooltip("ìµœì†Œ ë¡œë”© í™”ë©´ ë…¸ì¶œ ì‹œê°„(ì´ˆ)")]
     [SerializeField] private float minDisplayTime = 5.0f;
 
-    [Tooltip("¾À ÁØºñ(0.9)¿¡ µµ´ŞÇÏ¸é ÀÚµ¿À¸·Î ¾ÀÀ» È°¼ºÈ­ÇÒÁö ¿©ºÎ")]
+    [Tooltip("ì”¬ ì¤€ë¹„(0.9)ì— ë„ë‹¬í•˜ë©´ ìë™ìœ¼ë¡œ ì”¬ì„ í™œì„±í™”í• ì§€ ì—¬ë¶€")]
     [SerializeField] private bool autoActivateOnReady = true;
 
-    [Tooltip("·Îµù ÅØ½ºÆ®¸¦ Á¡(.) ¾Ö´Ï¸ŞÀÌ¼ÇÀ¸·Î º¸¿ÏÇÒÁö ¿©ºÎ (Variations ºñ¾îÀÖÀ» ¶§¸¸ µ¿ÀÛ)")]
+    [Tooltip("ë¡œë”© í…ìŠ¤íŠ¸ë¥¼ ì (.) ì• ë‹ˆë©”ì´ì…˜ìœ¼ë¡œ ë³´ì™„í• ì§€ ì—¬ë¶€ (Variations ë¹„ì–´ìˆì„ ë•Œë§Œ ë™ì‘)")]
     [SerializeField] private bool animateDotsWhenNoVariations = true;
 
     private Coroutine _textCo;
 
     // =========================
-    // ¿ÜºÎ ÁøÀÔ API
+    // ì™¸ë¶€ ì§„ì… API
     // =========================
     public static void LoadScene(string sceneName)
     {
@@ -49,17 +50,17 @@ public class LoadingSceneManager : MonoBehaviour
     }
 
     // =========================
-    // ·Îµù¾À ¼ö¸íÁÖ±â
+    // ë¡œë”©ì”¬ ìˆ˜ëª…ì£¼ê¸°
     // =========================
     private void Start()
     {
-        // UI ÃÊ±âÈ­
+        // UI ì´ˆê¸°í™”
         if (progressBar != null) progressBar.fillAmount = 0f;
 
-        // ·Îµù ÅØ½ºÆ® ÄÚ·çÆ¾
+        // ë¡œë”© í…ìŠ¤íŠ¸ ì½”ë£¨í‹´
         _textCo = StartCoroutine(CoLoadingText());
 
-        // ½ÇÁ¦ ¾À ·Îµå
+        // ì‹¤ì œ ì”¬ ë¡œë“œ
         StartCoroutine(CoLoadNextScene());
     }
 
@@ -69,11 +70,11 @@ public class LoadingSceneManager : MonoBehaviour
     }
 
     // =========================
-    // ·Îµù ÅØ½ºÆ® ¼øÈ¯/¾Ö´Ï¸ŞÀÌ¼Ç
+    // ë¡œë”© í…ìŠ¤íŠ¸ ìˆœí™˜/ì• ë‹ˆë©”ì´ì…˜
     // =========================
     private IEnumerator CoLoadingText()
     {
-        // 1) variations°¡ ÀÖÀ¸¸é ¼øÈ¯
+        // 1) variationsê°€ ìˆìœ¼ë©´ ìˆœí™˜
         if (loadingText != null && loadingTextVariations != null && loadingTextVariations.Length > 0)
         {
             int i = 0;
@@ -84,7 +85,7 @@ public class LoadingSceneManager : MonoBehaviour
                 yield return new WaitForSeconds(1.0f);
             }
         }
-        // 2) ¾øÀ¸¸é Á¡ ¾Ö´Ï¸ŞÀÌ¼Ç
+        // 2) ì—†ìœ¼ë©´ ì  ì• ë‹ˆë©”ì´ì…˜
         else if (loadingText != null && animateDotsWhenNoVariations)
         {
             var baseText = "Loading";
@@ -103,13 +104,13 @@ public class LoadingSceneManager : MonoBehaviour
     }
 
     // =========================
-    // ºñµ¿±â ¾À ·Îµå
+    // ë¹„ë™ê¸° ì”¬ ë¡œë“œ
     // =========================
     private IEnumerator CoLoadNextScene()
     {
-        yield return null; // ÇÑ ÇÁ·¹ÀÓ ¾çº¸ (UI ·»´õ)
+        yield return null; // í•œ í”„ë ˆì„ ì–‘ë³´ (UI ë Œë”)
 
-        // ´ë»ó °áÁ¤
+        // ëŒ€ìƒ ê²°ì •
         AsyncOperation op = null;
         if (IsValidIndex(nextSceneIndex))
         {
@@ -121,11 +122,11 @@ public class LoadingSceneManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("[LoadingSceneManager] ´ÙÀ½ ¾À Á¤º¸°¡ ¾ø½À´Ï´Ù. LoadScene(int) ¶Ç´Â LoadScene(string)À¸·Î ¸ÕÀú È£ÃâÇÏ¼¼¿ä.");
+            Debug.LogError("[LoadingSceneManager] ë‹¤ìŒ ì”¬ ì •ë³´ê°€ ì—†ìŠµë‹ˆë‹¤. LoadScene(int) ë˜ëŠ” LoadScene(string)ìœ¼ë¡œ ë¨¼ì € í˜¸ì¶œí•˜ì„¸ìš”.");
             yield break;
         }
 
-        // ÀÚµ¿ È°¼ºÈ­´Â ÀÏ´Ü ¸·¾ÆµÎ°í, 0.9 µµ´Ş½Ã UI/¿¬Ãâ ¸¶¹«¸® ÈÄ È°¼ºÈ­
+        // ìë™ í™œì„±í™”ëŠ” ì¼ë‹¨ ë§‰ì•„ë‘ê³ , 0.9 ë„ë‹¬ì‹œ UI/ì—°ì¶œ ë§ˆë¬´ë¦¬ í›„ í™œì„±í™”
         op.allowSceneActivation = false;
 
         float shownTime = 0f;
@@ -133,26 +134,45 @@ public class LoadingSceneManager : MonoBehaviour
         {
             shownTime += Time.unscaledDeltaTime;
 
-            // Unity´Â 0.9±îÁö ·Îµù, ÀÌÈÄ allowSceneActivation=true°¡ µÇ¸é 1.0·Î Á¡ÇÁ
+            // UnityëŠ” 0.9ê¹Œì§€ ë¡œë”©, ì´í›„ allowSceneActivation=trueê°€ ë˜ë©´ 1.0ë¡œ ì í”„
             float progress = Mathf.Clamp01(op.progress / 0.9f);
             if (progressBar != null)
                 progressBar.fillAmount = progress;
 
-            // ÁØºñ ¿Ï·á ±¸°£
+            // ì¤€ë¹„ ì™„ë£Œ êµ¬ê°„
             if (op.progress >= 0.9f)
             {
-                // ÃÖ¼Ò ³ëÃâ ½Ã°£ ÃæÁ· + ÀÚµ¿ È°¼ºÈ­ ¿É¼ÇÀÌ¸é ¹Ù·Î ¾À È°¼ºÈ­
                 if (autoActivateOnReady && shownTime >= minDisplayTime)
                 {
-                    op.allowSceneActivation = true;
+                    //  ìƒˆ ì”¬ì´ 'í™œì„±í™”'ë˜ëŠ” ê·¸ í”„ë ˆì„ì„ í¬ì°©í•˜ê¸° ìœ„í•´ ì´ë²¤íŠ¸ êµ¬ë…
+                    void HandleSceneLoaded(Scene s, LoadSceneMode m)
+                    {
+                        // ë‹¤ìŒ ì”¬ íŒë‹¨(ì´ë¦„/ì¸ë±ìŠ¤ ì–´ëŠìª½ìœ¼ë¡œ í˜¸ì¶œí–ˆëŠ”ì§€ì— ë”°ë¼)
+                        bool isTarget = (!string.IsNullOrEmpty(nextSceneName) && s.name == nextSceneName)
+                                        || (IsValidIndex(nextSceneIndex) && s.buildIndex == nextSceneIndex);
+
+                        if (isTarget)
+                        {
+                            SceneManager.sceneLoaded -= HandleSceneLoaded;
+                            // ì •ì  ìƒíƒœ ì´ˆê¸°í™”(ë‹¤ìŒ ë¡œë”© ëŒ€ë¹„)
+                            nextSceneName = null;
+                            nextSceneIndex = -1;
+                            // ğŸ”½ ì™¸ë¶€ì— "í™œì„±í™” ì™„ë£Œ" ì•Œë¦¼
+                            try { OnSceneActivated?.Invoke(); }
+                            finally { OnSceneActivated = null; }
+                        }
+                    }
+
+                    SceneManager.sceneLoaded += HandleSceneLoaded;
+                    op.allowSceneActivation = true; // ì´ë•Œ ë‹¤ìŒ ì”¬ìœ¼ë¡œ ìŠ¤ìœ„ì¹­
                 }
             }
 
             yield return null;
         }
 
-        // ¾ÀÀÌ È°¼ºÈ­µÇ°í ·Îµù¾ÀÀÌ ºüÁ®³ª°£ ½ÃÁ¡
-        // Á¤Àû »óÅÂ ÃÊ±âÈ­(´ÙÀ½ ·Îµù ´ëºñ)
+        // ì”¬ì´ í™œì„±í™”ë˜ê³  ë¡œë”©ì”¬ì´ ë¹ ì ¸ë‚˜ê°„ ì‹œì 
+        // ì •ì  ìƒíƒœ ì´ˆê¸°í™”(ë‹¤ìŒ ë¡œë”© ëŒ€ë¹„)
         nextSceneName = null;
         nextSceneIndex = -1;
     }

@@ -79,7 +79,6 @@
     <Compile Include="Assets\@Scripts\Network\RecvBuffer.cs" />
     <Compile Include="Assets\@Scripts\UI\Auth_UI.cs" />
     <Compile Include="Assets\@Scripts\Protocol\Auth.cs" />
-    <Compile Include="Assets\@Scripts\Managers\LoadingSceneManager\LoadingScene.cs" />
     <Compile Include="Assets\@Scripts\PlayerController\PlayerInfo\PlayerAvatar.cs" />
     <Compile Include="Assets\@Scripts\UI\CreateAccount_UI.cs" />
     <Compile Include="Assets\@Scripts\Protocol\AuthGrpc.cs" />
@@ -87,6 +86,7 @@
     <Compile Include="Assets\@Scripts\Packet\ServerPacketManager.cs" />
     <Compile Include="Assets\@Scripts\PlayerController\SimpleMover.cs" />
     <Compile Include="Assets\@Scripts\PlayerController\PlayerInfo\PlayerSpawn.cs" />
+    <Compile Include="Assets\@Scripts\Managers\LoadingSceneManager\LoadingSceneManager.cs" />
     <Compile Include="Assets\@Scripts\Packet\ServerPacketHandler.cs" />
     <Compile Include="Assets\@Scripts\Network\Connector.cs" />
     <Compile Include="Assets\@Scripts\Utill\TilemapJsonExporter.cs" />
@@ -99,6 +99,7 @@
     <Compile Include="Assets\@Scripts\UI\CreateCharacter_UI.cs" />
     <Compile Include="Assets\@Scripts\Protocol\Protocol.cs" />
     <Compile Include="Assets\@Scripts\PlayerController\PlayerInfo\PlayerIdentity.cs" />
+    <Compile Include="Assets\@Scripts\Managers\LoadingSceneManager\RoomTransitionManager.cs" />
     <Compile Include="Assets\@Scripts\Network\SendBuffer.cs" />
     <Compile Include="Assets\@Scripts\UI\AuthNotice_UI.cs" />
     <Compile Include="Assets\@Scripts\Managers\PortalManager\PortalMeta.cs" />

@@ -1,101 +1,123 @@
- // ¡ç Cinemachine »ç¿ë
-using System.Collections.Generic;
-using UnityEngine;
-using Google.Protobuf.Protocol;
-using Unity.Cinemachine;
+ï»¿using Google.Protobuf.Protocol;
+using NUnit.Framework;
 using System.Collections;
-/// <summary>
-/// ¼­¹ö¿¡¼­ ³»·Á¿À´Â PlayerInfo·Î ÇÃ·¹ÀÌ¾î ÇÁ¸®ÆÕÀ» ½ºÆù/Á¦°Å.
-/// ·ÎÄÃ ÇÃ·¹ÀÌ¾î°¡ ½ºÆùµÇ¸é Cinemachine vcamÀÇ Follow/LookAtÀ» ÀÚµ¿ ¿¬°á.
-/// </summary>
+using System.Collections.Generic;
+using System.Linq;
+using Unity.Cinemachine;
+using UnityEngine;
+
 public class PlayerSpawner : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private GameObject playerPrefab;                 // ½ºÆùÇÒ ÇÁ¸®ÆÕ
-    [SerializeField] private CinemachineCamera vcam;           // ¾À¿¡ ¹èÄ¡ÇÑ vcam (¾øÀ¸¸é ·±Å¸ÀÓ¿¡ Ã£¾Æ¿È)
+    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private CinemachineCamera vcam;
 
     public static PlayerSpawner Instance { get; private set; }
-    private readonly Dictionary<long, GameObject> _spawned = new();   // playerId ¡æ GO
+    private readonly Dictionary<int, GameObject> _spawned = new(); // ğŸ” intë¡œ í†µì¼
     private static readonly List<(PlayerInfo info, bool isLocal)> _pending = new();
+
     void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
 
-        // ÇÊ¿äÇÏ¸é À¯Áö
-        // DontDestroyOnLoad(gameObject);
-
         FlushPending();
         if (vcam == null)
-           vcam = FindFirstObjectByType<CinemachineCamera>(FindObjectsInactive.Include);
+            vcam = FindFirstObjectByType<CinemachineCamera>(FindObjectsInactive.Include);
     }
-    public static GameObject Get(int playerId)
-    {
-        if (!HasInstance) return null;
-        if (Instance._spawned.TryGetValue(playerId, out var go))
-            return go;
-        return null;
-    }
-    public static bool HasInstance => Instance != null;
 
-    /// <summary>ÀÌ¹Ì ½ºÆùµÅ ÀÖ´ÂÁö È®ÀÎ</summary>
+    public static bool HasInstance => Instance != null;
+    public static GameObject Get(int playerId)
+        => HasInstance && Instance._spawned.TryGetValue(playerId, out var go) ? go : null;
     public static bool IsSpawned(int playerId)
         => HasInstance && Instance._spawned.ContainsKey(playerId);
 
-    /// <summary>½ºÆù (Áßº¹ ½ºÆù ¹æÁö Æ÷ÇÔ)</summary>
     public void SpawnNow(PlayerInfo info, bool isLocal)
     {
-        if (!playerPrefab) { Debug.LogError("[PlayerSpawner] playerPrefab ¹ÌÇÒ´ç"); return; }
+        if (!playerPrefab) { Debug.LogError("[PlayerSpawner] playerPrefab ë¯¸í• ë‹¹"); return; }
         if (_spawned.ContainsKey(info.Id)) return;
-        
-        
+
         var pos = new Vector3(info.Pos.X, info.Pos.Y, 0);
-        Debug.Log($"{pos}, {info.Pos.X} {info.Pos.Y}");
         var go = Instantiate(playerPrefab, pos, Quaternion.identity);
         go.name = (isLocal ? "LocalPlayer_" : "Player_") + info.Id;
-
+        Debug.Log($"[Spawner] spawn id={info.Id} name={info.Username} local={isLocal} pos=({info.Pos.X},{info.Pos.Y})");
         var identity = go.GetComponent<PlayerIdentity>() ?? go.AddComponent<PlayerIdentity>();
         identity.Init(info, isLocal);
 
-        _spawned[info.Id] = go;
-        Debug.Log($"[PlayerSpawner] Spawn OK: {info.Username} (ID:{info.Id}) {(isLocal ? "(ME)" : "")} at {pos}");
+        _spawned[info.Id] = go; //  í•œ ë²ˆë§Œ ë“±ë¡
 
-        // µî·Ï
-        Instance._spawned[info.Id] = go;
-
-        // ·ÎÄÃ ÇÃ·¹ÀÌ¾î¶ó¸é ½Ã³×¸Ó½Å vcam ¿¬°á
         if (isLocal)
-            Instance.AttachCinemachineTo(go.transform);
-        
+            AttachCinemachineTo(go.transform);
     }
+
     public static void EnsureExists()
     {
         if (Instance != null) return;
         var go = new GameObject("PlayerSpawner");
         go.AddComponent<PlayerSpawner>();
-        Debug.Log("[PlayerSpawner] µ¿Àû »ı¼º");
+        Debug.Log("[PlayerSpawner] ë™ì  ìƒì„±");
     }
+
     public static void SafeSpawn(PlayerInfo info, bool isLocal)
     {
         if (Instance == null)
         {
             _pending.Add((info, isLocal));
-            Debug.LogWarning("[PlayerSpawner] ÀÎ½ºÅÏ½º ¾øÀ½ ¡æ ´ë±â¿­¿¡ º¸°ü");
+            Debug.LogWarning("[PlayerSpawner] ì¸ìŠ¤í„´ìŠ¤ ì—†ìŒ â†’ ëŒ€ê¸°ì—´ì— ë³´ê´€");
             return;
         }
-        Instance.SpawnNow(info, isLocal);
+        SceneTransition.RunAfterGameplaySceneLoaded(() => Instance.SpawnNow(info, isLocal));
     }
-    /// <summary>Á¦°Å</summary>
+
     public static void RemovePlayer(int playerId)
     {
-        if (!HasInstance) return;
-
-        if (Instance._spawned.TryGetValue(playerId, out var go))
+        if (!HasInstance)
+        {
+            SceneTransition.RunAfterGameplaySceneLoaded(() => Instance._spawned.Remove(playerId));
+        }
+        else if (Instance._spawned.TryGetValue(playerId, out var go))
         {
             Object.Destroy(go);
             Instance._spawned.Remove(playerId);
         }
     }
+
+    public static void DespawnAll()
+    {
+        if (!HasInstance) return;
+        foreach (var kv in Instance._spawned)
+            if (kv.Value) Object.Destroy(kv.Value);
+        Instance._spawned.Clear();
+    }
+
+    // ìŠ¤ëƒ…ìƒ· ìœ í‹¸: snapì— ì—†ëŠ” ì• ëŠ” ì œê±°, ìˆëŠ” ì• ëŠ” ìŠ¤í°(ê¸°ì¡´ ì •ì±…: ëª¨ë‘ ìƒˆ ìƒì„±ì´ì§€ë§Œ, ì•ˆì „ìƒ ìˆìŒ)
+    public static void ApplySnapshot(S_PlayerList snap)
+    {
+        if (snap == null) { Debug.LogWarning("[PlayerSpawner] snapshot is null"); return; }
+
+        // ì •ì±…: ì¼ë‹¨ ì „ì²´ ì œê±° í›„ ì¬ìƒì„±
+        DespawnAll();
+
+        int myId = snap.MyPlayerId;
+        SceneTransition.RunAfterGameplaySceneLoaded(() =>
+        {
+            Debug.Log("ì”¬ ë¡œë”© ì™„ë£Œ í›„ í”Œë ˆì´ì–´ ìŠ¤í° ì²˜ë¦¬");
+            foreach (var p in snap.Players)
+            {
+                Debug.Log($"[Spawner] apply snapshot myId={snap.MyPlayerId} total={snap.Players.Count}");
+                SafeSpawn(p, p.Id == myId);
+            }
+        }); 
+    }
+
+    // (ëŒ€ì•ˆ) ì—†ì• ê³  ì‹¶ì€ ì• ë§Œ ì œê±°í•˜ê³  ë‚˜ë¨¸ì§€ ìœ ì§€í•˜ê³  ì‹¶ì„ ë•Œ
+    public static void DespawnExcept(HashSet<int> aliveIds)
+    {
+        if (!HasInstance) return;
+        var toRemove = Instance._spawned.Keys.Where(id => !aliveIds.Contains(id)).ToList();
+        foreach (var id in toRemove) RemovePlayer(id);
+    }
+
     private void FlushPending()
     {
         if (_pending.Count == 0) return;
@@ -104,19 +126,6 @@ public class PlayerSpawner : MonoBehaviour
         _pending.Clear();
     }
 
-    /// <summary>ÀüÃ¼ Á¦°Å(¸Ê °¥¾ÆÅ» ¶§ µî)</summary>
-    public static void DespawnAll()
-    {
-        if (!HasInstance) return;
-
-        foreach (var kv in Instance._spawned)
-            if (kv.Value != null) Object.Destroy(kv.Value);
-
-        Instance._spawned.Clear();
-    }
-
-    // --- ³»ºÎ À¯Æ¿ ---
-
     private void AttachCinemachineTo(Transform target)
     {
         if (vcam == null)
@@ -124,56 +133,22 @@ public class PlayerSpawner : MonoBehaviour
 
         if (vcam == null)
         {
-            Debug.LogWarning("[PlayerSpawner] CinemachineCamera¸¦ Ã£Áö ¸øÇß½À´Ï´Ù. ¾À¿¡ vcamÀ» ¹èÄ¡ÇÏ¼¼¿ä.");
+            Debug.LogWarning("[PlayerSpawner] CinemachineCameraë¥¼ ì°¾ì§€ ëª»í–ˆìŠµë‹ˆë‹¤. ì”¬ì— vcamì„ ë°°ì¹˜í•˜ì„¸ìš”.");
             return;
         }
 
-        // CM3¿¡¼­µµ Follow
         vcam.Follow = target;
 
-        // (¼±ÅÃ) Ã¹ ÇÁ·¹ÀÓ Æ¦ ¹æÁö: PositionComposerÀÇ DampingÀ» Àá±ñ 0À¸·Î
         var composer = vcam.GetComponent<CinemachinePositionComposer>();
         if (composer != null)
-            StartCoroutine(SnapCameraNextFrame(composer, new Vector3(0.5f, 0.5f, 0f))); // º¹±¸°ªÀº ÇÁ·ÎÁ§Æ®¿¡ ¸Â°Ô
-        
+            StartCoroutine(SnapCameraNextFrame(composer, new Vector3(0.5f, 0.5f, 0f)));
     }
+
     IEnumerator SnapCameraNextFrame(CinemachinePositionComposer composer, Vector3 restoreDamping)
     {
-        // ÇöÀç Damping ÀúÀå
         var prev = composer.Damping;
-        // ½ºÆù ÇÁ·¹ÀÓ Áï½Ã ½º³À
         composer.Damping = Vector3.zero;
-
-        yield return null; // ÇÑ ÇÁ·¹ÀÓ ¾çº¸ ÈÄ
-
-        // ¿ø·¡ °¨¼è°ª º¹±¸
+        yield return null;
         composer.Damping = restoreDamping;
     }
-
-    static void ApplyDirection(Transform t, EDirection dir)
-    {
-        switch (dir)
-        {
-            case EDirection.DirLeft: 
-                t.localScale = new Vector3(-1, 1, 1); 
-                break;
-            case EDirection.DirRight:
-                t.localScale = new Vector3(1, 1, 1);
-                break;
-            case EDirection.DirUp:
-                // Animator ÆÄ¶ó¹ÌÅÍ·Î Ã³¸® ±ÇÀå
-                break;
-                case EDirection.DirDown:
-                // Animator ÆÄ¶ó¹ÌÅÍ·Î Ã³¸® ±ÇÀå
-                break;
-                // UP/DOWNÀº Animator ÆÄ¶ó¹ÌÅÍ·Î Ã³¸® ±ÇÀå
-        }
-    }
-    
-    //System.Collections.IEnumerator AttachCameraNextFrame(Transform target)
-    //{
-    //    yield return null;
-    //    var cf = Object.FindObjectOfType<CameraFollow>(true);
-    //    if (cf != null) cf.Follow(target);
-    //}
 }

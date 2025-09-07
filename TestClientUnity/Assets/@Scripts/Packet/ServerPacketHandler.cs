@@ -95,7 +95,6 @@ namespace Packet
                 UnityEngine.Debug.LogError("EnterGame 실패");
                 return;
             }
-            //Console.WriteLine("[S_EnterGame] 게임 접속 완료");
             Debug.Log("[S_EnterGame] 게임 접속 완료");
         }
 
@@ -149,10 +148,10 @@ namespace Packet
         {
             return mapId switch
             {
-                1 => "GoguryeoScene",
-                2 => "BaekjeScene",
-                3 => "FieldScene",
-                _ => $"알 수 없는 맵 (ID: {mapId})"
+                1 => "Map_Goguryeo",
+                2 => "Map_Baekje",
+                3 => "Map_HuntingField",
+                _ => $"Map_{mapId}",
             };
         }
         static void SafeSpawn(PlayerInfo info, bool isLocal)
@@ -184,12 +183,12 @@ namespace Packet
         internal static void HANDLE_S_BroadcastPlayerEnter(PacketSession session, S_BroadcastPlayerEnter broadEnter)
         {
             Debug.Log("[S_BroadcastPlayerEnter] 누군가 접속해서 그 정보를 받아옴");
-            SafeSpawn(broadEnter.Player, isLocal: false);
+            PlayerSpawner.SafeSpawn(broadEnter.Player, isLocal: false);
         }
 
         internal static void HANDLE_S_BroadcastPlayerLeave(PacketSession session, S_BroadcastPlayerLeave leave)
         {
-            SafeRemove(leave.PlayerId);
+            PlayerSpawner.RemovePlayer(leave.PlayerId);
             Debug.Log("[S_BroadcastPlayerLeave] 누군가 나가서 그 정보를 받아옴");
         }
 
@@ -298,16 +297,7 @@ namespace Packet
         {
             Console.WriteLine($"[S_ChangeRoomBegin] Begin Change Room");
             Debug.Log($"[HANDLE_S_ChangeRoomBegin] Room Has Change into ...");
-            var mapid = begin.MapId;
-            var pkt = new Google.Protobuf.Protocol.C_ChangeRoomReady {
-                TransitionId = begin.TransitionId,
-            };
-
-            session.Send(ServerPacketManager.MakeSendBuffer(pkt));
-            LoadingSceneManager.LoadScene(begin.MapId);
-
-
-            
+            RoomTransitionManager.Instance.OnChangeRoomBegin(begin);
             Debug.Log("맵 씬 로딩 시작");
             //맵 씬 활성 직후 전체 스폰
         }
@@ -315,7 +305,13 @@ namespace Packet
         internal static void HANDLE_S_ChangeRoomCommit(PacketSession session, S_ChangeRoomCommit commit)
         {
             Console.WriteLine($"[S_ChangeRoomCommit] Room Has Change into ...");
-            
+            Debug.Log($"[S_ChangeRoomCommit] tid={commit.TransitionId}, players={commit.Snapshots?.Players?.Count ?? 0}");
+            if (commit.Snapshots.Players.Count == 0)
+            {
+                Debug.LogWarning("[PlayerSpawner] Commit snapshot is empty! Re-requesting player list...");
+                // 예: 서버한테 S_PlayerList 다시 요청하는 패킷 보내기
+            }
+            RoomTransitionManager.Instance.OnChangeRoomCommit(commit);
             Debug.Log($"[S_ChangeRoomCommit] Room Has Change into ...");
 
         }
