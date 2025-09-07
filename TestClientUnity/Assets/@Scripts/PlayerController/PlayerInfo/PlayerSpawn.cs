@@ -131,24 +131,31 @@ public class PlayerSpawner : MonoBehaviour
         if (vcam == null)
             vcam = FindFirstObjectByType<CinemachineCamera>(FindObjectsInactive.Include);
 
-        if (vcam == null)
+        if (vcam == null || target == null)
         {
-            Debug.LogWarning("[PlayerSpawner] CinemachineCamera를 찾지 못했습니다. 씬에 vcam을 배치하세요.");
+            Debug.LogWarning("[PlayerSpawner] vcam or target is null");
             return;
         }
 
+        // 카메라를 먼저 타깃 위치로 순간이동
+        vcam.transform.position = target.position + new Vector3(0, 0, -10f);
+
+        // 이전 상태 무효화 → 첫 프레임부터 스냅
+        vcam.PreviousStateIsValid = false;
+
+        // Follow 바로 연결
         vcam.Follow = target;
 
-        var composer = vcam.GetComponent<CinemachinePositionComposer>();
-        if (composer != null)
-            StartCoroutine(SnapCameraNextFrame(composer, new Vector3(0.5f, 0.5f, 0f)));
+        // damping 잠깐 0으로 만들고 한 프레임 후 복구
+        if (vcam.TryGetComponent<CinemachinePositionComposer>(out var composer))
+            StartCoroutine(ResetDampingNextFrame(composer));
     }
 
-    IEnumerator SnapCameraNextFrame(CinemachinePositionComposer composer, Vector3 restoreDamping)
+    private IEnumerator ResetDampingNextFrame(CinemachinePositionComposer composer)
     {
         var prev = composer.Damping;
         composer.Damping = Vector3.zero;
-        yield return null;
-        composer.Damping = restoreDamping;
+        yield return null;   // 한 프레임 유지
+        composer.Damping = prev;
     }
 }

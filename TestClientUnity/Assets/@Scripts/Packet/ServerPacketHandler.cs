@@ -123,25 +123,6 @@ namespace Packet
                     Debug.Log($"플레이어 스폰 처리: {p.Username} (ID: {p.Id}) {(isLocal ? "(ME)" : "")}");
                 }
             });
-            #region 디버깅용        
-            // 맵ID에 따른 씬 로딩 시뮬레이션
-            //string sceneName = GetSceneNameByMapId(list.MapId);
-            //Debug.Log($">>> 씬 로딩 시뮬레이션: '{sceneName}' 로딩 중...");
-            //Debug.Log($">>> 맵 배경 및 UI 초기화 완료");
-
-            //// 내 플레이어 ID 저장
-            //NetDebug.MyPlayerId = list.MyPlayerId;
-            //Debug.Log($"내 플레이어 ID: {list.MyPlayerId}");
-
-            //// 다른 플레이어 정보
-            //Debug.Log($"현재 룸에 있는 다른 플레이어 수: {list.Players.Count-1}");
-            //foreach (var player in list.Players)
-            //{
-            //    var pos = NetDebug.PosToStr(player.Pos);
-            //    var dir = NetDebug.DirToStr(player.Direction);
-            //    Debug.Log($"  - 플레이어ID: {player.Id}, 이름: {player.Username}, 위치: {pos}, 방향: {dir}");
-            //}
-            #endregion
         }
 
         private static string GetSceneNameByMapId(int mapId)
@@ -153,32 +134,6 @@ namespace Packet
                 3 => "Map_HuntingField",
                 _ => $"Map_{mapId}",
             };
-        }
-        static void SafeSpawn(PlayerInfo info, bool isLocal)
-        {
-            if (PlayerSpawner.HasInstance)
-            {
-                PlayerSpawner.Instance.SpawnNow(info, isLocal);
-                Debug.Log("세이프 스폰 호출");
-            }
-            else
-            {
-                SceneTransition.RunAfterGameplaySceneLoaded(() =>
-                    PlayerSpawner.Instance.SpawnNow(info, isLocal));
-            }
-        }
-
-        static void SafeRemove(int id)
-        {
-            if (PlayerSpawner.HasInstance)
-            {
-                PlayerSpawner.RemovePlayer(id);
-            }
-            else
-            {
-                SceneTransition.RunAfterGameplaySceneLoaded(() =>
-                    PlayerSpawner.RemovePlayer(id));
-            }
         }
         internal static void HANDLE_S_BroadcastPlayerEnter(PacketSession session, S_BroadcastPlayerEnter broadEnter)
         {
@@ -313,13 +268,56 @@ namespace Packet
             }
             RoomTransitionManager.Instance.OnChangeRoomCommit(commit);
             Debug.Log($"[S_ChangeRoomCommit] Room Has Change into ...");
-
         }
 
         internal static void HANDLE_S_LeaveGame(PacketSession session, S_LeaveGame game)
         {
             Console.WriteLine($"[S_LeaveGame] Game Has left.");
-            Debug.Log($"[S_LeaveGame] Game Has left.");
+            
+            if (game.Success !=1)
+            {
+                return;
+            }
+            switch (LeaveGameContext.LastLeaveReason)
+            {
+                case ELeaveReason.LeaveLogout:
+                    //Debug.Log($"[S_LeaveGame] Game Has left.");
+                    //HandleLogoutAndQuit();
+                    Debug.Log($"[S_LeaveGame] CharacterSelectUI");
+                    LoginManagement.SetLoingEntryMode(LoginEntryMode.ColdStart);
+                    Authenticate.Jwt = "";
+                    HandleLeaveToCharacterSelect();
+                    break;
+
+                case ELeaveReason.LeaveChangeRoom:
+                    Debug.Log($"[S_LeaveGame] CharacterSelectUI");
+                    LoginManagement.SetLoingEntryMode(LoginEntryMode.AfterLeaveToCharacterSelect);
+                    HandleLeaveToCharacterSelect();
+                    break;
+
+                case ELeaveReason.LeaveDisconnect:
+                    LoginManagement.SetLoingEntryMode(LoginEntryMode.ColdStart);
+                    HandleDisconnectedToLogin();
+                    break;
+
+                default:
+                    HandleDisconnectedToLogin();
+                    break;
+            }
+
+        }
+        static void HandleLeaveToCharacterSelect()
+        {
+            // 1) 월드 정리 (세션/네트매니저는 유지)
+            PlayerSpawner.DespawnAll();
+            RoomTransitionManager.Instance?.ResetState(); // 아래 ResetState 구현
+            LoadingSceneManager.LoadScene("AuthScene");
+        }
+
+        static void HandleDisconnectedToLogin()
+        {
+            // 선택: 즉시 로그인 화면 or 재연결 시도 후 실패 시 로그인 화면
+            LoadingSceneManager.LoadScene("AuthScene");
         }
         internal static void HANDLE_S_SpawnMonster(PacketSession session, S_SpawnMonster spawnMonster)
         {

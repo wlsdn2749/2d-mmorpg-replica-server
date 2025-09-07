@@ -83,7 +83,12 @@ public class RoomTransitionManager : MonoBehaviour
             pc.enabled = enabled && id != null && id.IsLocalPlayer;
         }
     }
-
+    public void ResetState()
+    {
+        CurrentTransitionId = -1;
+        CurrentMapId = -1;
+        CurrentState = State.Idle;
+    }
     private string MapIdToSceneName(int mapId)
     {
         return mapId switch
