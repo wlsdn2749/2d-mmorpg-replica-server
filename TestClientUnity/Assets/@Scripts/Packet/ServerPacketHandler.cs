@@ -361,5 +361,10 @@ namespace Packet
         {
 
         }
+        internal static void HANDLE_S_SystemMessage(PacketSession session, S_SystemMessage sysMsg)
+        {
+            Debug.Log($"[SystemMessage] {sysMsg.Message}");
+            
+        }
     }
 }
