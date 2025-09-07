@@ -8,7 +8,7 @@ public class PlayerIdentity : MonoBehaviour
 {
     public int Id { get; private set; }
     public string Username { get; private set; }
-    public bool IsLocalPlayer { get; private set; }
+    public bool IsLocalPlayer;
     public int LastServerTick { get; private set; }
 
     [Header("Refs (auto)")]

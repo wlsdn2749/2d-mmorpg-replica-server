@@ -193,6 +193,7 @@ GameObject:
   - component: {fileID: -2982599122557389914}
   - component: {fileID: -1852574896024480770}
   - component: {fileID: 6923634569787037221}
+  - component: {fileID: -80947510715959898}
   m_Layer: 0
   m_Name: MaleCharacter
   m_TagString: Untagged
@@ -308,12 +309,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2307eb5c8a042a543b798c56d3578f2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerIdentity
-  Id: 0
-  Username: 
-  IsLocalPlayer: 0
   spriteRenderer: {fileID: 1296685899296522835}
   animator: {fileID: 2167436863411787309}
   _playerNameText: {fileID: 915390014024644149}
+  localOnlyComponents: []
+  remoteOnlyComponents: []
 --- !u!114 &-1852574896024480770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,9 +326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 464baffeabed5924cba3acd08e6c37b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAvatar
-  moveSpeed: 4
-  arriveEps: 0.01
-  initialState: Idle
+  _animator: {fileID: 0}
 --- !u!114 &6923634569787037221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,4 +339,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71eeef83527d4bc45b58e7c0e2f8add3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  previewSpeed: 5
+  _curMoveCooldown: 0.5
+  _simpleMover: {fileID: 0}
+--- !u!114 &-80947510715959898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3887942126045356216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea4ef27c132daf248b61d253fc2776da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleMover
+  _moveSpeed: 4
+  _arriveEps: 0.01
+  _playerAvatar: {fileID: 0}
