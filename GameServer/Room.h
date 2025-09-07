@@ -20,8 +20,8 @@ public:
 		string	name				= "Room"; 
 		uint32	tickMs				= 50;
 		size_t	capacity			= 200; // 최대 수용량
-		int		moveCooldownTicks	= 5;
-		int		rotateCooldownTicks	= 5;
+		int		moveCooldownTicks	= 10; // 10*50 = 500ms
+		int		rotateCooldownTicks	= 10;
 		int		periodicSaveTicksMs = 180 * 1000;
 	};
 
@@ -61,7 +61,7 @@ protected:
 -----------------*/
 public:
 	int RoomId() const noexcept { return _cfg.id; }
-	const std::string& Name() const noexcept { return _cfg.name; }
+	const std::string& RoomName() const noexcept { return _cfg.name; }
 	size_t PlayerCount() const noexcept { return _players.size(); }
 	size_t Capacity() const noexcept { return _cfg.capacity; }
 	int moveCooldownTicks() const noexcept {return _cfg.moveCooldownTicks; }

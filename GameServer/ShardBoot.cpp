@@ -43,7 +43,6 @@ void CreateRooms()
 {
     const int roomsPerQueue = 2;
 
-
     // 마을(0)
     {
         auto town0Map = MapData::LoadMapFromJsonFile("./Resources/Maps/고구려_Tilemap_Info.json");
