@@ -116,7 +116,7 @@ namespace Packet
             Console.WriteLine($"내 플레이어 ID: {list.MyPlayerId}");
             
             // 다른 플레이어 정보
-            Console.WriteLine($"현재 룸에 있는 다른 플레이어 수: {list.Players.Count}");
+            Console.WriteLine($"현재 룸에 있는 본인 포함 다른 플레이어 수: {list.Players.Count}");
             foreach (var player in list.Players)
             {
                 var pos = NetDebug.PosToStr(player.Pos);
@@ -210,7 +210,7 @@ namespace Packet
                 var snapshots = commit.Snapshots;
                 NetDebug.MyPlayerId = snapshots.MyPlayerId;
                 Console.WriteLine($"내 플레이어 ID: {snapshots.MyPlayerId}");
-                Console.WriteLine($"새로운 룸의 다른 플레이어 수: {snapshots.Players.Count}");
+                Console.WriteLine($"새로운 룸의 본인 포함 다른 플레이어 수: {snapshots.Players.Count}");
                 
                 foreach (var player in snapshots.Players)
                 {

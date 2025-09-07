@@ -466,11 +466,11 @@ void Room::ChangeRoomReady(const PlayerRef& p, const Protocol::C_ChangeRoomReady
             p->core.pos.y = sp->y;
             dst->AddPlayerInternal(p, {ESpawnType::PLAYER_SPAWN, sp->x, sp->y }, p->core.dir);
 
-            // Commit + 스냅샷(나 제외 권장)
+            // Commit + 스냅샷 (나 포함)
             Protocol::S_ChangeRoomCommit commit;
             commit.set_transitionid(pend.transitionId);
             commit.set_mapid(dst->RoomId());
-            *commit.mutable_snapshots() = dst->BuildPlayerListSnapshot(p, /*includeSelf=*/false);
+            *commit.mutable_snapshots() = dst->BuildPlayerListSnapshot(p, /*includeSelf=*/true);
             
             // DB에 저장
             CharacterRepository::CharacterStat stat;  // 스택에 한 번만 생성
