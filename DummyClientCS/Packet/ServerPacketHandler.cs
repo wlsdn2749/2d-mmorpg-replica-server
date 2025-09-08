@@ -223,7 +223,16 @@ namespace Packet
 
         internal static void HANDLE_S_LeaveGame(PacketSession session, S_LeaveGame game)
         {
-            Console.WriteLine($"[S_LeaveGame] Game Has left.");
+            var success = game.Success;
+            var detail = game.Detail;
+            if (success)
+            {
+                Console.WriteLine($"[S_LeaveGame] Game Has left. detail : {detail}");
+            }
+            else
+            {
+                Console.WriteLine($"[S_LeaveGame Failed. detail : {detail}");
+            }
         }
 
         internal static void HANDLE_S_BroadcastMonsterDeath(PacketSession session, S_BroadcastMonsterDeath death)
