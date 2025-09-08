@@ -85,7 +85,6 @@ public class CharacterList_UI : MonoBehaviour
     {
         if (_selectedIndex < 0) return;
 
-        // 여기서만 입장 패킷 전송
         var req = new C_EnterGame { PlayerIndex = _selectedIndex };
         var sendBuffer = ServerPacketManager.MakeSendBuffer(req);
         NetworkManager.Instance.Send(sendBuffer);
@@ -93,9 +92,7 @@ public class CharacterList_UI : MonoBehaviour
         Debug.Log($"[UI] 게임 접속 요청 전송: playerIndex={0}, len={sendBuffer.Count}");
         AuthNotice_UI.Instance.gameObject.SetActive(true);
         AuthNotice_UI.Instance.ShowNotice(NoticeCode.EnterGame);
-        // 선택: 로딩 표시
         _startBtn.interactable = false;
-        // ShowLoading(true);
     }
     private void OnClickShowCharacterDeleteUI()
     {
