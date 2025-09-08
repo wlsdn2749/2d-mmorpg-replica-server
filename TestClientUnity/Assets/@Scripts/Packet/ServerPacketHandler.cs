@@ -86,7 +86,10 @@ namespace Packet
             }
             CharacterList_UI.Instance.SetCharacterList(reply.Characters);
         }
-
+        internal static void HANDLE_S_DeleteCharacterReply(PacketSession session, S_DeleteCharacterReply delete)
+        {
+            //Debug.Log()
+        }
         internal static void HANDLE_S_EnterGame(PacketSession session, S_EnterGame enter)
         {
             AuthNotice_UI.Instance.gameObject.SetActive(false);
@@ -285,15 +288,14 @@ namespace Packet
                     //HandleLogoutAndQuit();
                     Debug.Log($"[S_LeaveGame] CharacterSelectUI");
                     LoginManagement.SetLoingEntryMode(LoginEntryMode.ColdStart);
-                    Authenticate.Jwt = "";
                     HandleLeaveToCharacterSelect();
                     break;
 
-                case ELeaveReason.LeaveChangeRoom:
-                    Debug.Log($"[S_LeaveGame] CharacterSelectUI");
-                    LoginManagement.SetLoingEntryMode(LoginEntryMode.AfterLeaveToCharacterSelect);
-                    HandleLeaveToCharacterSelect();
-                    break;
+                //case ELeaveReason.LeaveChangeRoom: // 클라이언트가 다루지 않음.
+                //    Debug.Log($"[S_LeaveGame] CharacterSelectUI");
+                //    LoginManagement.SetLoingEntryMode(LoginEntryMode.AfterLeaveToCharacterSelect);
+                //    HandleLeaveToCharacterSelect();
+                //    break;
 
                 case ELeaveReason.LeaveDisconnect:
                     LoginManagement.SetLoingEntryMode(LoginEntryMode.ColdStart);

@@ -94,7 +94,18 @@ public class CharacterList_UI : MonoBehaviour
         _startBtn.interactable = false;
         // ShowLoading(true);
     }
+    private void OnClickCharacterDelete()
+    {
+        if (_selectedIndex < 0) return;
 
+        var req = new C_DeleteCharacterRequest { CharacterIndex = _selectedIndex };
+        var sendBuffer = ServerPacketManager.MakeSendBuffer(req);   
+        NetworkManager.Instance.Send(sendBuffer);
+    }
+    private void ShowDeleteCharacterUI()
+    {
+
+    }
     void OnClickCreateCharacter()
     {
         _createCharacterPanel.SetActive(true);
