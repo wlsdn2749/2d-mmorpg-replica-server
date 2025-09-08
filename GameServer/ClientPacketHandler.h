@@ -13,32 +13,34 @@ enum : uint16
 	PKT_S_CreateCharacterReply = 3,
 	PKT_C_CharacterListRequest = 4,
 	PKT_S_CharacterListReply = 5,
-	PKT_C_EnterGame = 6,
-	PKT_S_EnterGame = 7,
-	PKT_S_PlayerList = 8,
-	PKT_S_BroadcastPlayerEnter = 9,
-	PKT_C_LeaveGame = 10,
-	PKT_S_LeaveGame = 11,
-	PKT_S_BroadcastPlayerLeave = 12,
-	PKT_C_PlayerMoveRequest = 13,
-	PKT_S_PlayerMoveReply = 14,
-	PKT_S_BroadcastPlayerMove = 15,
-	PKT_S_ChangeRoomBegin = 16,
-	PKT_C_ChangeRoomReady = 17,
-	PKT_S_ChangeRoomCommit = 18,
-	PKT_S_SpawnMonster = 19,
-	PKT_S_DespawnMonster = 20,
-	PKT_S_BroadcastMonsterMove = 21,
-	PKT_S_BroadcastMonsterAttack = 22,
-	PKT_S_BroadcastMonsterDeath = 23,
-	PKT_C_PlayerAttackRequest = 24,
-	PKT_S_BroadcastPlayerAttack = 25,
-	PKT_C_InventoryRequest = 26,
-	PKT_S_InventoryReply = 27,
-	PKT_C_ItemUseRequest = 28,
-	PKT_S_ItemUseReply = 29,
-	PKT_S_InventoryUpdate = 30,
-	PKT_S_SystemMessage = 31,
+	PKT_C_DeleteCharacterRequest = 6,
+	PKT_S_DeleteCharacterReply = 7,
+	PKT_C_EnterGame = 8,
+	PKT_S_EnterGame = 9,
+	PKT_S_PlayerList = 10,
+	PKT_S_BroadcastPlayerEnter = 11,
+	PKT_C_LeaveGame = 12,
+	PKT_S_LeaveGame = 13,
+	PKT_S_BroadcastPlayerLeave = 14,
+	PKT_C_PlayerMoveRequest = 15,
+	PKT_S_PlayerMoveReply = 16,
+	PKT_S_BroadcastPlayerMove = 17,
+	PKT_S_ChangeRoomBegin = 18,
+	PKT_C_ChangeRoomReady = 19,
+	PKT_S_ChangeRoomCommit = 20,
+	PKT_S_SpawnMonster = 21,
+	PKT_S_DespawnMonster = 22,
+	PKT_S_BroadcastMonsterMove = 23,
+	PKT_S_BroadcastMonsterAttack = 24,
+	PKT_S_BroadcastMonsterDeath = 25,
+	PKT_C_PlayerAttackRequest = 26,
+	PKT_S_BroadcastPlayerAttack = 27,
+	PKT_C_InventoryRequest = 28,
+	PKT_S_InventoryReply = 29,
+	PKT_C_ItemUseRequest = 30,
+	PKT_S_ItemUseReply = 31,
+	PKT_S_InventoryUpdate = 32,
+	PKT_S_SystemMessage = 33,
 
 };
 
@@ -48,6 +50,7 @@ bool Handle_Invalid(PacketSessionRef& session, BYTE* buffer, int32 len);
 bool Handle_C_JwtLoginRequest(PacketSessionRef& session, Protocol::C_JwtLoginRequest& pkt);
 bool Handle_C_CreateCharacterRequest(PacketSessionRef& session, Protocol::C_CreateCharacterRequest& pkt);
 bool Handle_C_CharacterListRequest(PacketSessionRef& session, Protocol::C_CharacterListRequest& pkt);
+bool Handle_C_DeleteCharacterRequest(PacketSessionRef& session, Protocol::C_DeleteCharacterRequest& pkt);
 bool Handle_C_EnterGame(PacketSessionRef& session, Protocol::C_EnterGame& pkt);
 bool Handle_C_LeaveGame(PacketSessionRef& session, Protocol::C_LeaveGame& pkt);
 bool Handle_C_PlayerMoveRequest(PacketSessionRef& session, Protocol::C_PlayerMoveRequest& pkt);
@@ -69,6 +72,7 @@ public:
 		GPacketHandler[PKT_C_JwtLoginRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_JwtLoginRequest>(Handle_C_JwtLoginRequest, session, buffer, len); };
 		GPacketHandler[PKT_C_CreateCharacterRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_CreateCharacterRequest>(Handle_C_CreateCharacterRequest, session, buffer, len); };
 		GPacketHandler[PKT_C_CharacterListRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_CharacterListRequest>(Handle_C_CharacterListRequest, session, buffer, len); };
+		GPacketHandler[PKT_C_DeleteCharacterRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_DeleteCharacterRequest>(Handle_C_DeleteCharacterRequest, session, buffer, len); };
 		GPacketHandler[PKT_C_EnterGame] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_EnterGame>(Handle_C_EnterGame, session, buffer, len); };
 		GPacketHandler[PKT_C_LeaveGame] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_LeaveGame>(Handle_C_LeaveGame, session, buffer, len); };
 		GPacketHandler[PKT_C_PlayerMoveRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PlayerMoveRequest>(Handle_C_PlayerMoveRequest, session, buffer, len); };
@@ -86,6 +90,7 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::S_JwtLoginReply& pkt) { return MakeSendBuffer(pkt, PKT_S_JwtLoginReply); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_CreateCharacterReply& pkt) { return MakeSendBuffer(pkt, PKT_S_CreateCharacterReply); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_CharacterListReply& pkt) { return MakeSendBuffer(pkt, PKT_S_CharacterListReply); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_DeleteCharacterReply& pkt) { return MakeSendBuffer(pkt, PKT_S_DeleteCharacterReply); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_EnterGame& pkt) { return MakeSendBuffer(pkt, PKT_S_EnterGame); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_PlayerList& pkt) { return MakeSendBuffer(pkt, PKT_S_PlayerList); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerEnter& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerEnter); };

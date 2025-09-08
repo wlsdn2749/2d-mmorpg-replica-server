@@ -239,5 +239,28 @@ public:
                 return GetCharacterStats_DB(c, characterId);
             });
     }
+
+/* 캐릭터 삭제 (Soft Delete)*/
+public:
+    static bool DeleteCharacter_DB(DBConnection& conn, int userId, int characterId)
+    {
+        int64 rowCount = 0;
+        SP::DeleteCharacter sp(conn);
+        sp.ParamIn_UserId(userId);
+        sp.ParamIn_CharacterId(characterId);
+        sp.ColumnOut_RowCount(OUT rowCount);
+        sp.Execute();
+        if (sp.Fetch())
+        {
+            return rowCount > 0;
+        }
+        return false;
+    }
+    static std::future<bool> DeleteCharacterAsync(int userId, int characterId)
+    {
+        return DbDispatcher::EnqueueRet([userId, characterId](DBConnection& c) {
+            return DeleteCharacter_DB(c, userId, characterId);
+            });
+    }
 };
 
