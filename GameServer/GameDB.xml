@@ -49,6 +49,7 @@
     <Column name="posX" type="int" notnull="true" default="0"/>
     <Column name="posY" type="int" notnull="true" default="0"/>
     <Column name="dir" type="int" notnull="true" default="0"/>
+    <Column name="isActive" type="int" notnull="true" default="1"/>
     <Column name="createdAt" type="datetime" notnull="true" default="SYSUTCDATETIME()"/>
     <Index type="clustered">
       <PrimaryKey/>
@@ -102,7 +103,7 @@
         SELECT
             characterId, username, posX, posY, gender, region, dir, level
         FROM [dbo].[Characters]
-        WHERE [userId] = @userId
+        WHERE [userId] = @userId AND [isActive] = 1
         ORDER BY [level] DESC;
       ]]>
     </Body>
@@ -144,6 +145,22 @@
         posX, posY, dir, lastRoom, hp, level, exp
       FROM [dbo].[Characters]
       WHERE [characterId] = @characterId
+     ]]>
+    </Body>
+  </Procedure>
+  <Procedure name="spDeleteCharacter">
+    <Param name="@userId" type="int"/>
+    <Param name="@characterId" type="int"/>
+    <Body>
+      <![CDATA[
+      SET NOCOUNT ON;
+      SET XACT_ABORT ON;
+      
+      UPDATE [dbo].[Characters]
+      SET isActive = 0
+      WHERE [characterId] = @characterId AND [userId] = @userId AND [isActive] = 1;
+      
+      SELECT @@ROWCOUNT AS affectedRows;
      ]]>
     </Body>
   </Procedure>

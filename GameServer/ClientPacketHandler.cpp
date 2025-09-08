@@ -137,6 +137,62 @@ bool Handle_C_CharacterListRequest(PacketSessionRef& session, Protocol::C_Charac
 	
 }
 
+bool Handle_C_DeleteCharacterRequest(PacketSessionRef& session, Protocol::C_DeleteCharacterRequest& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	// Room 접속 전에만 삭제 가능하도록 검증
+	if (gameSession->GetState() != GameSession::State::Connected) {
+		Protocol::S_DeleteCharacterReply replyPkt;
+		replyPkt.set_success(false);
+		replyPkt.set_errormessage("게임 진행 중에는 캐릭터를 삭제할 수 없습니다.");
+		auto sendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
+		session->Send(sendBuffer);
+		return true;
+	}
+
+	auto userId = gameSession->_account->GetUserId();
+	int characterIndex = pkt.characterindex();
+
+	// 캐릭터 인덱스 범위 검증
+	if (characterIndex < 0 || characterIndex >= gameSession->_players.size()) {
+		Protocol::S_DeleteCharacterReply replyPkt;
+		replyPkt.set_success(false);
+		replyPkt.set_errormessage("유효하지 않은 캐릭터입니다.");
+		auto sendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
+		session->Send(sendBuffer);
+		return true;
+	}
+
+	// 삭제하려는 캐릭터 정보 가져오기
+	PlayerRef targetPlayer = gameSession->_players[characterIndex];
+	int characterId = targetPlayer->playerId;
+
+	// DB에서 캐릭터 삭제 (soft delete)
+	auto fut = CharacterRepository::DeleteCharacterAsync(userId, characterId);
+	bool deleteSuccess = fut.get();
+
+	Protocol::S_DeleteCharacterReply replyPkt;
+	if (deleteSuccess) {
+		replyPkt.set_success(true);
+		replyPkt.set_errormessage("");
+		
+		// 세션에서 캐릭터 제거
+		gameSession->_players.erase(gameSession->_players.begin() + characterIndex);
+		
+		GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_DeleteCharacterRequest]: 캐릭터 삭제 성공 CharacterId[%d]\n", characterId);
+	} else {
+		replyPkt.set_success(false);
+		replyPkt.set_errormessage("캐릭터 삭제에 실패했습니다.");
+		
+		GConsoleLogger->WriteStdOut(Color::RED, L"[C_DeleteCharacterRequest]: 캐릭터 삭제 실패 CharacterId[%d]\n", characterId);
+	}
+
+	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
+	session->Send(sendBuffer);
+	return true;
+}
+
 bool Handle_C_EnterGame(PacketSessionRef& session, Protocol::C_EnterGame& pkt)
 {
 	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);

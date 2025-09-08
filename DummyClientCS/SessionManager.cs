@@ -249,5 +249,24 @@ namespace DummyClientCS
                 }
             }
         }
+
+        // 캐릭터 삭제 요청
+        public async Task SendDeleteCharacterRequest(int characterIndex)
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_DeleteCharacterRequest
+                    {
+                        CharacterIndex = characterIndex
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.WriteLine($"캐릭터 인덱스 {characterIndex} 삭제 요청을 전송했습니다.");
+                }
+            }
+        }
     }
 }
