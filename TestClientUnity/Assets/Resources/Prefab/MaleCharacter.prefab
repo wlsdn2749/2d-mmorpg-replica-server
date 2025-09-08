@@ -194,6 +194,7 @@ GameObject:
   - component: {fileID: -1852574896024480770}
   - component: {fileID: 6923634569787037221}
   - component: {fileID: -80947510715959898}
+  - component: {fileID: 9220042000764856237}
   m_Layer: 0
   m_Name: MaleCharacter
   m_TagString: Untagged
@@ -309,6 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2307eb5c8a042a543b798c56d3578f2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerIdentity
+  IsLocalPlayer: 0
   spriteRenderer: {fileID: 1296685899296522835}
   animator: {fileID: 2167436863411787309}
   _playerNameText: {fileID: 915390014024644149}
@@ -356,3 +358,16 @@ MonoBehaviour:
   _moveSpeed: 4
   _arriveEps: 0.01
   _playerAvatar: {fileID: 0}
+--- !u!114 &9220042000764856237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3887942126045356216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0e3c88b722cbed418e78f0726bcb338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackController
+  attackCooldown: 0.5

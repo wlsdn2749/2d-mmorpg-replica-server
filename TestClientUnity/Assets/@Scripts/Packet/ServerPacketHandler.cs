@@ -297,38 +297,31 @@ namespace Packet
                 case ELeaveReason.LeaveLogout:
                     Debug.Log($"[S_LeaveGame] CharacterSelectUI");
                     LoginManagement.SetLoingEntryMode(LoginEntryMode.ColdStart);
-                    HandleLeaveToCharacterSelect();
+
+                    PlayerSpawner.DespawnAll();
+                    RoomTransitionManager.Instance?.ResetState(); // 아래 ResetState 구현
+                    LoadingSceneManager.LoadScene("AuthScene");
                     break;
 
                 case ELeaveReason.LeaveChangeCharacter:
                     Debug.Log($"[S_LeaveGame] CharacterSelectUI");
                     LoginManagement.SetLoingEntryMode(LoginEntryMode.AfterLeaveToCharacterSelect);
-                    HandleLeaveToCharacterSelect();
+
+                    PlayerSpawner.DespawnAll();
+                    RoomTransitionManager.Instance?.ResetState(); // 아래 ResetState 구현
+                    LoadingSceneManager.LoadScene("AuthScene");
                     break;
 
                 case ELeaveReason.LeaveDisconnect:
                     LoginManagement.SetLoingEntryMode(LoginEntryMode.ColdStart);
-                    HandleDisconnectedToLogin();
+                    LoadingSceneManager.LoadScene("AuthScene");
                     break;
 
                 default:
-                    HandleDisconnectedToLogin();
+                    LoadingSceneManager.LoadScene("AuthScene");
                     break;
             }
 
-        }
-        static void HandleLeaveToCharacterSelect()
-        {
-            // 1) 월드 정리 (세션/네트매니저는 유지)
-            PlayerSpawner.DespawnAll();
-            RoomTransitionManager.Instance?.ResetState(); // 아래 ResetState 구현
-            LoadingSceneManager.LoadScene("AuthScene");
-        }
-
-        static void HandleDisconnectedToLogin()
-        {
-            // 선택: 즉시 로그인 화면 or 재연결 시도 후 실패 시 로그인 화면
-            LoadingSceneManager.LoadScene("AuthScene");
         }
         internal static void HANDLE_S_SpawnMonster(PacketSession session, S_SpawnMonster spawnMonster)
         {
@@ -352,7 +345,14 @@ namespace Packet
         }
         internal static void HANDLE_S_BroadcastPlayerAttack(PacketSession session, S_BroadcastPlayerAttack broadPlayerAtk)
         {
-
+            Debug.Log("공격패킷수신");
+            var attacker = PlayerSpawner.Get(broadPlayerAtk.PlayerId);
+            if (attacker)
+            {
+                
+                var anim = attacker.GetComponent<Animator>();
+                anim?.SetTrigger("Attack");
+            }
         }
         internal static void HANDLE_S_InventoryReply(PacketSession session, S_InventoryReply invenApply)
         {
