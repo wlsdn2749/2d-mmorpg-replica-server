@@ -97,7 +97,7 @@ bool GameSession::CharacterSelect(OUT std::string& detailOut)
 
 	SetState(State::InGame); // 캐릭터 선택을 해야하는 상태로 만들기
 	_currentPlayer = nullptr; 
-	detailOut = "Character Select 성공!";
+	detailOut = "Character Select Success!";
 
 	return true;
 }

@@ -1,4 +1,4 @@
-using Google.Protobuf.Protocol;
+﻿using Google.Protobuf.Protocol;
 using Packet;
 using System.Net.NetworkInformation;
 using UnityEngine;
@@ -21,7 +21,7 @@ public class UI_SystemManager : MonoBehaviour
     }
     void OnClickGoSelectCharacter()
     {
-        LeaveGameContext.SendLeave(ELeaveReason.LeaveChangeRoom);
+        LeaveGameContext.SendLeave(ELeaveReason.LeaveChangeCharacter);
     }
     void OnClickGameExit()
     {

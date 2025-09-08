@@ -288,25 +288,23 @@ namespace Packet
         {
             Console.WriteLine($"[S_LeaveGame] Game Has left.");
             
-            if (game.Success !=1)
+            if (game.Success !=true)
             {
                 return;
             }
             switch (LeaveGameContext.LastLeaveReason)
             {
                 case ELeaveReason.LeaveLogout:
-                    //Debug.Log($"[S_LeaveGame] Game Has left.");
-                    //HandleLogoutAndQuit();
                     Debug.Log($"[S_LeaveGame] CharacterSelectUI");
                     LoginManagement.SetLoingEntryMode(LoginEntryMode.ColdStart);
                     HandleLeaveToCharacterSelect();
                     break;
 
-                //case ELeaveReason.LeaveChangeRoom: // 클라이언트가 다루지 않음.
-                //    Debug.Log($"[S_LeaveGame] CharacterSelectUI");
-                //    LoginManagement.SetLoingEntryMode(LoginEntryMode.AfterLeaveToCharacterSelect);
-                //    HandleLeaveToCharacterSelect();
-                //    break;
+                case ELeaveReason.LeaveChangeCharacter:
+                    Debug.Log($"[S_LeaveGame] CharacterSelectUI");
+                    LoginManagement.SetLoingEntryMode(LoginEntryMode.AfterLeaveToCharacterSelect);
+                    HandleLeaveToCharacterSelect();
+                    break;
 
                 case ELeaveReason.LeaveDisconnect:
                     LoginManagement.SetLoingEntryMode(LoginEntryMode.ColdStart);

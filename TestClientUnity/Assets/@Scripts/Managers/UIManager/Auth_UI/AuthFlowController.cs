@@ -1,4 +1,4 @@
-using Google.Protobuf;
+ï»¿using Google.Protobuf;
 using Google.Protobuf.Protocol;
 using Packet;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ public class AuthFlowController : MonoBehaviour
     [SerializeField] private GameObject characterSelectPanel;
     void Start()
     {
-        // ³×Æ®¿öÅ© ¸Å´ÏÀú´Â DDOL ´ÜÀÏ ÀÎ½ºÅÏ½º¶ó°í °¡Á¤
+        // ë„¤íŠ¸ì›Œí¬ ë§¤ë‹ˆì €ëŠ” DDOL ë‹¨ì¼ ì¸ìŠ¤í„´ìŠ¤ë¼ê³  ê°€ì •
         ApplyEntryMode(LoginManagement.NextLoginEntryMode);
     }
 
@@ -22,7 +22,6 @@ public class AuthFlowController : MonoBehaviour
         switch (mode)
         {
             case LoginEntryMode.AfterLeaveToCharacterSelect:
-                NetworkManager.Instance.Enter();
                 ShowCharacterSelect();
                 break;
 
