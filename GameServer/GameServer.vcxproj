@@ -281,9 +281,9 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <None Include="..\Doc\Plan\inventory-test-data.sql" />
     <None Include="..\Protocol\Protocol.proto" />
     <None Include="appsettings.json" />
-    <None Include="Resources\Maps\백제_Tilemap_Info.json" />
-    <None Include="Resources\Maps\사냥터_Tilemap_Info.json" />
-    <None Include="Resources\Maps\고구려_Tilemap_Info.json" />
+    <None Include="Resources\Maps\Baekje_Tilemap_Info.json" />
+    <None Include="Resources\Maps\Goguryeo_Tilemap_Info.json" />
+    <None Include="Resources\Maps\HuntingField_Tilemap_Info.json" />
   </ItemGroup>
   <ItemGroup>
     <UpToDateCheckInput Include="..\Protocol\Protocol.proto" />

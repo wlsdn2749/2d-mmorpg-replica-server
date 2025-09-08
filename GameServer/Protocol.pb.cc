@@ -100,6 +100,33 @@ struct S_CharacterListReplyDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_CharacterListReplyDefaultTypeInternal _S_CharacterListReply_default_instance_;
+PROTOBUF_CONSTEXPR C_DeleteCharacterRequest::C_DeleteCharacterRequest(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.characterindex_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct C_DeleteCharacterRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR C_DeleteCharacterRequestDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~C_DeleteCharacterRequestDefaultTypeInternal() {}
+  union {
+    C_DeleteCharacterRequest _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 C_DeleteCharacterRequestDefaultTypeInternal _C_DeleteCharacterRequest_default_instance_;
+PROTOBUF_CONSTEXPR S_DeleteCharacterReply::S_DeleteCharacterReply(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.errormessage_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.success_)*/false
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct S_DeleteCharacterReplyDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR S_DeleteCharacterReplyDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~S_DeleteCharacterReplyDefaultTypeInternal() {}
+  union {
+    S_DeleteCharacterReply _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_DeleteCharacterReplyDefaultTypeInternal _S_DeleteCharacterReply_default_instance_;
 PROTOBUF_CONSTEXPR C_EnterGame::C_EnterGame(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.playerindex_)*/0
@@ -539,7 +566,7 @@ struct InventorySlotInfoDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 InventorySlotInfoDefaultTypeInternal _InventorySlotInfo_default_instance_;
 }  // namespace Protocol
-static ::_pb::Metadata file_level_metadata_Protocol_2eproto[37];
+static ::_pb::Metadata file_level_metadata_Protocol_2eproto[39];
 static const ::_pb::EnumDescriptor* file_level_enum_descriptors_Protocol_2eproto[11];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_Protocol_2eproto = nullptr;
 
@@ -588,6 +615,21 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_CharacterListReply, _impl_.characters_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_DeleteCharacterRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_DeleteCharacterRequest, _impl_.characterindex_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_DeleteCharacterReply, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_DeleteCharacterReply, _impl_.success_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_DeleteCharacterReply, _impl_.errormessage_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::C_EnterGame, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -850,37 +892,39 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 23, -1, -1, sizeof(::Protocol::S_CreateCharacterReply)},
   { 31, -1, -1, sizeof(::Protocol::C_CharacterListRequest)},
   { 37, -1, -1, sizeof(::Protocol::S_CharacterListReply)},
-  { 44, -1, -1, sizeof(::Protocol::C_EnterGame)},
-  { 51, -1, -1, sizeof(::Protocol::S_EnterGame)},
-  { 58, -1, -1, sizeof(::Protocol::S_PlayerList)},
-  { 67, -1, -1, sizeof(::Protocol::S_BroadcastPlayerEnter)},
-  { 74, -1, -1, sizeof(::Protocol::C_LeaveGame)},
-  { 81, -1, -1, sizeof(::Protocol::S_LeaveGame)},
-  { 88, -1, -1, sizeof(::Protocol::S_BroadcastPlayerLeave)},
-  { 96, -1, -1, sizeof(::Protocol::C_PlayerMoveRequest)},
-  { 103, -1, -1, sizeof(::Protocol::S_PlayerMoveReply)},
-  { 115, -1, -1, sizeof(::Protocol::S_BroadcastPlayerMove)},
-  { 123, -1, -1, sizeof(::Protocol::S_ChangeRoomBegin)},
-  { 131, -1, -1, sizeof(::Protocol::C_ChangeRoomReady)},
-  { 138, -1, -1, sizeof(::Protocol::S_ChangeRoomCommit)},
-  { 147, -1, -1, sizeof(::Protocol::S_SpawnMonster)},
-  { 158, -1, -1, sizeof(::Protocol::S_DespawnMonster)},
-  { 166, -1, -1, sizeof(::Protocol::S_BroadcastMonsterMove)},
-  { 176, -1, -1, sizeof(::Protocol::S_BroadcastMonsterAttack)},
-  { 184, -1, -1, sizeof(::Protocol::S_BroadcastMonsterDeath)},
-  { 191, -1, -1, sizeof(::Protocol::C_PlayerAttackRequest)},
-  { 197, -1, -1, sizeof(::Protocol::S_BroadcastPlayerAttack)},
-  { 207, -1, -1, sizeof(::Protocol::C_InventoryRequest)},
-  { 213, -1, -1, sizeof(::Protocol::S_InventoryReply)},
-  { 220, -1, -1, sizeof(::Protocol::C_ItemUseRequest)},
-  { 227, -1, -1, sizeof(::Protocol::S_ItemUseReply)},
-  { 235, -1, -1, sizeof(::Protocol::S_InventoryUpdate)},
-  { 242, -1, -1, sizeof(::Protocol::S_SystemMessage)},
-  { 250, -1, -1, sizeof(::Protocol::Vector2Info)},
-  { 258, -1, -1, sizeof(::Protocol::PlayerMoveInfo)},
-  { 268, -1, -1, sizeof(::Protocol::CharacterSummaryInfo)},
-  { 278, -1, -1, sizeof(::Protocol::PlayerInfo)},
-  { 288, -1, -1, sizeof(::Protocol::InventorySlotInfo)},
+  { 44, -1, -1, sizeof(::Protocol::C_DeleteCharacterRequest)},
+  { 51, -1, -1, sizeof(::Protocol::S_DeleteCharacterReply)},
+  { 59, -1, -1, sizeof(::Protocol::C_EnterGame)},
+  { 66, -1, -1, sizeof(::Protocol::S_EnterGame)},
+  { 73, -1, -1, sizeof(::Protocol::S_PlayerList)},
+  { 82, -1, -1, sizeof(::Protocol::S_BroadcastPlayerEnter)},
+  { 89, -1, -1, sizeof(::Protocol::C_LeaveGame)},
+  { 96, -1, -1, sizeof(::Protocol::S_LeaveGame)},
+  { 103, -1, -1, sizeof(::Protocol::S_BroadcastPlayerLeave)},
+  { 111, -1, -1, sizeof(::Protocol::C_PlayerMoveRequest)},
+  { 118, -1, -1, sizeof(::Protocol::S_PlayerMoveReply)},
+  { 130, -1, -1, sizeof(::Protocol::S_BroadcastPlayerMove)},
+  { 138, -1, -1, sizeof(::Protocol::S_ChangeRoomBegin)},
+  { 146, -1, -1, sizeof(::Protocol::C_ChangeRoomReady)},
+  { 153, -1, -1, sizeof(::Protocol::S_ChangeRoomCommit)},
+  { 162, -1, -1, sizeof(::Protocol::S_SpawnMonster)},
+  { 173, -1, -1, sizeof(::Protocol::S_DespawnMonster)},
+  { 181, -1, -1, sizeof(::Protocol::S_BroadcastMonsterMove)},
+  { 191, -1, -1, sizeof(::Protocol::S_BroadcastMonsterAttack)},
+  { 199, -1, -1, sizeof(::Protocol::S_BroadcastMonsterDeath)},
+  { 206, -1, -1, sizeof(::Protocol::C_PlayerAttackRequest)},
+  { 212, -1, -1, sizeof(::Protocol::S_BroadcastPlayerAttack)},
+  { 222, -1, -1, sizeof(::Protocol::C_InventoryRequest)},
+  { 228, -1, -1, sizeof(::Protocol::S_InventoryReply)},
+  { 235, -1, -1, sizeof(::Protocol::C_ItemUseRequest)},
+  { 242, -1, -1, sizeof(::Protocol::S_ItemUseReply)},
+  { 250, -1, -1, sizeof(::Protocol::S_InventoryUpdate)},
+  { 257, -1, -1, sizeof(::Protocol::S_SystemMessage)},
+  { 265, -1, -1, sizeof(::Protocol::Vector2Info)},
+  { 273, -1, -1, sizeof(::Protocol::PlayerMoveInfo)},
+  { 283, -1, -1, sizeof(::Protocol::CharacterSummaryInfo)},
+  { 293, -1, -1, sizeof(::Protocol::PlayerInfo)},
+  { 303, -1, -1, sizeof(::Protocol::InventorySlotInfo)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -890,6 +934,8 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::Protocol::_S_CreateCharacterReply_default_instance_._instance,
   &::Protocol::_C_CharacterListRequest_default_instance_._instance,
   &::Protocol::_S_CharacterListReply_default_instance_._instance,
+  &::Protocol::_C_DeleteCharacterRequest_default_instance_._instance,
+  &::Protocol::_S_DeleteCharacterReply_default_instance_._instance,
   &::Protocol::_C_EnterGame_default_instance_._instance,
   &::Protocol::_S_EnterGame_default_instance_._instance,
   &::Protocol::_S_PlayerList_default_instance_._instance,
@@ -934,113 +980,118 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "\030\001 \001(\010\022\016\n\006detail\030\002 \001(\t\"\030\n\026C_CharacterLis"
   "tRequest\"J\n\024S_CharacterListReply\0222\n\nchar"
   "acters\030\001 \003(\0132\036.Protocol.CharacterSummary"
-  "Info\"\"\n\013C_EnterGame\022\023\n\013playerIndex\030\001 \001(\005"
-  "\"\036\n\013S_EnterGame\022\017\n\007success\030\001 \001(\005\"X\n\014S_Pl"
-  "ayerList\022\022\n\nmyPlayerId\030\001 \001(\005\022\r\n\005mapId\030\002 "
-  "\001(\005\022%\n\007players\030\003 \003(\0132\024.Protocol.PlayerIn"
-  "fo\">\n\026S_BroadcastPlayerEnter\022$\n\006player\030\001"
-  " \001(\0132\024.Protocol.PlayerInfo\"5\n\013C_LeaveGam"
-  "e\022&\n\006reason\030\001 \001(\0162\026.Protocol.ELeaveReaso"
-  "n\"\036\n\013S_LeaveGame\022\017\n\007success\030\001 \001(\005\"R\n\026S_B"
-  "roadcastPlayerLeave\022\020\n\010playerId\030\001 \001(\005\022&\n"
-  "\006reason\030\002 \001(\0162\026.Protocol.ELeaveReason\"C\n"
-  "\023C_PlayerMoveRequest\022,\n\rclickWorldPos\030\001 "
-  "\001(\0132\025.Protocol.Vector2Info\"\275\001\n\021S_PlayerM"
-  "oveReply\022\020\n\010playerId\030\001 \001(\005\022\021\n\tclientSeq\030"
-  "\002 \001(\005\022%\n\006result\030\003 \001(\0162\025.Protocol.EMoveRe"
-  "sult\022\014\n\004tick\030\004 \001(\005\022%\n\006newPos\030\005 \001(\0132\025.Pro"
-  "tocol.Vector2Info\022\'\n\tdirection\030\006 \001(\0162\024.P"
-  "rotocol.EDirection\"T\n\025S_BroadcastPlayerM"
-  "ove\022\014\n\004tick\030\001 \001(\005\022-\n\013playerMoves\030\002 \003(\0132\030"
-  ".Protocol.PlayerMoveInfo\"8\n\021S_ChangeRoom"
-  "Begin\022\024\n\014transitionId\030\001 \001(\005\022\r\n\005mapId\030\002 \001"
-  "(\005\")\n\021C_ChangeRoomReady\022\024\n\014transitionId\030"
-  "\001 \001(\005\"d\n\022S_ChangeRoomCommit\022\024\n\014transitio"
-  "nId\030\001 \001(\005\022\r\n\005mapId\030\002 \001(\005\022)\n\tsnapshots\030\003 "
-  "\001(\0132\026.Protocol.S_PlayerList\"s\n\016S_SpawnMo"
-  "nster\022\021\n\tmonsterId\030\001 \001(\005\022\025\n\rmonsterTypeI"
-  "d\030\002 \001(\005\022\t\n\001x\030\003 \001(\005\022\t\n\001y\030\004 \001(\005\022!\n\003dir\030\005 \001"
-  "(\0162\024.Protocol.EDirection\"O\n\020S_DespawnMon"
-  "ster\022\021\n\tmonsterId\030\001 \001(\005\022(\n\006reason\030\002 \001(\0162"
-  "\030.Protocol.EDespawnReason\"d\n\026S_Broadcast"
-  "MonsterMove\022\021\n\tmonsterId\030\001 \001(\005\022\t\n\001x\030\002 \001("
-  "\005\022\t\n\001y\030\003 \001(\005\022!\n\003dir\030\004 \001(\0162\024.Protocol.EDi"
-  "rection\"@\n\030S_BroadcastMonsterAttack\022\021\n\tm"
-  "onsterId\030\001 \001(\005\022\021\n\ttargetPid\030\002 \001(\005\",\n\027S_B"
-  "roadcastMonsterDeath\022\021\n\tmonsterId\030\001 \001(\005\""
-  "\027\n\025C_PlayerAttackRequest\"^\n\027S_BroadcastP"
-  "layerAttack\022\020\n\010playerId\030\001 \001(\005\022\020\n\010targetI"
-  "d\030\002 \001(\005\022\016\n\006damage\030\003 \001(\005\022\017\n\007hpAfter\030\004 \001(\005"
-  "\"\024\n\022C_InventoryRequest\">\n\020S_InventoryRep"
-  "ly\022*\n\005slots\030\001 \003(\0132\033.Protocol.InventorySl"
-  "otInfo\"%\n\020C_ItemUseRequest\022\021\n\tslotIndex\030"
-  "\001 \001(\005\"7\n\016S_ItemUseReply\022\017\n\007success\030\001 \001(\010"
-  "\022\024\n\014errorMessage\030\002 \001(\t\"F\n\021S_InventoryUpd"
-  "ate\0221\n\014changedSlots\030\001 \003(\0132\033.Protocol.Inv"
-  "entorySlotInfo\"H\n\017S_SystemMessage\022\017\n\007mes"
-  "sage\030\001 \001(\t\022$\n\004type\030\002 \001(\0162\026.Protocol.EMes"
-  "sageType\"#\n\013Vector2Info\022\t\n\001x\030\001 \001(\005\022\t\n\001y\030"
-  "\002 \001(\005\"\231\001\n\016PlayerMoveInfo\022\020\n\010playerId\030\001 \001"
-  "(\005\022\'\n\tdirection\030\002 \001(\0162\024.Protocol.EDirect"
-  "ion\022%\n\006newPos\030\003 \001(\0132\025.Protocol.Vector2In"
-  "fo\022%\n\006result\030\004 \001(\0162\025.Protocol.EMoveResul"
-  "t\"}\n\024CharacterSummaryInfo\022\020\n\010username\030\001 "
-  "\001(\t\022\r\n\005level\030\002 \001(\005\022!\n\006gender\030\003 \001(\0162\021.Pro"
-  "tocol.EGender\022!\n\006region\030\004 \001(\0162\021.Protocol"
-  ".ERegion\"w\n\nPlayerInfo\022\n\n\002id\030\001 \001(\005\022\020\n\010us"
-  "ername\030\002 \001(\t\022\"\n\003pos\030\003 \001(\0132\025.Protocol.Vec"
-  "tor2Info\022\'\n\tdirection\030\004 \001(\0162\024.Protocol.E"
-  "Direction\"Z\n\021InventorySlotInfo\022\021\n\tslotIn"
-  "dex\030\001 \001(\005\022\016\n\006itemId\030\002 \001(\005\022\r\n\005count\030\003 \001(\005"
-  "\022\023\n\013isQuickslot\030\004 \001(\010*\264\006\n\005MsgId\022\027\n\023C_JWT"
-  "_LOGIN_REQUEST\020\000\022\025\n\021S_JWT_LOGIN_REPLY\020\001\022"
-  "\036\n\032C_CREATE_CHARACTER_REQUEST\020\002\022\034\n\030S_CRE"
-  "ATE_CHARACTER_REPLY\020\003\022\034\n\030C_CHARACTER_LIS"
-  "T_REQUEST\020\004\022\032\n\026S_CHARACTER_LIST_REPLY\020\005\022"
-  "\020\n\014C_ENTER_GAME\020\006\022\020\n\014S_ENTER_GAME\020\007\022\021\n\rS"
-  "_PLAYER_LIST\020\010\022\034\n\030S_BROADCAST_PLAYER_ENT"
-  "ER\020\t\022\020\n\014C_LEAVE_GAME\020\n\022\020\n\014S_LEAVE_GAME\020\013"
-  "\022\034\n\030S_BROADCAST_PLAYER_LEAVE\020\014\022\031\n\025C_PLAY"
-  "ER_MOVE_REQUEST\020\r\022\027\n\023S_PLAYER_MOVE_REPLY"
-  "\020\016\022\033\n\027S_BROADCAST_PLAYER_MOVE\020\017\022\027\n\023S_CHA"
-  "NGE_ROOM_BEGIN\020\020\022\027\n\023C_CHANGE_ROOM_READY\020"
-  "\021\022\030\n\024S_CHANGE_ROOM_COMMIT\020\022\022\023\n\017S_SPAWN_M"
-  "ONSTER\020\023\022\025\n\021S_DESPAWN_MONSTER\020\024\022\034\n\030S_BRO"
-  "ADCAST_MONSTER_MOVE\020\025\022\036\n\032S_BROADCAST_MON"
-  "STER_ATTACK\020\026\022\035\n\031S_BROADCAST_MONSTER_DEA"
-  "TH\020\027\022\033\n\027C_PLAYER_ATTACK_REQUEST\020\030\022\035\n\031S_B"
-  "ROADCAST_PLAYER_ATTACK\020\031\022\027\n\023C_INVENTORY_"
-  "REQUEST\020\032\022\025\n\021S_INVENTORY_REPLY\020\033\022\026\n\022C_IT"
-  "EM_USE_REQUEST\020\034\022\024\n\020S_ITEM_USE_REPLY\020\035\022\026"
-  "\n\022S_INVENTORY_UPDATE\020\036\022\024\n\020S_SYSTEM_MESSA"
-  "GE\020\037*S\n\014ELoginResult\022\013\n\007SUCCESS\020\000\022\021\n\rINV"
-  "ALID_TOKEN\020\001\022\021\n\rTOKEN_EXPIRED\020\002\022\020\n\014SERVE"
-  "R_ERROR\020\003*>\n\007EGender\022\017\n\013GENDER_NONE\020\000\022\017\n"
-  "\013GENDER_MALE\020\001\022\021\n\rGENDER_FEMALE\020\002*:\n\007ERe"
-  "gion\022\017\n\013REGION_NONE\020\000\022\r\n\tREGION_GO\020\001\022\017\n\013"
-  "REGION_BACK\020\002*C\n\nEDirection\022\n\n\006DIR_UP\020\000\022"
-  "\014\n\010DIR_DOWN\020\001\022\014\n\010DIR_LEFT\020\002\022\r\n\tDIR_RIGHT"
-  "\020\003*`\n\014ELeaveReason\022\021\n\rLEAVE_UNKNOWN\020\000\022\020\n"
-  "\014LEAVE_LOGOUT\020\001\022\025\n\021LEAVE_CHANGE_ROOM\020\002\022\024"
-  "\n\020LEAVE_DISCONNECT\020\003*_\n\013EMoveResult\022\020\n\014M"
-  "OVE_UNKNOWN\020\000\022\013\n\007MOVE_OK\020\001\022\014\n\010MOVE_DIR\020\002"
-  "\022\021\n\rMOVE_COOLDOWN\020\003\022\020\n\014MOVE_BLOCKED\020\004*I\n"
-  "\014EEnterReason\022\021\n\rENTER_UNKNOWN\020\000\022\017\n\013ENTE"
-  "R_LOGIN\020\001\022\025\n\021ENTER_CHANGE_ROOM\020\002*9\n\016EDes"
-  "pawnReason\022\023\n\017DESPAWN_UNKNOWN\020\000\022\022\n\016DESPA"
-  "WN_KILLED\020\001*~\n\tEItemType\022\025\n\021ITEM_TYPE_UN"
-  "KNOWN\020\000\022\030\n\024ITEM_TYPE_CONSUMABLE\020\001\022\027\n\023ITE"
-  "M_TYPE_EQUIPMENT\020\002\022\023\n\017ITEM_TYPE_QUEST\020\003\022"
-  "\022\n\016ITEM_TYPE_MISC\020\004*a\n\014EMessageType\022\020\n\014M"
-  "ESSAGE_INFO\020\000\022\023\n\017MESSAGE_WARNING\020\001\022\021\n\rME"
-  "SSAGE_ERROR\020\002\022\027\n\023MESSAGE_DROP_FAILED\020\003B\033"
-  "\252\002\030Google.Protobuf.Protocolb\006proto3"
+  "Info\"2\n\030C_DeleteCharacterRequest\022\026\n\016char"
+  "acterIndex\030\001 \001(\005\"\?\n\026S_DeleteCharacterRep"
+  "ly\022\017\n\007success\030\001 \001(\010\022\024\n\014errorMessage\030\002 \001("
+  "\t\"\"\n\013C_EnterGame\022\023\n\013playerIndex\030\001 \001(\005\"\036\n"
+  "\013S_EnterGame\022\017\n\007success\030\001 \001(\005\"X\n\014S_Playe"
+  "rList\022\022\n\nmyPlayerId\030\001 \001(\005\022\r\n\005mapId\030\002 \001(\005"
+  "\022%\n\007players\030\003 \003(\0132\024.Protocol.PlayerInfo\""
+  ">\n\026S_BroadcastPlayerEnter\022$\n\006player\030\001 \001("
+  "\0132\024.Protocol.PlayerInfo\"5\n\013C_LeaveGame\022&"
+  "\n\006reason\030\001 \001(\0162\026.Protocol.ELeaveReason\"\036"
+  "\n\013S_LeaveGame\022\017\n\007success\030\001 \001(\005\"R\n\026S_Broa"
+  "dcastPlayerLeave\022\020\n\010playerId\030\001 \001(\005\022&\n\006re"
+  "ason\030\002 \001(\0162\026.Protocol.ELeaveReason\"C\n\023C_"
+  "PlayerMoveRequest\022,\n\rclickWorldPos\030\001 \001(\013"
+  "2\025.Protocol.Vector2Info\"\275\001\n\021S_PlayerMove"
+  "Reply\022\020\n\010playerId\030\001 \001(\005\022\021\n\tclientSeq\030\002 \001"
+  "(\005\022%\n\006result\030\003 \001(\0162\025.Protocol.EMoveResul"
+  "t\022\014\n\004tick\030\004 \001(\005\022%\n\006newPos\030\005 \001(\0132\025.Protoc"
+  "ol.Vector2Info\022\'\n\tdirection\030\006 \001(\0162\024.Prot"
+  "ocol.EDirection\"T\n\025S_BroadcastPlayerMove"
+  "\022\014\n\004tick\030\001 \001(\005\022-\n\013playerMoves\030\002 \003(\0132\030.Pr"
+  "otocol.PlayerMoveInfo\"8\n\021S_ChangeRoomBeg"
+  "in\022\024\n\014transitionId\030\001 \001(\005\022\r\n\005mapId\030\002 \001(\005\""
+  ")\n\021C_ChangeRoomReady\022\024\n\014transitionId\030\001 \001"
+  "(\005\"d\n\022S_ChangeRoomCommit\022\024\n\014transitionId"
+  "\030\001 \001(\005\022\r\n\005mapId\030\002 \001(\005\022)\n\tsnapshots\030\003 \001(\013"
+  "2\026.Protocol.S_PlayerList\"s\n\016S_SpawnMonst"
+  "er\022\021\n\tmonsterId\030\001 \001(\005\022\025\n\rmonsterTypeId\030\002"
+  " \001(\005\022\t\n\001x\030\003 \001(\005\022\t\n\001y\030\004 \001(\005\022!\n\003dir\030\005 \001(\0162"
+  "\024.Protocol.EDirection\"O\n\020S_DespawnMonste"
+  "r\022\021\n\tmonsterId\030\001 \001(\005\022(\n\006reason\030\002 \001(\0162\030.P"
+  "rotocol.EDespawnReason\"d\n\026S_BroadcastMon"
+  "sterMove\022\021\n\tmonsterId\030\001 \001(\005\022\t\n\001x\030\002 \001(\005\022\t"
+  "\n\001y\030\003 \001(\005\022!\n\003dir\030\004 \001(\0162\024.Protocol.EDirec"
+  "tion\"@\n\030S_BroadcastMonsterAttack\022\021\n\tmons"
+  "terId\030\001 \001(\005\022\021\n\ttargetPid\030\002 \001(\005\",\n\027S_Broa"
+  "dcastMonsterDeath\022\021\n\tmonsterId\030\001 \001(\005\"\027\n\025"
+  "C_PlayerAttackRequest\"^\n\027S_BroadcastPlay"
+  "erAttack\022\020\n\010playerId\030\001 \001(\005\022\020\n\010targetId\030\002"
+  " \001(\005\022\016\n\006damage\030\003 \001(\005\022\017\n\007hpAfter\030\004 \001(\005\"\024\n"
+  "\022C_InventoryRequest\">\n\020S_InventoryReply\022"
+  "*\n\005slots\030\001 \003(\0132\033.Protocol.InventorySlotI"
+  "nfo\"%\n\020C_ItemUseRequest\022\021\n\tslotIndex\030\001 \001"
+  "(\005\"7\n\016S_ItemUseReply\022\017\n\007success\030\001 \001(\010\022\024\n"
+  "\014errorMessage\030\002 \001(\t\"F\n\021S_InventoryUpdate"
+  "\0221\n\014changedSlots\030\001 \003(\0132\033.Protocol.Invent"
+  "orySlotInfo\"H\n\017S_SystemMessage\022\017\n\007messag"
+  "e\030\001 \001(\t\022$\n\004type\030\002 \001(\0162\026.Protocol.EMessag"
+  "eType\"#\n\013Vector2Info\022\t\n\001x\030\001 \001(\005\022\t\n\001y\030\002 \001"
+  "(\005\"\231\001\n\016PlayerMoveInfo\022\020\n\010playerId\030\001 \001(\005\022"
+  "\'\n\tdirection\030\002 \001(\0162\024.Protocol.EDirection"
+  "\022%\n\006newPos\030\003 \001(\0132\025.Protocol.Vector2Info\022"
+  "%\n\006result\030\004 \001(\0162\025.Protocol.EMoveResult\"}"
+  "\n\024CharacterSummaryInfo\022\020\n\010username\030\001 \001(\t"
+  "\022\r\n\005level\030\002 \001(\005\022!\n\006gender\030\003 \001(\0162\021.Protoc"
+  "ol.EGender\022!\n\006region\030\004 \001(\0162\021.Protocol.ER"
+  "egion\"w\n\nPlayerInfo\022\n\n\002id\030\001 \001(\005\022\020\n\010usern"
+  "ame\030\002 \001(\t\022\"\n\003pos\030\003 \001(\0132\025.Protocol.Vector"
+  "2Info\022\'\n\tdirection\030\004 \001(\0162\024.Protocol.EDir"
+  "ection\"Z\n\021InventorySlotInfo\022\021\n\tslotIndex"
+  "\030\001 \001(\005\022\016\n\006itemId\030\002 \001(\005\022\r\n\005count\030\003 \001(\005\022\023\n"
+  "\013isQuickslot\030\004 \001(\010*\362\006\n\005MsgId\022\027\n\023C_JWT_LO"
+  "GIN_REQUEST\020\000\022\025\n\021S_JWT_LOGIN_REPLY\020\001\022\036\n\032"
+  "C_CREATE_CHARACTER_REQUEST\020\002\022\034\n\030S_CREATE"
+  "_CHARACTER_REPLY\020\003\022\034\n\030C_CHARACTER_LIST_R"
+  "EQUEST\020\004\022\032\n\026S_CHARACTER_LIST_REPLY\020\005\022\036\n\032"
+  "C_DELETE_CHARACTER_REQUEST\020\006\022\034\n\030S_DELETE"
+  "_CHARACTER_REPLY\020\007\022\020\n\014C_ENTER_GAME\020\010\022\020\n\014"
+  "S_ENTER_GAME\020\t\022\021\n\rS_PLAYER_LIST\020\n\022\034\n\030S_B"
+  "ROADCAST_PLAYER_ENTER\020\013\022\020\n\014C_LEAVE_GAME\020"
+  "\014\022\020\n\014S_LEAVE_GAME\020\r\022\034\n\030S_BROADCAST_PLAYE"
+  "R_LEAVE\020\016\022\031\n\025C_PLAYER_MOVE_REQUEST\020\017\022\027\n\023"
+  "S_PLAYER_MOVE_REPLY\020\020\022\033\n\027S_BROADCAST_PLA"
+  "YER_MOVE\020\021\022\027\n\023S_CHANGE_ROOM_BEGIN\020\022\022\027\n\023C"
+  "_CHANGE_ROOM_READY\020\023\022\030\n\024S_CHANGE_ROOM_CO"
+  "MMIT\020\024\022\023\n\017S_SPAWN_MONSTER\020\025\022\025\n\021S_DESPAWN"
+  "_MONSTER\020\026\022\034\n\030S_BROADCAST_MONSTER_MOVE\020\027"
+  "\022\036\n\032S_BROADCAST_MONSTER_ATTACK\020\030\022\035\n\031S_BR"
+  "OADCAST_MONSTER_DEATH\020\031\022\033\n\027C_PLAYER_ATTA"
+  "CK_REQUEST\020\032\022\035\n\031S_BROADCAST_PLAYER_ATTAC"
+  "K\020\033\022\027\n\023C_INVENTORY_REQUEST\020\034\022\025\n\021S_INVENT"
+  "ORY_REPLY\020\035\022\026\n\022C_ITEM_USE_REQUEST\020\036\022\024\n\020S"
+  "_ITEM_USE_REPLY\020\037\022\026\n\022S_INVENTORY_UPDATE\020"
+  " \022\024\n\020S_SYSTEM_MESSAGE\020!*S\n\014ELoginResult\022"
+  "\013\n\007SUCCESS\020\000\022\021\n\rINVALID_TOKEN\020\001\022\021\n\rTOKEN"
+  "_EXPIRED\020\002\022\020\n\014SERVER_ERROR\020\003*>\n\007EGender\022"
+  "\017\n\013GENDER_NONE\020\000\022\017\n\013GENDER_MALE\020\001\022\021\n\rGEN"
+  "DER_FEMALE\020\002*:\n\007ERegion\022\017\n\013REGION_NONE\020\000"
+  "\022\r\n\tREGION_GO\020\001\022\017\n\013REGION_BACK\020\002*C\n\nEDir"
+  "ection\022\n\n\006DIR_UP\020\000\022\014\n\010DIR_DOWN\020\001\022\014\n\010DIR_"
+  "LEFT\020\002\022\r\n\tDIR_RIGHT\020\003*`\n\014ELeaveReason\022\021\n"
+  "\rLEAVE_UNKNOWN\020\000\022\020\n\014LEAVE_LOGOUT\020\001\022\025\n\021LE"
+  "AVE_CHANGE_ROOM\020\002\022\024\n\020LEAVE_DISCONNECT\020\003*"
+  "_\n\013EMoveResult\022\020\n\014MOVE_UNKNOWN\020\000\022\013\n\007MOVE"
+  "_OK\020\001\022\014\n\010MOVE_DIR\020\002\022\021\n\rMOVE_COOLDOWN\020\003\022\020"
+  "\n\014MOVE_BLOCKED\020\004*I\n\014EEnterReason\022\021\n\rENTE"
+  "R_UNKNOWN\020\000\022\017\n\013ENTER_LOGIN\020\001\022\025\n\021ENTER_CH"
+  "ANGE_ROOM\020\002*9\n\016EDespawnReason\022\023\n\017DESPAWN"
+  "_UNKNOWN\020\000\022\022\n\016DESPAWN_KILLED\020\001*~\n\tEItemT"
+  "ype\022\025\n\021ITEM_TYPE_UNKNOWN\020\000\022\030\n\024ITEM_TYPE_"
+  "CONSUMABLE\020\001\022\027\n\023ITEM_TYPE_EQUIPMENT\020\002\022\023\n"
+  "\017ITEM_TYPE_QUEST\020\003\022\022\n\016ITEM_TYPE_MISC\020\004*a"
+  "\n\014EMessageType\022\020\n\014MESSAGE_INFO\020\000\022\023\n\017MESS"
+  "AGE_WARNING\020\001\022\021\n\rMESSAGE_ERROR\020\002\022\027\n\023MESS"
+  "AGE_DROP_FAILED\020\003B\033\252\002\030Google.Protobuf.Pr"
+  "otocolb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 4435, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 4614, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
-    &descriptor_table_Protocol_2eproto_once, nullptr, 0, 37,
+    &descriptor_table_Protocol_2eproto_once, nullptr, 0, 39,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
     file_level_metadata_Protocol_2eproto, file_level_enum_descriptors_Protocol_2eproto,
     file_level_service_descriptors_Protocol_2eproto,
@@ -1090,6 +1141,8 @@ bool MsgId_IsValid(int value) {
     case 29:
     case 30:
     case 31:
+    case 32:
+    case 33:
       return true;
     default:
       return false;
@@ -2364,6 +2417,414 @@ void S_CharacterListReply::InternalSwap(S_CharacterListReply* other) {
 
 // ===================================================================
 
+class C_DeleteCharacterRequest::_Internal {
+ public:
+};
+
+C_DeleteCharacterRequest::C_DeleteCharacterRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:Protocol.C_DeleteCharacterRequest)
+}
+C_DeleteCharacterRequest::C_DeleteCharacterRequest(const C_DeleteCharacterRequest& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  C_DeleteCharacterRequest* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.characterindex_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_impl_.characterindex_ = from._impl_.characterindex_;
+  // @@protoc_insertion_point(copy_constructor:Protocol.C_DeleteCharacterRequest)
+}
+
+inline void C_DeleteCharacterRequest::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.characterindex_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+C_DeleteCharacterRequest::~C_DeleteCharacterRequest() {
+  // @@protoc_insertion_point(destructor:Protocol.C_DeleteCharacterRequest)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void C_DeleteCharacterRequest::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void C_DeleteCharacterRequest::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void C_DeleteCharacterRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:Protocol.C_DeleteCharacterRequest)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.characterindex_ = 0;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* C_DeleteCharacterRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int32 characterIndex = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.characterindex_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* C_DeleteCharacterRequest::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Protocol.C_DeleteCharacterRequest)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int32 characterIndex = 1;
+  if (this->_internal_characterindex() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_characterindex(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Protocol.C_DeleteCharacterRequest)
+  return target;
+}
+
+size_t C_DeleteCharacterRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Protocol.C_DeleteCharacterRequest)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // int32 characterIndex = 1;
+  if (this->_internal_characterindex() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_characterindex());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData C_DeleteCharacterRequest::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    C_DeleteCharacterRequest::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*C_DeleteCharacterRequest::GetClassData() const { return &_class_data_; }
+
+
+void C_DeleteCharacterRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<C_DeleteCharacterRequest*>(&to_msg);
+  auto& from = static_cast<const C_DeleteCharacterRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:Protocol.C_DeleteCharacterRequest)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_characterindex() != 0) {
+    _this->_internal_set_characterindex(from._internal_characterindex());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void C_DeleteCharacterRequest::CopyFrom(const C_DeleteCharacterRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.C_DeleteCharacterRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool C_DeleteCharacterRequest::IsInitialized() const {
+  return true;
+}
+
+void C_DeleteCharacterRequest::InternalSwap(C_DeleteCharacterRequest* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_.characterindex_, other->_impl_.characterindex_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata C_DeleteCharacterRequest::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
+      file_level_metadata_Protocol_2eproto[6]);
+}
+
+// ===================================================================
+
+class S_DeleteCharacterReply::_Internal {
+ public:
+};
+
+S_DeleteCharacterReply::S_DeleteCharacterReply(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:Protocol.S_DeleteCharacterReply)
+}
+S_DeleteCharacterReply::S_DeleteCharacterReply(const S_DeleteCharacterReply& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  S_DeleteCharacterReply* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.errormessage_){}
+    , decltype(_impl_.success_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.errormessage_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.errormessage_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_errormessage().empty()) {
+    _this->_impl_.errormessage_.Set(from._internal_errormessage(), 
+      _this->GetArenaForAllocation());
+  }
+  _this->_impl_.success_ = from._impl_.success_;
+  // @@protoc_insertion_point(copy_constructor:Protocol.S_DeleteCharacterReply)
+}
+
+inline void S_DeleteCharacterReply::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.errormessage_){}
+    , decltype(_impl_.success_){false}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.errormessage_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.errormessage_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+S_DeleteCharacterReply::~S_DeleteCharacterReply() {
+  // @@protoc_insertion_point(destructor:Protocol.S_DeleteCharacterReply)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void S_DeleteCharacterReply::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.errormessage_.Destroy();
+}
+
+void S_DeleteCharacterReply::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void S_DeleteCharacterReply::Clear() {
+// @@protoc_insertion_point(message_clear_start:Protocol.S_DeleteCharacterReply)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.errormessage_.ClearToEmpty();
+  _impl_.success_ = false;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* S_DeleteCharacterReply::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // bool success = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.success_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // string errorMessage = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_errormessage();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "Protocol.S_DeleteCharacterReply.errorMessage"));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* S_DeleteCharacterReply::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Protocol.S_DeleteCharacterReply)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // bool success = 1;
+  if (this->_internal_success() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(1, this->_internal_success(), target);
+  }
+
+  // string errorMessage = 2;
+  if (!this->_internal_errormessage().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_errormessage().data(), static_cast<int>(this->_internal_errormessage().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "Protocol.S_DeleteCharacterReply.errorMessage");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_errormessage(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Protocol.S_DeleteCharacterReply)
+  return target;
+}
+
+size_t S_DeleteCharacterReply::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Protocol.S_DeleteCharacterReply)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string errorMessage = 2;
+  if (!this->_internal_errormessage().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_errormessage());
+  }
+
+  // bool success = 1;
+  if (this->_internal_success() != 0) {
+    total_size += 1 + 1;
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData S_DeleteCharacterReply::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    S_DeleteCharacterReply::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*S_DeleteCharacterReply::GetClassData() const { return &_class_data_; }
+
+
+void S_DeleteCharacterReply::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<S_DeleteCharacterReply*>(&to_msg);
+  auto& from = static_cast<const S_DeleteCharacterReply&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:Protocol.S_DeleteCharacterReply)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_errormessage().empty()) {
+    _this->_internal_set_errormessage(from._internal_errormessage());
+  }
+  if (from._internal_success() != 0) {
+    _this->_internal_set_success(from._internal_success());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void S_DeleteCharacterReply::CopyFrom(const S_DeleteCharacterReply& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.S_DeleteCharacterReply)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool S_DeleteCharacterReply::IsInitialized() const {
+  return true;
+}
+
+void S_DeleteCharacterReply::InternalSwap(S_DeleteCharacterReply* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.errormessage_, lhs_arena,
+      &other->_impl_.errormessage_, rhs_arena
+  );
+  swap(_impl_.success_, other->_impl_.success_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata S_DeleteCharacterReply::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
+      file_level_metadata_Protocol_2eproto[7]);
+}
+
+// ===================================================================
+
 class C_EnterGame::_Internal {
  public:
 };
@@ -2537,7 +2998,7 @@ void C_EnterGame::InternalSwap(C_EnterGame* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata C_EnterGame::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[6]);
+      file_level_metadata_Protocol_2eproto[8]);
 }
 
 // ===================================================================
@@ -2715,7 +3176,7 @@ void S_EnterGame::InternalSwap(S_EnterGame* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata S_EnterGame::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[7]);
+      file_level_metadata_Protocol_2eproto[9]);
 }
 
 // ===================================================================
@@ -2960,7 +3421,7 @@ void S_PlayerList::InternalSwap(S_PlayerList* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata S_PlayerList::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[8]);
+      file_level_metadata_Protocol_2eproto[10]);
 }
 
 // ===================================================================
@@ -3153,7 +3614,7 @@ void S_BroadcastPlayerEnter::InternalSwap(S_BroadcastPlayerEnter* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata S_BroadcastPlayerEnter::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[9]);
+      file_level_metadata_Protocol_2eproto[11]);
 }
 
 // ===================================================================
@@ -3334,7 +3795,7 @@ void C_LeaveGame::InternalSwap(C_LeaveGame* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata C_LeaveGame::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[10]);
+      file_level_metadata_Protocol_2eproto[12]);
 }
 
 // ===================================================================
@@ -3512,7 +3973,7 @@ void S_LeaveGame::InternalSwap(S_LeaveGame* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata S_LeaveGame::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[11]);
+      file_level_metadata_Protocol_2eproto[13]);
 }
 
 // ===================================================================
@@ -3726,7 +4187,7 @@ void S_BroadcastPlayerLeave::InternalSwap(S_BroadcastPlayerLeave* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata S_BroadcastPlayerLeave::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[12]);
+      file_level_metadata_Protocol_2eproto[14]);
 }
 
 // ===================================================================
@@ -3919,7 +4380,7 @@ void C_PlayerMoveRequest::InternalSwap(C_PlayerMoveRequest* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata C_PlayerMoveRequest::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[13]);
+      file_level_metadata_Protocol_2eproto[15]);
 }
 
 // ===================================================================
@@ -4249,7 +4710,7 @@ void S_PlayerMoveReply::InternalSwap(S_PlayerMoveReply* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata S_PlayerMoveReply::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[14]);
+      file_level_metadata_Protocol_2eproto[16]);
 }
 
 // ===================================================================
@@ -4461,7 +4922,7 @@ void S_BroadcastPlayerMove::InternalSwap(S_BroadcastPlayerMove* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata S_BroadcastPlayerMove::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[15]);
+      file_level_metadata_Protocol_2eproto[17]);
 }
 
 // ===================================================================
@@ -4672,7 +5133,7 @@ void S_ChangeRoomBegin::InternalSwap(S_ChangeRoomBegin* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata S_ChangeRoomBegin::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[16]);
+      file_level_metadata_Protocol_2eproto[18]);
 }
 
 // ===================================================================
@@ -4850,7 +5311,7 @@ void C_ChangeRoomReady::InternalSwap(C_ChangeRoomReady* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata C_ChangeRoomReady::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[17]);
+      file_level_metadata_Protocol_2eproto[19]);
 }
 
 // ===================================================================
@@ -5102,7 +5563,7 @@ void S_ChangeRoomCommit::InternalSwap(S_ChangeRoomCommit* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata S_ChangeRoomCommit::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[18]);
+      file_level_metadata_Protocol_2eproto[20]);
 }
 
 // ===================================================================
@@ -5388,7 +5849,7 @@ void S_SpawnMonster::InternalSwap(S_SpawnMonster* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata S_SpawnMonster::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[19]);
+      file_level_metadata_Protocol_2eproto[21]);
 }
 
 // ===================================================================
@@ -5602,7 +6063,7 @@ void S_DespawnMonster::InternalSwap(S_DespawnMonster* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata S_DespawnMonster::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[20]);
+      file_level_metadata_Protocol_2eproto[22]);
 }
 
 // ===================================================================
@@ -5864,7 +6325,7 @@ void S_BroadcastMonsterMove::InternalSwap(S_BroadcastMonsterMove* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata S_BroadcastMonsterMove::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[21]);
+      file_level_metadata_Protocol_2eproto[23]);
 }
 
 // ===================================================================
@@ -6075,7 +6536,7 @@ void S_BroadcastMonsterAttack::InternalSwap(S_BroadcastMonsterAttack* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata S_BroadcastMonsterAttack::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[22]);
+      file_level_metadata_Protocol_2eproto[24]);
 }
 
 // ===================================================================
@@ -6253,7 +6714,7 @@ void S_BroadcastMonsterDeath::InternalSwap(S_BroadcastMonsterDeath* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata S_BroadcastMonsterDeath::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[23]);
+      file_level_metadata_Protocol_2eproto[25]);
 }
 
 // ===================================================================
@@ -6293,7 +6754,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*C_PlayerAttackRequest::GetClas
 ::PROTOBUF_NAMESPACE_ID::Metadata C_PlayerAttackRequest::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[24]);
+      file_level_metadata_Protocol_2eproto[26]);
 }
 
 // ===================================================================
@@ -6552,7 +7013,7 @@ void S_BroadcastPlayerAttack::InternalSwap(S_BroadcastPlayerAttack* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata S_BroadcastPlayerAttack::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[25]);
+      file_level_metadata_Protocol_2eproto[27]);
 }
 
 // ===================================================================
@@ -6592,7 +7053,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*C_InventoryRequest::GetClassDa
 ::PROTOBUF_NAMESPACE_ID::Metadata C_InventoryRequest::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[26]);
+      file_level_metadata_Protocol_2eproto[28]);
 }
 
 // ===================================================================
@@ -6777,7 +7238,7 @@ void S_InventoryReply::InternalSwap(S_InventoryReply* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata S_InventoryReply::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[27]);
+      file_level_metadata_Protocol_2eproto[29]);
 }
 
 // ===================================================================
@@ -6955,7 +7416,7 @@ void C_ItemUseRequest::InternalSwap(C_ItemUseRequest* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata C_ItemUseRequest::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[28]);
+      file_level_metadata_Protocol_2eproto[30]);
 }
 
 // ===================================================================
@@ -7185,7 +7646,7 @@ void S_ItemUseReply::InternalSwap(S_ItemUseReply* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata S_ItemUseReply::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[29]);
+      file_level_metadata_Protocol_2eproto[31]);
 }
 
 // ===================================================================
@@ -7370,7 +7831,7 @@ void S_InventoryUpdate::InternalSwap(S_InventoryUpdate* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata S_InventoryUpdate::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[30]);
+      file_level_metadata_Protocol_2eproto[32]);
 }
 
 // ===================================================================
@@ -7603,7 +8064,7 @@ void S_SystemMessage::InternalSwap(S_SystemMessage* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata S_SystemMessage::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[31]);
+      file_level_metadata_Protocol_2eproto[33]);
 }
 
 // ===================================================================
@@ -7814,7 +8275,7 @@ void Vector2Info::InternalSwap(Vector2Info* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata Vector2Info::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[32]);
+      file_level_metadata_Protocol_2eproto[34]);
 }
 
 // ===================================================================
@@ -8096,7 +8557,7 @@ void PlayerMoveInfo::InternalSwap(PlayerMoveInfo* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata PlayerMoveInfo::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[33]);
+      file_level_metadata_Protocol_2eproto[35]);
 }
 
 // ===================================================================
@@ -8389,7 +8850,7 @@ void CharacterSummaryInfo::InternalSwap(CharacterSummaryInfo* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata CharacterSummaryInfo::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[34]);
+      file_level_metadata_Protocol_2eproto[36]);
 }
 
 // ===================================================================
@@ -8696,7 +9157,7 @@ void PlayerInfo::InternalSwap(PlayerInfo* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata PlayerInfo::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[35]);
+      file_level_metadata_Protocol_2eproto[37]);
 }
 
 // ===================================================================
@@ -8955,7 +9416,7 @@ void InventorySlotInfo::InternalSwap(InventorySlotInfo* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata InventorySlotInfo::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[36]);
+      file_level_metadata_Protocol_2eproto[38]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -8984,6 +9445,14 @@ Arena::CreateMaybeMessage< ::Protocol::C_CharacterListRequest >(Arena* arena) {
 template<> PROTOBUF_NOINLINE ::Protocol::S_CharacterListReply*
 Arena::CreateMaybeMessage< ::Protocol::S_CharacterListReply >(Arena* arena) {
   return Arena::CreateMessageInternal< ::Protocol::S_CharacterListReply >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Protocol::C_DeleteCharacterRequest*
+Arena::CreateMaybeMessage< ::Protocol::C_DeleteCharacterRequest >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Protocol::C_DeleteCharacterRequest >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Protocol::S_DeleteCharacterReply*
+Arena::CreateMaybeMessage< ::Protocol::S_DeleteCharacterReply >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Protocol::S_DeleteCharacterReply >(arena);
 }
 template<> PROTOBUF_NOINLINE ::Protocol::C_EnterGame*
 Arena::CreateMaybeMessage< ::Protocol::C_EnterGame >(Arena* arena) {

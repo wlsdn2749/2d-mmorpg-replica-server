@@ -1,0 +1,1183 @@
+fileFormatVersion: 2
+guid: 8ceb5f36dd30cd94e89471e08f667745
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 911922733785580911
+    second: Esoteric_0
+  - first:
+      213: 3122633967020011604
+    second: Esoteric_1
+  - first:
+      213: 7857395264393618764
+    second: Esoteric_2
+  - first:
+      213: 5218301140820500604
+    second: Esoteric_3
+  - first:
+      213: 6295927294432614664
+    second: Esoteric_4
+  - first:
+      213: -1384240214723398988
+    second: Esoteric_5
+  - first:
+      213: -6347446091418065051
+    second: Esoteric_6
+  - first:
+      213: -8337159545638431104
+    second: Esoteric_7
+  - first:
+      213: 5858256658268781342
+    second: Esoteric_8
+  - first:
+      213: -1204031823520054628
+    second: Esoteric_9
+  - first:
+      213: -1561482338508650035
+    second: Esoteric_10
+  - first:
+      213: 6712560084217742443
+    second: Esoteric_11
+  - first:
+      213: 2575661548185361329
+    second: Esoteric_12
+  - first:
+      213: 5336509176604863855
+    second: Esoteric_13
+  - first:
+      213: -7107338893083463087
+    second: Esoteric_14
+  - first:
+      213: -5519701670250488940
+    second: Esoteric_15
+  - first:
+      213: 3806781880459178098
+    second: Esoteric_16
+  - first:
+      213: -852668405757234758
+    second: Esoteric_17
+  - first:
+      213: 2595030798002784876
+    second: Esoteric_18
+  - first:
+      213: 7856323899338072543
+    second: Esoteric_19
+  - first:
+      213: -2661637407661025280
+    second: Esoteric_20
+  - first:
+      213: 1096251613167672255
+    second: Esoteric_21
+  - first:
+      213: 5922582807817072659
+    second: Esoteric_22
+  - first:
+      213: 2448968845762615195
+    second: Esoteric_23
+  - first:
+      213: -8844547165691470428
+    second: Esoteric_24
+  - first:
+      213: -7412284386504332058
+    second: Esoteric_25
+  - first:
+      213: -3932622176055592710
+    second: Esoteric_26
+  - first:
+      213: -5341283445790912484
+    second: Esoteric_27
+  - first:
+      213: 4767348106812305313
+    second: Esoteric_28
+  - first:
+      213: 5793241367748632744
+    second: Esoteric_29
+  - first:
+      213: -1851293914015421708
+    second: Esoteric_30
+  - first:
+      213: 4863672400533826178
+    second: Esoteric_31
+  - first:
+      213: 3553223528321314570
+    second: Esoteric_32
+  - first:
+      213: -2772917828837577329
+    second: Esoteric_33
+  - first:
+      213: 1097081590076126752
+    second: Esoteric_34
+  - first:
+      213: 5710087308319786891
+    second: Esoteric_35
+  - first:
+      213: -4646902406494836248
+    second: Esoteric_36
+  - first:
+      213: 4086307914474776682
+    second: Esoteric_37
+  - first:
+      213: -4264046155730891672
+    second: Esoteric_38
+  - first:
+      213: -5819797931516263888
+    second: Esoteric_39
+  - first:
+      213: -1151918515644699465
+    second: Esoteric_40
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Esoteric_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 390
+        width: 30
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6584e115ecc7ac00800000000000000
+      internalID: 911922733785580911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_1
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 384
+        width: 19
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 450fbcf6c03d55b20800000000000000
+      internalID: 3122633967020011604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_2
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 367
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c45a40adc531b0d60800000000000000
+      internalID: 7857395264393618764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_3
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 351
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c702f956d312b6840800000000000000
+      internalID: 5218301140820500604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_4
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 367
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 809975c5480af5750800000000000000
+      internalID: 6295927294432614664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_5
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 367
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b2f995dbd03acce0800000000000000
+      internalID: -1384240214723398988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_6
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 319
+        width: 22
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 567a51af86759e7a0800000000000000
+      internalID: -6347446091418065051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_7
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 367
+        width: 19
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 086d67eb0957c4c80800000000000000
+      internalID: -8337159545638431104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_8
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 335
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1b7d2f6465bc4150800000000000000
+      internalID: 5858256658268781342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_9
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 351
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9242dc8f6b6a4fe0800000000000000
+      internalID: -1204031823520054628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_10
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 351
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc945221610845ae0800000000000000
+      internalID: -1561482338508650035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_11
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 351
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b64c349f4ddc72d50800000000000000
+      internalID: 6712560084217742443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_12
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 351
+        width: 19
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1bb983918869eb320800000000000000
+      internalID: 2575661548185361329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_13
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 319
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6d252472d61f0a40800000000000000
+      internalID: 5336509176604863855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_14
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 335
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 152317bdee8ad5d90800000000000000
+      internalID: -7107338893083463087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_15
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 335
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49bd69653941663b0800000000000000
+      internalID: -5519701670250488940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_16
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 335
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 270b92a73f764d430800000000000000
+      internalID: 3806781880459178098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_17
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 335
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab134a34a96ba24f0800000000000000
+      internalID: -852668405757234758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_18
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 335
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6a872003c6630420800000000000000
+      internalID: 2595030798002784876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_19
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 319
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd1257c36f4470d60800000000000000
+      internalID: 7856323899338072543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_20
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 319
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 008197331e6ff0bd0800000000000000
+      internalID: -2661637407661025280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_21
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 319
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbbde43b80ba63f00800000000000000
+      internalID: 1096251613167672255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_22
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 287
+        width: 13
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 310b5cc3fad313250800000000000000
+      internalID: 5922582807817072659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_23
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 287
+        width: 11
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b97dda5a03c7cf120800000000000000
+      internalID: 2448968845762615195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_24
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 274
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ad95c5963bd14580800000000000000
+      internalID: -8844547165691470428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_25
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 287
+        width: 13
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ec2c385f96422990800000000000000
+      internalID: -7412284386504332058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_26
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 272
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af8f16087f48c69c0800000000000000
+      internalID: -3932622176055592710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_27
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 287
+        width: 11
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1055f06103ffd5b0800000000000000
+      internalID: -5341283445790912484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_28
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 276
+        width: 16
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1afad2b38d5092240800000000000000
+      internalID: 4767348106812305313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_29
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 276
+        width: 15
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a061ce745ab56050800000000000000
+      internalID: 5793241367748632744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_30
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 256
+        width: 15
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4faa4486ef1ee46e0800000000000000
+      internalID: -1851293914015421708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_31
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 258
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28aa0b9874c3f7340800000000000000
+      internalID: 4863672400533826178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_32
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 258
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0fe62529f59f4130800000000000000
+      internalID: 3553223528321314570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_33
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 255
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8de9cc1ded9489d0800000000000000
+      internalID: -2772917828837577329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_34
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 242
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 026bb12c4ed993f00800000000000000
+      internalID: 1097081590076126752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_35
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 240
+        width: 11
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b870ed0572e4e3f40800000000000000
+      internalID: 5710087308319786891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_36
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 225
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e9a7f2b1e2e28fb0800000000000000
+      internalID: -4646902406494836248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_37
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 212
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a68e225e56b75b830800000000000000
+      internalID: 4086307914474776682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_38
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 210
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86c4acdfc9013d4c0800000000000000
+      internalID: -4264046155730891672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_39
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 180
+        width: 7
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0328b6bad9ceb3fa0800000000000000
+      internalID: -5819797931516263888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Esoteric_40
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 165
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bc6dc096309300f0800000000000000
+      internalID: -1151918515644699465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Esoteric_0: 911922733785580911
+      Esoteric_1: 3122633967020011604
+      Esoteric_10: -1561482338508650035
+      Esoteric_11: 6712560084217742443
+      Esoteric_12: 2575661548185361329
+      Esoteric_13: 5336509176604863855
+      Esoteric_14: -7107338893083463087
+      Esoteric_15: -5519701670250488940
+      Esoteric_16: 3806781880459178098
+      Esoteric_17: -852668405757234758
+      Esoteric_18: 2595030798002784876
+      Esoteric_19: 7856323899338072543
+      Esoteric_2: 7857395264393618764
+      Esoteric_20: -2661637407661025280
+      Esoteric_21: 1096251613167672255
+      Esoteric_22: 5922582807817072659
+      Esoteric_23: 2448968845762615195
+      Esoteric_24: -8844547165691470428
+      Esoteric_25: -7412284386504332058
+      Esoteric_26: -3932622176055592710
+      Esoteric_27: -5341283445790912484
+      Esoteric_28: 4767348106812305313
+      Esoteric_29: 5793241367748632744
+      Esoteric_3: 5218301140820500604
+      Esoteric_30: -1851293914015421708
+      Esoteric_31: 4863672400533826178
+      Esoteric_32: 3553223528321314570
+      Esoteric_33: -2772917828837577329
+      Esoteric_34: 1097081590076126752
+      Esoteric_35: 5710087308319786891
+      Esoteric_36: -4646902406494836248
+      Esoteric_37: 4086307914474776682
+      Esoteric_38: -4264046155730891672
+      Esoteric_39: -5819797931516263888
+      Esoteric_4: 6295927294432614664
+      Esoteric_40: -1151918515644699465
+      Esoteric_5: -1384240214723398988
+      Esoteric_6: -6347446091418065051
+      Esoteric_7: -8337159545638431104
+      Esoteric_8: 5858256658268781342
+      Esoteric_9: -1204031823520054628
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

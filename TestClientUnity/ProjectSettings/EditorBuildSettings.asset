@@ -6,8 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/@Scenes/SampleScene.unity
+    path: Assets/@Scenes/AuthScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/@Scenes/Map_Goguryeo.unity
+    guid: dada4f852de8d084287de3fe904e58df
+  - enabled: 1
+    path: Assets/@Scenes/Map_Baekje.unity
+    guid: acbabe09473543547a21216121b9d10d
+  - enabled: 1
+    path: Assets/@Scenes/Map_HuntingField.unity
+    guid: a9c09053ae577b4449459fbfc3426bb5
+  - enabled: 1
+    path: Assets/@Scenes/LoadingScene.unity
+    guid: 7da1407c33619e744ae7f6089afc2a30
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

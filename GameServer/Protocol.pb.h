@@ -56,6 +56,9 @@ extern C_CharacterListRequestDefaultTypeInternal _C_CharacterListRequest_default
 class C_CreateCharacterRequest;
 struct C_CreateCharacterRequestDefaultTypeInternal;
 extern C_CreateCharacterRequestDefaultTypeInternal _C_CreateCharacterRequest_default_instance_;
+class C_DeleteCharacterRequest;
+struct C_DeleteCharacterRequestDefaultTypeInternal;
+extern C_DeleteCharacterRequestDefaultTypeInternal _C_DeleteCharacterRequest_default_instance_;
 class C_EnterGame;
 struct C_EnterGameDefaultTypeInternal;
 extern C_EnterGameDefaultTypeInternal _C_EnterGame_default_instance_;
@@ -122,6 +125,9 @@ extern S_CharacterListReplyDefaultTypeInternal _S_CharacterListReply_default_ins
 class S_CreateCharacterReply;
 struct S_CreateCharacterReplyDefaultTypeInternal;
 extern S_CreateCharacterReplyDefaultTypeInternal _S_CreateCharacterReply_default_instance_;
+class S_DeleteCharacterReply;
+struct S_DeleteCharacterReplyDefaultTypeInternal;
+extern S_DeleteCharacterReplyDefaultTypeInternal _S_DeleteCharacterReply_default_instance_;
 class S_DespawnMonster;
 struct S_DespawnMonsterDefaultTypeInternal;
 extern S_DespawnMonsterDefaultTypeInternal _S_DespawnMonster_default_instance_;
@@ -163,6 +169,7 @@ PROTOBUF_NAMESPACE_OPEN
 template<> ::Protocol::C_ChangeRoomReady* Arena::CreateMaybeMessage<::Protocol::C_ChangeRoomReady>(Arena*);
 template<> ::Protocol::C_CharacterListRequest* Arena::CreateMaybeMessage<::Protocol::C_CharacterListRequest>(Arena*);
 template<> ::Protocol::C_CreateCharacterRequest* Arena::CreateMaybeMessage<::Protocol::C_CreateCharacterRequest>(Arena*);
+template<> ::Protocol::C_DeleteCharacterRequest* Arena::CreateMaybeMessage<::Protocol::C_DeleteCharacterRequest>(Arena*);
 template<> ::Protocol::C_EnterGame* Arena::CreateMaybeMessage<::Protocol::C_EnterGame>(Arena*);
 template<> ::Protocol::C_InventoryRequest* Arena::CreateMaybeMessage<::Protocol::C_InventoryRequest>(Arena*);
 template<> ::Protocol::C_ItemUseRequest* Arena::CreateMaybeMessage<::Protocol::C_ItemUseRequest>(Arena*);
@@ -185,6 +192,7 @@ template<> ::Protocol::S_ChangeRoomBegin* Arena::CreateMaybeMessage<::Protocol::
 template<> ::Protocol::S_ChangeRoomCommit* Arena::CreateMaybeMessage<::Protocol::S_ChangeRoomCommit>(Arena*);
 template<> ::Protocol::S_CharacterListReply* Arena::CreateMaybeMessage<::Protocol::S_CharacterListReply>(Arena*);
 template<> ::Protocol::S_CreateCharacterReply* Arena::CreateMaybeMessage<::Protocol::S_CreateCharacterReply>(Arena*);
+template<> ::Protocol::S_DeleteCharacterReply* Arena::CreateMaybeMessage<::Protocol::S_DeleteCharacterReply>(Arena*);
 template<> ::Protocol::S_DespawnMonster* Arena::CreateMaybeMessage<::Protocol::S_DespawnMonster>(Arena*);
 template<> ::Protocol::S_EnterGame* Arena::CreateMaybeMessage<::Protocol::S_EnterGame>(Arena*);
 template<> ::Protocol::S_InventoryReply* Arena::CreateMaybeMessage<::Protocol::S_InventoryReply>(Arena*);
@@ -207,32 +215,34 @@ enum MsgId : int {
   S_CREATE_CHARACTER_REPLY = 3,
   C_CHARACTER_LIST_REQUEST = 4,
   S_CHARACTER_LIST_REPLY = 5,
-  C_ENTER_GAME = 6,
-  S_ENTER_GAME = 7,
-  S_PLAYER_LIST = 8,
-  S_BROADCAST_PLAYER_ENTER = 9,
-  C_LEAVE_GAME = 10,
-  S_LEAVE_GAME = 11,
-  S_BROADCAST_PLAYER_LEAVE = 12,
-  C_PLAYER_MOVE_REQUEST = 13,
-  S_PLAYER_MOVE_REPLY = 14,
-  S_BROADCAST_PLAYER_MOVE = 15,
-  S_CHANGE_ROOM_BEGIN = 16,
-  C_CHANGE_ROOM_READY = 17,
-  S_CHANGE_ROOM_COMMIT = 18,
-  S_SPAWN_MONSTER = 19,
-  S_DESPAWN_MONSTER = 20,
-  S_BROADCAST_MONSTER_MOVE = 21,
-  S_BROADCAST_MONSTER_ATTACK = 22,
-  S_BROADCAST_MONSTER_DEATH = 23,
-  C_PLAYER_ATTACK_REQUEST = 24,
-  S_BROADCAST_PLAYER_ATTACK = 25,
-  C_INVENTORY_REQUEST = 26,
-  S_INVENTORY_REPLY = 27,
-  C_ITEM_USE_REQUEST = 28,
-  S_ITEM_USE_REPLY = 29,
-  S_INVENTORY_UPDATE = 30,
-  S_SYSTEM_MESSAGE = 31,
+  C_DELETE_CHARACTER_REQUEST = 6,
+  S_DELETE_CHARACTER_REPLY = 7,
+  C_ENTER_GAME = 8,
+  S_ENTER_GAME = 9,
+  S_PLAYER_LIST = 10,
+  S_BROADCAST_PLAYER_ENTER = 11,
+  C_LEAVE_GAME = 12,
+  S_LEAVE_GAME = 13,
+  S_BROADCAST_PLAYER_LEAVE = 14,
+  C_PLAYER_MOVE_REQUEST = 15,
+  S_PLAYER_MOVE_REPLY = 16,
+  S_BROADCAST_PLAYER_MOVE = 17,
+  S_CHANGE_ROOM_BEGIN = 18,
+  C_CHANGE_ROOM_READY = 19,
+  S_CHANGE_ROOM_COMMIT = 20,
+  S_SPAWN_MONSTER = 21,
+  S_DESPAWN_MONSTER = 22,
+  S_BROADCAST_MONSTER_MOVE = 23,
+  S_BROADCAST_MONSTER_ATTACK = 24,
+  S_BROADCAST_MONSTER_DEATH = 25,
+  C_PLAYER_ATTACK_REQUEST = 26,
+  S_BROADCAST_PLAYER_ATTACK = 27,
+  C_INVENTORY_REQUEST = 28,
+  S_INVENTORY_REPLY = 29,
+  C_ITEM_USE_REQUEST = 30,
+  S_ITEM_USE_REPLY = 31,
+  S_INVENTORY_UPDATE = 32,
+  S_SYSTEM_MESSAGE = 33,
   MsgId_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   MsgId_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
@@ -1439,6 +1449,318 @@ class S_CharacterListReply final :
 };
 // -------------------------------------------------------------------
 
+class C_DeleteCharacterRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.C_DeleteCharacterRequest) */ {
+ public:
+  inline C_DeleteCharacterRequest() : C_DeleteCharacterRequest(nullptr) {}
+  ~C_DeleteCharacterRequest() override;
+  explicit PROTOBUF_CONSTEXPR C_DeleteCharacterRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  C_DeleteCharacterRequest(const C_DeleteCharacterRequest& from);
+  C_DeleteCharacterRequest(C_DeleteCharacterRequest&& from) noexcept
+    : C_DeleteCharacterRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline C_DeleteCharacterRequest& operator=(const C_DeleteCharacterRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline C_DeleteCharacterRequest& operator=(C_DeleteCharacterRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const C_DeleteCharacterRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const C_DeleteCharacterRequest* internal_default_instance() {
+    return reinterpret_cast<const C_DeleteCharacterRequest*>(
+               &_C_DeleteCharacterRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    6;
+
+  friend void swap(C_DeleteCharacterRequest& a, C_DeleteCharacterRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(C_DeleteCharacterRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(C_DeleteCharacterRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  C_DeleteCharacterRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<C_DeleteCharacterRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const C_DeleteCharacterRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const C_DeleteCharacterRequest& from) {
+    C_DeleteCharacterRequest::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(C_DeleteCharacterRequest* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.C_DeleteCharacterRequest";
+  }
+  protected:
+  explicit C_DeleteCharacterRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kCharacterIndexFieldNumber = 1,
+  };
+  // int32 characterIndex = 1;
+  void clear_characterindex();
+  int32_t characterindex() const;
+  void set_characterindex(int32_t value);
+  private:
+  int32_t _internal_characterindex() const;
+  void _internal_set_characterindex(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Protocol.C_DeleteCharacterRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int32_t characterindex_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_Protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
+class S_DeleteCharacterReply final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.S_DeleteCharacterReply) */ {
+ public:
+  inline S_DeleteCharacterReply() : S_DeleteCharacterReply(nullptr) {}
+  ~S_DeleteCharacterReply() override;
+  explicit PROTOBUF_CONSTEXPR S_DeleteCharacterReply(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  S_DeleteCharacterReply(const S_DeleteCharacterReply& from);
+  S_DeleteCharacterReply(S_DeleteCharacterReply&& from) noexcept
+    : S_DeleteCharacterReply() {
+    *this = ::std::move(from);
+  }
+
+  inline S_DeleteCharacterReply& operator=(const S_DeleteCharacterReply& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline S_DeleteCharacterReply& operator=(S_DeleteCharacterReply&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const S_DeleteCharacterReply& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const S_DeleteCharacterReply* internal_default_instance() {
+    return reinterpret_cast<const S_DeleteCharacterReply*>(
+               &_S_DeleteCharacterReply_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    7;
+
+  friend void swap(S_DeleteCharacterReply& a, S_DeleteCharacterReply& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(S_DeleteCharacterReply* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(S_DeleteCharacterReply* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  S_DeleteCharacterReply* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<S_DeleteCharacterReply>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const S_DeleteCharacterReply& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const S_DeleteCharacterReply& from) {
+    S_DeleteCharacterReply::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S_DeleteCharacterReply* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.S_DeleteCharacterReply";
+  }
+  protected:
+  explicit S_DeleteCharacterReply(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kErrorMessageFieldNumber = 2,
+    kSuccessFieldNumber = 1,
+  };
+  // string errorMessage = 2;
+  void clear_errormessage();
+  const std::string& errormessage() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_errormessage(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_errormessage();
+  PROTOBUF_NODISCARD std::string* release_errormessage();
+  void set_allocated_errormessage(std::string* errormessage);
+  private:
+  const std::string& _internal_errormessage() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_errormessage(const std::string& value);
+  std::string* _internal_mutable_errormessage();
+  public:
+
+  // bool success = 1;
+  void clear_success();
+  bool success() const;
+  void set_success(bool value);
+  private:
+  bool _internal_success() const;
+  void _internal_set_success(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Protocol.S_DeleteCharacterReply)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr errormessage_;
+    bool success_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_Protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
 class C_EnterGame final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.C_EnterGame) */ {
  public:
@@ -1487,7 +1809,7 @@ class C_EnterGame final :
                &_C_EnterGame_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    8;
 
   friend void swap(C_EnterGame& a, C_EnterGame& b) {
     a.Swap(&b);
@@ -1635,7 +1957,7 @@ class S_EnterGame final :
                &_S_EnterGame_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    7;
+    9;
 
   friend void swap(S_EnterGame& a, S_EnterGame& b) {
     a.Swap(&b);
@@ -1783,7 +2105,7 @@ class S_PlayerList final :
                &_S_PlayerList_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    8;
+    10;
 
   friend void swap(S_PlayerList& a, S_PlayerList& b) {
     a.Swap(&b);
@@ -1962,7 +2284,7 @@ class S_BroadcastPlayerEnter final :
                &_S_BroadcastPlayerEnter_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    9;
+    11;
 
   friend void swap(S_BroadcastPlayerEnter& a, S_BroadcastPlayerEnter& b) {
     a.Swap(&b);
@@ -2119,7 +2441,7 @@ class C_LeaveGame final :
                &_C_LeaveGame_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    12;
 
   friend void swap(C_LeaveGame& a, C_LeaveGame& b) {
     a.Swap(&b);
@@ -2267,7 +2589,7 @@ class S_LeaveGame final :
                &_S_LeaveGame_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    13;
 
   friend void swap(S_LeaveGame& a, S_LeaveGame& b) {
     a.Swap(&b);
@@ -2415,7 +2737,7 @@ class S_BroadcastPlayerLeave final :
                &_S_BroadcastPlayerLeave_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    14;
 
   friend void swap(S_BroadcastPlayerLeave& a, S_BroadcastPlayerLeave& b) {
     a.Swap(&b);
@@ -2574,7 +2896,7 @@ class C_PlayerMoveRequest final :
                &_C_PlayerMoveRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    15;
 
   friend void swap(C_PlayerMoveRequest& a, C_PlayerMoveRequest& b) {
     a.Swap(&b);
@@ -2731,7 +3053,7 @@ class S_PlayerMoveReply final :
                &_S_PlayerMoveReply_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    16;
 
   friend void swap(S_PlayerMoveReply& a, S_PlayerMoveReply& b) {
     a.Swap(&b);
@@ -2943,7 +3265,7 @@ class S_BroadcastPlayerMove final :
                &_S_BroadcastPlayerMove_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    17;
 
   friend void swap(S_BroadcastPlayerMove& a, S_BroadcastPlayerMove& b) {
     a.Swap(&b);
@@ -3111,7 +3433,7 @@ class S_ChangeRoomBegin final :
                &_S_ChangeRoomBegin_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    16;
+    18;
 
   friend void swap(S_ChangeRoomBegin& a, S_ChangeRoomBegin& b) {
     a.Swap(&b);
@@ -3270,7 +3592,7 @@ class C_ChangeRoomReady final :
                &_C_ChangeRoomReady_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    17;
+    19;
 
   friend void swap(C_ChangeRoomReady& a, C_ChangeRoomReady& b) {
     a.Swap(&b);
@@ -3418,7 +3740,7 @@ class S_ChangeRoomCommit final :
                &_S_ChangeRoomCommit_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    18;
+    20;
 
   friend void swap(S_ChangeRoomCommit& a, S_ChangeRoomCommit& b) {
     a.Swap(&b);
@@ -3597,7 +3919,7 @@ class S_SpawnMonster final :
                &_S_SpawnMonster_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    19;
+    21;
 
   friend void swap(S_SpawnMonster& a, S_SpawnMonster& b) {
     a.Swap(&b);
@@ -3789,7 +4111,7 @@ class S_DespawnMonster final :
                &_S_DespawnMonster_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    20;
+    22;
 
   friend void swap(S_DespawnMonster& a, S_DespawnMonster& b) {
     a.Swap(&b);
@@ -3948,7 +4270,7 @@ class S_BroadcastMonsterMove final :
                &_S_BroadcastMonsterMove_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    21;
+    23;
 
   friend void swap(S_BroadcastMonsterMove& a, S_BroadcastMonsterMove& b) {
     a.Swap(&b);
@@ -4129,7 +4451,7 @@ class S_BroadcastMonsterAttack final :
                &_S_BroadcastMonsterAttack_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    22;
+    24;
 
   friend void swap(S_BroadcastMonsterAttack& a, S_BroadcastMonsterAttack& b) {
     a.Swap(&b);
@@ -4288,7 +4610,7 @@ class S_BroadcastMonsterDeath final :
                &_S_BroadcastMonsterDeath_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    23;
+    25;
 
   friend void swap(S_BroadcastMonsterDeath& a, S_BroadcastMonsterDeath& b) {
     a.Swap(&b);
@@ -4435,7 +4757,7 @@ class C_PlayerAttackRequest final :
                &_C_PlayerAttackRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    24;
+    26;
 
   friend void swap(C_PlayerAttackRequest& a, C_PlayerAttackRequest& b) {
     a.Swap(&b);
@@ -4554,7 +4876,7 @@ class S_BroadcastPlayerAttack final :
                &_S_BroadcastPlayerAttack_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    25;
+    27;
 
   friend void swap(S_BroadcastPlayerAttack& a, S_BroadcastPlayerAttack& b) {
     a.Swap(&b);
@@ -4734,7 +5056,7 @@ class C_InventoryRequest final :
                &_C_InventoryRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    26;
+    28;
 
   friend void swap(C_InventoryRequest& a, C_InventoryRequest& b) {
     a.Swap(&b);
@@ -4853,7 +5175,7 @@ class S_InventoryReply final :
                &_S_InventoryReply_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    27;
+    29;
 
   friend void swap(S_InventoryReply& a, S_InventoryReply& b) {
     a.Swap(&b);
@@ -5010,7 +5332,7 @@ class C_ItemUseRequest final :
                &_C_ItemUseRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    28;
+    30;
 
   friend void swap(C_ItemUseRequest& a, C_ItemUseRequest& b) {
     a.Swap(&b);
@@ -5158,7 +5480,7 @@ class S_ItemUseReply final :
                &_S_ItemUseReply_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    29;
+    31;
 
   friend void swap(S_ItemUseReply& a, S_ItemUseReply& b) {
     a.Swap(&b);
@@ -5322,7 +5644,7 @@ class S_InventoryUpdate final :
                &_S_InventoryUpdate_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    30;
+    32;
 
   friend void swap(S_InventoryUpdate& a, S_InventoryUpdate& b) {
     a.Swap(&b);
@@ -5479,7 +5801,7 @@ class S_SystemMessage final :
                &_S_SystemMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    31;
+    33;
 
   friend void swap(S_SystemMessage& a, S_SystemMessage& b) {
     a.Swap(&b);
@@ -5643,7 +5965,7 @@ class Vector2Info final :
                &_Vector2Info_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    32;
+    34;
 
   friend void swap(Vector2Info& a, Vector2Info& b) {
     a.Swap(&b);
@@ -5802,7 +6124,7 @@ class PlayerMoveInfo final :
                &_PlayerMoveInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    33;
+    35;
 
   friend void swap(PlayerMoveInfo& a, PlayerMoveInfo& b) {
     a.Swap(&b);
@@ -5992,7 +6314,7 @@ class CharacterSummaryInfo final :
                &_CharacterSummaryInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    34;
+    36;
 
   friend void swap(CharacterSummaryInfo& a, CharacterSummaryInfo& b) {
     a.Swap(&b);
@@ -6178,7 +6500,7 @@ class PlayerInfo final :
                &_PlayerInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    35;
+    37;
 
   friend void swap(PlayerInfo& a, PlayerInfo& b) {
     a.Swap(&b);
@@ -6373,7 +6695,7 @@ class InventorySlotInfo final :
                &_InventorySlotInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    36;
+    38;
 
   friend void swap(InventorySlotInfo& a, InventorySlotInfo& b) {
     a.Swap(&b);
@@ -6803,6 +7125,104 @@ inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::CharacterSum
 S_CharacterListReply::characters() const {
   // @@protoc_insertion_point(field_list:Protocol.S_CharacterListReply.characters)
   return _impl_.characters_;
+}
+
+// -------------------------------------------------------------------
+
+// C_DeleteCharacterRequest
+
+// int32 characterIndex = 1;
+inline void C_DeleteCharacterRequest::clear_characterindex() {
+  _impl_.characterindex_ = 0;
+}
+inline int32_t C_DeleteCharacterRequest::_internal_characterindex() const {
+  return _impl_.characterindex_;
+}
+inline int32_t C_DeleteCharacterRequest::characterindex() const {
+  // @@protoc_insertion_point(field_get:Protocol.C_DeleteCharacterRequest.characterIndex)
+  return _internal_characterindex();
+}
+inline void C_DeleteCharacterRequest::_internal_set_characterindex(int32_t value) {
+  
+  _impl_.characterindex_ = value;
+}
+inline void C_DeleteCharacterRequest::set_characterindex(int32_t value) {
+  _internal_set_characterindex(value);
+  // @@protoc_insertion_point(field_set:Protocol.C_DeleteCharacterRequest.characterIndex)
+}
+
+// -------------------------------------------------------------------
+
+// S_DeleteCharacterReply
+
+// bool success = 1;
+inline void S_DeleteCharacterReply::clear_success() {
+  _impl_.success_ = false;
+}
+inline bool S_DeleteCharacterReply::_internal_success() const {
+  return _impl_.success_;
+}
+inline bool S_DeleteCharacterReply::success() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_DeleteCharacterReply.success)
+  return _internal_success();
+}
+inline void S_DeleteCharacterReply::_internal_set_success(bool value) {
+  
+  _impl_.success_ = value;
+}
+inline void S_DeleteCharacterReply::set_success(bool value) {
+  _internal_set_success(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_DeleteCharacterReply.success)
+}
+
+// string errorMessage = 2;
+inline void S_DeleteCharacterReply::clear_errormessage() {
+  _impl_.errormessage_.ClearToEmpty();
+}
+inline const std::string& S_DeleteCharacterReply::errormessage() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_DeleteCharacterReply.errorMessage)
+  return _internal_errormessage();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void S_DeleteCharacterReply::set_errormessage(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.errormessage_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Protocol.S_DeleteCharacterReply.errorMessage)
+}
+inline std::string* S_DeleteCharacterReply::mutable_errormessage() {
+  std::string* _s = _internal_mutable_errormessage();
+  // @@protoc_insertion_point(field_mutable:Protocol.S_DeleteCharacterReply.errorMessage)
+  return _s;
+}
+inline const std::string& S_DeleteCharacterReply::_internal_errormessage() const {
+  return _impl_.errormessage_.Get();
+}
+inline void S_DeleteCharacterReply::_internal_set_errormessage(const std::string& value) {
+  
+  _impl_.errormessage_.Set(value, GetArenaForAllocation());
+}
+inline std::string* S_DeleteCharacterReply::_internal_mutable_errormessage() {
+  
+  return _impl_.errormessage_.Mutable(GetArenaForAllocation());
+}
+inline std::string* S_DeleteCharacterReply::release_errormessage() {
+  // @@protoc_insertion_point(field_release:Protocol.S_DeleteCharacterReply.errorMessage)
+  return _impl_.errormessage_.Release();
+}
+inline void S_DeleteCharacterReply::set_allocated_errormessage(std::string* errormessage) {
+  if (errormessage != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.errormessage_.SetAllocated(errormessage, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.errormessage_.IsDefault()) {
+    _impl_.errormessage_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:Protocol.S_DeleteCharacterReply.errorMessage)
 }
 
 // -------------------------------------------------------------------
@@ -8912,6 +9332,10 @@ inline void InventorySlotInfo::set_isquickslot(bool value) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

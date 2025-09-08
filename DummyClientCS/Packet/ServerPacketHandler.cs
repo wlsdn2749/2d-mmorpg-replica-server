@@ -323,5 +323,19 @@ namespace Packet
         {
             Console.WriteLine($"[SystemMessage] Type: {message.Type}, Message: {message.Message}");
         }
+
+        internal static void HANDLE_S_DeleteCharacterReply(PacketSession session, S_DeleteCharacterReply reply)
+        {
+            if (reply.Success)
+            {
+                Console.WriteLine("✅ 캐릭터 삭제 성공!");
+                Console.WriteLine("캐릭터가 성공적으로 삭제되었습니다. 캐릭터 리스트를 다시 조회하세요.");
+            }
+            else
+            {
+                Console.WriteLine("❌ 캐릭터 삭제 실패!");
+                Console.WriteLine($"오류: {reply.ErrorMessage}");
+            }
+        }
     }
 }

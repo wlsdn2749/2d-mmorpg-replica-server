@@ -124,6 +124,21 @@ namespace SP
     	int32 _characterId = {};
     };
 
+    class DeleteCharacter : public DBBind<2,1>
+    {
+    public:
+    	DeleteCharacter(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spDeleteCharacter(?,?)}") { }
+    	void ParamIn_UserId(int32& v) { BindParam(0, v); };
+    	void ParamIn_UserId(int32&& v) { _userId = std::move(v); BindParam(0, _userId); };
+    	void ParamIn_CharacterId(int32& v) { BindParam(1, v); };
+    	void ParamIn_CharacterId(int32&& v) { _characterId = std::move(v); BindParam(1, _characterId); };
+    	void ColumnOut_RowCount(OUT int64& v) { BindCol(0, v); };
+
+    private:
+    	int32 _userId = {};
+    	int32 _characterId = {};
+    };
+
     class GetMonsterDropItems : public DBBind<0,7>
     {
     public:

@@ -40,12 +40,13 @@ class Program
             Console.WriteLine("[2] 로그인");
             Console.WriteLine("[3] 이메일 확인");
             Console.WriteLine("\n===== TCP 게임서버 =====");
-            Console.WriteLine("[q] JWT 검증:          --- 반드시 2번을 하고 해야함");
-            Console.WriteLine("[w] 캐릭터 생성 :         --- Input 입력");
-            Console.WriteLine("[e] 캐릭터 리스트 받기");
-            Console.WriteLine("[r] 게임 접속 :          --- Index 입력");
-            Console.WriteLine("[t] 상하좌우 움직이기:   --- 0,1,2,3 [상하좌우]");
-            Console.WriteLine("[a] 공격 보내기 : --- 기본공격");
+            Console.WriteLine("[4] JWT 검증:          --- 반드시 2번을 하고 해야함");
+            Console.WriteLine("[5] 캐릭터 생성 :         --- Input 입력");
+            Console.WriteLine("[6] 캐릭터 리스트 받기");
+            Console.WriteLine("[7] 캐릭터 삭제 :         --- Index 입력");
+            Console.WriteLine("[8] 게임 접속 :          --- Index 입력");
+            Console.WriteLine("[9] 상하좌우 움직이기:   --- 0,1,2,3 [상하좌우]");
+            Console.WriteLine("[0] 공격 보내기 : --- 기본공격");
             Console.WriteLine("\n===== 인벤토리 테스트 =====");
             Console.WriteLine("[i] 인벤토리 조회하기");
             Console.WriteLine("[u] 퀵슬롯 사용 (1~9)");
@@ -74,7 +75,7 @@ class Program
                 case "3":
                     await AuthUtil.DoCheckEmailAsync(_client);
                     break;
-                case "q":
+                case "4":
                     if (!_isLoggedIn)
                     {
                         Console.WriteLine("먼저 로그인(2번)을 완료해야 합니다!");
@@ -82,9 +83,9 @@ class Program
                     }
                     await SessionManager.Instance.SendForEachJWTLoginAsync(_jwt);
                     _isJwtVerified = true;
-                    Console.WriteLine("JWT 검증 완료! 이제 캐릭터 리스트 조회(e)를 진행할 수 있습니다.");
+                    Console.WriteLine("JWT 검증 완료! 이제 캐릭터 리스트 조회(6번)를 진행할 수 있습니다.");
                     break;
-                case "w":
+                case "5":
                     Console.Write("Username : ");
                     var username = Console.ReadLine();
                     
@@ -107,20 +108,62 @@ class Program
                     
                     await SessionManager.Instance.SendForEachCreateCharacterAsync(username);
                     break;
-                case "e":
+                case "6":
                     if (!_isJwtVerified)
                     {
-                        Console.WriteLine("먼저 JWT 검증(q)을 완료해야 합니다!");
+                        Console.WriteLine("먼저 JWT 검증(4번)을 완료해야 합니다!");
                         break;
                     }
                     await SessionManager.Instance.SendForEachGetCharacterList();
                     _isCharacterListLoaded = true;
-                    Console.WriteLine("캐릭터 리스트 조회 완료! 이제 게임 접속(r)을 진행할 수 있습니다.");
+                    Console.WriteLine("캐릭터 리스트 조회 완료! 이제 게임 접속(8번) 또는 캐릭터 삭제(7번)를 진행할 수 있습니다.");
                     break;
-                case "r":
+                case "7":
                     if (!_isCharacterListLoaded)
                     {
-                        Console.WriteLine("먼저 캐릭터 리스트 조회(e)를 완료해야 합니다!");
+                        Console.WriteLine("먼저 캐릭터 리스트 조회(6번)를 완료해야 합니다!");
+                        break;
+                    }
+                    if (_isInGame)
+                    {
+                        Console.WriteLine("게임 진행 중에는 캐릭터를 삭제할 수 없습니다! 먼저 룸에서 나가세요(x).");
+                        break;
+                    }
+                    Console.Write("삭제할 캐릭터 인덱스 : ");
+                    string? deleteIdxInput = Console.ReadLine();
+                    
+                    // 캐릭터 인덱스 유효성 검사
+                    if (string.IsNullOrWhiteSpace(deleteIdxInput))
+                    {
+                        Console.WriteLine("캐릭터 인덱스를 입력해주세요!");
+                        break;
+                    }
+                    if (!Int32.TryParse(deleteIdxInput, out int deleteIdx))
+                    {
+                        Console.WriteLine("캐릭터 인덱스는 숫자여야 합니다!");
+                        break;
+                    }
+                    if (deleteIdx < 0)
+                    {
+                        Console.WriteLine("캐릭터 인덱스는 0 이상이어야 합니다!");
+                        break;
+                    }
+                    
+                    Console.WriteLine($"정말로 캐릭터 인덱스 {deleteIdx}를 삭제하시겠습니까? (y/N):");
+                    string? confirm = Console.ReadLine();
+                    if (confirm?.ToLower() == "y" || confirm?.ToLower() == "yes")
+                    {
+                        await SessionManager.Instance.SendDeleteCharacterRequest(deleteIdx);
+                    }
+                    else
+                    {
+                        Console.WriteLine("캐릭터 삭제를 취소했습니다.");
+                    }
+                    break;
+                case "8":
+                    if (!_isCharacterListLoaded)
+                    {
+                        Console.WriteLine("먼저 캐릭터 리스트 조회(6번)를 완료해야 합니다!");
                         break;
                     }
                     Console.Write("PlayerIdx : ");
@@ -145,12 +188,12 @@ class Program
                     
                     await SessionManager.Instance.SendForEachEnterGame(idx);
                     _isInGame = true;
-                    Console.WriteLine("게임 접속 완료! 이제 게임 플레이 기능들(t,a,i,o,u)을 사용할 수 있습니다.");
+                    Console.WriteLine("게임 접속 완료! 이제 게임 플레이 기능들(9,0,i,o,u)을 사용할 수 있습니다.");
                     break;
-                case "t":
+                case "9":
                     if (!_isInGame)
                     {
-                        Console.WriteLine("먼저 게임 접속(r)을 완료해야 합니다!");
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
                         break;
                     }
                     Console.Write("Dir(상하좌우) 0,1,2,3:");
@@ -175,10 +218,10 @@ class Program
                     
                     await SessionManager.Instance.SendForEachMove(dir);
                     break;
-                case "a":
+                case "0":
                     if (!_isInGame)
                     {
-                        Console.WriteLine("먼저 게임 접속(r)을 완료해야 합니다!");
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
                         break;
                     }
                     await SessionManager.Instance.SendForEachAttack();
@@ -186,7 +229,7 @@ class Program
                 case "i":
                     if (!_isInGame)
                     {
-                        Console.WriteLine("먼저 게임 접속(r)을 완료해야 합니다!");
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
                         break;
                     }
                     await SessionManager.Instance.SendInventoryRequest();
@@ -194,7 +237,7 @@ class Program
                 case "u":
                     if (!_isInGame)
                     {
-                        Console.WriteLine("먼저 게임 접속(r)을 완료해야 합니다!");
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
                         break;
                     }
                     Console.Write("퀵슬롯 번호 (1~9): ");
@@ -223,7 +266,7 @@ class Program
                 case "o":
                     if (!_isInGame)
                     {
-                        Console.WriteLine("먼저 게임 접속(r)을 완료해야 합니다!");
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
                         break;
                     }
                     Console.Write("사용할 슬롯 번호 (0~39): ");
@@ -256,7 +299,7 @@ class Program
                     }
                     await SessionManager.Instance.SendForLeave();
                     _isInGame = false;
-                    Console.WriteLine("룸에서 나갔습니다. 게임을 다시 시작하려면 r을 눌러주세요.");
+                    Console.WriteLine("룸에서 나갔습니다. 게임을 다시 시작하려면 8번을 눌러주세요.");
                     break;
                 case "z":
                     Console.WriteLine("프로그램을 종료합니다.");

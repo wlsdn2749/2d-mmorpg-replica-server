@@ -1,0 +1,1261 @@
+fileFormatVersion: 2
+guid: 7c43c22fce9cf704a825d98defc59f84
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6250211276864005170
+    second: Anvil_02-Sheet_0
+  - first:
+      213: -5090277950172763437
+    second: Anvil_02-Sheet_1
+  - first:
+      213: -4178225698249747140
+    second: Anvil_02-Sheet_2
+  - first:
+      213: -2881082177824561387
+    second: Anvil_02-Sheet_3
+  - first:
+      213: -3231543633668339385
+    second: Anvil_02-Sheet_4
+  - first:
+      213: -4264233676816135112
+    second: Anvil_02-Sheet_5
+  - first:
+      213: -4271054495512892344
+    second: Anvil_02-Sheet_6
+  - first:
+      213: 3389604289903966508
+    second: Anvil_02-Sheet_7
+  - first:
+      213: -4560105022929749390
+    second: Anvil_02-Sheet_8
+  - first:
+      213: -457539441404893411
+    second: Anvil_02-Sheet_9
+  - first:
+      213: 2775779572809760050
+    second: Anvil_02-Sheet_10
+  - first:
+      213: -8973053007359022861
+    second: Anvil_02-Sheet_11
+  - first:
+      213: -2376709123177325136
+    second: Anvil_02-Sheet_12
+  - first:
+      213: -4064371742326846572
+    second: Anvil_02-Sheet_13
+  - first:
+      213: -7651771678106323616
+    second: Anvil_02-Sheet_14
+  - first:
+      213: -4366167587370142634
+    second: Anvil_02-Sheet_15
+  - first:
+      213: -6048175205236368578
+    second: Anvil_02-Sheet_16
+  - first:
+      213: 3700922527704221983
+    second: Anvil_02-Sheet_17
+  - first:
+      213: -929050684101974796
+    second: Anvil_02-Sheet_18
+  - first:
+      213: 7547082959816594615
+    second: Anvil_02-Sheet_19
+  - first:
+      213: 7965676139695114673
+    second: Anvil_02-Sheet_20
+  - first:
+      213: -7515937503897353433
+    second: Anvil_02-Sheet_21
+  - first:
+      213: -8372182307864503211
+    second: Anvil_02-Sheet_22
+  - first:
+      213: -4104664371636265912
+    second: Anvil_02-Sheet_23
+  - first:
+      213: -4361827367955391757
+    second: Anvil_02-Sheet_24
+  - first:
+      213: -2649286788200043901
+    second: Anvil_02-Sheet_25
+  - first:
+      213: 4328601657486634149
+    second: Anvil_02-Sheet_26
+  - first:
+      213: 1886744573994933792
+    second: Anvil_02-Sheet_27
+  - first:
+      213: 2417538006339910813
+    second: Anvil_02-Sheet_28
+  - first:
+      213: 7864904285604080463
+    second: Anvil_02-Sheet_29
+  - first:
+      213: -7431582668887807551
+    second: Anvil_02-Sheet_30
+  - first:
+      213: -8830228912782087858
+    second: Anvil_02-Sheet_31
+  - first:
+      213: 1684209516231892827
+    second: Anvil_02-Sheet_32
+  - first:
+      213: -4263669085414774453
+    second: Anvil_02-Sheet_33
+  - first:
+      213: -1620787332609819532
+    second: Anvil_02-Sheet_34
+  - first:
+      213: 2702896088305746489
+    second: Anvil_02-Sheet_35
+  - first:
+      213: 8057972531133987271
+    second: Anvil_02-Sheet_36
+  - first:
+      213: 5996645719826777814
+    second: Anvil_02-Sheet_37
+  - first:
+      213: -6552091720836697518
+    second: Anvil_02-Sheet_38
+  - first:
+      213: -378566265884412001
+    second: Anvil_02-Sheet_39
+  - first:
+      213: 3699749211271397495
+    second: Anvil_02-Sheet_40
+  - first:
+      213: 5973372644740174597
+    second: Anvil_02-Sheet_41
+  - first:
+      213: 8832055701490730108
+    second: Anvil_02-Sheet_42
+  - first:
+      213: 4262425029252983346
+    second: Anvil_02-Sheet_43
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 403
+        width: 80
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 234ae909a063db650800000000000000
+      internalID: 6250211276864005170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 403
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3dae2fb7c23bb59b0800000000000000
+      internalID: -5090277950172763437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 403
+        width: 81
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c355a685dd5f306c0800000000000000
+      internalID: -4178225698249747140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 403
+        width: 81
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 517ee0e16075408d0800000000000000
+      internalID: -2881082177824561387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 403
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7490607cf204723d0800000000000000
+      internalID: -3231543633668339385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 455
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83ccd16501662d4c0800000000000000
+      internalID: -4264233676816135112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 458
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84c6e9ab09a2ab4c0800000000000000
+      internalID: -4271054495512892344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 403
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c29bddc842b4a0f20800000000000000
+      internalID: 3389604289903966508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 378
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27a3cc164a047b0c0800000000000000
+      internalID: -4560105022929749390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 323
+        width: 80
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d17a45c5d4e76a9f0800000000000000
+      internalID: -457539441404893411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 323
+        width: 81
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23d7c1490dc858620800000000000000
+      internalID: 2775779572809760050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 323
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f86d91c4df497380800000000000000
+      internalID: -8973053007359022861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 323
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0bdd59215ab340fd0800000000000000
+      internalID: -2376709123177325136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 323
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49b097f2f637897c0800000000000000
+      internalID: -4064371742326846572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 323
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 065f31813327fc590800000000000000
+      internalID: -7651771678106323616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 243
+        width: 80
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6547af456b14863c0800000000000000
+      internalID: -4366167587370142634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 243
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3b9f8802b0901ca0800000000000000
+      internalID: -6048175205236368578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 295
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f190d0d3e615c5330800000000000000
+      internalID: 3700922527704221983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 298
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f4a4cb33595b13f0800000000000000
+      internalID: -929050684101974796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 243
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b4954e37ff9cb860800000000000000
+      internalID: 7547082959816594615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_20
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 298
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b9055ebe34cb8e60800000000000000
+      internalID: 7965676139695114673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_21
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 243
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 723892e49a602b790800000000000000
+      internalID: -7515937503897353433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_22
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 243
+        width: 81
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55c1de87c8800db80800000000000000
+      internalID: -8372182307864503211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_23
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 243
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84c1b6e508d4907c0800000000000000
+      internalID: -4104664371636265912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 163
+        width: 80
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fa11796e1da773c0800000000000000
+      internalID: -4361827367955391757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_25
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 163
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38a6331e3b7db3bd0800000000000000
+      internalID: -2649286788200043901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_26
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 163
+        width: 81
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ac68a80648421c30800000000000000
+      internalID: 4328601657486634149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_27
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 163
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02e1dd291301f2a10800000000000000
+      internalID: 1886744573994933792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_28
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 215
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9c75e21202dc8120800000000000000
+      internalID: 2417538006339910813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_29
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 218
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4be0e717c0c52d60800000000000000
+      internalID: 7864904285604080463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_30
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 163
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c92ef5dfe6bdd890800000000000000
+      internalID: -7431582668887807551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_31
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 218
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e496d30a699b47580800000000000000
+      internalID: -8830228912782087858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_32
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 163
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5f9556b1a38f5710800000000000000
+      internalID: 1684209516231892827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_33
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 83
+        width: 80
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b49a9048e8764d4c0800000000000000
+      internalID: -4263669085414774453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_34
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 83
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47cb65f128ec189e0800000000000000
+      internalID: -1620787332609819532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_35
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 83
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 932c148fbad928520800000000000000
+      internalID: 2702896088305746489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_36
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 83
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c9b818f25ba3df60800000000000000
+      internalID: 8057972531133987271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_37
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 83
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d64426b28d583350800000000000000
+      internalID: 5996645719826777814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_38
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 83
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25230cb5b4b4215a0800000000000000
+      internalID: -6552091720836697518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_39
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3
+        width: 80
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f977306acff0fbaf0800000000000000
+      internalID: -378566265884412001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_40
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 3
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7700dd73e46285330800000000000000
+      internalID: 3699749211271397495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_41
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 3
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50316c8a5cea5e250800000000000000
+      internalID: 5973372644740174597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_42
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 3
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7481d3cdd3c19a70800000000000000
+      internalID: 8832055701490730108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Anvil_02-Sheet_43
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 3
+        width: 81
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23aab561bfc272b30800000000000000
+      internalID: 4262425029252983346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Anvil_02-Sheet_0: 6250211276864005170
+      Anvil_02-Sheet_1: -5090277950172763437
+      Anvil_02-Sheet_10: 2775779572809760050
+      Anvil_02-Sheet_11: -8973053007359022861
+      Anvil_02-Sheet_12: -2376709123177325136
+      Anvil_02-Sheet_13: -4064371742326846572
+      Anvil_02-Sheet_14: -7651771678106323616
+      Anvil_02-Sheet_15: -4366167587370142634
+      Anvil_02-Sheet_16: -6048175205236368578
+      Anvil_02-Sheet_17: 3700922527704221983
+      Anvil_02-Sheet_18: -929050684101974796
+      Anvil_02-Sheet_19: 7547082959816594615
+      Anvil_02-Sheet_2: -4178225698249747140
+      Anvil_02-Sheet_20: 7965676139695114673
+      Anvil_02-Sheet_21: -7515937503897353433
+      Anvil_02-Sheet_22: -8372182307864503211
+      Anvil_02-Sheet_23: -4104664371636265912
+      Anvil_02-Sheet_24: -4361827367955391757
+      Anvil_02-Sheet_25: -2649286788200043901
+      Anvil_02-Sheet_26: 4328601657486634149
+      Anvil_02-Sheet_27: 1886744573994933792
+      Anvil_02-Sheet_28: 2417538006339910813
+      Anvil_02-Sheet_29: 7864904285604080463
+      Anvil_02-Sheet_3: -2881082177824561387
+      Anvil_02-Sheet_30: -7431582668887807551
+      Anvil_02-Sheet_31: -8830228912782087858
+      Anvil_02-Sheet_32: 1684209516231892827
+      Anvil_02-Sheet_33: -4263669085414774453
+      Anvil_02-Sheet_34: -1620787332609819532
+      Anvil_02-Sheet_35: 2702896088305746489
+      Anvil_02-Sheet_36: 8057972531133987271
+      Anvil_02-Sheet_37: 5996645719826777814
+      Anvil_02-Sheet_38: -6552091720836697518
+      Anvil_02-Sheet_39: -378566265884412001
+      Anvil_02-Sheet_4: -3231543633668339385
+      Anvil_02-Sheet_40: 3699749211271397495
+      Anvil_02-Sheet_41: 5973372644740174597
+      Anvil_02-Sheet_42: 8832055701490730108
+      Anvil_02-Sheet_43: 4262425029252983346
+      Anvil_02-Sheet_5: -4264233676816135112
+      Anvil_02-Sheet_6: -4271054495512892344
+      Anvil_02-Sheet_7: 3389604289903966508
+      Anvil_02-Sheet_8: -4560105022929749390
+      Anvil_02-Sheet_9: -457539441404893411
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

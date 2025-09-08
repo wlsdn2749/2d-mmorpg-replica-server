@@ -1,0 +1,585 @@
+fileFormatVersion: 2
+guid: 0da441b99a3b1cc48936ecdc75f2dac3
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1606033873651133071
+    second: Alchemy_Table_01-Sheet_0
+  - first:
+      213: -4917001537178277526
+    second: Alchemy_Table_01-Sheet_1
+  - first:
+      213: 7032706493632976950
+    second: Alchemy_Table_01-Sheet_2
+  - first:
+      213: -1669282813056034962
+    second: Alchemy_Table_01-Sheet_3
+  - first:
+      213: -7876556830126546630
+    second: Alchemy_Table_01-Sheet_4
+  - first:
+      213: 5184527237454153358
+    second: Alchemy_Table_01-Sheet_5
+  - first:
+      213: 5370038334494087734
+    second: Alchemy_Table_01-Sheet_6
+  - first:
+      213: -8423652011473115633
+    second: Alchemy_Table_01-Sheet_7
+  - first:
+      213: -3848305668633033007
+    second: Alchemy_Table_01-Sheet_8
+  - first:
+      213: 1770422341319323725
+    second: Alchemy_Table_01-Sheet_9
+  - first:
+      213: -8971786524244057638
+    second: Alchemy_Table_01-Sheet_10
+  - first:
+      213: -360054203878525724
+    second: Alchemy_Table_01-Sheet_11
+  - first:
+      213: -2582996775016916313
+    second: Alchemy_Table_01-Sheet_12
+  - first:
+      213: -7857833653581929611
+    second: Alchemy_Table_01-Sheet_13
+  - first:
+      213: -3651284674933399031
+    second: Alchemy_Table_01-Sheet_14
+  - first:
+      213: -7110111646388677505
+    second: Alchemy_Table_01-Sheet_15
+  - first:
+      213: 422904581096068222
+    second: Alchemy_Table_01-Sheet_16
+  - first:
+      213: 5708269455955113730
+    second: Alchemy_Table_01-Sheet_17
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Alchemy_Table_01-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 639
+        width: 192
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17597c773b836b9e0800000000000000
+      internalID: -1606033873651133071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alchemy_Table_01-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 575
+        width: 192
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a696070472d43cbb0800000000000000
+      internalID: -4917001537178277526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alchemy_Table_01-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 511
+        width: 192
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 638939a8b41399160800000000000000
+      internalID: 7032706493632976950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alchemy_Table_01-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 447
+        width: 192
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e675122302485d8e0800000000000000
+      internalID: -1669282813056034962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alchemy_Table_01-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 474
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3161277b49d0b290800000000000000
+      internalID: -7876556830126546630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alchemy_Table_01-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 475
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e86caccbd0423f740800000000000000
+      internalID: 5184527237454153358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alchemy_Table_01-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 474
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63a10cdd965368a40800000000000000
+      internalID: 5370038334494087734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alchemy_Table_01-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 475
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f06e3a0402d291b80800000000000000
+      internalID: -8423652011473115633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alchemy_Table_01-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 474
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d681023262189ac0800000000000000
+      internalID: -3848305668633033007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alchemy_Table_01-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 383
+        width: 192
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d40f0c44dbdc19810800000000000000
+      internalID: 1770422341319323725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alchemy_Table_01-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 411
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad1ebc5d0bfcd7380800000000000000
+      internalID: -8971786524244057638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alchemy_Table_01-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 410
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e43fe5fb94d00bf0800000000000000
+      internalID: -360054203878525724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alchemy_Table_01-Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 319
+        width: 192
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7aa13215e1a572cd0800000000000000
+      internalID: -2582996775016916313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alchemy_Table_01-Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 255
+        width: 192
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 573a326bced53f290800000000000000
+      internalID: -7857833653581929611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alchemy_Table_01-Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 191
+        width: 192
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90264c8fee7045dc0800000000000000
+      internalID: -3651284674933399031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alchemy_Table_01-Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 127
+        width: 192
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7492abe02fc35d90800000000000000
+      internalID: -7110111646388677505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alchemy_Table_01-Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 63
+        width: 192
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e74dd12d9757ed500800000000000000
+      internalID: 422904581096068222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alchemy_Table_01-Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 97
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 207ba6493d8d73f40800000000000000
+      internalID: 5708269455955113730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Alchemy_Table_01-Sheet_0: -1606033873651133071
+      Alchemy_Table_01-Sheet_1: -4917001537178277526
+      Alchemy_Table_01-Sheet_10: -8971786524244057638
+      Alchemy_Table_01-Sheet_11: -360054203878525724
+      Alchemy_Table_01-Sheet_12: -2582996775016916313
+      Alchemy_Table_01-Sheet_13: -7857833653581929611
+      Alchemy_Table_01-Sheet_14: -3651284674933399031
+      Alchemy_Table_01-Sheet_15: -7110111646388677505
+      Alchemy_Table_01-Sheet_16: 422904581096068222
+      Alchemy_Table_01-Sheet_17: 5708269455955113730
+      Alchemy_Table_01-Sheet_2: 7032706493632976950
+      Alchemy_Table_01-Sheet_3: -1669282813056034962
+      Alchemy_Table_01-Sheet_4: -7876556830126546630
+      Alchemy_Table_01-Sheet_5: 5184527237454153358
+      Alchemy_Table_01-Sheet_6: 5370038334494087734
+      Alchemy_Table_01-Sheet_7: -8423652011473115633
+      Alchemy_Table_01-Sheet_8: -3848305668633033007
+      Alchemy_Table_01-Sheet_9: 1770422341319323725
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -18,9 +18,9 @@ public class SimpleNetworkUI : MonoBehaviour
     void Start()
     {
         // 버튼 바인딩
-        if (jwtLoginButton) jwtLoginButton.onClick.AddListener(OnClickJwtLogin);
+        
         if (enterGameButton) enterGameButton.onClick.AddListener(OnClickEnterGame);
-        if (characterListReqButton) characterListReqButton.onClick.AddListener(onClickCharacterListReqButton);
+        if (characterListReqButton) characterListReqButton.onClick.AddListener(OnClickCharacterListReqButton);
     }
     // Update is called once per frame
     void Update()
@@ -29,21 +29,7 @@ public class SimpleNetworkUI : MonoBehaviour
     }
     
     #region UI Handlers
-    void OnClickJwtLogin()
-    {
-        var token = SimpleCall.Instance.jwt;
-        if (string.IsNullOrEmpty(token))
-        {
-            Debug.LogWarning("[UI] accessToken이 비어있습니다.");
-            return;
-        }
-
-        var req = new C_JwtLoginRequest { AccessToken = token };
-        var sendBuffer = ServerPacketManager.MakeSendBuffer(req); // PKT_C_JwtLoginRequest로 매핑됨
-
-        NetworkManager.Instance.Send(sendBuffer);
-        Debug.Log($"[UI] JWT 로그인 요청 전송: len={sendBuffer.Count}");
-    }
+    
 
     void OnClickEnterGame()
     {
@@ -55,7 +41,7 @@ public class SimpleNetworkUI : MonoBehaviour
         Debug.Log($"[UI] 게임 접속 요청 전송: playerIndex={0}, len={sendBuffer.Count}");
     }
 
-    void onClickCharacterListReqButton()
+    void OnClickCharacterListReqButton()
     {
         var req = new C_CharacterListRequest() { };
         var sendBuffer = ServerPacketManager.MakeSendBuffer(req); // PKT_C_CharacterListRequest로 매핑됨

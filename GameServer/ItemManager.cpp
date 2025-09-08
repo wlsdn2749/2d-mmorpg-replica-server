@@ -74,7 +74,6 @@ void ItemManager::LoadAllItemData_DB(DBConnection& conn)
     // inventory-test-data.sql 파일의 데이터와 동일하게 로드
     _itemDataMap.clear();
     
-    // TODO: Encoding Error? 
     // 소비형 아이템 (포션류) - itemType 1 = ITEM_TYPE_CONSUMABLE
     //AddItemData(ItemData{1, "체력 회복 포션", "HP를 50 회복시킵니다.", true, 99, Protocol::EItemType::ITEM_TYPE_CONSUMABLE});
     //AddItemData(ItemData{2, "마나 회복 포션", "MP를 30 회복시킵니다.", true, 99, Protocol::EItemType::ITEM_TYPE_CONSUMABLE});
@@ -100,7 +99,7 @@ void ItemManager::LoadAllItemData_DB(DBConnection& conn)
     //AddItemData(ItemData{31, "던전 입장권", "특별한 던전에 입장할 수 있는 티켓입니다.", true, 5, Protocol::EItemType::ITEM_TYPE_CONSUMABLE});
     //AddItemData(ItemData{32, "경험치 북", "사용하면 경험치를 획득할 수 있습니다.", true, 20, Protocol::EItemType::ITEM_TYPE_CONSUMABLE});
     //AddItemData(ItemData{33, "금화 주머니", "소량의 금화가 들어있는 주머니입니다.", true, 99, Protocol::EItemType::ITEM_TYPE_CONSUMABLE});
-    
+    //
     GConsoleLogger->WriteStdOut(Color::GREEN, L"ItemManager: Loaded %d items from database.\n", 
                                static_cast<int>(_itemDataMap.size()));
 }

@@ -1,14 +1,8 @@
 ﻿using Google.Protobuf;
 using Google.Protobuf.Protocol;
-using Mmorpg2d.Auth;
-using Microsoft.VisualBasic;
 using ServerCore;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Packet
 {
@@ -29,147 +23,342 @@ namespace Packet
         public static string PosToStr(Vector2Info pos)
             => pos is null ? "(?,?)" : $"({pos.X},{pos.Y})";
     }
-    public class ServerPacketHandler
+    public class ServerPacketHandler 
     {
         internal static void HANDLE_Invalid(PacketSession session, IMessage message)
         {
             throw new NotImplementedException();
         }
-        internal static void HANDLE_S_RegisterReply(PacketSession sessionm, RegisterReply register)
-        {
-            switch (register.Success)
-            {
-                case true:
-                    
-                    break;
-            }
-        }
         internal static void HANDLE_S_JwtLoginReply(PacketSession session, S_JwtLoginReply reply)
         {
-            
             switch (reply.Result) // 프로토 C# 코드 생성 시 보통 PascalCase enum이 됩니다 (Success 등). 필요하면 이름 맞춰 수정
             {
                 case ELoginResult.Success: // 또는 LoginResult.Success
 
-                    Console.WriteLine($"[JWT VALIDATION OK]");
-                    // Debug.Log($"[LOGIN OK] accountId={reply.AccountId}");
-                    // 다음 단계로 진행:
-                    // - 캐릭터 리스트 요청
-                    // - 바로 게임 입장 패킷 보내기 등
-                    // Send_C_CHARACTER_LIST_REQUEST(session);
+                    //Console.WriteLine($"[JWT VALIDATION OK]");
+                   
+                    UnityEngine.Debug.Log($"[LOGIN OK] accountId={reply.Result}");
+                    AuthNotice_UI.Instance.gameObject.SetActive(true);
+                    AuthNotice_UI.Instance.ShowNotice(NoticeCode.LoginSuccess);
+                    CharacterList_UI.Instance.gameObject.SetActive(true);
                     break;
 
                 case ELoginResult.InvalidToken: // InvalidToken
 
-                    Console.WriteLine("[JWT VALIDATION] Invalid token. Please re-auth.");
-                    // 토큰 재발급 UX로 전환
+                    //Console.WriteLine("[JWT VALIDATION] Invalid token. Please re-auth.");
+                    UnityEngine.Debug.Log("[JWT VALIDATION] Invalid token. Please re-auth.");
+                    //토큰 재발급 UX로 전환
                     break;
 
                 case ELoginResult.TokenExpired: // TokenExpired
 
                     Console.WriteLine("[JWT VALIDATION] Token expired. Get a new token.");
+                    UnityEngine.Debug.Log("[JWT VALIDATION] Token expired. Get a new token.");
                     // 리프레시 토큰/재로그인 유도
                     break;
 
                 case ELoginResult.ServerError: // ServerError
                 default:
 
-                    Console.WriteLine($"[JWT VALIDATION] Server error (code={(int)reply.Result}). Try again later.");
+                    //Console.WriteLine($"[JWT VALIDATION] Server error (code={(int)reply.Result}). Try again later.");
+                    UnityEngine.Debug.Log($"[JWT VALIDATION] Server error (code={(int)reply.Result}). Try again later.");
                     break;
             }
         }
         internal static void HANDLE_S_CreateCharacterReply(PacketSession session, S_CreateCharacterReply reply)
         {
             var result = reply;
-            Console.WriteLine($"[CreateCharacterReply] 결과: {result.Success}.");
-            Console.WriteLine($"[CreateCharacterReply] 결과: {result.Detail}.");
-        }
+            AuthNotice_UI.Instance.gameObject.SetActive(true);
+            AuthNotice_UI.Instance.ShowNotice(NoticeCode.CreateCharacterSuccess);
+            UnityEngine.Debug.Log($"[CreateCharacterReply] 결과: {result.Success}.");
+            UnityEngine.Debug.Log($"[CreateCharacterReply] 결과: {result.Detail}.");
+            
+        }  
 
         internal static void HANDLE_S_CharacterListReply(PacketSession session, S_CharacterListReply reply)
         {
-            foreach(var character in reply.Characters)
+            UnityEngine.Debug.Log($"[S_CharacterListReply] 전송받음");
+            AuthNotice_UI.Instance.gameObject.SetActive(true); 
+            AuthNotice_UI.Instance.ShowNotice(NoticeCode.RecvCharacterListSuccess);
+            if (reply.Characters == null)
             {
-                Console.WriteLine(character);
+                UnityEngine.Debug.Log("계정 내 생성된 캐릭터가 없습니다.");
             }
+            CharacterList_UI.Instance.SetCharacterList(reply.Characters);
         }
 
-        internal static void HANDLE_S_EnterGame(PacketSession session, S_EnterGame game)
+        internal static void HANDLE_S_EnterGame(PacketSession session, S_EnterGame enter)
         {
-            Console.WriteLine("[S_EnterGame] 게임 접속 완료");
+            AuthNotice_UI.Instance.gameObject.SetActive(false);
+            if (enter.Success != 1)
+            {
+                UnityEngine.Debug.LogError("EnterGame 실패");
+                return;
+            }
+            Debug.Log("[S_EnterGame] 게임 접속 완료");
         }
 
         internal static void HANDLE_S_PlayerList(PacketSession session, S_PlayerList list)
         {
-            Console.WriteLine("[S_PlayerList] 내가 접속해서 다른사람의 리스트 받아옴");
+            foreach (var p in list.Players)
+            {
+                bool isLocal = (p.Id == list.MyPlayerId);
+                Debug.Log($" {p.Pos.X},{p.Pos.Y}");
+            }
+            GetSceneNameByMapId(list.MapId);
+            LoadingSceneManager.LoadScene(list.MapId);
+            var player = list.Players;
+            
+
+            Debug.Log("맵 씬 로딩 시작");
+            //맵 씬 활성 직후 전체 스폰
+            SceneTransition.RunAfterGameplaySceneLoaded(() =>
+            {
+                Debug.Log("씬 로딩 완료 후 플레이어 스폰 처리");
+                foreach (var p in list.Players)
+                {
+                    bool isLocal = (p.Id == list.MyPlayerId);
+                    PlayerSpawner.SafeSpawn(p, isLocal);
+                    Debug.Log($"{p.Pos.X},{p.Pos.Y}");
+                    Debug.Log($"플레이어 스폰 처리: {p.Username} (ID: {p.Id}) {(isLocal ? "(ME)" : "")}");
+                }
+            });
         }
 
-        internal static void HANDLE_S_BroadcastPlayerEnter(PacketSession session, S_BroadcastPlayerEnter enter)
+        private static string GetSceneNameByMapId(int mapId)
         {
-            Console.WriteLine("[S_BroadcastPlayerEnter] 누군가 접속해서 그 정보를 받아옴");
+            return mapId switch
+            {
+                1 => "Map_Goguryeo",
+                2 => "Map_Baekje",
+                3 => "Map_HuntingField",
+                _ => $"Map_{mapId}",
+            };
+        }
+        internal static void HANDLE_S_BroadcastPlayerEnter(PacketSession session, S_BroadcastPlayerEnter broadEnter)
+        {
+            Debug.Log("[S_BroadcastPlayerEnter] 누군가 접속해서 그 정보를 받아옴");
+            PlayerSpawner.SafeSpawn(broadEnter.Player, isLocal: false);
         }
 
         internal static void HANDLE_S_BroadcastPlayerLeave(PacketSession session, S_BroadcastPlayerLeave leave)
         {
-            Console.WriteLine("[S_BroadcastPlayerLeave] 누군가 나가서 그 정보를 받아옴");
+            PlayerSpawner.RemovePlayer(leave.PlayerId);
+            Debug.Log("[S_BroadcastPlayerLeave] 누군가 나가서 그 정보를 받아옴");
         }
 
         internal static void HANDLE_S_PlayerMoveReply(PacketSession session, S_PlayerMoveReply reply)
         {
-            // 안전하게 널 체크
+            if (reply.PlayerId != NetDebug.MyPlayerId) return;
             var pos = reply.NewPos;
             var posStr = NetDebug.PosToStr(pos);
             var dirStr = NetDebug.DirToStr(reply.Direction);
 
-            // result/tick 필드가 없을 수도 있으니 Try 포맷
             string resultStr = reply?.Result.ToString() ?? "N/A";
             int tick = reply?.Tick ?? -1;
-
             string meTag = (reply.PlayerId == NetDebug.MyPlayerId && NetDebug.MyPlayerId >= 0) ? " (ME)" : "";
 
-            Console.WriteLine(
-                $"[S_PlayerMoveReply] pid={reply.PlayerId}{meTag} " +
-                $"dir={dirStr} pos={posStr} result={resultStr} tick={tick}");
+            Debug.Log($"[S_PlayerMoveReply] pid={reply.PlayerId}{meTag} dir={dirStr} pos={posStr} result={resultStr} tick={tick}");
+
+            switch (reply.Result)
+            {
+                case EMoveResult.MoveOk:
+                    {
+                        var go = PlayerSpawner.Get(reply.PlayerId);
+                        if (!go)
+                        {
+                            Debug.LogWarning($"[MoveOk] target not found: pid={reply.PlayerId}");
+                            break;
+                        }
+
+                        // 방향은 아바타에서
+                        var avatar = go.GetComponent<PlayerAvatar>();
+                        if (!avatar)
+                        {
+                            Debug.LogError($"[MoveOk] PlayerAvatar missing on pid={reply.PlayerId}");
+                            break;
+                        }
+                        avatar.SetDirection(reply.Direction);
+
+                        // 위치 이동은 전용 mover로
+                        var target = new Vector3(reply.NewPos.X, reply.NewPos.Y, 0);
+                        var mover = go.GetComponent<SimpleMover>();
+                        if (!mover) mover = go.AddComponent<SimpleMover>();
+                        mover.SetTarget(target); // 부드럽게 이동
+
+                        go.GetComponent<PlayerIdentity>()?.SetLastServerTick(reply.Tick);
+                        break;
+                    }
+
+                case EMoveResult.MoveBlocked:
+                    {
+                        Debug.LogWarning("[MoveResult] 이동이 막혔습니다.");
+                        // 필요 시 막힌 위치로 하드스냅:
+                        // var go = PlayerSpawner.Get(reply.PlayerId);
+                        // var mover = go?.GetComponent<SimpleMover>();
+                        // mover?.HardSnap(new Vector3(reply.NewPos.X, reply.NewPos.Y, 0));
+                        break;
+                    }
+
+                case EMoveResult.MoveCooldown:
+                    {
+                        Debug.LogWarning("[MoveResult] 이동 쿨다운 중.");
+                        break;
+                    }
+
+                case EMoveResult.MoveDir:
+                    {
+                        Debug.Log("[MoveResult] 단순 방향 전환.");
+                        var dirGo = PlayerSpawner.Get(reply.PlayerId);
+                        var avatar = dirGo?.GetComponent<PlayerAvatar>();
+                        if (!avatar)
+                        {
+                            Debug.LogWarning($"[MoveDir] PlayerAvatar missing on pid={reply.PlayerId}");
+                            break;
+                        }
+                        avatar.SetDirection(reply.Direction);
+                        break;
+                    }
+
+                case EMoveResult.MoveUnknown:
+                default:
+                    {
+                        Debug.LogError("[MoveResult] 알 수 없는 이동 응답.");
+                        break;
+                    }
+            }
         }
 
         internal static void HANDLE_S_BroadcastPlayerMove(PacketSession session, S_BroadcastPlayerMove move)
         {
-            //foreach (var m in move)
-            //{ 
-            //    PlayerMAnager.Isntacen.Move(  m.PlayerId);
-            //}
-            int tick = move?.Tick ?? -1;
-            Console.WriteLine($"[S_BroadcastPlayerMove] tick={tick} count={move.PlayerMoves.Count}");
-
-            foreach (var m in move.PlayerMoves)
+            foreach (var mv in move.PlayerMoves)
             {
-                var pos = m.NewPos;
-                var posStr = NetDebug.PosToStr(pos);
-                var dirStr = NetDebug.DirToStr(m.Direction);
-                string meTag = (m.PlayerId == NetDebug.MyPlayerId && NetDebug.MyPlayerId >= 0) ? " (ME)" : "";
+                var go = PlayerSpawner.Get(mv.PlayerId);
+                if (!go)
+                {
+                    // (선택) 아직 스폰 전이면 무시만 하고 지나감. 절대 Destroy/Despawn 금지
+                    Debug.LogWarning($"[MOVE/BC] GO missing pid={mv.PlayerId} → ignore");
+                    continue;
+                }
 
-                Console.WriteLine($"  - pid={m.PlayerId}{meTag} dir={dirStr} pos={posStr}");
+                var avatar = go.GetComponent<PlayerAvatar>();
+                avatar?.SetDirection(mv.Direction);
+
+                var mover = go.GetComponent<SimpleMover>() ?? go.AddComponent<SimpleMover>();
+                mover.SetTarget(new Vector3(mv.NewPos.X, mv.NewPos.Y, 0));
             }
         }
-
         internal static void HANDLE_S_ChangeRoomBegin(PacketSession session, S_ChangeRoomBegin begin)
         {
             Console.WriteLine($"[S_ChangeRoomBegin] Begin Change Room");
-
-            var pkt = new Google.Protobuf.Protocol.C_ChangeRoomReady {
-                TransitionId = begin.TransitionId,
-            };
-
-            session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+            Debug.Log($"[HANDLE_S_ChangeRoomBegin] Room Has Change into ...");
+            RoomTransitionManager.Instance.OnChangeRoomBegin(begin);
+            Debug.Log("맵 씬 로딩 시작");
+            //맵 씬 활성 직후 전체 스폰
         }
 
         internal static void HANDLE_S_ChangeRoomCommit(PacketSession session, S_ChangeRoomCommit commit)
         {
             Console.WriteLine($"[S_ChangeRoomCommit] Room Has Change into ...");
+            Debug.Log($"[S_ChangeRoomCommit] tid={commit.TransitionId}, players={commit.Snapshots?.Players?.Count ?? 0}");
+            if (commit.Snapshots.Players.Count == 0)
+            {
+                Debug.LogWarning("[PlayerSpawner] Commit snapshot is empty! Re-requesting player list...");
+                // 예: 서버한테 S_PlayerList 다시 요청하는 패킷 보내기
+            }
+            RoomTransitionManager.Instance.OnChangeRoomCommit(commit);
+            Debug.Log($"[S_ChangeRoomCommit] Room Has Change into ...");
         }
 
         internal static void HANDLE_S_LeaveGame(PacketSession session, S_LeaveGame game)
         {
             Console.WriteLine($"[S_LeaveGame] Game Has left.");
+            
+            if (game.Success !=1)
+            {
+                return;
+            }
+            switch (LeaveGameContext.LastLeaveReason)
+            {
+                case ELeaveReason.LeaveLogout:
+                    //Debug.Log($"[S_LeaveGame] Game Has left.");
+                    //HandleLogoutAndQuit();
+                    Debug.Log($"[S_LeaveGame] CharacterSelectUI");
+                    LoginManagement.SetLoingEntryMode(LoginEntryMode.ColdStart);
+                    Authenticate.Jwt = "";
+                    HandleLeaveToCharacterSelect();
+                    break;
+
+                case ELeaveReason.LeaveChangeRoom:
+                    Debug.Log($"[S_LeaveGame] CharacterSelectUI");
+                    LoginManagement.SetLoingEntryMode(LoginEntryMode.AfterLeaveToCharacterSelect);
+                    HandleLeaveToCharacterSelect();
+                    break;
+
+                case ELeaveReason.LeaveDisconnect:
+                    LoginManagement.SetLoingEntryMode(LoginEntryMode.ColdStart);
+                    HandleDisconnectedToLogin();
+                    break;
+
+                default:
+                    HandleDisconnectedToLogin();
+                    break;
+            }
+
+        }
+        static void HandleLeaveToCharacterSelect()
+        {
+            // 1) 월드 정리 (세션/네트매니저는 유지)
+            PlayerSpawner.DespawnAll();
+            RoomTransitionManager.Instance?.ResetState(); // 아래 ResetState 구현
+            LoadingSceneManager.LoadScene("AuthScene");
+        }
+
+        static void HandleDisconnectedToLogin()
+        {
+            // 선택: 즉시 로그인 화면 or 재연결 시도 후 실패 시 로그인 화면
+            LoadingSceneManager.LoadScene("AuthScene");
+        }
+        internal static void HANDLE_S_SpawnMonster(PacketSession session, S_SpawnMonster spawnMonster)
+        {
+            
+        }
+        internal static void HANDLE_S_DespawnMonster(PacketSession session, S_DespawnMonster despawnMonster)
+        {
+
+        }
+        internal static void HANDLE_S_BroadcastMonsterMove(PacketSession session, S_BroadcastMonsterMove broadMonsterMove)
+        {
+
+        }
+        internal static void HANDLE_S_BroadcastMonsterAttack(PacketSession session, S_BroadcastMonsterAttack broadMonsterAtk)
+        {
+
+        }
+        internal static void HANDLE_S_BroadcastMonsterDeath(PacketSession session, S_BroadcastMonsterDeath broadMonsterDeath)
+        {
+
+        }
+        internal static void HANDLE_S_BroadcastPlayerAttack(PacketSession session, S_BroadcastPlayerAttack broadPlayerAtk)
+        {
+
+        }
+        internal static void HANDLE_S_InventoryReply(PacketSession session, S_InventoryReply invenApply)
+        {
+
+        }
+        internal static void HANDLE_S_ItemUseReply(PacketSession session, S_ItemUseReply useItemApply)
+        {
+
+        }
+        internal static void HANDLE_S_InventoryUpdate(PacketSession session, S_InventoryUpdate invenUpdate)
+        {
+
+        }
+        internal static void HANDLE_S_SystemMessage(PacketSession session, S_SystemMessage sysMsg)
+        {
+            Debug.Log($"[SystemMessage] {sysMsg.Message}");
+            
         }
     }
 }

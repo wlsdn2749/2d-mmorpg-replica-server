@@ -14,32 +14,34 @@ namespace Packet
 	    PKT_S_CreateCharacterReply = 3,
 	    PKT_C_CharacterListRequest = 4,
 	    PKT_S_CharacterListReply = 5,
-	    PKT_C_EnterGame = 6,
-	    PKT_S_EnterGame = 7,
-	    PKT_S_PlayerList = 8,
-	    PKT_S_BroadcastPlayerEnter = 9,
-	    PKT_C_LeaveGame = 10,
-	    PKT_S_LeaveGame = 11,
-	    PKT_S_BroadcastPlayerLeave = 12,
-	    PKT_C_PlayerMoveRequest = 13,
-	    PKT_S_PlayerMoveReply = 14,
-	    PKT_S_BroadcastPlayerMove = 15,
-	    PKT_S_ChangeRoomBegin = 16,
-	    PKT_C_ChangeRoomReady = 17,
-	    PKT_S_ChangeRoomCommit = 18,
-	    PKT_S_SpawnMonster = 19,
-	    PKT_S_DespawnMonster = 20,
-	    PKT_S_BroadcastMonsterMove = 21,
-	    PKT_S_BroadcastMonsterAttack = 22,
-	    PKT_S_BroadcastMonsterDeath = 23,
-	    PKT_C_PlayerAttackRequest = 24,
-	    PKT_S_BroadcastPlayerAttack = 25,
-	    PKT_C_InventoryRequest = 26,
-	    PKT_S_InventoryReply = 27,
-	    PKT_C_ItemUseRequest = 28,
-	    PKT_S_ItemUseReply = 29,
-	    PKT_S_InventoryUpdate = 30,
-	    PKT_S_SystemMessage = 31,
+	    PKT_C_DeleteCharacterRequest = 6,
+	    PKT_S_DeleteCharacterReply = 7,
+	    PKT_C_EnterGame = 8,
+	    PKT_S_EnterGame = 9,
+	    PKT_S_PlayerList = 10,
+	    PKT_S_BroadcastPlayerEnter = 11,
+	    PKT_C_LeaveGame = 12,
+	    PKT_S_LeaveGame = 13,
+	    PKT_S_BroadcastPlayerLeave = 14,
+	    PKT_C_PlayerMoveRequest = 15,
+	    PKT_S_PlayerMoveReply = 16,
+	    PKT_S_BroadcastPlayerMove = 17,
+	    PKT_S_ChangeRoomBegin = 18,
+	    PKT_C_ChangeRoomReady = 19,
+	    PKT_S_ChangeRoomCommit = 20,
+	    PKT_S_SpawnMonster = 21,
+	    PKT_S_DespawnMonster = 22,
+	    PKT_S_BroadcastMonsterMove = 23,
+	    PKT_S_BroadcastMonsterAttack = 24,
+	    PKT_S_BroadcastMonsterDeath = 25,
+	    PKT_C_PlayerAttackRequest = 26,
+	    PKT_S_BroadcastPlayerAttack = 27,
+	    PKT_C_InventoryRequest = 28,
+	    PKT_S_InventoryReply = 29,
+	    PKT_C_ItemUseRequest = 30,
+	    PKT_S_ItemUseReply = 31,
+	    PKT_S_InventoryUpdate = 32,
+	    PKT_S_SystemMessage = 33,
     }
     public class ServerPacketManager
     {
@@ -68,6 +70,7 @@ namespace Packet
         public static ArraySegment<byte> MakeSendBuffer(C_JwtLoginRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_JwtLoginRequest);
         public static ArraySegment<byte> MakeSendBuffer(C_CreateCharacterRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_CreateCharacterRequest);
         public static ArraySegment<byte> MakeSendBuffer(C_CharacterListRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_CharacterListRequest);
+        public static ArraySegment<byte> MakeSendBuffer(C_DeleteCharacterRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_DeleteCharacterRequest);
         public static ArraySegment<byte> MakeSendBuffer(C_EnterGame pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_EnterGame);
         public static ArraySegment<byte> MakeSendBuffer(C_LeaveGame pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_LeaveGame);
         public static ArraySegment<byte> MakeSendBuffer(C_PlayerMoveRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PlayerMoveRequest);
@@ -85,6 +88,7 @@ namespace Packet
             RegisterHandler((ushort)PacketID.PKT_S_JwtLoginReply, ServerPacketHandler.HANDLE_S_JwtLoginReply, S_JwtLoginReply.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_CreateCharacterReply, ServerPacketHandler.HANDLE_S_CreateCharacterReply, S_CreateCharacterReply.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_CharacterListReply, ServerPacketHandler.HANDLE_S_CharacterListReply, S_CharacterListReply.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_DeleteCharacterReply, ServerPacketHandler.HANDLE_S_DeleteCharacterReply, S_DeleteCharacterReply.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_EnterGame, ServerPacketHandler.HANDLE_S_EnterGame, S_EnterGame.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_PlayerList, ServerPacketHandler.HANDLE_S_PlayerList, S_PlayerList.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_BroadcastPlayerEnter, ServerPacketHandler.HANDLE_S_BroadcastPlayerEnter, S_BroadcastPlayerEnter.Parser);

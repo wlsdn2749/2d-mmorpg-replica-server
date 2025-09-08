@@ -45,7 +45,7 @@ void CreateRooms()
 
     // 마을(0)
     {
-        auto town0Map = MapData::LoadMapFromJsonFile("./Resources/Maps/고구려_Tilemap_Info.json");
+        auto town0Map = MapData::LoadMapFromJsonFile("./Resources/Maps/Goguryeo_Tilemap_Info.json");
         auto town0 = std::make_shared<TownRoom>(Room::Cfg{ 1, "Goguryeo", 50, 200 }, town0Map);
         town0->SetOwner(gQueues[OwnerIndexForRoom(town0->RoomId(), roomsPerQueue)].get());
         town0->Init(); // 매 틱마다 호출하는 함수
@@ -54,7 +54,7 @@ void CreateRooms()
 
     // 마을(1)
     {
-        auto town1Map = MapData::LoadMapFromJsonFile("./Resources/Maps/백제_Tilemap_Info.json");
+        auto town1Map = MapData::LoadMapFromJsonFile("./Resources/Maps/Baekje_Tilemap_Info.json");
         auto town1 = std::make_shared<TownRoom>(Room::Cfg{ 2, "Baekje", 50, 200 }, town1Map);
         town1->SetOwner(gQueues[OwnerIndexForRoom(town1->RoomId(), roomsPerQueue)].get());
         town1->Init(); // 매 틱마다 호출하는 함수
@@ -63,7 +63,7 @@ void CreateRooms()
 
     //사냥터(0)
     {
-        auto field0Map = MapData::LoadMapFromJsonFile("./Resources/Maps/사냥터_Tilemap_Info.json");
+        auto field0Map = MapData::LoadMapFromJsonFile("./Resources/Maps/HuntingField_Tilemap_Info.json");
         auto field0 = std::make_shared<FieldRoom>(Room::Cfg{ 3, "Field", 50, 200 }, field0Map);
         field0->SetOwner(gQueues[OwnerIndexForRoom(field0->RoomId(), roomsPerQueue)].get());
         field0->Init(); // 매 틱마다 호출하는 함수
