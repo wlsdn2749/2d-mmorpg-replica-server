@@ -164,11 +164,54 @@ namespace DummyClientCS
                 {
                     var pkt = new Google.Protobuf.Protocol.C_LeaveGame
                     {
-                        Reason = 0
+                        Reason = Google.Protobuf.Protocol.ELeaveReason.LeaveChangeCharacter // 기본값: 캐릭터 변경
                     };
                     session.Send(ServerPacketManager.MakeSendBuffer(pkt));
                 }
             }
+        }
+
+        // 다양한 종료 사유별 테스트 메소드들
+        public async Task SendLeaveGameWithReason(Google.Protobuf.Protocol.ELeaveReason reason)
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_LeaveGame
+                    {
+                        Reason = reason
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.WriteLine($"📤 C_LeaveGame 패킷 전송됨 - 사유: {reason}");
+                }
+            }
+        }
+
+        // 로그아웃 (JWT 인증 상태로 복귀)
+        public async Task SendLeaveForLogout()
+        {
+            await SendLeaveGameWithReason(Google.Protobuf.Protocol.ELeaveReason.LeaveLogout);
+        }
+
+        // 캐릭터 변경 (캐릭터 선택창으로 복귀) 
+        public async Task SendLeaveForCharacterChange()
+        {
+            await SendLeaveGameWithReason(Google.Protobuf.Protocol.ELeaveReason.LeaveChangeCharacter);
+        }
+
+        // 룸 이동
+        public async Task SendLeaveForRoomChange()
+        {
+            await SendLeaveGameWithReason(Google.Protobuf.Protocol.ELeaveReason.LeaveChangeRoom);
+        }
+
+        // 연결 해제
+        public async Task SendLeaveForDisconnect()
+        {
+            await SendLeaveGameWithReason(Google.Protobuf.Protocol.ELeaveReason.LeaveDisconnect);
         }
 
         public async Task SendForEachAttack()

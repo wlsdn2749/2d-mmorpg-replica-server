@@ -152,6 +152,7 @@ private:
 public:
 	void GetCharacterStat(CharacterRepository::CharacterStat& outStat) const;
 	void LoadCharacterStat(const CharacterRepository::CharacterStat& stat);
+	std::future<void> SaveCharacterToDB();
 
 /*---------------------------------
 	Player Room Transitioning Data

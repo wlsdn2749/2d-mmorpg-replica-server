@@ -40,6 +40,8 @@ bool Handle_C_JwtLoginRequest(PacketSessionRef& session, Protocol::C_JwtLoginReq
 		auto fut = AccountRepository::UpsertAccountAsync(userId);
 	}
 
+	gameSession->SetState(GameSession::State::InGame);
+
 	Protocol::S_JwtLoginReply replyPkt;
 	replyPkt.set_result(eLoginResult);
 	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
@@ -246,14 +248,27 @@ bool Handle_C_LeaveGame(PacketSessionRef& session, Protocol::C_LeaveGame& pkt)
 
 	RoomRef room = player->GetRoom();
 
-	room->DoAsync(&Room::Leave, player);
-	
-	player->SaveInventoryToDB(); // DB에 인벤토리 저장
-
-	GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_LeaveGame]: Client가 Room에서 나감 \n");
+	bool result = false;
+	string detail = "";
+	switch (pkt.reason())
+	{
+		case Protocol::ELeaveReason::LEAVE_LOGOUT:
+			result = gameSession->Logout(OUT detail); 
+			break;
+		case Protocol::ELeaveReason::LEAVE_CHANGE_CHARACTER:
+			result = gameSession->CharacterSelect(OUT detail);
+			break; 
+		case Protocol::ELeaveReason::LEAVE_CHANGE_ROOM:// 클라가 직접 요청을 보낼때 이 항목은 사용하지 않음
+			break;
+		case Protocol::ELeaveReason::LEAVE_DISCONNECT: // 클라가 직접 요청을 보낼때 이 항목은 사용하지 않음
+		default:
+			GConsoleLogger->WriteStdOut(Color::GREEN, L"Change Room and disconnect is not used in C_LeaveGame"); 
+			break;
+	}
 	
 	Protocol::S_LeaveGame leaveGamePkt;
-	leaveGamePkt.set_success(true);
+	leaveGamePkt.set_success(result);
+	leaveGamePkt.set_detail(detail);
 	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(leaveGamePkt);
 	session->Send(sendBuffer);
 	return true;

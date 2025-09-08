@@ -21,6 +21,12 @@ public:
 	virtual void OnDisconnected() override;
 	virtual void OnRecvPacket(BYTE* buffer, int32 len) override;
 	virtual void OnSend(int32 len) override;
+public:
+	// make to JWT Login State
+	bool Logout(OUT std::string& detailOut);
+
+	// make to character Select
+	bool CharacterSelect(OUT std::string& detailOut);
 
 private:
 	GameSessionContainerRef _gameSessionContainer;
