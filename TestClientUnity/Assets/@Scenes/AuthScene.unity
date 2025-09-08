@@ -251,7 +251,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uAC8C\uC784 \uC885\uB8CC\n"
+  m_text: "\uCE90\uB9AD\uD130 \uC0AD\uC81C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 425c4249eeb25a44fa576bff8f7bbefa, type: 2}
   m_sharedMaterial: {fileID: 6984616725136365512, guid: 425c4249eeb25a44fa576bff8f7bbefa, type: 2}
@@ -3047,7 +3047,7 @@ GameObject:
   - component: {fileID: 374991492}
   - component: {fileID: 374991491}
   m_Layer: 5
-  m_Name: Btn_GameExit
+  m_Name: Btn_CharacterDelete
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11742,7 +11742,7 @@ MonoBehaviour:
   _emptyListText: {fileID: 1318943835}
   _selectedCharacterName: {fileID: 753142602}
   _createBtn: {fileID: 603982467}
-  _exitBtn: {fileID: 374991491}
+  _characterDeleteBtn: {fileID: 374991491}
   _startBtn: {fileID: 1759406567}
   _createCharacterPanel: {fileID: 2113835217}
   _selectedIndex: -1

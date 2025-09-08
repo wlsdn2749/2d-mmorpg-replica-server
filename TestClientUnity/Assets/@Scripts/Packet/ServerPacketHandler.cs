@@ -88,7 +88,18 @@ namespace Packet
         }
         internal static void HANDLE_S_DeleteCharacterReply(PacketSession session, S_DeleteCharacterReply delete)
         {
-            //Debug.Log()
+            var result = delete.Success;
+            if (result)
+            {
+                var req = new C_CharacterListRequest();
+                var send = ServerPacketManager.MakeSendBuffer(req);
+                NetworkManager.Instance.Send(send);
+            }
+            else
+            {
+                Debug.Log(delete.ErrorMessage);
+            }
+            
         }
         internal static void HANDLE_S_EnterGame(PacketSession session, S_EnterGame enter)
         {

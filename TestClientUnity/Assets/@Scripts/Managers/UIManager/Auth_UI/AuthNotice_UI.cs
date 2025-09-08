@@ -1,3 +1,5 @@
+using Google.Protobuf.Protocol;
+using Packet;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,6 +25,7 @@ public enum NoticeCode
     CreateCharacterSuccess,
     EnterGame,
     EnterGameFail,  
+    CharacterDelete,
 }
 
 public class AuthNotice_UI : MonoBehaviour
@@ -43,29 +46,34 @@ public class AuthNotice_UI : MonoBehaviour
             case NoticeCode.CheckExitCreateAccountPanel:
                 _noticeText.text = "정말로 계정 생성을 멈추시고 로그인 화면으로\n돌아가시겠습니까?";
                 _noticeText.color = Color.red;
+                _noticeCode = NoticeCode.CheckExitCreateAccountPanel;
                 ShowOkButton();
                 break;
 
             case NoticeCode.CreateAccountSucess:
                 _noticeText.text = "계정 생성이 완료되었습니다.\n체크 버튼을 누르시면 로그인 화면으로 돌아갑니다.";
                 _noticeText.color = Color.white;
+                _noticeCode = NoticeCode.CreateAccountSucess;
                 ShowOkButton();
                 break;
 
             case NoticeCode.CreateAccountFail:
                 _noticeText.text = "계정 생성에 필요한 조건이 충족되지 않았습니다.\n다시 시도해주세요.";
                 _noticeText.color = Color.red;
+                _noticeCode = NoticeCode.CreateAccountFail;  
                 ShowOkButton();
                 break;
             case NoticeCode.LoginFailNullID:
                 _noticeText.text = "아이디를 입력해주세요.";
                 _noticeText.color = Color.red;
+                _noticeCode = NoticeCode.LoginFailNullID;
                 ShowOkButton();
                 break;
 
             case NoticeCode.LoginFailNullPW:
                 _noticeText.text = "비밀번호를 입력해주세요";
                 _noticeText.color = Color.red;
+                _noticeCode = NoticeCode.LoginFailNullPW;   
                 ShowOkButton();
                 break;
 
@@ -76,11 +84,13 @@ public class AuthNotice_UI : MonoBehaviour
             case NoticeCode.LoginFailGrpcError:
                 _noticeText.text = "서버와 연결이 원활하지 않습니다.\n같은 현상이 반복되면 고객센터로 연락해주시기 바랍니다.";
                 _noticeText.color = Color.red;
+                _noticeCode = NoticeCode.LoginFailGrpcError;
                 ShowOkButton();
                 break;
             case NoticeCode.LoginFailNullAccount:
                 _noticeText.text = "존재하지 않는 계정입니다.\n회원가입을 진행하거나 로그인 정보를 다시 입력해주세요.";
                 _noticeText.color = Color.red;
+                _noticeCode = NoticeCode.LoginFailNullAccount;
                 ShowOkButton();
                 break;
 
@@ -92,42 +102,49 @@ public class AuthNotice_UI : MonoBehaviour
             case NoticeCode.RecvCharacterListSuccess:
                 _noticeText.text = "캐릭터 리스트를 성공적으로 불러왔습니다.";
                 _noticeText.color = Color.white;
+                _noticeCode = NoticeCode.RecvCharacterListSuccess;
                 ShowOkButton();
                 break;
 
             case NoticeCode.FailCreateCharacterName:
                 _noticeText.text = "캐릭터 이름을 입력해주세요.";
                 _noticeText.color = Color.red;
+                _noticeCode = NoticeCode.FailCreateCharacterName;   
                 ShowOkButton();
                 break;
 
             case NoticeCode.FailCreateCharacterNameWrong:
                 _noticeText.text = "올바르지 못한 형식의 이름입니다.\n다시 설정해주세요.";
                 _noticeText.color = Color.red;
+                _noticeCode = NoticeCode.FailCreateCharacterNameWrong;
                 ShowOkButton();
                 break;
 
             case NoticeCode.FailCreateCharacterGender:
                 _noticeText.text = "성별을 설정해주세요.";
                 _noticeText.color = Color.red;
+                _noticeCode = NoticeCode.FailCreateCharacterGender; 
                 ShowOkButton();
                 break;
 
             case NoticeCode.FailCreateCharacterRegion:
                 _noticeText.text = "지역을 설정해주세요.";
                 _noticeText.color = Color.red;
+                _noticeCode = NoticeCode.FailCreateCharacterRegion; 
                 ShowOkButton();
                 break;
 
             case NoticeCode.FailCreateCharacterNameDuplicated:
                 _noticeText.text = "중복된 닉네임입니다. 다시 설정해주세요.";
                 _noticeText.color = Color.red;
+                _noticeCode = NoticeCode.FailCreateCharacterNameDuplicated;
                 ShowOkButton();
                 break;
 
             case NoticeCode.CreateCharacterSuccess:
                 _noticeText.text = "캐릭터 생성에 성공하셨습니다!";
                 _noticeText.color = Color.white;
+                _noticeCode = NoticeCode.CreateCharacterSuccess;    
                 ShowOkButton();
                 break;
             case NoticeCode.EnterGame:
@@ -137,6 +154,13 @@ public class AuthNotice_UI : MonoBehaviour
             case NoticeCode.EnterGameFail:
                 _noticeText.text = "게임에 접속하던중 문제가 발생하였습니다.";
                 _noticeText.color = Color.red;
+                _noticeCode = NoticeCode.EnterGameFail;
+                ShowOkButton();
+                break;
+            case NoticeCode.CharacterDelete:
+                _noticeText.text = "정말로 해당 캐릭터를 삭제하시겠습니까?";
+                _noticeText.color = Color.red;
+                _noticeCode = NoticeCode.CharacterDelete;
                 ShowOkButton();
                 break;
         }
@@ -208,6 +232,12 @@ public class AuthNotice_UI : MonoBehaviour
         }
         else if (_noticeCode == NoticeCode.EnterGameFail)
         {
+            OkButtonClose();
+            this.gameObject.SetActive(false);
+        }
+        else if (_noticeCode == NoticeCode.CharacterDelete)
+        {
+            CharacterList_UI.Instance.DeleteCharacter();
             OkButtonClose();
             this.gameObject.SetActive(false);
         }

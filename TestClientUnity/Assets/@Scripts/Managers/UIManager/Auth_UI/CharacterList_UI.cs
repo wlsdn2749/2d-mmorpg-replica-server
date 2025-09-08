@@ -13,10 +13,9 @@ public class CharacterList_UI : MonoBehaviour
     [SerializeField] private TMP_Text _emptyListText;
     [SerializeField] private TMP_Text _selectedCharacterName;
     [SerializeField] private Button _createBtn;
-    [SerializeField] private Button _exitBtn;
+    [SerializeField] private Button _characterDeleteBtn;
     [SerializeField] private Button _startBtn;
     [SerializeField] private GameObject _createCharacterPanel;
-
     private readonly List<CharacterSlot_UI> _slots = new();
     [SerializeField] private int _selectedIndex = -1;
     private void Awake()
@@ -26,7 +25,7 @@ public class CharacterList_UI : MonoBehaviour
             Instance = this;
         }
         if (_createBtn) _createBtn.onClick.AddListener(OnClickCreateCharacter);
-        if (_exitBtn) _exitBtn.onClick.AddListener(OnClickExitGame);
+        if (_characterDeleteBtn) _characterDeleteBtn.onClick.AddListener(OnClickShowCharacterDeleteUI);
         if (_startBtn) _startBtn.onClick.AddListener(OnClickStartGame);
         _selectedCharacterName.text = "";
         gameObject.SetActive(false);
@@ -56,6 +55,9 @@ public class CharacterList_UI : MonoBehaviour
         _slots.Clear();
         _selectedIndex = -1;
         _startBtn.interactable = false;
+        _characterDeleteBtn.interactable = false;
+
+        _selectedCharacterName.text = $"선택한 캐릭터 : ";
         for (int i = 0; i < list.Count; i++)
         {
             var slot = Instantiate(_slotPrefab, _contentParent);
@@ -67,6 +69,7 @@ public class CharacterList_UI : MonoBehaviour
     {
         _selectedIndex = index;
         _startBtn.interactable = true;
+        _characterDeleteBtn.interactable = true;
         _selectedCharacterName.text = $"선택한 캐릭터 : {name}";
         UpdateHighlights();
     }
@@ -94,26 +97,22 @@ public class CharacterList_UI : MonoBehaviour
         _startBtn.interactable = false;
         // ShowLoading(true);
     }
-    private void OnClickCharacterDelete()
+    private void OnClickShowCharacterDeleteUI()
     {
         if (_selectedIndex < 0) return;
-
-        var req = new C_DeleteCharacterRequest { CharacterIndex = _selectedIndex };
-        var sendBuffer = ServerPacketManager.MakeSendBuffer(req);   
-        NetworkManager.Instance.Send(sendBuffer);
+        AuthNotice_UI.Instance.gameObject.SetActive(true);
+        AuthNotice_UI.Instance.ShowNotice(NoticeCode.CharacterDelete);
     }
-    private void ShowDeleteCharacterUI()
+    public void DeleteCharacter()
     {
-
+        var req = new C_DeleteCharacterRequest { CharacterIndex = _selectedIndex };
+        var sendBuffer = ServerPacketManager.MakeSendBuffer(req);
+        NetworkManager.Instance.Send(sendBuffer);
     }
     void OnClickCreateCharacter()
     {
         _createCharacterPanel.SetActive(true);
         gameObject.SetActive(false);
-    }
-    void OnClickExitGame()
-    {
-        Application.Quit();
     }
     void EmptyListTextEnable(bool enable)
     {
