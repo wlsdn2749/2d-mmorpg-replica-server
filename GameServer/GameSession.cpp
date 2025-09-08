@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "GameSession.h"
 #include "ClientPacketHandler.h"
 #include "Player.h"
@@ -45,8 +45,8 @@ bool GameSession::Logout(OUT std::string& detailOut)
 	auto currentState = GetState();
 	if (currentState != State::InGame && currentState != State::InRoom)
 	{
-		GConsoleLogger->WriteStdOut(Color::RED, L"[WARNING] ResetSession: 잘못된 상태 - %d\n", (int)GetState());
-		detailOut = "InRoom or InGame 상태가 아니므로 로그아웃 불가능";
+		GConsoleLogger->WriteStdOut(Color::RED, L"[WARNING] ResetSession: Wrong State - %d \n", (int)GetState());
+		detailOut = "InRoom or InGame Doesn't make sense to logout";
 		return false;
 	}
 
@@ -68,8 +68,8 @@ bool GameSession::Logout(OUT std::string& detailOut)
 	_currentPlayer = nullptr;
 	_account = nullptr;
 
-	GConsoleLogger->WriteStdOut(Color::GREEN, L"[INFO] GameSession Reset 완료 - JWT 로그인 창으로 복귀\n");
-	detailOut = "Logout 성공";
+	GConsoleLogger->WriteStdOut(Color::GREEN, L"[INFO] GameSession Reset Completed - JWT Return to Login Scene\n");
+	detailOut = "Logout OK";
 
 	return true;
 }
@@ -80,8 +80,8 @@ bool GameSession::CharacterSelect(OUT std::string& detailOut)
 	auto currentState = GetState();
 	if (currentState != State::InRoom)
 	{
-		GConsoleLogger->WriteStdOut(Color::RED, L"[WARNING] ResetSession: 잘못된 상태 - %d\n", (int)GetState());
-		detailOut = "InRoom 상태가 아니므로 캐릭터 선택창 이동 불가능";
+		GConsoleLogger->WriteStdOut(Color::RED, L"[WARNING] ResetSession: Wrong State %d\n", (int)GetState());
+		detailOut = "Not InRoom State, Doesn't make sense to move character select";
 	}
 
 	// 현재 플레이어가 있다면 데이터 저장 및 룸에서 제거
