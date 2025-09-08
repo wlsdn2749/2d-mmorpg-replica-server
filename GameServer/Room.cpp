@@ -35,9 +35,7 @@ void Room::SaveAllActivePlayers()
     // Active 구현을 해야하지만 일단은 모든 플레이어 대상으로
     for (auto& [pid, p] : _players)
     {
-        CharacterRepository::CharacterStat stat;  // 스택에 한 번만 생성
-        p->GetCharacterStat(stat);  // 복사 없이 직접 할당
-        CharacterRepository::UpdateCharacterStatsAsync(stat); // const& 전달
+        p->SaveCharacterToDB();
     }
 
     DoTimer(_cfg.periodicSaveTicksMs, &Room::SaveAllActivePlayers);
@@ -160,6 +158,10 @@ void Room::Enter(PlayerRef p)
 
 void Room::Leave(PlayerRef p)
 {
+    // 데이터 저장
+    auto fut = p->SaveCharacterToDB();
+    fut.get();
+
     RemovePlayerInternal(p->playerId, "Leave");
     GConsoleLogger->WriteStdOut(Color::GREEN, L"Room에서 Leave 퇴장\n");
 	OnLeave(p); // 여기서 모두에게 BroadCasting?
@@ -473,9 +475,7 @@ void Room::ChangeRoomReady(const PlayerRef& p, const Protocol::C_ChangeRoomReady
             *commit.mutable_snapshots() = dst->BuildPlayerListSnapshot(p, /*includeSelf=*/true);
             
             // DB에 저장
-            CharacterRepository::CharacterStat stat;  // 스택에 한 번만 생성
-            p->GetCharacterStat(stat);  // 복사 없이 직접 할당
-            CharacterRepository::UpdateCharacterStatsAsync(stat); // const& 전달
+            p->SaveCharacterToDB();
 
             if (auto s = p->ownerSession.lock())
             {

@@ -375,7 +375,8 @@ enum ELeaveReason : int {
   LEAVE_UNKNOWN = 0,
   LEAVE_LOGOUT = 1,
   LEAVE_CHANGE_ROOM = 2,
-  LEAVE_DISCONNECT = 3,
+  LEAVE_CHANGE_CHARACTER = 3,
+  LEAVE_DISCONNECT = 4,
   ELeaveReason_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   ELeaveReason_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
@@ -2662,15 +2663,30 @@ class S_LeaveGame final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kDetailFieldNumber = 2,
     kSuccessFieldNumber = 1,
   };
-  // int32 success = 1;
-  void clear_success();
-  int32_t success() const;
-  void set_success(int32_t value);
+  // string detail = 2;
+  void clear_detail();
+  const std::string& detail() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_detail(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_detail();
+  PROTOBUF_NODISCARD std::string* release_detail();
+  void set_allocated_detail(std::string* detail);
   private:
-  int32_t _internal_success() const;
-  void _internal_set_success(int32_t value);
+  const std::string& _internal_detail() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_detail(const std::string& value);
+  std::string* _internal_mutable_detail();
+  public:
+
+  // bool success = 1;
+  void clear_success();
+  bool success() const;
+  void set_success(bool value);
+  private:
+  bool _internal_success() const;
+  void _internal_set_success(bool value);
   public:
 
   // @@protoc_insertion_point(class_scope:Protocol.S_LeaveGame)
@@ -2681,7 +2697,8 @@ class S_LeaveGame final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    int32_t success_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr detail_;
+    bool success_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -7479,24 +7496,74 @@ inline void C_LeaveGame::set_reason(::Protocol::ELeaveReason value) {
 
 // S_LeaveGame
 
-// int32 success = 1;
+// bool success = 1;
 inline void S_LeaveGame::clear_success() {
-  _impl_.success_ = 0;
+  _impl_.success_ = false;
 }
-inline int32_t S_LeaveGame::_internal_success() const {
+inline bool S_LeaveGame::_internal_success() const {
   return _impl_.success_;
 }
-inline int32_t S_LeaveGame::success() const {
+inline bool S_LeaveGame::success() const {
   // @@protoc_insertion_point(field_get:Protocol.S_LeaveGame.success)
   return _internal_success();
 }
-inline void S_LeaveGame::_internal_set_success(int32_t value) {
+inline void S_LeaveGame::_internal_set_success(bool value) {
   
   _impl_.success_ = value;
 }
-inline void S_LeaveGame::set_success(int32_t value) {
+inline void S_LeaveGame::set_success(bool value) {
   _internal_set_success(value);
   // @@protoc_insertion_point(field_set:Protocol.S_LeaveGame.success)
+}
+
+// string detail = 2;
+inline void S_LeaveGame::clear_detail() {
+  _impl_.detail_.ClearToEmpty();
+}
+inline const std::string& S_LeaveGame::detail() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_LeaveGame.detail)
+  return _internal_detail();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void S_LeaveGame::set_detail(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.detail_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Protocol.S_LeaveGame.detail)
+}
+inline std::string* S_LeaveGame::mutable_detail() {
+  std::string* _s = _internal_mutable_detail();
+  // @@protoc_insertion_point(field_mutable:Protocol.S_LeaveGame.detail)
+  return _s;
+}
+inline const std::string& S_LeaveGame::_internal_detail() const {
+  return _impl_.detail_.Get();
+}
+inline void S_LeaveGame::_internal_set_detail(const std::string& value) {
+  
+  _impl_.detail_.Set(value, GetArenaForAllocation());
+}
+inline std::string* S_LeaveGame::_internal_mutable_detail() {
+  
+  return _impl_.detail_.Mutable(GetArenaForAllocation());
+}
+inline std::string* S_LeaveGame::release_detail() {
+  // @@protoc_insertion_point(field_release:Protocol.S_LeaveGame.detail)
+  return _impl_.detail_.Release();
+}
+inline void S_LeaveGame::set_allocated_detail(std::string* detail) {
+  if (detail != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.detail_.SetAllocated(detail, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.detail_.IsDefault()) {
+    _impl_.detail_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:Protocol.S_LeaveGame.detail)
 }
 
 // -------------------------------------------------------------------

@@ -128,7 +128,8 @@ message C_LeaveGame
 // (11)
 message S_LeaveGame
 {
-	int32 success = 1;
+	bool success = 1;
+	string detail = 2;
 }
 
 // (12)
@@ -292,9 +293,10 @@ enum EDirection
 enum ELeaveReason
 {
 	LEAVE_UNKNOWN = 0;
-	LEAVE_LOGOUT = 1; // 게임종료
+	LEAVE_LOGOUT = 1; // 로그아웃 -> Jwt 로그인 인증 상태로 (세션 초기화)
 	LEAVE_CHANGE_ROOM = 2; // 룸 이동
-	LEAVE_DISCONNECT = 3; // 네트워크 끊김
+	LEAVE_CHANGE_CHARACTER = 3; // 캐릭터 변경 -> 세션은 유지하고 캐릭터 선택으로 변경
+	LEAVE_DISCONNECT = 4; // 네트워크 끊김
 }
 
 enum EMoveResult

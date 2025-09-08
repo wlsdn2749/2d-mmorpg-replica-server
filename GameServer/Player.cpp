@@ -29,6 +29,16 @@ void Player::LoadCharacterStat(const CharacterRepository::CharacterStat& stat)
 	SetExp(stat.exp);
 }
 
+std::future<void> Player::SaveCharacterToDB()
+{
+	GConsoleLogger->WriteStdOut(Color::YELLOW, L"SaveCharacterToDB 실행");
+	CharacterRepository::CharacterStat stat;
+	GetCharacterStat(stat);
+	CharacterRepository::UpdateCharacterStatsAsync(stat); // 연결종료 시, Stats 저장
+	auto fut = SaveInventoryToDB(); // 연결 종료시, DB 저장
+	return fut;
+}
+
 std::future<void> Player::LoadInventoryFromDB()
 {
 	int characterId = static_cast<int>(playerId);

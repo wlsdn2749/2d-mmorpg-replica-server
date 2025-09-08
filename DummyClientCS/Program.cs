@@ -51,8 +51,12 @@ class Program
             Console.WriteLine("[i] 인벤토리 조회하기");
             Console.WriteLine("[u] 퀵슬롯 사용 (1~9)");
             Console.WriteLine("[o] 슬롯 지정 아이템 사용");
-            Console.WriteLine("\n===== 종료 로직 =====");
-            Console.WriteLine("[x] 룸에서 나가기");
+            Console.WriteLine("\n===== 종료 로직 테스트 =====");
+            Console.WriteLine("[x] 룸에서 나가기 (캐릭터 변경)");
+            Console.WriteLine("[l] 로그아웃 테스트 (JWT 인증 상태로 복귀)");
+            Console.WriteLine("[c] 캐릭터 변경 테스트");  
+            Console.WriteLine("[r] 룸 이동 테스트");
+            Console.WriteLine("[d] 연결 해제 테스트");
             Console.WriteLine("[z] 종료");
             Console.Write("선택: ");
 
@@ -297,9 +301,50 @@ class Program
                         Console.WriteLine("게임에 접속한 상태가 아닙니다!");
                         break;
                     }
-                    await SessionManager.Instance.SendForLeave();
+                    await SessionManager.Instance.SendLeaveForCharacterChange();
                     _isInGame = false;
-                    Console.WriteLine("룸에서 나갔습니다. 게임을 다시 시작하려면 8번을 눌러주세요.");
+                    Console.WriteLine("✅ 캐릭터 변경으로 룸에서 나갔습니다. 게임을 다시 시작하려면 8번을 눌러주세요.");
+                    break;
+                case "l":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("게임에 접속한 상태가 아닙니다!");
+                        break;
+                    }
+                    await SessionManager.Instance.SendLeaveForLogout();
+                    _isInGame = false;
+                    _isCharacterListLoaded = false;
+                    _isJwtVerified = false;
+                    Console.WriteLine("✅ 로그아웃 테스트 완료. JWT 인증 상태로 복귀했습니다. 다시 시작하려면 4번부터 진행하세요.");
+                    break;
+                case "c":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("게임에 접속한 상태가 아닙니다!");
+                        break;
+                    }
+                    await SessionManager.Instance.SendLeaveForCharacterChange();
+                    _isInGame = false;
+                    Console.WriteLine("✅ 캐릭터 변경 테스트 완료. 캐릭터 선택창으로 복귀했습니다. 게임을 다시 시작하려면 8번을 눌러주세요.");
+                    break;
+                case "r":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("게임에 접속한 상태가 아닙니다!");
+                        break;
+                    }
+                    await SessionManager.Instance.SendLeaveForRoomChange();
+                    Console.WriteLine("✅ 룸 이동 테스트 완료. (현재 미구현 상태)");
+                    break;
+                case "d":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("게임에 접속한 상태가 아닙니다!");
+                        break;
+                    }
+                    await SessionManager.Instance.SendLeaveForDisconnect();
+                    _isInGame = false;
+                    Console.WriteLine("✅ 연결 해제 테스트 완료. 디버그 로깅용입니다.");
                     break;
                 case "z":
                     Console.WriteLine("프로그램을 종료합니다.");
