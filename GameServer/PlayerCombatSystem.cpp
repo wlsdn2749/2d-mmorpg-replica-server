@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "PlayerCombatSystem.h"
 
 #include "ProtocolHelper.h"
@@ -14,9 +14,9 @@ void PlayerCombatSystem::HandleAttack(const PlayerRef& player, int64 nowMs)
 	// 1) 쿨다운 체크
 	if (!AttackCooldownReady(pid, nowMs)) return; // 쿨 안됬으면 공격 무효 처리
 
-	// 2) 1타일 전방 판정
+	// 2) 1타일 전방 몬스터 여부 판정.
 	MonsterView mv{};
-	if (!InFrontOneTile(player, mv)) return;
+	if (!FindMonsterInFrontOneTile(player, mv)) return;
 
 	// 3) 타겟 조회
 	auto targetMonsterId = mv.id;
@@ -24,6 +24,9 @@ void PlayerCombatSystem::HandleAttack(const PlayerRef& player, int64 nowMs)
 
 	// 4) 데미지 판정 = monsterHp = monsterHp - player.Atk
 	const int damage = player->Atk();
+
+	GConsoleLogger->WriteStdOut(Color::GREEN, L"[Player] Player:%d attacks Monster:%d (dmg:%d hp:%d->%d)", 
+		pid, mv.id, damage, mv.hp, mv.hp - damage);
 
 	int hpAfter = mv.hp;
 	_pLinker.ApplyDamageToMonster(mv.id, damage, pid); // 여기서 만약 죽으면 Death broadcast
@@ -34,14 +37,12 @@ void PlayerCombatSystem::HandleAttack(const PlayerRef& player, int64 nowMs)
 
 }
 
-
-bool PlayerCombatSystem::InFrontOneTile(const PlayerRef& player, const MonsterView& m) const
+bool PlayerCombatSystem::FindMonsterInFrontOneTile(const PlayerRef& player, MonsterView& outMonster) const
 {
 	int fx, fy;
 	ForwardTile(player->PosX(), player->PosY(), player->Dir(), fx, fy);
-	
-	// “바라보는 방향 앞 1타일” 엄격 체크
-	return (m.x == fx && m.y == fy);
+
+	return _pLinker.TryGetMonsterAt(fx, fy, outMonster);
 }
 
 bool PlayerCombatSystem::AttackCooldownReady(int pid, int64 nowMs) const

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "MonsterContainer.h"
 #include "MonsterPorts.h"
 #include "MonsterSpawnerSystem.h"
@@ -19,6 +19,7 @@ public:
 	void Tick(MonsterContainer& repo,
 			  const MonsterSpawnerSystem& spawner,
 			  IMonsterMapQuery& map,
+			  IMonsterEntityLinker& linker,
 			  IMonsterBroadcaster& cast,
 			  IMonsterClock& clock,
 			  IMonsterRng& rng);
@@ -30,6 +31,7 @@ private:
 	void TickOne(Monster& m, 
 				 const MonsterSpawnerSystem& spawner,
 				 IMonsterMapQuery& map,
+				 IMonsterEntityLinker& linker,
 				 IMonsterBroadcaster& cast,
 				 IMonsterClock& clock,
 				 IMonsterRng& rng);

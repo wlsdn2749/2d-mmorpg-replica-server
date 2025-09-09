@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "MonsterMovementSystem.h"
 #include "MonsterSpawnerSystem.h"
 
@@ -9,6 +9,7 @@
 void MonsterMovementSystem::Tick(MonsterContainer& repo,
 								 const MonsterSpawnerSystem& spawner,
 								 IMonsterMapQuery& map,
+								 IMonsterEntityLinker& linker,	
 								 IMonsterBroadcaster& cast,
 								 IMonsterClock& clock,
 								 IMonsterRng& rng)
@@ -17,7 +18,7 @@ void MonsterMovementSystem::Tick(MonsterContainer& repo,
 	repo.ForEachMonster([&](Monster& m) {
 		if (m.state == MState::Dead) return;
 		if (m.nextMoveAtMs > now) return;
-		this->TickOne(m, spawner, map, cast, clock, rng);
+		this->TickOne(m, spawner, map, linker, cast, clock, rng);
 		});
 }
 
@@ -40,6 +41,7 @@ bool MonsterMovementSystem::TryStep(Monster& m,
 void MonsterMovementSystem::TickOne(Monster& m, 
 									const MonsterSpawnerSystem& spawner,
 									IMonsterMapQuery& map, 
+									IMonsterEntityLinker& linker,
 									IMonsterBroadcaster& cast, 
 									IMonsterClock& clock, 
 									IMonsterRng& rng) 
@@ -51,7 +53,6 @@ void MonsterMovementSystem::TickOne(Monster& m,
 	const auto& spawns = spawner.Spawns();
 	auto it = std::find_if(spawns.begin(), spawns.end(),
 		[&](const SpawnPointCfg& s) { return s.id == m.fromSpawnId; });
-
 	const int leash = (it != spawns.end()) ? it->leashRadiusTiles : 10;
 	const int dx = std::abs(m.core.pos.x - m.spawnX);
 	const int dy = std::abs(m.core.pos.y - m.spawnY);
@@ -61,6 +62,11 @@ void MonsterMovementSystem::TickOne(Monster& m,
 	if (outOfLeash) m.state = MState::Return;
 
 	auto monsterStats = spawner.GetStats(m.typeId);
+	if (monsterStats.moveSpeedTilesPerSec <= 0) // 0보다 작으면 아무런행동 X, MState도 Idle에서 고정
+	{
+		return;
+	}
+
 	switch (m.state)
 	{
 		case MState::Idle:
@@ -81,19 +87,43 @@ void MonsterMovementSystem::TickOne(Monster& m,
 			m.state = MState::Patrol;
 			break;
 		}
-		case MState::Chase:
+		case MState::Ready:
 		{
-			// v1: Movement에서는 Chase 경로 산책 수준 (직선 우선)
-			// 타깃 위치는 CombatSystem 쪽에서 선택 후 m.targetPlayerId로 유지한다고 가정
-			// 여기서는 단순히 타깃 쪽으로 1스텝
-			// (실제 좌표 가져오기는 CombatSystem에서 수행
-			// 또는 링크에서 가져오도록 Movement가 링크를 알도록 확장 가능)
-			// 일단은 Patrol처럼 처리
-			Protocol::EDirection dir = static_cast<Protocol::EDirection>(rng.NextInt(0, 3));
+			int stepMs = 1000 / monsterStats.moveSpeedTilesPerSec;
+			if (m.targetPlayerId != -1) {
+				IMonsterEntityLinker::PlayerView pv;
+				if (linker.TryGetPlayer(m.targetPlayerId, pv)) {
+					m.core.dir = FaceTo(m.core.pos, Pos2{ pv.x, pv.y });
+					GConsoleLogger->WriteStdOut(Color::GREEN, L"[Movement] Monster:%d facing player:%d dir:%d \n", 
+						m.core.id, m.targetPlayerId, (int)m.core.dir);
+				}
+			}
+			m.nextMoveAtMs = clock.NowMs() + stepMs;
+			break;
+		}
+		case MState::Chase:
+		case MState::Combat:
+		{
+			if (m.targetPlayerId == -1)
+			{
+				m.state = MState::Patrol;
+				m.wasAttacked = false;
+				break;
+			}
+
+			IMonsterEntityLinker::PlayerView pv;
+			Protocol::EDirection dir = Protocol::EDirection::DIR_UP; // 
+			if (linker.TryGetPlayer(m.targetPlayerId, pv)) {
+				dir = FaceTo(m.core.pos, Pos2{ pv.x, pv.y });
+				GConsoleLogger->WriteStdOut(Color::WHITE, L"[Movement] Monster:%d tracking player:%d from (%d,%d) to (%d,%d) \n", 
+					m.core.id, m.targetPlayerId, m.core.pos.x, m.core.pos.y, pv.x, pv.y);
+			}
+
+			int stepMs = 1000 / monsterStats.moveSpeedTilesPerSec;
 			if (this->TryStep(m, dir, map, cast))
-				m.nextMoveAtMs = clock.NowMs() + 300;
+				m.nextMoveAtMs = clock.NowMs() + stepMs;
 			else
-				m.nextMoveAtMs = clock.NowMs() + 200;
+				m.nextMoveAtMs = clock.NowMs() + 200; // 막히면 짧게 대기
 			break;
 		}
 		case MState::Return:

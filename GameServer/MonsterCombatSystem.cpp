@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "MonsterCombatSystem.h"
 
 static inline int Mdist(const Pos2& a, const Pos2& b) {
@@ -41,20 +41,40 @@ void MonsterCombatSystem::TickOne(Monster& m, IMonsterEntityLinker& linker, IMon
 		return;
 	}
 
+	// Get Player
 
-	m.targetPlayerId = bestId;
+	IMonsterEntityLinker::PlayerView pv;
+	if (linker.TryGetPlayer(bestId, pv)) {
+		int dist = Mdist(m.core.pos, Pos2{ pv.x, pv.y });
+
+		if (dist <= stats.attackRangeTiles) {  // 1칸 거리
+			if (m.state != MState::Combat) {
+				GConsoleLogger->WriteStdOut(Color::GREEN, L"[Combat] Monster:%d enters Ready state (target player:%d)", m.core.id, bestId);
+				m.state = MState::Ready;  // 처음 접근시만 Ready
+			}
+		}
+		else {  // 멀리 있으면
+			GConsoleLogger->WriteStdOut(Color::WHITE, L"[Combat] Monster:%d chasing player:%d (dist:%d)", m.core.id, bestId, dist);
+			m.state = MState::Chase;  // 추적
+		}
+		m.targetPlayerId = bestId;
+	}
 
 
 	// 공격 시도
-	const int64_t now = clock.NowMs();
-	if (now >= m.nextAttackAtMs) {
-		IMonsterEntityLinker::PlayerView pv;
-		if (linker.TryGetPlayer(bestId, pv)) {
-			int dist = Mdist(m.core.pos, Pos2{ pv.x, pv.y });
-			if (dist <= stats.attackRangeTiles) {
-				linker.ApplyDamageToPlayer(bestId, stats.atk, (int)m.core.id);
-				cast.BroadcastMonsterAttack(m.core.id, bestId);
-				m.nextAttackAtMs = now + stats.attackCooldownMs;
+	if (m.wasAttacked && m.state == MState::Combat)
+	{
+		const int64_t now = clock.NowMs();
+		if (now >= m.nextAttackAtMs) {
+			IMonsterEntityLinker::PlayerView pv;
+			if (linker.TryGetPlayer(bestId, pv)) {
+				int dist = Mdist(m.core.pos, Pos2{ pv.x, pv.y });
+				if (dist <= stats.attackRangeTiles) {
+					GConsoleLogger->WriteStdOut(Color::WHITE, L"[Combat] Monster:%d attacks player:%d (dmg:%d)", m.core.id, bestId, stats.atk);
+					linker.ApplyDamageToPlayer(bestId, stats.atk, (int)m.core.id);
+					cast.BroadcastMonsterAttack(m.core.id, bestId);
+					m.nextAttackAtMs = now + stats.attackCooldownMs;
+				}
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "FieldRoom.h"
 #include "pch.h"
 #include "FieldRoom.h"
@@ -95,16 +95,17 @@ void FieldRoom::SendSystemMessageToPlayer(int playerId, const std::string& messa
 	}
 }
 
-void FieldRoom::StartTick()
+void FieldRoom::InitRoomSystems()
 {
 	_lastMonsterTickMs = _clock.NowMs(); // 첫 기준 시각
 	InitMonsters();
 	InitPCombat();
 }
 
+
 void FieldRoom::OnEnter(const PlayerRef& p)
 {
-	GConsoleLogger->WriteStdOut(Color::WHITE, L"[%d]: [%s] Has Join the [%s].\n", p->playerId, StrToWstr(p->username.c_str()), StrToWstr(RoomName().c_str()));
+	GConsoleLogger->WriteStdOut(Color::WHITE, L"[%d]: [%s] Has Join the [%s].\n", p->playerId, StrToWstr(p->username).c_str(), StrToWstr(RoomName()).c_str());
 
 	// 1. 내 클라에 현재 월드 스냅샷 (기존 유저들) 전송
 	auto pkt = BuildPlayerListSnapshot(p);
@@ -243,7 +244,7 @@ void FieldRoom::MonsterBroadcasterImpl::BroadcastMonsterMove(EntityId id, int x,
 	Protocol::S_BroadcastMonsterMove pkt;
 	pkt.set_monsterid(id);
 	pkt.set_x(x); pkt.set_y(y); pkt.set_dir(dir);
-	//GConsoleLogger->WriteStdOut(Color::GREEN, L"몬스터 이동 Id: %d, x: %d, y: %d, dir: %d\n", id, x, y, (int) dir);
+	GConsoleLogger->WriteStdOut(Color::GREEN, L"몬스터 이동 Id: %d, x: %d, y: %d, dir: %d\n", id, x, y, (int) dir);
 	_r.Broadcast(ClientPacketHandler::MakeSendBuffer(pkt));
 }
 
@@ -278,30 +279,73 @@ int FieldRoom::MonsterRngImpl::NextInt(int minIncl, int maxIncl)
 
 // ------------------- Monster Service Wiring -------------------
 
+void FieldRoom::LoadMonsterStatData(MonsterService::Cfg& cfg, std::unique_ptr<vector<pair<int, MonsterStats>>> monsterStatDatas)
+{
+	// 스탯/스폰 설정 (예시)
+	for (auto& [monsterId, monsterStats] : *monsterStatDatas.get())
+	{
+		cfg.statsByType.emplace(monsterId, monsterStats);
+	}
+}
+
+void FieldRoom::LoadMonsterSpawnData(MonsterService::Cfg& cfg, std::unique_ptr<vector<SpawnPointCfg>> spawnPointCfgDatas)
+{
+	for (auto& spawnPointCfg : *spawnPointCfgDatas.get())
+	{
+		cfg.spawns.push_back(spawnPointCfg);
+	}
+}
+
 void FieldRoom::InitMonsters()
 {
 	MonsterService::Cfg cfg;
 
 	// 스탯/스폰 설정 (예시)
-	cfg.statsByType.emplace(1001, MonsterStats(
-		30, // MaxHp
-		5, // atk
-		1, // move tile per sec
-		1, // atk range tile
-		1200, // leash Radius Tiles
-		6 // aggroRangeTile
-	));
+	//cfg.statsByType.emplace(1001, MonsterStats(
+	//	30, // MaxHp
+	//	5, // atk
+	//	1, // move tile per sec
+	//	1, // atk range tile
+	//	1200, // leash Radius Tiles
+	//	6 // aggroRangeTile
+	//));
 
-	cfg.spawns.push_back(SpawnPointCfg(
-		1,   // id
-		20,  // x
-		15,  // y
-		5,   // maxAlive
-		1,   // initialSpawn
-		8000,// respawnDelayMs
-		10,  // leashRadiusTiles
-		1001 // monsterTypeId
-	));
+	//cfg.spawns.push_back(SpawnPointCfg(
+	//	1,   // spawnPointId
+	//	20,  // x
+	//	15,  // y
+	//	5,   // maxAlive
+	//	1,   // initialSpawn
+	//	8000,// respawnDelayMs
+	//	10,  // leashRadiusTiles
+	//	1001 // monsterTypeId
+	//));
+	auto monsterStatDatas = std::make_unique<vector<pair<int, MonsterStats>>>();
+	auto spawnPointCfgDatas = std::make_unique<vector<SpawnPointCfg>>();
+
+	{
+		// 기본 몬스터 (움직이는)
+		int monsterId = 1001;
+		MonsterStats monsterStats = { 30, 5, 1, 1, 1200, 1 };
+		monsterStatDatas->push_back({ monsterId, monsterStats });
+
+		SpawnPointCfg spawnPointCfg = { 1, 15, -4, 5, 1, 8000, 10, monsterId };
+		spawnPointCfgDatas->push_back(spawnPointCfg);
+	}
+
+	{
+		// 허수아비 몬스터 (고정)
+		int monsterId = 9999;
+		MonsterStats monsterStats = { 9999, 0, 0, 0, 0, 0 };
+		monsterStatDatas->push_back({ monsterId, monsterStats });
+		
+		SpawnPointCfg spawnPointCfg = { 99, 20, -6, 1, 1, 1000, 0, monsterId };
+		spawnPointCfgDatas->push_back(spawnPointCfg);
+	}
+	// Todo: This values has to be altered into sheets
+
+	LoadMonsterStatData(cfg, std::move(monsterStatDatas));
+	LoadMonsterSpawnData(cfg, std::move(spawnPointCfgDatas));
 
 	cfg.movementCfg = MonsterMovementSystem::Cfg(800, 1600);
 
@@ -329,6 +373,20 @@ bool FieldRoom::PlayerMonsterLinkerImpl::TryGetMonster(EntityId monsterId, Monst
 {
 	if(!_r._monsters->TryGetMonsterView(monsterId, outMv)) return false;
 	return true;
+}
+
+bool FieldRoom::PlayerMonsterLinkerImpl::TryGetMonsterAt(int fx, int fy, MonsterView& outMonster) const
+{
+	// 해당 위치에 있는 몬스터를 찾기
+	bool found = false;
+	_r._monsters->ForEachMonsterView([&](const MonsterView& mv) {
+		if (mv.x == fx && mv.y == fy) {
+			outMonster = mv;
+			found = true;
+			return; // 첫 번째 찾은 몬스터만 반환
+		}
+	});
+	return found;
 }
 
 bool FieldRoom::PlayerMonsterLinkerImpl::ApplyDamageToMonster(int monsterId, int damage, int srcPlayerId)

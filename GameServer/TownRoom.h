@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Room.h"
 #include "MapData.h"
 // 마을 룸 :
@@ -13,7 +13,7 @@ public:
 
 protected:
 	// 최초 1회 초기화
-	void StartTick() override;
+	void InitRoomSystems() override;
 
 	// 입장/퇴장 훅
 	void OnEnter(const PlayerRef& p) override;
