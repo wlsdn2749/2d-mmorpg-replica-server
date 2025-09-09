@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <functional>
 #include "TypeCore.h"
 #include "MonsterService.h"
@@ -13,6 +13,7 @@ struct IPlayerMonsterLinker {
 	// 범위 내 몬스터 정보
 	virtual void ForEachMonsterInRange(int cx, int cy, int rangeTiles, std::function<void(const MonsterView&)>) const = 0; 
 	virtual bool TryGetMonster(EntityId monsterId, MonsterView& out) const = 0;
+	virtual bool TryGetMonsterAt(int fx, int fy, MonsterView& outMonster) const = 0;
 	virtual bool ApplyDamageToMonster(int monsterId, int damage, int srcPlayerId) = 0;
 
 };

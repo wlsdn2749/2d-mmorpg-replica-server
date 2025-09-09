@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "MonsterService.h"
 #include "DropManager.h"
 
@@ -18,7 +18,7 @@ void MonsterService::Tick(int64_t /*deltaMs*/) {
 
 
 	// 이동 처리
-	_move.Tick(_container, _spawner, _map, _cast, _clock, _rng);
+	_move.Tick(_container, _spawner, _map, _linker, _cast, _clock, _rng);
 
 
 	// 전투 처리
@@ -75,8 +75,14 @@ bool MonsterService::ApplyDamageToMonster(EntityId id, int dmg, int srcPlayerId,
 	Monster* m = _container.Find(id);
 	if (!m) return false;
 
-	hpAfter -= dmg;
-	m->curHp = hpAfter;
+	if (m->state == MState::Ready)
+	{
+		GConsoleLogger->WriteStdOut(Color::WHITE, L"[Combat] Monster:%d attacked! Ready->Combat transition", id);
+		m->state = MState::Combat;
+	}
+
+	m->curHp = m->curHp - dmg;
+	hpAfter = m->curHp;
 	if(m->curHp > 0)
 		return true;
 

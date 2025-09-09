@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "MonsterSpawnerSystem.h"
 
 void MonsterSpawnerSystem::Init(MonsterContainer& repo, const std::vector<SpawnPointCfg>& spawns,
@@ -8,7 +8,6 @@ void MonsterSpawnerSystem::Init(MonsterContainer& repo, const std::vector<SpawnP
 	_spawns = spawns;
 	_statsByType = statsByType;
 
-
 	// 초기 스폰
 	const int64_t now = clock.NowMs();
 	for (const auto& sp : _spawns) {
@@ -16,10 +15,11 @@ void MonsterSpawnerSystem::Init(MonsterContainer& repo, const std::vector<SpawnP
 		if (it == _statsByType.end()) continue;
 		const MonsterStats& stats = it->second;
 
-
 		const int toSpawn = std::min(sp.initialSpawn, sp.maxAlive);
 		for (int i = 0; i < toSpawn; ++i) {
 			Monster& m = repo.CreateFromSpawn(sp, stats, _idSeq++, now);
+			GConsoleLogger->WriteStdOut(Color::WHITE, L"[Spawn] Monster:%d spawned at (%d,%d) type:%d hp:%d", 
+				m.core.id, m.core.pos.x, m.core.pos.y, m.typeId, m.curHp);
 			cast.SpawnMonster(m);
 		}
 	}
@@ -42,6 +42,8 @@ void MonsterSpawnerSystem::Tick(MonsterContainer& repo, IMonsterBroadcaster& cas
 			continue;
 		}
 		Monster& m = repo.CreateFromSpawn(task.spawnCfg, it->second, _idSeq++, now);
+		GConsoleLogger->WriteStdOut(Color::WHITE, L"[Respawn] Monster:%d respawned at (%d,%d) type:%d hp:%d", 
+			m.core.id, m.core.pos.x, m.core.pos.y, m.typeId, m.curHp);
 		cast.SpawnMonster(m);
 	}
 }

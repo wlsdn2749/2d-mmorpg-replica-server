@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "PlayerPorts.h"
 
 class PlayerCombatSystem
@@ -19,7 +19,7 @@ public:
 
 private:
 	// 바로 앞 타일의 MonsterView 구하기
-	bool InFrontOneTile(const PlayerRef& player, const MonsterView& m) const;
+	bool FindMonsterInFrontOneTile(const PlayerRef& player, MonsterView& m) const;
 	// 플레이어  공격 쿨타임 확인
 	bool AttackCooldownReady(int pid, int64 nowMs) const;
 

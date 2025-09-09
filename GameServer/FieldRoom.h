@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Room.h"
 #include "MapData.h"
 
@@ -39,7 +39,7 @@ public:
 
 protected:
 	// 최초 1회 초기화
-	void StartTick() override;
+	void InitRoomSystems() override;
 
 	// 입장/퇴장 훅
 	void OnEnter(const PlayerRef& p) override;
@@ -113,6 +113,7 @@ private:
         explicit PlayerMonsterLinkerImpl(FieldRoom& r) : _r(r) {}
 	    virtual void ForEachMonsterInRange(int cx, int cy, int rangeTiles, std::function<void(const MonsterView&)>) const override; 
 	    virtual bool TryGetMonster(EntityId monsterId, MonsterView& outMv) const override;
+	    virtual bool TryGetMonsterAt(int fx, int fy, MonsterView& outMonster) const override;
 	    virtual bool ApplyDamageToMonster(int monsterId, int damage, int srcPlayerId) override;
     private:
         FieldRoom& _r;
@@ -135,6 +136,9 @@ private:
     MonsterRngImpl          _rng;
 
     std::unique_ptr<MonsterService> _monsters;
+
+    void LoadMonsterStatData(MonsterService::Cfg& cfg, std::unique_ptr<vector<pair<int, MonsterStats>>> monsterStatDatas);
+    void LoadMonsterSpawnData(MonsterService::Cfg& cfg, std::unique_ptr<vector<SpawnPointCfg>> spawnPointCfgDatas);
 
     void InitMonsters(); // 구성/초기 스폰
     int64_t _lastMonsterTickMs{ 0 }; // monster Dt 계산용

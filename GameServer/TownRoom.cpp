@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "TownRoom.h"
 #include "ClientPacketHandler.h"
 
@@ -10,7 +10,8 @@ bool TownRoom::CanEnterTile(int nx, int ny) const
 	return !_map->IsBlocked(nx, ny);	
 }
 
-void TownRoom::StartTick()
+
+void TownRoom::InitRoomSystems()
 {
 	;
 }

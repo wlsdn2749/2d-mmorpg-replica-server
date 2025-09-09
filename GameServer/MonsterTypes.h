@@ -1,7 +1,7 @@
-#pragma once
+﻿#pragma once
 #include "EntityCore.h"
 #include <cstdint>
-enum class MState : uint8_t { Idle, Patrol, Chase, Return, Dead };
+enum class MState : uint8_t { Idle, Patrol, Chase, Ready, Combat, Return, Dead };
 
 /* 몬스터 별로 가지는 특성 */
 struct MonsterStats {
@@ -58,4 +58,7 @@ struct Monster {
 	int64_t nextMoveAtMs{ 0 };
 	int64_t nextAttackAtMs{ 0 };
 	int64_t lostAggroAtMs{ 0 };
+
+	// Attacked
+	bool wasAttacked {false}; 
 };

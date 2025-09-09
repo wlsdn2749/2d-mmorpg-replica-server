@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "Room.h"
 #include "ClientPacketHandler.h"
 #include "MapData.h"
@@ -15,6 +15,7 @@ Room::~Room() = default;
 
 void Room::Init()
 {
+    InitRoomSystems();
     StartTicking();
     StartPeriodicSave();
 }
@@ -270,7 +271,7 @@ void Room::OnPlayerMoved(const PlayerRef& p, int ox, int oy)
     // 파생 룸에서 포탈/트리거 처리
 }
 
-void Room::StartTick(){}
+void Room::InitRoomSystems(){}
 
 void Room::OnRoomTick()
 {

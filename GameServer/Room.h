@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "JobQueue.h"
 #include "Player.h"
@@ -117,7 +117,7 @@ protected:
 	virtual void ReserveTile(int nx, int ny); // 이동 예약
 	virtual bool IsTileReserved(int nx, int ny) const; // Default = false
 	virtual void OnPlayerMoved(const PlayerRef& p, int ox, int oy); // 좌표로 이동한 후 
-	virtual void StartTick(); //  최초 한 번만 호출
+	virtual void InitRoomSystems(); //  최초 한 번만 호출
 	virtual void OnRoomTick(); // 매 Tick마다 호출
 
 private:
