@@ -1,0 +1,741 @@
+fileFormatVersion: 2
+guid: 787d7e60b73824f4e891e82162b7dce3
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1638438590836382622
+    second: Rabbit_Brown_Move_0
+  - first:
+      213: -3237551747800637557
+    second: Rabbit_Brown_Move_1
+  - first:
+      213: 697337132957016905
+    second: Rabbit_Brown_Move_2
+  - first:
+      213: -6393407095215861448
+    second: Rabbit_Brown_Move_3
+  - first:
+      213: 1337920652222372275
+    second: Rabbit_Brown_Move_4
+  - first:
+      213: -5924857451158868924
+    second: Rabbit_Brown_Move_5
+  - first:
+      213: -7138363664859429960
+    second: Rabbit_Brown_Move_6
+  - first:
+      213: -1854998540641313773
+    second: Rabbit_Brown_Move_7
+  - first:
+      213: -6876806532877960561
+    second: Rabbit_Brown_Move_8
+  - first:
+      213: 6863667515795749470
+    second: Rabbit_Brown_Move_9
+  - first:
+      213: -5683962997118025245
+    second: Rabbit_Brown_Move_10
+  - first:
+      213: 5973365604513523192
+    second: Rabbit_Brown_Move_11
+  - first:
+      213: 7570449791647174802
+    second: Rabbit_Brown_Move_12
+  - first:
+      213: 6203390622007435940
+    second: Rabbit_Brown_Move_13
+  - first:
+      213: -4798751533752299054
+    second: Rabbit_Brown_Move_14
+  - first:
+      213: 4531220207707494592
+    second: Rabbit_Brown_Move_15
+  - first:
+      213: 1825431671945397472
+    second: Rabbit_Brown_Move_16
+  - first:
+      213: -1581025031208326547
+    second: Rabbit_Brown_Move_17
+  - first:
+      213: -8806110882126405763
+    second: Rabbit_Brown_Move_18
+  - first:
+      213: 8702148827064461265
+    second: Rabbit_Brown_Move_19
+  - first:
+      213: 1072685708177847855
+    second: Rabbit_Brown_Move_20
+  - first:
+      213: -4937549175229334306
+    second: Rabbit_Brown_Move_21
+  - first:
+      213: -6825505454376104705
+    second: Rabbit_Brown_Move_22
+  - first:
+      213: 120785182343613082
+    second: Rabbit_Brown_Move_23
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_0
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 428
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9b1811b737ecb610800000000000000
+      internalID: 1638438590836382622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_1
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 429
+        width: 15
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8fd562b6d7e113d0800000000000000
+      internalID: -3237551747800637557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_2
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 432
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 943a7928d607da900800000000000000
+      internalID: 697337132957016905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_3
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 431
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8315231ee1e0647a0800000000000000
+      internalID: -6393407095215861448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_4
+      rect:
+        serializedVersion: 2
+        x: 568
+        y: 429
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b99f5d9ebf319210800000000000000
+      internalID: 1337920652222372275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_5
+      rect:
+        serializedVersion: 2
+        x: 696
+        y: 427
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44c69d61a8da6cda0800000000000000
+      internalID: -5924857451158868924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_6
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 303
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b38f7641107fec90800000000000000
+      internalID: -7138363664859429960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_7
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 303
+        width: 21
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31cd43ec7a8b146e0800000000000000
+      internalID: -1854998540641313773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_8
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 305
+        width: 23
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8a39baa4eca090a0800000000000000
+      internalID: -6876806532877960561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_9
+      rect:
+        serializedVersion: 2
+        x: 436
+        y: 306
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5ab4678d35a04f50800000000000000
+      internalID: 6863667515795749470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_10
+      rect:
+        serializedVersion: 2
+        x: 564
+        y: 303
+        width: 21
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e1c050e4c18e11b0800000000000000
+      internalID: -5683962997118025245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_11
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 303
+        width: 20
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f5a09a7e58a5e250800000000000000
+      internalID: 5973365604513523192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_12
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 175
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2905f0db9f3af0960800000000000000
+      internalID: 7570449791647174802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_13
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 175
+        width: 21
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a22ebb57eed61650800000000000000
+      internalID: 6203390622007435940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_14
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 177
+        width: 23
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d15559a7e8676db0800000000000000
+      internalID: -4798751533752299054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_15
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 178
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c81a7f75c022ee30800000000000000
+      internalID: 4531220207707494592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_16
+      rect:
+        serializedVersion: 2
+        x: 567
+        y: 175
+        width: 21
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e48d002f6c355910800000000000000
+      internalID: 1825431671945397472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_17
+      rect:
+        serializedVersion: 2
+        x: 695
+        y: 175
+        width: 20
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6aa3d95c121f0ae0800000000000000
+      internalID: -1581025031208326547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_18
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 46
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7f572a3fc86ac580800000000000000
+      internalID: -8806110882126405763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_19
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 47
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d762c3904e34c870800000000000000
+      internalID: 8702148827064461265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_20
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 48
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f26349fd7f1f2ee00800000000000000
+      internalID: 1072685708177847855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_21
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 49
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edcbe657f2d4a7bb0800000000000000
+      internalID: -4937549175229334306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_22
+      rect:
+        serializedVersion: 2
+        x: 569
+        y: 47
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffccb6bc3fee641a0800000000000000
+      internalID: -6825505454376104705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Move_23
+      rect:
+        serializedVersion: 2
+        x: 697
+        y: 47
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9ac8bfbb7d1da100800000000000000
+      internalID: 120785182343613082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Rabbit_Brown_Move_0: 1638438590836382622
+      Rabbit_Brown_Move_1: -3237551747800637557
+      Rabbit_Brown_Move_10: -5683962997118025245
+      Rabbit_Brown_Move_11: 5973365604513523192
+      Rabbit_Brown_Move_12: 7570449791647174802
+      Rabbit_Brown_Move_13: 6203390622007435940
+      Rabbit_Brown_Move_14: -4798751533752299054
+      Rabbit_Brown_Move_15: 4531220207707494592
+      Rabbit_Brown_Move_16: 1825431671945397472
+      Rabbit_Brown_Move_17: -1581025031208326547
+      Rabbit_Brown_Move_18: -8806110882126405763
+      Rabbit_Brown_Move_19: 8702148827064461265
+      Rabbit_Brown_Move_2: 697337132957016905
+      Rabbit_Brown_Move_20: 1072685708177847855
+      Rabbit_Brown_Move_21: -4937549175229334306
+      Rabbit_Brown_Move_22: -6825505454376104705
+      Rabbit_Brown_Move_23: 120785182343613082
+      Rabbit_Brown_Move_3: -6393407095215861448
+      Rabbit_Brown_Move_4: 1337920652222372275
+      Rabbit_Brown_Move_5: -5924857451158868924
+      Rabbit_Brown_Move_6: -7138363664859429960
+      Rabbit_Brown_Move_7: -1854998540641313773
+      Rabbit_Brown_Move_8: -6876806532877960561
+      Rabbit_Brown_Move_9: 6863667515795749470
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

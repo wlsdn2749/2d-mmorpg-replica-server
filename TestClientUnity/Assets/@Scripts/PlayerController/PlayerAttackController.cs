@@ -20,14 +20,15 @@ public class PlayerAttackController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A)||Input.GetKeyDown(KeyCode.Space))
         {
             _nextAttackTime = Time.time + attackCooldown;
-            _animator.SetTrigger("Attack");
-
-            // 서버에 공격 요청(타깃 선택은 서버 로직에 맡기는 설계)
-            var req = new C_PlayerAttackRequest();
-            var send = ServerPacketManager.MakeSendBuffer(req);
-            NetworkManager.Instance.Send(send);
-            Debug.Log("공격 패킷 송신");
+            _animator.SetTrigger("Attack"); // 애니메이션 이벤트로 서버에 공격 패킷 전송
         }
+    }
+    void PlayerNormalAttack() // Aniamition Event
+    {
+        var req = new C_PlayerAttackRequest();
+        var send = ServerPacketManager.MakeSendBuffer(req);
+        NetworkManager.Instance.Send(send);
+        Debug.Log("공격 패킷 송신");
     }
     // Update is called once per frame
     void Update()

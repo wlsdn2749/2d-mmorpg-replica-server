@@ -325,7 +325,7 @@ namespace Packet
         }
         internal static void HANDLE_S_SpawnMonster(PacketSession session, S_SpawnMonster spawnMonster)
         {
-            
+            Debug.Log($"[S_SpawnMonster] 몬스터 스폰 패킷 수신 {spawnMonster.MonsterTypeId} at {spawnMonster.X},{spawnMonster.Y}");
         }
         internal static void HANDLE_S_DespawnMonster(PacketSession session, S_DespawnMonster despawnMonster)
         {

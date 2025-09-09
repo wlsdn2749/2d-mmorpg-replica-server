@@ -85,6 +85,7 @@
     <Compile Include="Assets\@Scripts\Protocol\AuthGrpc.cs" />
     <Compile Include="Assets\@Scripts\PlayerController\PlayerAttackController.cs" />
     <Compile Include="Assets\@Scripts\Managers\UIManager\Auth_UI\LoginManagement.cs" />
+    <Compile Include="Assets\@Scripts\Managers\MonsterSpawnManager\MonsterAvatar.cs" />
     <Compile Include="Assets\@Scripts\Packet\ServerPacketManager.cs" />
     <Compile Include="Assets\@Scripts\Managers\UIManager\Auth_UI\AuthNotice_UI.cs" />
     <Compile Include="Assets\@Scripts\Managers\UIManager\Auth_UI\Auth_UI.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Assets\@Scripts\Network\Connector.cs" />
     <Compile Include="Assets\@Scripts\Utill\TilemapJsonExporter.cs" />
     <Compile Include="Assets\@Scripts\Managers\LoadingSceneManager\SceneTransition.cs" />
+    <Compile Include="Assets\@Scripts\Managers\MonsterSpawnManager\MonsterSpawner.cs" />
     <Compile Include="Assets\@Scripts\PacketQueue.cs" />
     <Compile Include="Assets\@Scripts\Managers\UIManager\Auth_UI\CreateAccount_UI.cs" />
     <Compile Include="Assets\@Scripts\Network\SessionStore.cs" />
@@ -106,6 +108,8 @@
     <Compile Include="Assets\@Scripts\Network\SendBuffer.cs" />
     <Compile Include="Assets\@Scripts\Managers\UIManager\Auth_UI\CreateCharacter_UI.cs" />
     <Compile Include="Assets\@Scripts\Managers\UIManager\HUD\UI_SystemManager.cs" />
+    <Compile Include="Assets\@Scripts\Managers\MonsterSpawnManager\MonsterIdentity.cs" />
+    <Compile Include="Assets\@Scripts\Managers\MonsterSpawnManager\MonsterResourceLoader.cs" />
     <Compile Include="Assets\@Scripts\Managers\PortalManager\PortalMeta.cs" />
     <Compile Include="Assets\@Scripts\SimpleCall.cs" />
     <Compile Include="Assets\@Scripts\Network\ServerSession.cs" />

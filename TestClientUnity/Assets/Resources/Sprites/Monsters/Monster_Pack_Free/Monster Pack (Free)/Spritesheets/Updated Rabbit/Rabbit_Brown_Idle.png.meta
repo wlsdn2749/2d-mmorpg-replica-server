@@ -1,0 +1,533 @@
+fileFormatVersion: 2
+guid: 764155086bf2be24ca2f3a217320fd10
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1513104991446919771
+    second: Rabbit_Brown_Idle_0
+  - first:
+      213: -3265093054017932575
+    second: Rabbit_Brown_Idle_1
+  - first:
+      213: 1140317450937859684
+    second: Rabbit_Brown_Idle_2
+  - first:
+      213: 526389225122915735
+    second: Rabbit_Brown_Idle_3
+  - first:
+      213: -6389855018402773623
+    second: Rabbit_Brown_Idle_4
+  - first:
+      213: -5935644752598825339
+    second: Rabbit_Brown_Idle_5
+  - first:
+      213: -5388864437595372852
+    second: Rabbit_Brown_Idle_6
+  - first:
+      213: 3874718731053823418
+    second: Rabbit_Brown_Idle_7
+  - first:
+      213: 6092086273264788826
+    second: Rabbit_Brown_Idle_8
+  - first:
+      213: 2211645830066881627
+    second: Rabbit_Brown_Idle_9
+  - first:
+      213: -5653305627940284447
+    second: Rabbit_Brown_Idle_10
+  - first:
+      213: -1984889181352220151
+    second: Rabbit_Brown_Idle_11
+  - first:
+      213: -8165369575009151539
+    second: Rabbit_Brown_Idle_12
+  - first:
+      213: -3644856059561707899
+    second: Rabbit_Brown_Idle_13
+  - first:
+      213: 3349593057113161053
+    second: Rabbit_Brown_Idle_14
+  - first:
+      213: 3098834033304238452
+    second: Rabbit_Brown_Idle_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Rabbit_Brown_Idle_0
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 428
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5a601319f0aff410800000000000000
+      internalID: 1513104991446919771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Idle_1
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 429
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e27aa4aa2f00b2d0800000000000000
+      internalID: -3265093054017932575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Idle_2
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 429
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46e74521ea833df00800000000000000
+      internalID: 1140317450937859684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Idle_3
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 428
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7956b09163c1e4700800000000000000
+      internalID: 526389225122915735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Idle_4
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 303
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9850bd537bca257a0800000000000000
+      internalID: -6389855018402773623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Idle_5
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 303
+        width: 21
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5868f60cb8a50ada0800000000000000
+      internalID: -5935644752598825339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Idle_6
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 303
+        width: 21
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc2846e6858e635b0800000000000000
+      internalID: -5388864437595372852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Idle_7
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 303
+        width: 21
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab5f3012824c5c530800000000000000
+      internalID: 3874718731053823418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Idle_8
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 175
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a552bf230307b8450800000000000000
+      internalID: 6092086273264788826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Idle_9
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 175
+        width: 21
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b544c162a2851be10800000000000000
+      internalID: 2211645830066881627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Idle_10
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 175
+        width: 21
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e717efdb7c6b81b0800000000000000
+      internalID: -5653305627940284447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Idle_11
+      rect:
+        serializedVersion: 2
+        x: 437
+        y: 175
+        width: 21
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90a2cf25ec14474e0800000000000000
+      internalID: -1984889181352220151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Idle_12
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 46
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc51ccd22a7ceae80800000000000000
+      internalID: -8165369575009151539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Idle_13
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 46
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 586f460a9beda6dc0800000000000000
+      internalID: -3644856059561707899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Idle_14
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 46
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5d385773252c7e20800000000000000
+      internalID: 3349593057113161053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_Brown_Idle_15
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 46
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4797dfc8225410b20800000000000000
+      internalID: 3098834033304238452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Rabbit_Brown_Idle_0: 1513104991446919771
+      Rabbit_Brown_Idle_1: -3265093054017932575
+      Rabbit_Brown_Idle_10: -5653305627940284447
+      Rabbit_Brown_Idle_11: -1984889181352220151
+      Rabbit_Brown_Idle_12: -8165369575009151539
+      Rabbit_Brown_Idle_13: -3644856059561707899
+      Rabbit_Brown_Idle_14: 3349593057113161053
+      Rabbit_Brown_Idle_15: 3098834033304238452
+      Rabbit_Brown_Idle_2: 1140317450937859684
+      Rabbit_Brown_Idle_3: 526389225122915735
+      Rabbit_Brown_Idle_4: -6389855018402773623
+      Rabbit_Brown_Idle_5: -5935644752598825339
+      Rabbit_Brown_Idle_6: -5388864437595372852
+      Rabbit_Brown_Idle_7: 3874718731053823418
+      Rabbit_Brown_Idle_8: 6092086273264788826
+      Rabbit_Brown_Idle_9: 2211645830066881627
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
