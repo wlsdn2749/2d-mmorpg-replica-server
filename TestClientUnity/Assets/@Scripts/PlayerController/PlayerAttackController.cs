@@ -6,21 +6,21 @@ public class PlayerAttackController : MonoBehaviour
 {
     [SerializeField] float attackCooldown = 0.5f;
     float _nextAttackTime;
-    PlayerIdentity _id;
-    Animator _anim; 
+    PlayerIdentity _playerIdentity;
+    Animator _animator; 
     void Awake()
     {
-        _id = GetComponent<PlayerIdentity>();
-        _anim = GetComponent<Animator>();
+        _playerIdentity = GetComponent<PlayerIdentity>();
+        _animator = GetComponent<Animator>();
     }
     void MeleeAttack()
     {
-        if (!_id.IsLocalPlayer) return;
+        if (!_playerIdentity.IsLocalPlayer) return;
         if (Time.time < _nextAttackTime) return;
         if (Input.GetKeyDown(KeyCode.A)||Input.GetKeyDown(KeyCode.Space))
         {
             _nextAttackTime = Time.time + attackCooldown;
-
+            _animator.SetTrigger("Attack");
 
             // 서버에 공격 요청(타깃 선택은 서버 로직에 맡기는 설계)
             var req = new C_PlayerAttackRequest();

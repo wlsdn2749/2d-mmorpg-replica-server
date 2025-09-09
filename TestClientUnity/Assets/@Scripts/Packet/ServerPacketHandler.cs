@@ -350,8 +350,7 @@ namespace Packet
             if (attacker)
             {
                 
-                var anim = attacker.GetComponent<Animator>();
-                anim?.SetTrigger("Attack");
+                
             }
         }
         internal static void HANDLE_S_InventoryReply(PacketSession session, S_InventoryReply invenApply)
