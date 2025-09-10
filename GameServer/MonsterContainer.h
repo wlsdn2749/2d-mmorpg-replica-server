@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "MonsterTypes.h"
 
 struct RespawnTask {
@@ -42,6 +42,9 @@ public:
 	void ForEachMonster(Fn&& fn) const {
 		for(const auto& kv : _monsters) fn(kv.second);
 	}
+
+	// 전체 순회해서 Protocol:S_Monster_List 반환
+	Protocol::S_MonsterList BuildMonsterSnapShot(int mapId) const;
 
 private:
 	std::unordered_map<EntityId, Monster> _monsters;

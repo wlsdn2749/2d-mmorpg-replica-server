@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <unordered_map>
 #include "MonsterPorts.h"
 #include "MonsterContainer.h"
@@ -39,6 +39,9 @@ public:
 	struct MonsterView { EntityId id; int x, y, hp, typeId; }; // 서비스 내부에서 사용
 	void ForEachMonsterView(const std::function<void(const MonsterView&)>& fn) const;
 	bool TryGetMonsterView(EntityId id, MonsterView& out) const;
+
+	// 브로드캐스트용 S_MonsterList 패킷 생성
+	Protocol::S_MonsterList BuildMonsterSnapShot(int mapId) {return _container.BuildMonsterSnapShot(mapId); }
 
 	// 쓰기
 	bool ApplyDamageToMonster(EntityId id, int dmg, int srcPlayerId, int& hpAfter); // hp↓, 0이하면 KillMonster(reason=Dead)

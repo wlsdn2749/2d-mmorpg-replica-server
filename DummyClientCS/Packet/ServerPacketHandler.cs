@@ -346,5 +346,14 @@ namespace Packet
                 Console.WriteLine($"오류: {reply.ErrorMessage}");
             }
         }
+
+        internal static void HANDLE_S_MonsterList(PacketSession session, S_MonsterList list)
+        {
+            Console.WriteLine($"MapId : {list.MapId} ");
+            foreach(MonsterInfo monster in list.Monsters)
+            {
+                Console.WriteLine($"[S_MonsterList] Id:{monster.MonsterId} Pos:({monster.Pos.X}, {monster.Pos.Y}), Dir:{monster.Direction}");
+            }
+        }
     }
 }

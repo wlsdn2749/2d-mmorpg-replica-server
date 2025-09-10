@@ -41,6 +41,7 @@ enum : uint16
 	PKT_S_ItemUseReply = 31,
 	PKT_S_InventoryUpdate = 32,
 	PKT_S_SystemMessage = 33,
+	PKT_S_MonsterList = 34,
 
 };
 
@@ -110,6 +111,7 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::S_ItemUseReply& pkt) { return MakeSendBuffer(pkt, PKT_S_ItemUseReply); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_InventoryUpdate& pkt) { return MakeSendBuffer(pkt, PKT_S_InventoryUpdate); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_SystemMessage& pkt) { return MakeSendBuffer(pkt, PKT_S_SystemMessage); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_MonsterList& pkt) { return MakeSendBuffer(pkt, PKT_S_MonsterList); };
 
 private:
 	template<typename PacketType, typename ProcessFunc>
