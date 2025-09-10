@@ -133,6 +133,7 @@ namespace Packet
                 {
                     bool isLocal = (p.Id == list.MyPlayerId);
                     PlayerSpawner.SafeSpawn(p, isLocal);
+                    MonsterSync.OnMapActivated(list.MapId); 
                     Debug.Log($"{p.Pos.X},{p.Pos.Y}");
                     Debug.Log($"플레이어 스폰 처리: {p.Username} (ID: {p.Id}) {(isLocal ? "(ME)" : "")}");
                 }
@@ -323,20 +324,25 @@ namespace Packet
             }
 
         }
+        internal static void HANDLE_S_MonsterList(PacketSession session, S_MonsterList list)
+        {
+            Debug.Log($"몬스터 리스트 스냅샷 패킷 수신완료 \n[S_MonsterList] map={list.MapId}, count={list.Monsters?.Count ?? 0}");
+            MonsterSync.ApplySnapshot(list);
+        }
         internal static void HANDLE_S_SpawnMonster(PacketSession session, S_SpawnMonster spawnMonster)
         {
             Debug.Log("몬스터 스폰 패킷 수신완료");
-            Debug.Log($"{spawnMonster.MonsterTypeId} at {spawnMonster.X},{spawnMonster.Y}");
-            MonsterSpawner.Spawn(spawnMonster);
+            MonsterSync.OnSpawn(spawnMonster);
         }
         internal static void HANDLE_S_DespawnMonster(PacketSession session, S_DespawnMonster despawnMonster)
         {
-            MonsterSpawner.Despawn(despawnMonster);
+            Debug.Log("몬스터 삭제");
+            MonsterSync.OnDespawn(despawnMonster);
         }
         internal static void HANDLE_S_BroadcastMonsterMove(PacketSession session, S_BroadcastMonsterMove broadMonsterMove)
         {
-            
-            MonsterSpawner.UpdateMove(broadMonsterMove);
+            Debug.Log("몬스터 이동 패킷 수신완료");
+            MonsterSync.OnMove(broadMonsterMove);
         }
         internal static void HANDLE_S_BroadcastMonsterAttack(PacketSession session, S_BroadcastMonsterAttack broadMonsterAtk)
         {

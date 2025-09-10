@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using UnityEngine;
 using Google.Protobuf.Protocol;
 using Packet;
@@ -20,7 +20,7 @@ public class RoomTransitionManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // === ¼­¹ö ÇÚµé·¯¿¡¼­ È£Ãâ ===
+    // === ì„œë²„ í•¸ë“¤ëŸ¬ì—ì„œ í˜¸ì¶œ ===
     public void OnChangeRoomBegin(S_ChangeRoomBegin msg)
     {
         if (CurrentState != State.Idle && msg.TransitionId == CurrentTransitionId) return;
@@ -29,14 +29,14 @@ public class RoomTransitionManager : MonoBehaviour
         CurrentMapId = msg.MapId;
         CurrentState = State.BeginReceived;
         Debug.Log($"[RTM] Begin tid={msg.TransitionId}, map={msg.MapId}");
-        // 1) ÀÔ·Â Àá±İ + ÀüÃ¼ Á¦°Å
+        // 1) ì…ë ¥ ì ê¸ˆ + ì „ì²´ ì œê±°
         ToggleLocalInput(false);
         PlayerSpawner.DespawnAll();
-
-        // 2) ·Îµù ½ÃÀÛ: ³× ¸ÅÇÎ ±ÔÄ¢¿¡ ¸Â°Ô ÀÌ¸§À» °áÁ¤
+        MonsterSpawner.DespawnAll();   // ğŸ”¸ ì´ ì¤„ ì¶”ê°€
+        // 2) ë¡œë”© ì‹œì‘: ë„¤ ë§¤í•‘ ê·œì¹™ì— ë§ê²Œ ì´ë¦„ì„ ê²°ì •
         string nextSceneName = MapIdToSceneName(CurrentMapId);
 
-        // 3) »õ ¾À È°¼ºÈ­ Á÷ÈÄ¿¡ Ready º¸³»µµ·Ï Äİ¹é µî·Ï
+        // 3) ìƒˆ ì”¬ í™œì„±í™” ì§í›„ì— Ready ë³´ë‚´ë„ë¡ ì½œë°± ë“±ë¡
         LoadingSceneManager.OnSceneActivated = () =>
         {
             if (CurrentState != State.BeginReceived && CurrentState != State.Loading)
@@ -51,7 +51,7 @@ public class RoomTransitionManager : MonoBehaviour
             NetworkManager.Instance.Send(send);
         };
 
-        // 4) ·Îµù¾À ÅëÇØ ºñµ¿±â ·Îµå
+        // 4) ë¡œë”©ì”¬ í†µí•´ ë¹„ë™ê¸° ë¡œë“œ
         LoadingSceneManager.LoadScene(nextSceneName);
         CurrentState = State.Loading;
     }
@@ -65,18 +65,18 @@ public class RoomTransitionManager : MonoBehaviour
         }
         Debug.Log($"[RTM] Commit tid={msg.TransitionId}, map={msg.MapId}, count={msg.Snapshots?.Players?.Count ?? -1}");
 
-        // 5) ½º³À¼¦ Àç»ı¼º(·ÎÄÃ/¸®¸ğÆ® ÀüºÎ »õ·Î »ı¼º)
+        // 5) ìŠ¤ëƒ…ìƒ· ì¬ìƒì„±(ë¡œì»¬/ë¦¬ëª¨íŠ¸ ì „ë¶€ ìƒˆë¡œ ìƒì„±)
         PlayerSpawner.EnsureExists();
         PlayerSpawner.ApplySnapshot(msg.Snapshots);
-
-        // 6) º¹±¸
+        MonsterSync.OnMapActivated(msg.MapId); // âœ… ë§µ ì „í™˜ ì‹œ ê°±ì‹ 
+        // 6) ë³µêµ¬
         ToggleLocalInput(true);
         CurrentState = State.Committed;
     }
 
     private void ToggleLocalInput(bool enabled)
     {
-        // PlayerControllerÀÇ ¸ğµç ÀÎ½ºÅÏ½º¸¦ °¡Á®¿Í¼­ foreach·Î ¼øÈ¸
+        // PlayerControllerì˜ ëª¨ë“  ì¸ìŠ¤í„´ìŠ¤ë¥¼ ê°€ì ¸ì™€ì„œ foreachë¡œ ìˆœíšŒ
         foreach (var pc in FindObjectsByType<PlayerController>(FindObjectsSortMode.None))
         {
             var id = pc.GetComponent<PlayerIdentity>();

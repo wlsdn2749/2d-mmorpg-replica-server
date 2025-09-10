@@ -80,6 +80,7 @@
     <Compile Include="Assets\@Scripts\Network\RecvBuffer.cs" />
     <Compile Include="Assets\@Scripts\Protocol\Auth.cs" />
     <Compile Include="Assets\@Scripts\Network\LeaveGameContext.cs" />
+    <Compile Include="Assets\@Scripts\Managers\MonsterSpawnManager\MonsterSync.cs" />
     <Compile Include="Assets\@Scripts\PlayerController\PlayerInfo\PlayerAvatar.cs" />
     <Compile Include="Assets\@Scripts\Managers\UIManager\Auth_UI\CharacterSlot_UI.cs" />
     <Compile Include="Assets\@Scripts\Protocol\AuthGrpc.cs" />

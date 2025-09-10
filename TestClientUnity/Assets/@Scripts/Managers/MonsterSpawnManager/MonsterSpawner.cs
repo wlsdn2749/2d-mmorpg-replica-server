@@ -20,60 +20,63 @@ public static class MonsterSpawner
         }
     }
 
-    // === 스폰 ===
-    public static GameObject Spawn(S_SpawnMonster msg)
+    public static bool Exists(int id) => _spawned.ContainsKey(id);
+    public static GameObject Get(int id) => _spawned.TryGetValue(id, out var go) ? go : null;
+
+    // 스냅샷/스폰 패킷 통합 진입점
+    public static GameObject SpawnDirect(int id, int typeId, Vector3 pos, EDirection dir)
     {
-        if (_spawned.ContainsKey(msg.MonsterId))
+        if (_spawned.TryGetValue(id, out var exist))
         {
-            Debug.LogWarning($"[MonsterSpawner] Already spawned monster {msg.MonsterId}");
-            return _spawned[msg.MonsterId];
+            // 이미 있으면 위치/방향만 동기화
+            var av = exist.GetComponent<MonsterAvatar>() ?? exist.AddComponent<MonsterAvatar>();
+            av.HardSnap(pos);
+            av.SetDirection(dir);
+            return exist;
         }
 
-        // MonsterTypeId를 Prefab으로 매핑
-        var prefab = MonsterResourceLoader.GetPrefab(msg.MonsterTypeId);
+        var prefab = MonsterResourceLoader.GetPrefab(typeId);
         if (!prefab)
         {
-            Debug.LogError($"[MonsterSpawner] prefab not found for type {msg.MonsterTypeId}");
+            Debug.LogError($"[MonsterSpawner] prefab not found for type {typeId}, id={id}");
             return null;
         }
 
-        Vector3 pos = new Vector3(msg.X, msg.Y, 0);
         var go = Object.Instantiate(prefab, pos, Quaternion.identity, Container);
-        go.name = $"Monster_{msg.MonsterId}";
+        go.name = $"Monster_{id}";
 
-        // 컴포넌트 초기화
-        var id = go.GetComponent<MonsterIdentity>() ?? go.AddComponent<MonsterIdentity>();
-        id.Init(msg.MonsterId, msg.MonsterTypeId, msg.Dir);
+        var idc = go.GetComponent<MonsterIdentity>() ?? go.AddComponent<MonsterIdentity>();
+        idc.Init(id, typeId, dir);
 
-        _spawned[msg.MonsterId] = go;
+        var avNew = go.GetComponent<MonsterAvatar>() ?? go.AddComponent<MonsterAvatar>();
+        avNew.HardSnap(pos);
+        avNew.SetDirection(dir);
+
+        _spawned[id] = go;
+        Debug.Log("스냅샷 몬스터 생성 완료");
         return go;
     }
 
-    // === 디스폰 ===
+    public static void UpdateMove(S_BroadcastMonsterMove msg)
+    {
+        if (!_spawned.TryGetValue(msg.MonsterId, out var go)) return;
+        var av = go.GetComponent<MonsterAvatar>() ?? go.AddComponent<MonsterAvatar>();
+        av.SmoothMoveTo(new Vector3(msg.X, msg.Y, 0));
+        av.SetDirection(msg.Dir);
+    }
+
     public static void Despawn(S_DespawnMonster msg)
     {
         if (_spawned.TryGetValue(msg.MonsterId, out var go))
         {
             Object.Destroy(go);
             _spawned.Remove(msg.MonsterId);
-            Debug.Log($"[MonsterSpawner] Despawn {msg.MonsterId}, reason={msg.Reason}");
         }
     }
 
-    // === 이동 업데이트 ===
-    public static void UpdateMove(S_BroadcastMonsterMove msg)
+    public static void DespawnAll()
     {
-        if (!_spawned.TryGetValue(msg.MonsterId, out var go))
-        {
-            Debug.LogWarning($"[MonsterSpawner] Move update for missing {msg.MonsterId}");
-            return;
-        }
-
-        var avatar = go.GetComponent<MonsterAvatar>();
-        if (avatar == null) avatar = go.AddComponent<MonsterAvatar>();
-
-        Vector3 dst = new Vector3(msg.X, msg.Y, 0);
-        avatar.SmoothMoveTo(dst);
-        avatar.SetDirection(msg.Dir);
+        foreach (var kv in _spawned) if (kv.Value) Object.Destroy(kv.Value);
+        _spawned.Clear();
     }
 }

@@ -12,7 +12,7 @@ public static class MonsterResourceLoader
         // 경로 규칙: Monsters/Monster_{typeId}
         var path = $"Monsters/Monster_{typeId}";
         var prefab = Resources.Load<GameObject>(path);
-
+        if (!prefab) Debug.LogError($"[MonsterRes] Resources.Load failed at 'Resources/{path}.prefab' (typeId={typeId})");
         if (!prefab)
         {
             if (!_fallback)
