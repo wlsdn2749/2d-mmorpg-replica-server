@@ -120,18 +120,19 @@ void FieldRoom::OnEnter(const PlayerRef& p)
 
 	// 플레이어 전송
 	{ 
+		// 플레이어 스냅샷을 -> 접속한 플레이어에게 전달
 		auto pkt = BuildPlayerListSnapshot(p);
-		auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
 		if (auto s = p->ownerSession.lock())
 		{
 			auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
 			s->Send(sendBuffer);
 		}
-
+		
+		// 플레이어가 입장함을 -> 다른 플레이어에게 전달
 		BroadcastEnter(p);
 	}
 
-	// 맵에 있는 몬스터 전송 - 나중에 이부분은 합칠 예정
+	// 맵에 있는 몬스터 전송 -> 접속한 플레이어에게 전달 - 나중에 이부분은 합칠 예정
 	SendMonstersToPlayer(p);
 	
 }
