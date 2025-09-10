@@ -23,6 +23,20 @@ void MonsterMovementSystem::Tick(MonsterContainer& repo,
 }
 
 
+bool MonsterMovementSystem::TryRotate(Monster& m, 
+									   Protocol::EDirection targetDir,
+									   IMonsterBroadcaster& cast)
+{
+	if (m.core.dir == targetDir) return false; // 이미 같은 방향
+	
+	m.core.dir = targetDir;
+	m.needsRotation = false;
+	cast.BroadcastMonsterMove(m.core.id, m.core.pos.x, m.core.pos.y, targetDir);
+	GConsoleLogger->WriteStdOut(Color::GREEN, L"[MonsterMove] Monster:%d rotated to dir:%d\n", 
+		m.core.id, (int)targetDir);
+	return true;
+}
+
 bool MonsterMovementSystem::TryStep(Monster& m, 
 									Protocol::EDirection dir, 
 									IMonsterMapQuery& map, 
@@ -34,6 +48,8 @@ bool MonsterMovementSystem::TryStep(Monster& m,
 	m.core.pos = to;
 	m.core.dir = dir;
 	cast.BroadcastMonsterMove(m.core.id, to.x, to.y, dir);
+	GConsoleLogger->WriteStdOut(Color::GREEN, L"[MonsterMove] Monster:%d moved to (%d,%d) dir:%d\n", 
+		m.core.id, to.x, to.y, (int)dir);
 	return true;
 }
 
@@ -72,17 +88,35 @@ void MonsterMovementSystem::TickOne(Monster& m,
 		case MState::Idle:
 		case MState::Patrol:
 		{
-			// 1~3타일 랜덤 한칸씩 이동 시도
-			Protocol::EDirection dir = static_cast<Protocol::EDirection>(rng.NextInt(0, 3));
-			if (this->TryStep(m, dir, map, cast))
-			{
-				// 다음 이동 쿨다운(속도 기반): 1000 / tilesPerSec
-				int stepMs = 1000 / monsterStats.moveSpeedTilesPerSec;
-				m.nextMoveAtMs = clock.NowMs() + stepMs;
+			int stepMs = 1000 / monsterStats.moveSpeedTilesPerSec;
+			
+			// Patrol 시작: 새로운 방향과 스텝 수 설정
+			if (m.patrolStepsRemaining <= 0) {
+				m.targetDirection = static_cast<Protocol::EDirection>(rng.NextInt(0, 3));
+				m.patrolTargetSteps = rng.NextInt(3, 5); // 3-5칸
+				m.patrolStepsRemaining = m.patrolTargetSteps;
+				m.needsRotation = (m.core.dir != m.targetDirection);
+				GConsoleLogger->WriteStdOut(Color::WHITE, L"[Patrol] Monster:%d starting patrol: dir=%d, steps=%d\n", 
+					m.core.id, (int)m.targetDirection, m.patrolTargetSteps);
 			}
-			else
-			{
-				m.nextMoveAtMs = clock.NowMs() + 200; // 막히면 짧게 대기
+			
+			// 회전이 필요하면 회전 먼저
+			if (m.needsRotation) {
+				if (this->TryRotate(m, m.targetDirection, cast)) {
+					m.nextMoveAtMs = clock.NowMs() + stepMs;
+				} else {
+					m.nextMoveAtMs = clock.NowMs() + 200;
+				}
+			} else {
+				// 이동 시도
+				if (this->TryStep(m, m.targetDirection, map, cast)) {
+					m.patrolStepsRemaining--;
+					m.nextMoveAtMs = clock.NowMs() + stepMs;
+				} else {
+					// 막혔으면 다른 방향으로 전환
+					m.patrolStepsRemaining = 0; // 새 방향 선택 강제
+					m.nextMoveAtMs = clock.NowMs() + 200;
+				}
 			}
 			m.state = MState::Patrol;
 			break;
@@ -93,9 +127,10 @@ void MonsterMovementSystem::TickOne(Monster& m,
 			if (m.targetPlayerId != -1) {
 				IMonsterEntityLinker::PlayerView pv;
 				if (linker.TryGetPlayer(m.targetPlayerId, pv)) {
-					m.core.dir = FaceTo(m.core.pos, Pos2{ pv.x, pv.y });
-					GConsoleLogger->WriteStdOut(Color::GREEN, L"[Movement] Monster:%d facing player:%d dir:%d \n", 
-						m.core.id, m.targetPlayerId, (int)m.core.dir);
+					Protocol::EDirection targetDir = FaceTo(m.core.pos, Pos2{ pv.x, pv.y });
+					if (m.core.dir != targetDir) {
+						this->TryRotate(m, targetDir, cast);
+					}
 				}
 			}
 			m.nextMoveAtMs = clock.NowMs() + stepMs;
@@ -107,41 +142,56 @@ void MonsterMovementSystem::TickOne(Monster& m,
 			{
 				m.state = MState::Patrol;
 				m.wasAttacked = false;
+				m.patrolStepsRemaining = 0; // 새 패트롤 시작
 				break;
 			}
 
 			IMonsterEntityLinker::PlayerView pv;
-			Protocol::EDirection dir = Protocol::EDirection::DIR_UP; // 
+			Protocol::EDirection targetDir = Protocol::EDirection::DIR_UP;
 			if (linker.TryGetPlayer(m.targetPlayerId, pv)) {
-				dir = FaceTo(m.core.pos, Pos2{ pv.x, pv.y });
+				targetDir = FaceTo(m.core.pos, Pos2{ pv.x, pv.y });
 				GConsoleLogger->WriteStdOut(Color::WHITE, L"[Movement] Monster:%d tracking player:%d from (%d,%d) to (%d,%d) \n",
 					m.core.id, m.targetPlayerId, m.core.pos.x, m.core.pos.y, pv.x, pv.y);
 			}
 
 			int stepMs = 1000 / monsterStats.moveSpeedTilesPerSec;
-			if (this->TryStep(m, dir, map, cast))
-				m.nextMoveAtMs = clock.NowMs() + stepMs;
-			else
-				m.nextMoveAtMs = clock.NowMs() + 200; // 막히면 짧게 대기
+			
+			// 2단계: 회전 먼저, 그 다음 이동
+			if (m.core.dir != targetDir) {
+				if (this->TryRotate(m, targetDir, cast)) {
+					m.nextMoveAtMs = clock.NowMs() + stepMs;
+				} else {
+					m.nextMoveAtMs = clock.NowMs() + 200;
+				}
+			} else {
+				if (this->TryStep(m, targetDir, map, cast))
+					m.nextMoveAtMs = clock.NowMs() + stepMs;
+				else
+					m.nextMoveAtMs = clock.NowMs() + 200; // 막히면 짧게 대기
+			}
 			break;
 		}
 		case MState::Combat:
 		{
-			// 전투 시 이동 X
+			// 전투 시 이동 X, 방향만 조정
 			if (m.targetPlayerId == -1)
 			{
 				m.state = MState::Patrol;
 				m.wasAttacked = false;
+				m.patrolStepsRemaining = 0; // 새 패트롤 시작
 				break;
 			}
 
 			IMonsterEntityLinker::PlayerView pv;
-			Protocol::EDirection dir = Protocol::EDirection::DIR_UP; // 
 			if (linker.TryGetPlayer(m.targetPlayerId, pv)) {
-				dir = FaceTo(m.core.pos, Pos2{ pv.x, pv.y });
-				GConsoleLogger->WriteStdOut(Color::WHITE, L"[Movement] Monster:%d Entering Combat System player:%d from (%d,%d) to (%d,%d) \n",
-					m.core.id, m.targetPlayerId, m.core.pos.x, m.core.pos.y, pv.x, pv.y);
+				Protocol::EDirection targetDir = FaceTo(m.core.pos, Pos2{ pv.x, pv.y });
+				if (m.core.dir != targetDir) {
+					this->TryRotate(m, targetDir, cast);
+				}
+				GConsoleLogger->WriteStdOut(Color::WHITE, L"[Movement] Monster:%d in combat facing player:%d\n",
+					m.core.id, m.targetPlayerId);
 			}
+			break;
 		}
 		case MState::Return:
 		{

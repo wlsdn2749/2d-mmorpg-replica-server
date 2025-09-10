@@ -60,5 +60,13 @@ struct Monster {
 	int64_t lostAggroAtMs{ 0 };
 
 	// Attacked
-	bool wasAttacked {false}; 
+	bool wasAttacked {false};
+
+	// 2단계 이동 시스템
+	Protocol::EDirection targetDirection{ Protocol::EDirection::DIR_UP }; // 목표 방향
+	bool needsRotation{ false }; // 회전 필요 여부
+	
+	// Patrol 상태 관리
+	int32_t patrolStepsRemaining{ 0 }; // 남은 직진 스텝 수
+	int32_t patrolTargetSteps{ 0 }; // 목표 스텝 수 (3-5)
 };

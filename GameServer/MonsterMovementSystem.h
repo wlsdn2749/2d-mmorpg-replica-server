@@ -36,5 +36,6 @@ private:
 				 IMonsterClock& clock,
 				 IMonsterRng& rng);
 	
+	bool TryRotate(Monster& m, Protocol::EDirection targetDir, IMonsterBroadcaster& cast);
 	bool TryStep(Monster& m, Protocol::EDirection dir, IMonsterMapQuery& map, IMonsterBroadcaster& cast);
 };

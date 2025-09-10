@@ -54,10 +54,14 @@ void MonsterCombatSystem::TickOne(Monster& m, IMonsterEntityLinker& linker, IMon
 			}
 		}
 		else{  // 멀리 있고 전투 모드면 추적
-			if (m.state == MState::Combat)
-			{
-				GConsoleLogger->WriteStdOut(Color::WHITE, L"[Combat] Monster:%d chasing player in Combat state:%d (dist:%d)\n", m.core.id, bestId, dist);
-				m.state = MState::Chase;  // 추적
+			if (m.state == MState::Ready) {
+				// Ready 상태에서 멀어지면 Patrol로 복귀
+				m.state = MState::Patrol;
+				m.targetPlayerId = -1;
+			}
+			else if (m.state == MState::Combat) {
+				// Combat 상태에서 멀어지면 Chase로 전환
+				m.state = MState::Chase;
 			}
 		}
 		m.targetPlayerId = bestId;
