@@ -29,7 +29,16 @@ public:
     }
 
 	bool CanEnterTile(int nx, int ny) const override {
-		return !_map->IsBlocked(nx, ny);
+		// 맵 충돌 체크
+		if (_map->IsBlocked(nx, ny)) return false;
+		
+		// 몬스터 충돌 체크
+		MonsterService::MonsterView mv;
+		if (_pLinker.TryGetMonsterAt(nx, ny, mv)) {
+			return false; // 몬스터가 있으면 진입 불가
+		}
+		
+		return true;
 	}
 
     bool ProcessMonsterDropInRoom(EntityId typeId, int srcPlayerId); // 플레이어에게 드랍 
