@@ -42,6 +42,7 @@ namespace Packet
 	    PKT_S_ItemUseReply = 31,
 	    PKT_S_InventoryUpdate = 32,
 	    PKT_S_SystemMessage = 33,
+	    PKT_S_MonsterList = 34,
     }
     public class ServerPacketManager
     {
@@ -108,6 +109,7 @@ namespace Packet
             RegisterHandler((ushort)PacketID.PKT_S_ItemUseReply, ServerPacketHandler.HANDLE_S_ItemUseReply, S_ItemUseReply.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_InventoryUpdate, ServerPacketHandler.HANDLE_S_InventoryUpdate, S_InventoryUpdate.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_SystemMessage, ServerPacketHandler.HANDLE_S_SystemMessage, S_SystemMessage.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_MonsterList, ServerPacketHandler.HANDLE_S_MonsterList, S_MonsterList.Parser);
             
                   
         }

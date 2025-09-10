@@ -1,4 +1,4 @@
-syntax = "proto3";
+﻿syntax = "proto3";
 package Protocol;
 
 option csharp_namespace = "Google.Protobuf.Protocol";
@@ -39,6 +39,7 @@ enum MsgId
 	S_ITEM_USE_REPLY = 31;
 	S_INVENTORY_UPDATE = 32;
 	S_SYSTEM_MESSAGE = 33;
+	S_MONSTER_LIST = 34;
 }
 
 // 클라 -> 게임 서버 jwt 로그인 인증 (0)
@@ -260,6 +261,13 @@ message S_SystemMessage{
 // TODO (32) 서버 -> 클라 : S_BroadcastPlayerHpChanged
 // TODO (33) 서버 -> 클라 : S_BroadcastPlayerDeath
 
+// (34) 서버 -> 클라 :  몬스터 리스트 스냅샷
+message S_MonsterList
+{
+	int32 mapId = 1;
+	repeated MonsterInfo monsters = 2;
+}
+
 enum ELoginResult
 {
     SUCCESS = 0;
@@ -375,4 +383,11 @@ message InventorySlotInfo
 	int32 itemId = 2;
 	int32 count = 3;
 	bool isQuickslot = 4;
+}
+
+message MonsterInfo
+{
+	int32 monsterId = 1;
+	Vector2Info pos = 2;
+	EDirection direction =3 ;
 }

@@ -107,17 +107,30 @@ void FieldRoom::OnEnter(const PlayerRef& p)
 {
 	GConsoleLogger->WriteStdOut(Color::WHITE, L"[%d]: [%s] Has Join the [%s].\n", p->playerId, StrToWstr(p->username).c_str(), StrToWstr(RoomName()).c_str());
 
-	// 1. 내 클라에 현재 월드 스냅샷 (기존 유저들) 전송
-	auto pkt = BuildPlayerListSnapshot(p);
-	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
-	if (auto s = p->ownerSession.lock())
-	{
+	// 플레이어 전송
+	{ 
+		auto pkt = BuildPlayerListSnapshot(p);
 		auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
-		s->Send(sendBuffer);
+		if (auto s = p->ownerSession.lock())
+		{
+			auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
+			s->Send(sendBuffer);
+		}
+
+		BroadcastEnter(p);
 	}
 
-	// 2. 기존 유저들에게 나 등장 브로드캐스트
-	BroadcastEnter(p);
+	// 맵에 있는 몬스터 전송 - 나중에 이부분은 합칠 예정
+	{
+		auto pkt = _monsters->BuildMonsterSnapShot(RoomId());
+		auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
+		if (auto s = p->ownerSession.lock())
+		{
+			auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
+			s->Send(sendBuffer);
+		}
+	}
+	
 }
 
 void FieldRoom::OnLeave(const PlayerRef& p)
@@ -262,6 +275,7 @@ void FieldRoom::MonsterBroadcasterImpl::BroadcastMonsterDeath(EntityId id)
 	pkt.set_monsterid(id);
 	_r.Broadcast(ClientPacketHandler::MakeSendBuffer(pkt));
 }
+
 
 // ------------------- Clock/Rng -------------------
 int64_t FieldRoom::MonsterClockImpl::NowMs() const
