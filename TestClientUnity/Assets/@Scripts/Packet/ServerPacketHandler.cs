@@ -325,18 +325,23 @@ namespace Packet
         }
         internal static void HANDLE_S_SpawnMonster(PacketSession session, S_SpawnMonster spawnMonster)
         {
-            Debug.Log($"[S_SpawnMonster] 몬스터 스폰 패킷 수신 {spawnMonster.MonsterTypeId} at {spawnMonster.X},{spawnMonster.Y}");
+            Debug.Log("몬스터 스폰 패킷 수신완료");
+            Debug.Log($"{spawnMonster.MonsterTypeId} at {spawnMonster.X},{spawnMonster.Y}");
+            MonsterSpawner.Spawn(spawnMonster);
         }
         internal static void HANDLE_S_DespawnMonster(PacketSession session, S_DespawnMonster despawnMonster)
         {
-
+            MonsterSpawner.Despawn(despawnMonster);
         }
         internal static void HANDLE_S_BroadcastMonsterMove(PacketSession session, S_BroadcastMonsterMove broadMonsterMove)
         {
-
+            
+            MonsterSpawner.UpdateMove(broadMonsterMove);
         }
         internal static void HANDLE_S_BroadcastMonsterAttack(PacketSession session, S_BroadcastMonsterAttack broadMonsterAtk)
         {
+            Debug.Log($"{broadMonsterAtk.TargetPid},{broadMonsterAtk.MonsterId}");
+
 
         }
         internal static void HANDLE_S_BroadcastMonsterDeath(PacketSession session, S_BroadcastMonsterDeath broadMonsterDeath)

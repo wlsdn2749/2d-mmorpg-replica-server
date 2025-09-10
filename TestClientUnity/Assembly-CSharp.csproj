@@ -99,6 +99,8 @@
     <Compile Include="Assets\@Scripts\Managers\LoadingSceneManager\SceneTransition.cs" />
     <Compile Include="Assets\@Scripts\Managers\MonsterSpawnManager\MonsterSpawner.cs" />
     <Compile Include="Assets\@Scripts\PacketQueue.cs" />
+    <Compile Include="Assets\@Scripts\Managers\SoundManager\SFXManager.cs" />
+    <Compile Include="Assets\@Scripts\Managers\SoundManager\BGMManager.cs" />
     <Compile Include="Assets\@Scripts\Managers\UIManager\Auth_UI\CreateAccount_UI.cs" />
     <Compile Include="Assets\@Scripts\Network\SessionStore.cs" />
     <Compile Include="Assets\@Scripts\SimpleNetworkUI.cs" />
@@ -108,6 +110,7 @@
     <Compile Include="Assets\@Scripts\Network\SendBuffer.cs" />
     <Compile Include="Assets\@Scripts\Managers\UIManager\Auth_UI\CreateCharacter_UI.cs" />
     <Compile Include="Assets\@Scripts\Managers\UIManager\HUD\UI_SystemManager.cs" />
+    <Compile Include="Assets\@Scripts\Managers\SoundManager\BGMData.cs" />
     <Compile Include="Assets\@Scripts\Managers\MonsterSpawnManager\MonsterIdentity.cs" />
     <Compile Include="Assets\@Scripts\Managers\MonsterSpawnManager\MonsterResourceLoader.cs" />
     <Compile Include="Assets\@Scripts\Managers\PortalManager\PortalMeta.cs" />

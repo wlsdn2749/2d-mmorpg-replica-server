@@ -16,8 +16,7 @@ public class MonsterAvatar : MonoBehaviour
     {
         if (_anim) _anim.SetInteger("Dir", (int)dir);
     }
-
-    void Update()
+    public void Move()
     {
         if (!_target.HasValue) return;
 
@@ -34,4 +33,10 @@ public class MonsterAvatar : MonoBehaviour
             if (_anim) _anim.SetBool("IsMoving", false);
         }
     }
+
+    void Update()
+    {
+        Move();
+    }
 }
+
