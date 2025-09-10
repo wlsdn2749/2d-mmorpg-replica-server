@@ -1,24 +1,24 @@
-using Google.Protobuf.Protocol;
+ï»¿using Google.Protobuf.Protocol;
 using Packet;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerIdentity))]
 public class PlayerController : MonoBehaviour
 {
-    private const float _moveCooldown = 0.5f;
-    [SerializeField] private float _curMoveCooldown = 0.5f;
+    private const float _moveCooldown = 0.23f;
+    [SerializeField] private float _curMoveCooldown = 0f;
     private PlayerIdentity _identity;
     [SerializeField] private SimpleMover _simpleMover;
     void Awake()
     {
         _identity = GetComponent<PlayerIdentity>();
         _simpleMover = GetComponent<SimpleMover>();
-        // ÇÁ¸®ÆÕ ±âº»°ªÀº disabled ±ÇÀå. Init ÈÄ ·ÎÄÃÀÏ ¶§¸¸ EnableµÊ.
+        // í”„ë¦¬íŒ¹ ê¸°ë³¸ê°’ì€ disabled ê¶Œì¥. Init í›„ ë¡œì»¬ì¼ ë•Œë§Œ Enableë¨.
     }
 
     void OnEnable()
     {
-        // È¤½Ã¶óµµ Àß¸ø ÄÑÁ³À» ¶§ ¹æ¾î
+        // í˜¹ì‹œë¼ë„ ì˜ëª» ì¼œì¡Œì„ ë•Œ ë°©ì–´
         if (_identity == null && !_identity.IsLocalPlayer)
         {
             Debug.LogWarning($"[PlayerController] Enabled on remote! Disabling. Id={_identity.Id}");
@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
             return; 
         }
         _curMoveCooldown -= Time.deltaTime;
-        if (Input.GetMouseButtonDown(1) && _curMoveCooldown <= 0)
+        if (Input.GetMouseButton(1) && _curMoveCooldown <= 0)
         {
             var cam = Camera.main;
             if (cam == null) return;
@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
             var world = cam.ScreenToWorldPoint(Input.mousePosition);
             world.z = 0;
 
-            // ÆĞÅ¶ Àü¼Û
+            // íŒ¨í‚· ì „ì†¡
             var req = new C_PlayerMoveRequest
             {
                 ClickWorldPos = new Vector2Info { X = (int)world.x, Y = (int)world.y }
