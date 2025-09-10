@@ -153,8 +153,12 @@ void Room::Enter(PlayerRef p)
     SpawnPoint spawn { ESpawnType::PLAYER_SPAWN, p->core.pos.x, p->core.pos.y };
     AddPlayerInternal(p, spawn, p->core.dir);  // 내부 등록 (SetRoom 포함)
 
-	GConsoleLogger->WriteStdOut(Color::GREEN, L"Room에 ENter 입장\n");
+	GConsoleLogger->WriteStdOut(Color::GREEN, L"Room에 Enter 입장\n");
 	OnEnter(p); // 여기서 모두에게 BroadCasting?
+
+    // 데이터 저장
+    auto fut = p->SaveCharacterToDB();
+    fut.get();
 }
 
 void Room::Leave(PlayerRef p)
@@ -451,15 +455,14 @@ void Room::ChangeRoomReady(const PlayerRef& p, const Protocol::C_ChangeRoomReady
             return;
 
         // 플레이어가 방에서 나가도록
-        src->RemovePlayerInternal(p->playerId, "MapChange");
-        src->BroadcastLeave(p);
+        src->Leave(p);
 
         // dst 잡큐에서 실행
         dst->DoAsync([src, dst, p, pend] {
             // 목적지 스폰 계산 (DB NO, 인메모리)
             auto sp = dst->ResolveSpawn(pend.dstPortalId);
             if (!sp) {
-                // 실패 정책: 간r단히 상태만 해제. (원하면 src로 롤백도 가능)
+                // 실패 정책: 간단히 상태만 해제. (원하면 src로 롤백도 가능)
                 p->ClearRoomChangeState();
                 return;
             }
@@ -467,16 +470,13 @@ void Room::ChangeRoomReady(const PlayerRef& p, const Protocol::C_ChangeRoomReady
             // 인메모리 좌표 반영 후 등록
             p->core.pos.x = sp->x;
             p->core.pos.y = sp->y;
-            dst->AddPlayerInternal(p, {ESpawnType::PLAYER_SPAWN, sp->x, sp->y }, p->core.dir);
 
-            // Commit + 스냅샷 (나 포함)
+            dst->Enter(p);
+
+            // Commit
             Protocol::S_ChangeRoomCommit commit;
             commit.set_transitionid(pend.transitionId);
             commit.set_mapid(dst->RoomId());
-            *commit.mutable_snapshots() = dst->BuildPlayerListSnapshot(p, /*includeSelf=*/true);
-            
-            // DB에 저장
-            p->SaveCharacterToDB();
 
             if (auto s = p->ownerSession.lock())
             {
@@ -484,7 +484,6 @@ void Room::ChangeRoomReady(const PlayerRef& p, const Protocol::C_ChangeRoomReady
                 GConsoleLogger->WriteStdOut(Color::GREEN, L"[Room::S_ChangeRoomCommit]: 커밋 송신 (룸 이동완료) \n");
             }
 
-            dst->BroadcastEnter(p);
             p->ClearRoomChangeState();
             });
         });

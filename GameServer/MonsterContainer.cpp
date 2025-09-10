@@ -94,7 +94,7 @@ Protocol::S_MonsterList MonsterContainer::BuildMonsterSnapShot(int mapId) const
 	{
 		Protocol::MonsterInfo* info = out->Add();
 		info->set_monsterid(monster.core.id);
-		
+		info->set_monstertypeid(monster.typeId);
 		auto* pos = info->mutable_pos();
 		pos->set_x(monster.core.pos.x);
 		pos->set_y(monster.core.pos.y);
