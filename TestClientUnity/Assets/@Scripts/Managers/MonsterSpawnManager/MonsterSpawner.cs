@@ -59,8 +59,19 @@ public static class MonsterSpawner
 
     public static void UpdateMove(S_BroadcastMonsterMove msg)
     {
-        if (!_spawned.TryGetValue(msg.MonsterId, out var go)) return;
-        var av = go.GetComponent<MonsterAvatar>() ?? go.AddComponent<MonsterAvatar>();
+        if (!_spawned.TryGetValue(msg.MonsterId, out var go) || go == null)
+        {
+            Debug.LogWarning($"[MonsterSpawner] Move update for missing {msg.MonsterId}");
+            return;
+        }
+
+        var av = go.GetComponent<MonsterAvatar>();
+        if (av == null)
+        {
+            Debug.LogWarning($"[MonsterSpawner] Avatar missing for {msg.MonsterId}");
+            return;
+        }
+
         av.SmoothMoveTo(new Vector3(msg.X, msg.Y, 0));
         av.SetDirection(msg.Dir);
     }
@@ -78,5 +89,11 @@ public static class MonsterSpawner
     {
         foreach (var kv in _spawned) if (kv.Value) Object.Destroy(kv.Value);
         _spawned.Clear();
+        foreach (var kv in _spawned)
+        {
+            if (kv.Value != null)
+                Object.Destroy(kv.Value);
+        }
+        _spawned.Clear(); // ✅ 참조도 제거
     }
 }

@@ -17,14 +17,17 @@ public class UI_SystemManager : MonoBehaviour
     }
     void OnClickLogOut()
     {
+        WorldFlowState.HasEnteredWorld = false;
         LeaveGameContext.SendLeave(ELeaveReason.LeaveLogout);
     }
     void OnClickGoSelectCharacter()
     {
+        WorldFlowState.OnCharacterChange = true;
         LeaveGameContext.SendLeave(ELeaveReason.LeaveChangeCharacter);
     }
     void OnClickGameExit()
     {
+        WorldFlowState.HasEnteredWorld = false;
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else

@@ -23,45 +23,57 @@ public class RoomTransitionManager : MonoBehaviour
     // === 서버 핸들러에서 호출 ===
     public void OnChangeRoomBegin(S_ChangeRoomBegin msg)
     {
-        if (CurrentState != State.Idle && msg.TransitionId == CurrentTransitionId) return;
-
-        CurrentTransitionId = msg.TransitionId;
-        CurrentMapId = msg.MapId;
-        CurrentState = State.BeginReceived;
-
-        // 입력 잠금 + 기존 오브젝트 정리
         ToggleLocalInput(false);
         PlayerSpawner.DespawnAll();
         MonsterSpawner.DespawnAll();
 
+        WorldFlowState.ResetForBegin(msg.MapId, msg.TransitionId);
+
+        // 몬스터 스냅샷 맵 일치용
+        MonsterSync.OnMapActivated(msg.MapId);
+
+        // 씬 로딩 (Begin이 유일한 로더)
+        string sceneName = MapIdToSceneName(msg.MapId);
         LoadingSceneManager.OnSceneActivated = () =>
         {
-            var ready = new C_ChangeRoomReady { TransitionId = CurrentTransitionId };
+            // Ready 전송
+            var ready = new C_ChangeRoomReady { TransitionId = WorldFlowState.CurrentTransitionId ?? -1 };
             NetworkManager.Instance.Send(ServerPacketManager.MakeSendBuffer(ready));
+            WorldFlowState.FinishSceneActivated();
+            MonsterSync.OnGameplaySceneActivated();
+
         };
-
-        LoadingSceneManager.LoadScene(MapIdToSceneName(CurrentMapId));
-        CurrentState = State.Loading;
+        LoadingSceneManager.LoadScene(sceneName);
     }
-
+    public void UnlockInputAfterSpawn()
+    {
+        ToggleLocalInput(true);
+        Debug.Log("[RTM] Local player spawned → input unlocked");
+    }
     public void OnChangeRoomCommit(S_ChangeRoomCommit msg)
     {
-        if (msg.TransitionId != CurrentTransitionId)
+        // 최초 접속 경로: Begin이 없었다면(CurrentTransitionId < 0) 비교하지 말고 받아들임
+        if (CurrentTransitionId >= 0 && msg.TransitionId != CurrentTransitionId)
         {
-            Debug.LogWarning($"[Room] Stale commit ignored: got={msg.TransitionId}, want={CurrentTransitionId}");
+            Debug.LogWarning($"[Room] stale commit ignored: got={msg.TransitionId}, want={CurrentTransitionId}");
             return;
         }
 
+        // 최초 접속이면 여기서 세팅만
+        if (CurrentTransitionId < 0)
+            CurrentTransitionId = msg.TransitionId;
+
         Debug.Log($"[RTM] Commit tid={msg.TransitionId}, map={msg.MapId}");
 
-        // 1) 맵 확정(몬스터 스냅샷과의 맵 불일치 방지)
+        // 씬 로드는 여기서 하지 않음 (너 정책 유지)
+        // 몬스터 스냅샷과의 맵 불일치 방지용
         MonsterSync.OnMapActivated(msg.MapId);
 
-        // 2) (선택) 서버가 자동으로 스냅샷을 안 밀어줄 경우에만 요청
-        //NetworkManager.Instance.Send(ServerPacketManager.MakeSendBuffer(new C_RequestPlayerList { MapId = msg.MapId }));
-        //NetworkManager.Instance.Send(ServerPacketManager.MakeSendBuffer(new C_RequestMonsterList { MapId = msg.MapId }));
+        LoadingSceneManager.OnSceneActivated = () =>
+        {
+            // Ready 전송 등...
+        };
 
-        // 3) 입력은 여기서 풀지 않는다! (내 플레이어가 스폰될 때까지 대기)
         CurrentState = State.Committed;
     }
 

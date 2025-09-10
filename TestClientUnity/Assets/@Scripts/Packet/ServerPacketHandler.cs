@@ -114,30 +114,77 @@ namespace Packet
 
         internal static void HANDLE_S_PlayerList(PacketSession session, S_PlayerList list)
         {
-            foreach (var p in list.Players)
-            {
-                bool isLocal = (p.Id == list.MyPlayerId);
-                Debug.Log($" {p.Pos.X},{p.Pos.Y}");
-            }
-            GetSceneNameByMapId(list.MapId);
-            LoadingSceneManager.LoadScene(list.MapId);
-            var player = list.Players;
-            
+            MonsterSync.OnMapActivated(list.MapId);
 
-            Debug.Log("맵 씬 로딩 시작");
-            //맵 씬 활성 직후 전체 스폰
-            SceneTransition.RunAfterGameplaySceneLoaded(() =>
+            if (!WorldFlowState.HasEnteredWorld||WorldFlowState.OnCharacterChange)
             {
-                Debug.Log("씬 로딩 완료 후 플레이어 스폰 처리");
-                foreach (var p in list.Players)
+                // ▶ 최초 접속 루트: 여기서만 씬 로드
+                string sceneName = GetSceneNameByMapId(list.MapId);
+
+                // 🎯 씬 로딩 시작 알림(중요)
+                MonsterSync.OnGameplaySceneWillLoad();
+
+                LoadingSceneManager.OnSceneActivated = () =>
                 {
-                    bool isLocal = (p.Id == list.MyPlayerId);
-                    PlayerSpawner.SafeSpawn(p, isLocal);
-                    MonsterSync.OnMapActivated(list.MapId); 
-                    Debug.Log($"{p.Pos.X},{p.Pos.Y}");
-                    Debug.Log($"플레이어 스폰 처리: {p.Username} (ID: {p.Id}) {(isLocal ? "(ME)" : "")}");
-                }
-            });
+                    // 🎯 씬 활성 알림(펜딩된 몬스터 스냅샷/스폰 플러시)
+                    MonsterSync.OnGameplaySceneActivated();
+
+                    // 스폰
+                    PlayerSpawner.EnsureExists();
+                    PlayerSpawner.DespawnAll();
+
+                    int my = list.MyPlayerId;
+                    foreach (var p in list.Players)
+                        PlayerSpawner.SafeSpawn(p, p.Id == my);
+
+                    RoomTransitionManager.Instance?.UnlockInputAfterSpawn();
+
+                    WorldFlowState.HasEnteredWorld = true;
+                    WorldFlowState.OnCharacterChange = false;
+                    WorldFlowState.ActiveMapId = list.MapId;
+                };
+
+                LoadingSceneManager.LoadScene(sceneName);
+                return;
+            }
+
+            // ▶ 인게임 루트(이미 월드 진입 후)
+            // 씬 로딩은 Begin이 이미 했다. 여기서는 스폰만.
+            if (WorldFlowState.TransitionInProgress)
+            {
+                // (Begin에서 이미 OnGameplaySceneWillLoad 호출되어 있어야 함)
+                LoadingSceneManager.OnSceneActivated = () =>
+                {
+                    // 🎯 씬 활성 알림 (여기서 몬스터 flush)
+                    MonsterSync.OnGameplaySceneActivated();
+
+                    PlayerSpawner.EnsureExists();
+                    PlayerSpawner.DespawnAll();
+
+                    int my = list.MyPlayerId;
+                    foreach (var p in list.Players)
+                        PlayerSpawner.SafeSpawn(p, p.Id == my);
+
+                    RoomTransitionManager.Instance?.UnlockInputAfterSpawn();
+                };
+                // 주의: 여기서 LoadScene 호출 금지!
+            }
+            else
+            {
+                // 씬이 이미 활성 상태(같은 맵에서 재동기화 등): 즉시 스폰
+                // (씬은 활성 상태라 OnGameplaySceneActivated 한 번 호출해 플러시)
+                MonsterSync.OnGameplaySceneActivated();
+
+                PlayerSpawner.EnsureExists();
+                PlayerSpawner.DespawnAll();
+
+                int my = list.MyPlayerId;
+                foreach (var p in list.Players)
+                    PlayerSpawner.SafeSpawn(p, p.Id == my);
+
+                RoomTransitionManager.Instance?.UnlockInputAfterSpawn();
+                WorldFlowState.ActiveMapId = list.MapId;
+            }
         }
 
         private static string GetSceneNameByMapId(int mapId)
@@ -326,8 +373,8 @@ namespace Packet
         }
         internal static void HANDLE_S_SpawnMonster(PacketSession session, S_SpawnMonster spawnMonster)
         {
-            Debug.Log("몬스터 스폰 패킷 수신완료");
-            MonsterSync.OnSpawn(spawnMonster);
+            var m = spawnMonster.Monster;
+            MonsterSync.OnSpawn(m);
         }
         internal static void HANDLE_S_DespawnMonster(PacketSession session, S_DespawnMonster despawnMonster)
         {

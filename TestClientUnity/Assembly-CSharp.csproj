@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\@Scripts\Network\Session.cs" />
+    <Compile Include="Assets\@Scripts\Utill\WorldFlowState.cs" />
     <Compile Include="Assets\@Scripts\Managers\UIManager\Auth_UI\AuthFlowController.cs" />
     <Compile Include="Assets\@Scripts\Network\RecvBuffer.cs" />
     <Compile Include="Assets\@Scripts\Protocol\Auth.cs" />
