@@ -439,3 +439,13 @@ bool Handle_C_ItemUseRequest(PacketSessionRef& session, Protocol::C_ItemUseReque
 
 	return true;
 }
+
+bool Handle_C_NpcInteract(PacketSessionRef& session, Protocol::C_NpcInteract& pkt)
+{
+	return false;
+}
+
+bool Handle_C_NpcShopBuyRequest(PacketSessionRef& session, Protocol::C_NpcShopBuyRequest& pkt)
+{
+	return false;
+}

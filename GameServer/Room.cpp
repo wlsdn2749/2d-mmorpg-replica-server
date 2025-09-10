@@ -239,6 +239,44 @@ void Room::OnPlayerDeath(int playerId, int killerMonsterId)
     // 기본: 아무것도 안 함. 파생(Room)에서 필요 시 오버라이드
 }
 
+void Room::LoadNpcs()
+{
+    // TODO
+}
+
+void Room::HandleNpcInteract(PlayerRef player, int interactionType)
+{
+    // 1. 좌표로 NPC 찾기 (_npcPositions 활용)
+    Pos2 outPos {};
+    ForwardTile(player->GetPos(), player->Dir(), outPos);
+    Npc* npc = FindNpcByPosition(outPos);
+
+    // 2. 거리 체크 (IsNearby)
+    if(!npc->IsNearby(player->GetPos()), 1) return; // Npc Interaction은 1칸 이내 이여야함. 
+
+    // 3. NPC 컴포넌트별 처리 위임
+    if (interactionType == 1) { // Shop
+        npc->GetShopComponent()->ShowShop(player->playerId);
+    }
+}
+
+Npc* Room::FindNpcByPosition(int x, int y)
+{
+    const Pos2 tempPos = {x, y};
+    return FindNpcByPosition(tempPos);
+}
+
+Npc* Room::FindNpcByPosition(const Pos2& pos)
+{
+    auto it = _npcPositions.find(pos);
+    return (it != _npcPositions.end()) ? FindNpcById(it->second) : nullptr;
+}
+
+Npc* Room::FindNpcById(int npcId)
+{
+    return nullptr;
+}
+
 bool Room::CanEnterTile(int nx, int ny) const
 {
     UNREFERENCED_PARAMETER(nx);

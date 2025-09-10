@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <future>
 #include "DBDisPatcher.h"
 #include "GenProcedures.h"
@@ -36,6 +36,7 @@ struct CharacterRepository
         int hp;
         int level;
         int exp;
+        int money;
     };
 
 /* 캐릭터 생성 요청*/
@@ -144,6 +145,7 @@ public:
         int region;
         int dir;
         int level;
+        int money;
 
         SP::GetCharactersByUser sp(conn);
         sp.ParamIn_UserId(userId);
@@ -155,11 +157,13 @@ public:
         sp.ColumnOut_Region(OUT region);
         sp.ColumnOut_Dir(OUT dir);
         sp.ColumnOut_Level(OUT level);
+        sp.ColumnOut_Money(OUT money);
         sp.Execute();
         while (sp.Fetch())
         {
             GConsoleLogger->WriteStdOut(Color::GREEN,
-                L"Username[%s] Gender[%d] Region[%d] Level[%d]\n", username, gender, region, level);
+                L"Username[%s] Gender[%d] Region[%d] Level[%d] Money[%d]\n"
+                , username, gender, region, level, money);
 
             CharacterInfo info
             {
@@ -199,6 +203,7 @@ public:
         sp.ParamIn_Hp(const_cast<int32&>(stat.hp));
         sp.ParamIn_Level(const_cast<int32&>(stat.level));
         sp.ParamIn_Exp(const_cast<int32&>(stat.exp));
+        sp.ParamIn_Money(const_cast<int32&>(stat.money));
         sp.Execute();
     }
 
@@ -224,6 +229,7 @@ public:
         sp.ColumnOut_Hp(OUT stat.hp);
         sp.ColumnOut_Level(OUT stat.level);
         sp.ColumnOut_Exp(OUT stat.exp);
+        sp.ColumnOut_Money(OUT stat.money);
         sp.Execute();
         if (sp.Fetch())
         {

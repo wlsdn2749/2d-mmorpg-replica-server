@@ -41,6 +41,10 @@ enum : uint16
 	PKT_S_ItemUseReply = 31,
 	PKT_S_InventoryUpdate = 32,
 	PKT_S_SystemMessage = 33,
+	PKT_C_NpcInteract = 34,
+	PKT_S_NpcShopOpen = 35,
+	PKT_C_NpcShopBuyRequest = 36,
+	PKT_S_NpcShopBuyReply = 37,
 
 };
 
@@ -58,6 +62,8 @@ bool Handle_C_ChangeRoomReady(PacketSessionRef& session, Protocol::C_ChangeRoomR
 bool Handle_C_PlayerAttackRequest(PacketSessionRef& session, Protocol::C_PlayerAttackRequest& pkt);
 bool Handle_C_InventoryRequest(PacketSessionRef& session, Protocol::C_InventoryRequest& pkt);
 bool Handle_C_ItemUseRequest(PacketSessionRef& session, Protocol::C_ItemUseRequest& pkt);
+bool Handle_C_NpcInteract(PacketSessionRef& session, Protocol::C_NpcInteract& pkt);
+bool Handle_C_NpcShopBuyRequest(PacketSessionRef& session, Protocol::C_NpcShopBuyRequest& pkt);
 
 class ClientPacketHandler
 {
@@ -80,6 +86,8 @@ public:
 		GPacketHandler[PKT_C_PlayerAttackRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PlayerAttackRequest>(Handle_C_PlayerAttackRequest, session, buffer, len); };
 		GPacketHandler[PKT_C_InventoryRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_InventoryRequest>(Handle_C_InventoryRequest, session, buffer, len); };
 		GPacketHandler[PKT_C_ItemUseRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_ItemUseRequest>(Handle_C_ItemUseRequest, session, buffer, len); };
+		GPacketHandler[PKT_C_NpcInteract] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_NpcInteract>(Handle_C_NpcInteract, session, buffer, len); };
+		GPacketHandler[PKT_C_NpcShopBuyRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_NpcShopBuyRequest>(Handle_C_NpcShopBuyRequest, session, buffer, len); };
 		
 	}
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
@@ -110,6 +118,8 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::S_ItemUseReply& pkt) { return MakeSendBuffer(pkt, PKT_S_ItemUseReply); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_InventoryUpdate& pkt) { return MakeSendBuffer(pkt, PKT_S_InventoryUpdate); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_SystemMessage& pkt) { return MakeSendBuffer(pkt, PKT_S_SystemMessage); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_NpcShopOpen& pkt) { return MakeSendBuffer(pkt, PKT_S_NpcShopOpen); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_NpcShopBuyReply& pkt) { return MakeSendBuffer(pkt, PKT_S_NpcShopBuyReply); };
 
 private:
 	template<typename PacketType, typename ProcessFunc>

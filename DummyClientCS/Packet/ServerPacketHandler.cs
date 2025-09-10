@@ -346,5 +346,15 @@ namespace Packet
                 Console.WriteLine($"오류: {reply.ErrorMessage}");
             }
         }
+
+        internal static void HANDLE_S_NpcShopOpen(PacketSession session, S_NpcShopOpen open)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void HANDLE_S_NpcShopBuyReply(PacketSession session, S_NpcShopBuyReply reply)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

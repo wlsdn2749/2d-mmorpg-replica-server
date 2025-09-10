@@ -58,6 +58,9 @@
     <Filter Include="GameContents\Manager">
       <UniqueIdentifier>{de48bc72-53d2-43b5-b759-a3608cbedad6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameContents\Npc">
+      <UniqueIdentifier>{1e5cf317-bed0-42cc-9568-458a50d65d1b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameServer.cpp">
@@ -176,6 +179,27 @@
     </ClCompile>
     <ClCompile Include="RandomUtils.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Npc.cpp">
+      <Filter>GameContents\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="NpcDialogComponent.cpp">
+      <Filter>GameContents\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="NpcDialogManager.cpp">
+      <Filter>GameContents\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="NpcManager.cpp">
+      <Filter>GameContents\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="NpcQuestComponent.cpp">
+      <Filter>GameContents\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="NpcShopComponent.cpp">
+      <Filter>GameContents\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="NpcShopDataManager.cpp">
+      <Filter>GameContents\Npc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -319,6 +343,27 @@
     </ClInclude>
     <ClInclude Include="RandomUtils.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Npc.h">
+      <Filter>GameContents\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="NpcDialogComponent.h">
+      <Filter>GameContents\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="NpcDialogManager.h">
+      <Filter>GameContents\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="NpcManager.h">
+      <Filter>GameContents\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="NpcQuestComponent.h">
+      <Filter>GameContents\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="NpcShopComponent.h">
+      <Filter>GameContents\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="NpcShopDataManager.h">
+      <Filter>GameContents\Npc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
