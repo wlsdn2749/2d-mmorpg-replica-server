@@ -275,12 +275,7 @@ namespace Packet
         internal static void HANDLE_S_ChangeRoomCommit(PacketSession session, S_ChangeRoomCommit commit)
         {
             Console.WriteLine($"[S_ChangeRoomCommit] Room Has Change into ...");
-            Debug.Log($"[S_ChangeRoomCommit] tid={commit.TransitionId}, players={commit.Snapshots?.Players?.Count ?? 0}");
-            if (commit.Snapshots.Players.Count == 0)
-            {
-                Debug.LogWarning("[PlayerSpawner] Commit snapshot is empty! Re-requesting player list...");
-                // 예: 서버한테 S_PlayerList 다시 요청하는 패킷 보내기
-            }
+            
             RoomTransitionManager.Instance.OnChangeRoomCommit(commit);
             Debug.Log($"[S_ChangeRoomCommit] Room Has Change into ...");
         }

@@ -69,23 +69,23 @@ public static class MonsterSync
     // ===== 개별 스폰 수신 =====
     public static void OnSpawn(S_SpawnMonster msg)
     {
-        typeRegistry[msg.MonsterId] = msg.MonsterTypeId;
+        typeRegistry[msg.Monster.MonsterTypeId] = msg.Monster.MonsterTypeId;
 
         // 스냅샷에서 정보가 이미 왔으면 그 좌표/방향으로 스폰
-        if (pendingInfos.TryGetValue(msg.MonsterId, out var info))
+        if (pendingInfos.TryGetValue(msg.Monster.MonsterId, out var info))
         {
-            SpawnWithAllData(msg.MonsterId, msg.MonsterTypeId, info);
-            pendingInfos.Remove(msg.MonsterId);
+            SpawnWithAllData(msg.Monster.MonsterId, msg.Monster.MonsterTypeId, info);
+            pendingInfos.Remove(msg.Monster.MonsterId);
         }
         else
         {
             // 스냅샷이 아직 없으면 스폰 패킷 좌표로 일단 만들고, 나중에 스냅샷/이동이 오면 덮어씀
-            var pos = new Vector3(msg.X, msg.Y, 0);
-            var go = MonsterSpawner.SpawnDirect(msg.MonsterId, msg.MonsterTypeId, pos, msg.Dir);
+            var pos = new Vector3(msg.Monster.Pos.X, msg.Monster.Pos.Y, 0);
+            var go = MonsterSpawner.SpawnDirect(msg.Monster.MonsterId, msg.Monster.MonsterTypeId, pos, msg.Monster.Direction);
             // 스폰 직후 대기 중 이동 적용
-            if (pendingMoves.TryGetValue(msg.MonsterId, out var mv))
+            if (pendingMoves.TryGetValue(msg.Monster.MonsterId, out var mv))
             {
-                pendingMoves.Remove(msg.MonsterId);
+                pendingMoves.Remove(msg.Monster.MonsterId);
                 MonsterSpawner.UpdateMove(mv);
             }
         }
