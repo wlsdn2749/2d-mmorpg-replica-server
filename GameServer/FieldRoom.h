@@ -36,6 +36,7 @@ public:
 
     void SendInventoryUpdateToPlayer(int killPlayerId);
     void SendSystemMessageToPlayer(int playerId, const std::string& message, Protocol::EMessageType type);
+    void SendMonstersToPlayer(PlayerRef p);
 
 protected:
 	// 최초 1회 초기화
