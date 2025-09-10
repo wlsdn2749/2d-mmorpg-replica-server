@@ -3839,28 +3839,9 @@ class S_ChangeRoomCommit final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kSnapshotsFieldNumber = 3,
     kTransitionIdFieldNumber = 1,
     kMapIdFieldNumber = 2,
   };
-  // .Protocol.S_PlayerList snapshots = 3;
-  bool has_snapshots() const;
-  private:
-  bool _internal_has_snapshots() const;
-  public:
-  void clear_snapshots();
-  const ::Protocol::S_PlayerList& snapshots() const;
-  PROTOBUF_NODISCARD ::Protocol::S_PlayerList* release_snapshots();
-  ::Protocol::S_PlayerList* mutable_snapshots();
-  void set_allocated_snapshots(::Protocol::S_PlayerList* snapshots);
-  private:
-  const ::Protocol::S_PlayerList& _internal_snapshots() const;
-  ::Protocol::S_PlayerList* _internal_mutable_snapshots();
-  public:
-  void unsafe_arena_set_allocated_snapshots(
-      ::Protocol::S_PlayerList* snapshots);
-  ::Protocol::S_PlayerList* unsafe_arena_release_snapshots();
-
   // int32 transitionId = 1;
   void clear_transitionid();
   int32_t transitionid() const;
@@ -3887,7 +3868,6 @@ class S_ChangeRoomCommit final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::Protocol::S_PlayerList* snapshots_;
     int32_t transitionid_;
     int32_t mapid_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -4018,56 +3998,25 @@ class S_SpawnMonster final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kMonsterIdFieldNumber = 1,
-    kMonsterTypeIdFieldNumber = 2,
-    kXFieldNumber = 3,
-    kYFieldNumber = 4,
-    kDirFieldNumber = 5,
+    kMonsterFieldNumber = 1,
   };
-  // int32 monsterId = 1;
-  void clear_monsterid();
-  int32_t monsterid() const;
-  void set_monsterid(int32_t value);
+  // .Protocol.MonsterInfo monster = 1;
+  bool has_monster() const;
   private:
-  int32_t _internal_monsterid() const;
-  void _internal_set_monsterid(int32_t value);
+  bool _internal_has_monster() const;
   public:
-
-  // int32 monsterTypeId = 2;
-  void clear_monstertypeid();
-  int32_t monstertypeid() const;
-  void set_monstertypeid(int32_t value);
+  void clear_monster();
+  const ::Protocol::MonsterInfo& monster() const;
+  PROTOBUF_NODISCARD ::Protocol::MonsterInfo* release_monster();
+  ::Protocol::MonsterInfo* mutable_monster();
+  void set_allocated_monster(::Protocol::MonsterInfo* monster);
   private:
-  int32_t _internal_monstertypeid() const;
-  void _internal_set_monstertypeid(int32_t value);
+  const ::Protocol::MonsterInfo& _internal_monster() const;
+  ::Protocol::MonsterInfo* _internal_mutable_monster();
   public:
-
-  // int32 x = 3;
-  void clear_x();
-  int32_t x() const;
-  void set_x(int32_t value);
-  private:
-  int32_t _internal_x() const;
-  void _internal_set_x(int32_t value);
-  public:
-
-  // int32 y = 4;
-  void clear_y();
-  int32_t y() const;
-  void set_y(int32_t value);
-  private:
-  int32_t _internal_y() const;
-  void _internal_set_y(int32_t value);
-  public:
-
-  // .Protocol.EDirection dir = 5;
-  void clear_dir();
-  ::Protocol::EDirection dir() const;
-  void set_dir(::Protocol::EDirection value);
-  private:
-  ::Protocol::EDirection _internal_dir() const;
-  void _internal_set_dir(::Protocol::EDirection value);
-  public:
+  void unsafe_arena_set_allocated_monster(
+      ::Protocol::MonsterInfo* monster);
+  ::Protocol::MonsterInfo* unsafe_arena_release_monster();
 
   // @@protoc_insertion_point(class_scope:Protocol.S_SpawnMonster)
  private:
@@ -4077,11 +4026,7 @@ class S_SpawnMonster final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    int32_t monsterid_;
-    int32_t monstertypeid_;
-    int32_t x_;
-    int32_t y_;
-    int dir_;
+    ::Protocol::MonsterInfo* monster_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -7143,11 +7088,12 @@ class MonsterInfo final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kPosFieldNumber = 2,
+    kPosFieldNumber = 3,
     kMonsterIdFieldNumber = 1,
-    kDirectionFieldNumber = 3,
+    kMonsterTypeIdFieldNumber = 2,
+    kDirectionFieldNumber = 4,
   };
-  // .Protocol.Vector2Info pos = 2;
+  // .Protocol.Vector2Info pos = 3;
   bool has_pos() const;
   private:
   bool _internal_has_pos() const;
@@ -7174,7 +7120,16 @@ class MonsterInfo final :
   void _internal_set_monsterid(int32_t value);
   public:
 
-  // .Protocol.EDirection direction = 3;
+  // int32 monsterTypeId = 2;
+  void clear_monstertypeid();
+  int32_t monstertypeid() const;
+  void set_monstertypeid(int32_t value);
+  private:
+  int32_t _internal_monstertypeid() const;
+  void _internal_set_monstertypeid(int32_t value);
+  public:
+
+  // .Protocol.EDirection direction = 4;
   void clear_direction();
   ::Protocol::EDirection direction() const;
   void set_direction(::Protocol::EDirection value);
@@ -7193,6 +7148,7 @@ class MonsterInfo final :
   struct Impl_ {
     ::Protocol::Vector2Info* pos_;
     int32_t monsterid_;
+    int32_t monstertypeid_;
     int direction_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -8430,45 +8386,49 @@ inline void S_ChangeRoomCommit::set_mapid(int32_t value) {
   // @@protoc_insertion_point(field_set:Protocol.S_ChangeRoomCommit.mapId)
 }
 
-// .Protocol.S_PlayerList snapshots = 3;
-inline bool S_ChangeRoomCommit::_internal_has_snapshots() const {
-  return this != internal_default_instance() && _impl_.snapshots_ != nullptr;
+// -------------------------------------------------------------------
+
+// S_SpawnMonster
+
+// .Protocol.MonsterInfo monster = 1;
+inline bool S_SpawnMonster::_internal_has_monster() const {
+  return this != internal_default_instance() && _impl_.monster_ != nullptr;
 }
-inline bool S_ChangeRoomCommit::has_snapshots() const {
-  return _internal_has_snapshots();
+inline bool S_SpawnMonster::has_monster() const {
+  return _internal_has_monster();
 }
-inline void S_ChangeRoomCommit::clear_snapshots() {
-  if (GetArenaForAllocation() == nullptr && _impl_.snapshots_ != nullptr) {
-    delete _impl_.snapshots_;
+inline void S_SpawnMonster::clear_monster() {
+  if (GetArenaForAllocation() == nullptr && _impl_.monster_ != nullptr) {
+    delete _impl_.monster_;
   }
-  _impl_.snapshots_ = nullptr;
+  _impl_.monster_ = nullptr;
 }
-inline const ::Protocol::S_PlayerList& S_ChangeRoomCommit::_internal_snapshots() const {
-  const ::Protocol::S_PlayerList* p = _impl_.snapshots_;
-  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::S_PlayerList&>(
-      ::Protocol::_S_PlayerList_default_instance_);
+inline const ::Protocol::MonsterInfo& S_SpawnMonster::_internal_monster() const {
+  const ::Protocol::MonsterInfo* p = _impl_.monster_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::MonsterInfo&>(
+      ::Protocol::_MonsterInfo_default_instance_);
 }
-inline const ::Protocol::S_PlayerList& S_ChangeRoomCommit::snapshots() const {
-  // @@protoc_insertion_point(field_get:Protocol.S_ChangeRoomCommit.snapshots)
-  return _internal_snapshots();
+inline const ::Protocol::MonsterInfo& S_SpawnMonster::monster() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_SpawnMonster.monster)
+  return _internal_monster();
 }
-inline void S_ChangeRoomCommit::unsafe_arena_set_allocated_snapshots(
-    ::Protocol::S_PlayerList* snapshots) {
+inline void S_SpawnMonster::unsafe_arena_set_allocated_monster(
+    ::Protocol::MonsterInfo* monster) {
   if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.snapshots_);
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.monster_);
   }
-  _impl_.snapshots_ = snapshots;
-  if (snapshots) {
+  _impl_.monster_ = monster;
+  if (monster) {
     
   } else {
     
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protocol.S_ChangeRoomCommit.snapshots)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protocol.S_SpawnMonster.monster)
 }
-inline ::Protocol::S_PlayerList* S_ChangeRoomCommit::release_snapshots() {
+inline ::Protocol::MonsterInfo* S_SpawnMonster::release_monster() {
   
-  ::Protocol::S_PlayerList* temp = _impl_.snapshots_;
-  _impl_.snapshots_ = nullptr;
+  ::Protocol::MonsterInfo* temp = _impl_.monster_;
+  _impl_.monster_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
   auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
   temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
@@ -8480,148 +8440,44 @@ inline ::Protocol::S_PlayerList* S_ChangeRoomCommit::release_snapshots() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
-inline ::Protocol::S_PlayerList* S_ChangeRoomCommit::unsafe_arena_release_snapshots() {
-  // @@protoc_insertion_point(field_release:Protocol.S_ChangeRoomCommit.snapshots)
+inline ::Protocol::MonsterInfo* S_SpawnMonster::unsafe_arena_release_monster() {
+  // @@protoc_insertion_point(field_release:Protocol.S_SpawnMonster.monster)
   
-  ::Protocol::S_PlayerList* temp = _impl_.snapshots_;
-  _impl_.snapshots_ = nullptr;
+  ::Protocol::MonsterInfo* temp = _impl_.monster_;
+  _impl_.monster_ = nullptr;
   return temp;
 }
-inline ::Protocol::S_PlayerList* S_ChangeRoomCommit::_internal_mutable_snapshots() {
+inline ::Protocol::MonsterInfo* S_SpawnMonster::_internal_mutable_monster() {
   
-  if (_impl_.snapshots_ == nullptr) {
-    auto* p = CreateMaybeMessage<::Protocol::S_PlayerList>(GetArenaForAllocation());
-    _impl_.snapshots_ = p;
+  if (_impl_.monster_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Protocol::MonsterInfo>(GetArenaForAllocation());
+    _impl_.monster_ = p;
   }
-  return _impl_.snapshots_;
+  return _impl_.monster_;
 }
-inline ::Protocol::S_PlayerList* S_ChangeRoomCommit::mutable_snapshots() {
-  ::Protocol::S_PlayerList* _msg = _internal_mutable_snapshots();
-  // @@protoc_insertion_point(field_mutable:Protocol.S_ChangeRoomCommit.snapshots)
+inline ::Protocol::MonsterInfo* S_SpawnMonster::mutable_monster() {
+  ::Protocol::MonsterInfo* _msg = _internal_mutable_monster();
+  // @@protoc_insertion_point(field_mutable:Protocol.S_SpawnMonster.monster)
   return _msg;
 }
-inline void S_ChangeRoomCommit::set_allocated_snapshots(::Protocol::S_PlayerList* snapshots) {
+inline void S_SpawnMonster::set_allocated_monster(::Protocol::MonsterInfo* monster) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
-    delete _impl_.snapshots_;
+    delete _impl_.monster_;
   }
-  if (snapshots) {
+  if (monster) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(snapshots);
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(monster);
     if (message_arena != submessage_arena) {
-      snapshots = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, snapshots, submessage_arena);
+      monster = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, monster, submessage_arena);
     }
     
   } else {
     
   }
-  _impl_.snapshots_ = snapshots;
-  // @@protoc_insertion_point(field_set_allocated:Protocol.S_ChangeRoomCommit.snapshots)
-}
-
-// -------------------------------------------------------------------
-
-// S_SpawnMonster
-
-// int32 monsterId = 1;
-inline void S_SpawnMonster::clear_monsterid() {
-  _impl_.monsterid_ = 0;
-}
-inline int32_t S_SpawnMonster::_internal_monsterid() const {
-  return _impl_.monsterid_;
-}
-inline int32_t S_SpawnMonster::monsterid() const {
-  // @@protoc_insertion_point(field_get:Protocol.S_SpawnMonster.monsterId)
-  return _internal_monsterid();
-}
-inline void S_SpawnMonster::_internal_set_monsterid(int32_t value) {
-  
-  _impl_.monsterid_ = value;
-}
-inline void S_SpawnMonster::set_monsterid(int32_t value) {
-  _internal_set_monsterid(value);
-  // @@protoc_insertion_point(field_set:Protocol.S_SpawnMonster.monsterId)
-}
-
-// int32 monsterTypeId = 2;
-inline void S_SpawnMonster::clear_monstertypeid() {
-  _impl_.monstertypeid_ = 0;
-}
-inline int32_t S_SpawnMonster::_internal_monstertypeid() const {
-  return _impl_.monstertypeid_;
-}
-inline int32_t S_SpawnMonster::monstertypeid() const {
-  // @@protoc_insertion_point(field_get:Protocol.S_SpawnMonster.monsterTypeId)
-  return _internal_monstertypeid();
-}
-inline void S_SpawnMonster::_internal_set_monstertypeid(int32_t value) {
-  
-  _impl_.monstertypeid_ = value;
-}
-inline void S_SpawnMonster::set_monstertypeid(int32_t value) {
-  _internal_set_monstertypeid(value);
-  // @@protoc_insertion_point(field_set:Protocol.S_SpawnMonster.monsterTypeId)
-}
-
-// int32 x = 3;
-inline void S_SpawnMonster::clear_x() {
-  _impl_.x_ = 0;
-}
-inline int32_t S_SpawnMonster::_internal_x() const {
-  return _impl_.x_;
-}
-inline int32_t S_SpawnMonster::x() const {
-  // @@protoc_insertion_point(field_get:Protocol.S_SpawnMonster.x)
-  return _internal_x();
-}
-inline void S_SpawnMonster::_internal_set_x(int32_t value) {
-  
-  _impl_.x_ = value;
-}
-inline void S_SpawnMonster::set_x(int32_t value) {
-  _internal_set_x(value);
-  // @@protoc_insertion_point(field_set:Protocol.S_SpawnMonster.x)
-}
-
-// int32 y = 4;
-inline void S_SpawnMonster::clear_y() {
-  _impl_.y_ = 0;
-}
-inline int32_t S_SpawnMonster::_internal_y() const {
-  return _impl_.y_;
-}
-inline int32_t S_SpawnMonster::y() const {
-  // @@protoc_insertion_point(field_get:Protocol.S_SpawnMonster.y)
-  return _internal_y();
-}
-inline void S_SpawnMonster::_internal_set_y(int32_t value) {
-  
-  _impl_.y_ = value;
-}
-inline void S_SpawnMonster::set_y(int32_t value) {
-  _internal_set_y(value);
-  // @@protoc_insertion_point(field_set:Protocol.S_SpawnMonster.y)
-}
-
-// .Protocol.EDirection dir = 5;
-inline void S_SpawnMonster::clear_dir() {
-  _impl_.dir_ = 0;
-}
-inline ::Protocol::EDirection S_SpawnMonster::_internal_dir() const {
-  return static_cast< ::Protocol::EDirection >(_impl_.dir_);
-}
-inline ::Protocol::EDirection S_SpawnMonster::dir() const {
-  // @@protoc_insertion_point(field_get:Protocol.S_SpawnMonster.dir)
-  return _internal_dir();
-}
-inline void S_SpawnMonster::_internal_set_dir(::Protocol::EDirection value) {
-  
-  _impl_.dir_ = value;
-}
-inline void S_SpawnMonster::set_dir(::Protocol::EDirection value) {
-  _internal_set_dir(value);
-  // @@protoc_insertion_point(field_set:Protocol.S_SpawnMonster.dir)
+  _impl_.monster_ = monster;
+  // @@protoc_insertion_point(field_set_allocated:Protocol.S_SpawnMonster.monster)
 }
 
 // -------------------------------------------------------------------
@@ -9840,7 +9696,27 @@ inline void MonsterInfo::set_monsterid(int32_t value) {
   // @@protoc_insertion_point(field_set:Protocol.MonsterInfo.monsterId)
 }
 
-// .Protocol.Vector2Info pos = 2;
+// int32 monsterTypeId = 2;
+inline void MonsterInfo::clear_monstertypeid() {
+  _impl_.monstertypeid_ = 0;
+}
+inline int32_t MonsterInfo::_internal_monstertypeid() const {
+  return _impl_.monstertypeid_;
+}
+inline int32_t MonsterInfo::monstertypeid() const {
+  // @@protoc_insertion_point(field_get:Protocol.MonsterInfo.monsterTypeId)
+  return _internal_monstertypeid();
+}
+inline void MonsterInfo::_internal_set_monstertypeid(int32_t value) {
+  
+  _impl_.monstertypeid_ = value;
+}
+inline void MonsterInfo::set_monstertypeid(int32_t value) {
+  _internal_set_monstertypeid(value);
+  // @@protoc_insertion_point(field_set:Protocol.MonsterInfo.monsterTypeId)
+}
+
+// .Protocol.Vector2Info pos = 3;
 inline bool MonsterInfo::_internal_has_pos() const {
   return this != internal_default_instance() && _impl_.pos_ != nullptr;
 }
@@ -9930,7 +9806,7 @@ inline void MonsterInfo::set_allocated_pos(::Protocol::Vector2Info* pos) {
   // @@protoc_insertion_point(field_set_allocated:Protocol.MonsterInfo.pos)
 }
 
-// .Protocol.EDirection direction = 3;
+// .Protocol.EDirection direction = 4;
 inline void MonsterInfo::clear_direction() {
   _impl_.direction_ = 0;
 }

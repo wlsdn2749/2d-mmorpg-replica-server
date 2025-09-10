@@ -95,6 +95,17 @@ void FieldRoom::SendSystemMessageToPlayer(int playerId, const std::string& messa
 	}
 }
 
+void FieldRoom::SendMonstersToPlayer(PlayerRef p)
+{
+	auto pkt = _monsters->BuildMonsterSnapShot(RoomId());
+	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
+	if (auto s = p->ownerSession.lock())
+	{
+		auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
+		s->Send(sendBuffer);
+	}
+}
+
 void FieldRoom::InitRoomSystems()
 {
 	_lastMonsterTickMs = _clock.NowMs(); // 첫 기준 시각
@@ -121,15 +132,7 @@ void FieldRoom::OnEnter(const PlayerRef& p)
 	}
 
 	// 맵에 있는 몬스터 전송 - 나중에 이부분은 합칠 예정
-	{
-		auto pkt = _monsters->BuildMonsterSnapShot(RoomId());
-		auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
-		if (auto s = p->ownerSession.lock())
-		{
-			auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
-			s->Send(sendBuffer);
-		}
-	}
+	SendMonstersToPlayer(p);
 	
 }
 
@@ -232,15 +235,19 @@ void FieldRoom::MonsterEntityLinkerImpl::ApplyDamageToPlayer(int pid, int dmg, i
 }
 
 // ------------------- Broadcaster -------------------
-void FieldRoom::MonsterBroadcasterImpl::SpawnMonster(const Monster& m)
+void FieldRoom::MonsterBroadcasterImpl::SpawnMonster(const Monster& monster)
 {
 	Protocol::S_SpawnMonster pkt;
-	pkt.set_monsterid(m.core.id);
-	pkt.set_monstertypeid(m.typeId);
-	pkt.set_x(m.core.pos.x);
-	pkt.set_y(m.core.pos.y);
-	pkt.set_dir(m.core.dir);
-	GConsoleLogger->WriteStdOut(Color::YELLOW, L"몬스터 스폰 Id: %d, x: %d, y: %d, dir: %d\n", m.core.id, m.core.pos.x, m.core.pos.y, (int)m.core.dir);
+	auto* info = pkt.mutable_monster();
+	info->set_monsterid(monster.core.id);
+	info->set_monstertypeid(monster.typeId);
+	auto* pos = info->mutable_pos();
+	pos->set_x(monster.core.pos.x);
+	pos->set_y(monster.core.pos.y);
+
+	info->set_direction(monster.core.dir);
+	
+	GConsoleLogger->WriteStdOut(Color::YELLOW, L"몬스터 스폰 Id: %d, typeId: %d, x: %d, y: %d, dir: %d\n", monster.core.id, monster.typeId, monster.core.pos.x, monster.core.pos.y, (int)monster.core.dir);
 	_r.Broadcast(ClientPacketHandler::MakeSendBuffer(pkt));
 }
 

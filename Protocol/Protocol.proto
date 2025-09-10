@@ -178,16 +178,12 @@ message C_ChangeRoomReady {
 message S_ChangeRoomCommit {
   int32 transitionId = 1;
   int32 mapId = 2;
-  S_PlayerList snapshots = 3; // 들어오자마자 월드 동기화
+  // Snapshot은 OnEnter에서 PlayerList보내는것으로 대신함
 }
 
 // (19) 서버 -> 클라 : 몬스터 스폰 알림
 message S_SpawnMonster {
-	int32 monsterId = 1; // Entity Unique id
-	int32 monsterTypeId = 2; // Monster Type (Template or Resources Id)
-	int32 x = 3; // Tile Pos X
-	int32 y = 4; // Tile Pos Y
-	EDirection dir = 5; // 방향 
+	MonsterInfo monster = 1;
 }
 
 // (20) 서버 -> 클라 몬스터 디스폰(제거) 알림 
@@ -387,7 +383,8 @@ message InventorySlotInfo
 
 message MonsterInfo
 {
-	int32 monsterId = 1;
-	Vector2Info pos = 2;
-	EDirection direction =3 ;
+	int32 monsterId = 1; // Entity Unique id
+	int32 monsterTypeId = 2; // Monster Type (Template or Resources Id)
+	Vector2Info pos = 3;
+	EDirection direction = 4;
 }

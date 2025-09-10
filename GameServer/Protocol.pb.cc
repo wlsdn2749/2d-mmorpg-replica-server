@@ -296,8 +296,7 @@ struct C_ChangeRoomReadyDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 C_ChangeRoomReadyDefaultTypeInternal _C_ChangeRoomReady_default_instance_;
 PROTOBUF_CONSTEXPR S_ChangeRoomCommit::S_ChangeRoomCommit(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.snapshots_)*/nullptr
-  , /*decltype(_impl_.transitionid_)*/0
+    /*decltype(_impl_.transitionid_)*/0
   , /*decltype(_impl_.mapid_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct S_ChangeRoomCommitDefaultTypeInternal {
@@ -311,11 +310,7 @@ struct S_ChangeRoomCommitDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_ChangeRoomCommitDefaultTypeInternal _S_ChangeRoomCommit_default_instance_;
 PROTOBUF_CONSTEXPR S_SpawnMonster::S_SpawnMonster(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.monsterid_)*/0
-  , /*decltype(_impl_.monstertypeid_)*/0
-  , /*decltype(_impl_.x_)*/0
-  , /*decltype(_impl_.y_)*/0
-  , /*decltype(_impl_.dir_)*/0
+    /*decltype(_impl_.monster_)*/nullptr
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct S_SpawnMonsterDefaultTypeInternal {
   PROTOBUF_CONSTEXPR S_SpawnMonsterDefaultTypeInternal()
@@ -584,6 +579,7 @@ PROTOBUF_CONSTEXPR MonsterInfo::MonsterInfo(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.pos_)*/nullptr
   , /*decltype(_impl_.monsterid_)*/0
+  , /*decltype(_impl_.monstertypeid_)*/0
   , /*decltype(_impl_.direction_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct MonsterInfoDefaultTypeInternal {
@@ -763,18 +759,13 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_ChangeRoomCommit, _impl_.transitionid_),
   PROTOBUF_FIELD_OFFSET(::Protocol::S_ChangeRoomCommit, _impl_.mapid_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::S_ChangeRoomCommit, _impl_.snapshots_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_SpawnMonster, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::Protocol::S_SpawnMonster, _impl_.monsterid_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::S_SpawnMonster, _impl_.monstertypeid_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::S_SpawnMonster, _impl_.x_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::S_SpawnMonster, _impl_.y_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::S_SpawnMonster, _impl_.dir_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_SpawnMonster, _impl_.monster_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_DespawnMonster, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -930,6 +921,7 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::Protocol::MonsterInfo, _impl_.monsterid_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::MonsterInfo, _impl_.monstertypeid_),
   PROTOBUF_FIELD_OFFSET(::Protocol::MonsterInfo, _impl_.pos_),
   PROTOBUF_FIELD_OFFSET(::Protocol::MonsterInfo, _impl_.direction_),
 };
@@ -955,26 +947,26 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 139, -1, -1, sizeof(::Protocol::S_ChangeRoomBegin)},
   { 147, -1, -1, sizeof(::Protocol::C_ChangeRoomReady)},
   { 154, -1, -1, sizeof(::Protocol::S_ChangeRoomCommit)},
-  { 163, -1, -1, sizeof(::Protocol::S_SpawnMonster)},
-  { 174, -1, -1, sizeof(::Protocol::S_DespawnMonster)},
-  { 182, -1, -1, sizeof(::Protocol::S_BroadcastMonsterMove)},
-  { 192, -1, -1, sizeof(::Protocol::S_BroadcastMonsterAttack)},
-  { 200, -1, -1, sizeof(::Protocol::S_BroadcastMonsterDeath)},
-  { 207, -1, -1, sizeof(::Protocol::C_PlayerAttackRequest)},
-  { 213, -1, -1, sizeof(::Protocol::S_BroadcastPlayerAttack)},
-  { 223, -1, -1, sizeof(::Protocol::C_InventoryRequest)},
-  { 229, -1, -1, sizeof(::Protocol::S_InventoryReply)},
-  { 236, -1, -1, sizeof(::Protocol::C_ItemUseRequest)},
-  { 243, -1, -1, sizeof(::Protocol::S_ItemUseReply)},
-  { 251, -1, -1, sizeof(::Protocol::S_InventoryUpdate)},
-  { 258, -1, -1, sizeof(::Protocol::S_SystemMessage)},
-  { 266, -1, -1, sizeof(::Protocol::S_MonsterList)},
-  { 274, -1, -1, sizeof(::Protocol::Vector2Info)},
-  { 282, -1, -1, sizeof(::Protocol::PlayerMoveInfo)},
-  { 292, -1, -1, sizeof(::Protocol::CharacterSummaryInfo)},
-  { 302, -1, -1, sizeof(::Protocol::PlayerInfo)},
-  { 312, -1, -1, sizeof(::Protocol::InventorySlotInfo)},
-  { 322, -1, -1, sizeof(::Protocol::MonsterInfo)},
+  { 162, -1, -1, sizeof(::Protocol::S_SpawnMonster)},
+  { 169, -1, -1, sizeof(::Protocol::S_DespawnMonster)},
+  { 177, -1, -1, sizeof(::Protocol::S_BroadcastMonsterMove)},
+  { 187, -1, -1, sizeof(::Protocol::S_BroadcastMonsterAttack)},
+  { 195, -1, -1, sizeof(::Protocol::S_BroadcastMonsterDeath)},
+  { 202, -1, -1, sizeof(::Protocol::C_PlayerAttackRequest)},
+  { 208, -1, -1, sizeof(::Protocol::S_BroadcastPlayerAttack)},
+  { 218, -1, -1, sizeof(::Protocol::C_InventoryRequest)},
+  { 224, -1, -1, sizeof(::Protocol::S_InventoryReply)},
+  { 231, -1, -1, sizeof(::Protocol::C_ItemUseRequest)},
+  { 238, -1, -1, sizeof(::Protocol::S_ItemUseReply)},
+  { 246, -1, -1, sizeof(::Protocol::S_InventoryUpdate)},
+  { 253, -1, -1, sizeof(::Protocol::S_SystemMessage)},
+  { 261, -1, -1, sizeof(::Protocol::S_MonsterList)},
+  { 269, -1, -1, sizeof(::Protocol::Vector2Info)},
+  { 277, -1, -1, sizeof(::Protocol::PlayerMoveInfo)},
+  { 287, -1, -1, sizeof(::Protocol::CharacterSummaryInfo)},
+  { 297, -1, -1, sizeof(::Protocol::PlayerInfo)},
+  { 307, -1, -1, sizeof(::Protocol::InventorySlotInfo)},
+  { 317, -1, -1, sizeof(::Protocol::MonsterInfo)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -1056,98 +1048,96 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "Moves\030\002 \003(\0132\030.Protocol.PlayerMoveInfo\"8\n"
   "\021S_ChangeRoomBegin\022\024\n\014transitionId\030\001 \001(\005"
   "\022\r\n\005mapId\030\002 \001(\005\")\n\021C_ChangeRoomReady\022\024\n\014"
-  "transitionId\030\001 \001(\005\"d\n\022S_ChangeRoomCommit"
-  "\022\024\n\014transitionId\030\001 \001(\005\022\r\n\005mapId\030\002 \001(\005\022)\n"
-  "\tsnapshots\030\003 \001(\0132\026.Protocol.S_PlayerList"
-  "\"s\n\016S_SpawnMonster\022\021\n\tmonsterId\030\001 \001(\005\022\025\n"
-  "\rmonsterTypeId\030\002 \001(\005\022\t\n\001x\030\003 \001(\005\022\t\n\001y\030\004 \001"
-  "(\005\022!\n\003dir\030\005 \001(\0162\024.Protocol.EDirection\"O\n"
-  "\020S_DespawnMonster\022\021\n\tmonsterId\030\001 \001(\005\022(\n\006"
-  "reason\030\002 \001(\0162\030.Protocol.EDespawnReason\"d"
-  "\n\026S_BroadcastMonsterMove\022\021\n\tmonsterId\030\001 "
-  "\001(\005\022\t\n\001x\030\002 \001(\005\022\t\n\001y\030\003 \001(\005\022!\n\003dir\030\004 \001(\0162\024"
-  ".Protocol.EDirection\"@\n\030S_BroadcastMonst"
-  "erAttack\022\021\n\tmonsterId\030\001 \001(\005\022\021\n\ttargetPid"
-  "\030\002 \001(\005\",\n\027S_BroadcastMonsterDeath\022\021\n\tmon"
-  "sterId\030\001 \001(\005\"\027\n\025C_PlayerAttackRequest\"^\n"
-  "\027S_BroadcastPlayerAttack\022\020\n\010playerId\030\001 \001"
-  "(\005\022\020\n\010targetId\030\002 \001(\005\022\016\n\006damage\030\003 \001(\005\022\017\n\007"
-  "hpAfter\030\004 \001(\005\"\024\n\022C_InventoryRequest\">\n\020S"
-  "_InventoryReply\022*\n\005slots\030\001 \003(\0132\033.Protoco"
-  "l.InventorySlotInfo\"%\n\020C_ItemUseRequest\022"
-  "\021\n\tslotIndex\030\001 \001(\005\"7\n\016S_ItemUseReply\022\017\n\007"
-  "success\030\001 \001(\010\022\024\n\014errorMessage\030\002 \001(\t\"F\n\021S"
-  "_InventoryUpdate\0221\n\014changedSlots\030\001 \003(\0132\033"
-  ".Protocol.InventorySlotInfo\"H\n\017S_SystemM"
-  "essage\022\017\n\007message\030\001 \001(\t\022$\n\004type\030\002 \001(\0162\026."
-  "Protocol.EMessageType\"G\n\rS_MonsterList\022\r"
-  "\n\005mapId\030\001 \001(\005\022\'\n\010monsters\030\002 \003(\0132\025.Protoc"
-  "ol.MonsterInfo\"#\n\013Vector2Info\022\t\n\001x\030\001 \001(\005"
-  "\022\t\n\001y\030\002 \001(\005\"\231\001\n\016PlayerMoveInfo\022\020\n\010player"
-  "Id\030\001 \001(\005\022\'\n\tdirection\030\002 \001(\0162\024.Protocol.E"
-  "Direction\022%\n\006newPos\030\003 \001(\0132\025.Protocol.Vec"
-  "tor2Info\022%\n\006result\030\004 \001(\0162\025.Protocol.EMov"
-  "eResult\"}\n\024CharacterSummaryInfo\022\020\n\010usern"
-  "ame\030\001 \001(\t\022\r\n\005level\030\002 \001(\005\022!\n\006gender\030\003 \001(\016"
-  "2\021.Protocol.EGender\022!\n\006region\030\004 \001(\0162\021.Pr"
-  "otocol.ERegion\"w\n\nPlayerInfo\022\n\n\002id\030\001 \001(\005"
-  "\022\020\n\010username\030\002 \001(\t\022\"\n\003pos\030\003 \001(\0132\025.Protoc"
-  "ol.Vector2Info\022\'\n\tdirection\030\004 \001(\0162\024.Prot"
-  "ocol.EDirection\"Z\n\021InventorySlotInfo\022\021\n\t"
-  "slotIndex\030\001 \001(\005\022\016\n\006itemId\030\002 \001(\005\022\r\n\005count"
-  "\030\003 \001(\005\022\023\n\013isQuickslot\030\004 \001(\010\"m\n\013MonsterIn"
-  "fo\022\021\n\tmonsterId\030\001 \001(\005\022\"\n\003pos\030\002 \001(\0132\025.Pro"
-  "tocol.Vector2Info\022\'\n\tdirection\030\003 \001(\0162\024.P"
-  "rotocol.EDirection*\206\007\n\005MsgId\022\027\n\023C_JWT_LO"
-  "GIN_REQUEST\020\000\022\025\n\021S_JWT_LOGIN_REPLY\020\001\022\036\n\032"
-  "C_CREATE_CHARACTER_REQUEST\020\002\022\034\n\030S_CREATE"
-  "_CHARACTER_REPLY\020\003\022\034\n\030C_CHARACTER_LIST_R"
-  "EQUEST\020\004\022\032\n\026S_CHARACTER_LIST_REPLY\020\005\022\036\n\032"
-  "C_DELETE_CHARACTER_REQUEST\020\006\022\034\n\030S_DELETE"
-  "_CHARACTER_REPLY\020\007\022\020\n\014C_ENTER_GAME\020\010\022\020\n\014"
-  "S_ENTER_GAME\020\t\022\021\n\rS_PLAYER_LIST\020\n\022\034\n\030S_B"
-  "ROADCAST_PLAYER_ENTER\020\013\022\020\n\014C_LEAVE_GAME\020"
-  "\014\022\020\n\014S_LEAVE_GAME\020\r\022\034\n\030S_BROADCAST_PLAYE"
-  "R_LEAVE\020\016\022\031\n\025C_PLAYER_MOVE_REQUEST\020\017\022\027\n\023"
-  "S_PLAYER_MOVE_REPLY\020\020\022\033\n\027S_BROADCAST_PLA"
-  "YER_MOVE\020\021\022\027\n\023S_CHANGE_ROOM_BEGIN\020\022\022\027\n\023C"
-  "_CHANGE_ROOM_READY\020\023\022\030\n\024S_CHANGE_ROOM_CO"
-  "MMIT\020\024\022\023\n\017S_SPAWN_MONSTER\020\025\022\025\n\021S_DESPAWN"
-  "_MONSTER\020\026\022\034\n\030S_BROADCAST_MONSTER_MOVE\020\027"
-  "\022\036\n\032S_BROADCAST_MONSTER_ATTACK\020\030\022\035\n\031S_BR"
-  "OADCAST_MONSTER_DEATH\020\031\022\033\n\027C_PLAYER_ATTA"
-  "CK_REQUEST\020\032\022\035\n\031S_BROADCAST_PLAYER_ATTAC"
-  "K\020\033\022\027\n\023C_INVENTORY_REQUEST\020\034\022\025\n\021S_INVENT"
-  "ORY_REPLY\020\035\022\026\n\022C_ITEM_USE_REQUEST\020\036\022\024\n\020S"
-  "_ITEM_USE_REPLY\020\037\022\026\n\022S_INVENTORY_UPDATE\020"
-  " \022\024\n\020S_SYSTEM_MESSAGE\020!\022\022\n\016S_MONSTER_LIS"
-  "T\020\"*S\n\014ELoginResult\022\013\n\007SUCCESS\020\000\022\021\n\rINVA"
-  "LID_TOKEN\020\001\022\021\n\rTOKEN_EXPIRED\020\002\022\020\n\014SERVER"
-  "_ERROR\020\003*>\n\007EGender\022\017\n\013GENDER_NONE\020\000\022\017\n\013"
-  "GENDER_MALE\020\001\022\021\n\rGENDER_FEMALE\020\002*:\n\007EReg"
-  "ion\022\017\n\013REGION_NONE\020\000\022\r\n\tREGION_GO\020\001\022\017\n\013R"
-  "EGION_BACK\020\002*C\n\nEDirection\022\n\n\006DIR_UP\020\000\022\014"
-  "\n\010DIR_DOWN\020\001\022\014\n\010DIR_LEFT\020\002\022\r\n\tDIR_RIGHT\020"
-  "\003*|\n\014ELeaveReason\022\021\n\rLEAVE_UNKNOWN\020\000\022\020\n\014"
-  "LEAVE_LOGOUT\020\001\022\025\n\021LEAVE_CHANGE_ROOM\020\002\022\032\n"
-  "\026LEAVE_CHANGE_CHARACTER\020\003\022\024\n\020LEAVE_DISCO"
-  "NNECT\020\004*_\n\013EMoveResult\022\020\n\014MOVE_UNKNOWN\020\000"
-  "\022\013\n\007MOVE_OK\020\001\022\014\n\010MOVE_DIR\020\002\022\021\n\rMOVE_COOL"
-  "DOWN\020\003\022\020\n\014MOVE_BLOCKED\020\004*I\n\014EEnterReason"
-  "\022\021\n\rENTER_UNKNOWN\020\000\022\017\n\013ENTER_LOGIN\020\001\022\025\n\021"
-  "ENTER_CHANGE_ROOM\020\002*9\n\016EDespawnReason\022\023\n"
-  "\017DESPAWN_UNKNOWN\020\000\022\022\n\016DESPAWN_KILLED\020\001*~"
-  "\n\tEItemType\022\025\n\021ITEM_TYPE_UNKNOWN\020\000\022\030\n\024IT"
-  "EM_TYPE_CONSUMABLE\020\001\022\027\n\023ITEM_TYPE_EQUIPM"
-  "ENT\020\002\022\023\n\017ITEM_TYPE_QUEST\020\003\022\022\n\016ITEM_TYPE_"
-  "MISC\020\004*a\n\014EMessageType\022\020\n\014MESSAGE_INFO\020\000"
-  "\022\023\n\017MESSAGE_WARNING\020\001\022\021\n\rMESSAGE_ERROR\020\002"
-  "\022\027\n\023MESSAGE_DROP_FAILED\020\003B\033\252\002\030Google.Pro"
-  "tobuf.Protocolb\006proto3"
+  "transitionId\030\001 \001(\005\"9\n\022S_ChangeRoomCommit"
+  "\022\024\n\014transitionId\030\001 \001(\005\022\r\n\005mapId\030\002 \001(\005\"8\n"
+  "\016S_SpawnMonster\022&\n\007monster\030\001 \001(\0132\025.Proto"
+  "col.MonsterInfo\"O\n\020S_DespawnMonster\022\021\n\tm"
+  "onsterId\030\001 \001(\005\022(\n\006reason\030\002 \001(\0162\030.Protoco"
+  "l.EDespawnReason\"d\n\026S_BroadcastMonsterMo"
+  "ve\022\021\n\tmonsterId\030\001 \001(\005\022\t\n\001x\030\002 \001(\005\022\t\n\001y\030\003 "
+  "\001(\005\022!\n\003dir\030\004 \001(\0162\024.Protocol.EDirection\"@"
+  "\n\030S_BroadcastMonsterAttack\022\021\n\tmonsterId\030"
+  "\001 \001(\005\022\021\n\ttargetPid\030\002 \001(\005\",\n\027S_BroadcastM"
+  "onsterDeath\022\021\n\tmonsterId\030\001 \001(\005\"\027\n\025C_Play"
+  "erAttackRequest\"^\n\027S_BroadcastPlayerAtta"
+  "ck\022\020\n\010playerId\030\001 \001(\005\022\020\n\010targetId\030\002 \001(\005\022\016"
+  "\n\006damage\030\003 \001(\005\022\017\n\007hpAfter\030\004 \001(\005\"\024\n\022C_Inv"
+  "entoryRequest\">\n\020S_InventoryReply\022*\n\005slo"
+  "ts\030\001 \003(\0132\033.Protocol.InventorySlotInfo\"%\n"
+  "\020C_ItemUseRequest\022\021\n\tslotIndex\030\001 \001(\005\"7\n\016"
+  "S_ItemUseReply\022\017\n\007success\030\001 \001(\010\022\024\n\014error"
+  "Message\030\002 \001(\t\"F\n\021S_InventoryUpdate\0221\n\014ch"
+  "angedSlots\030\001 \003(\0132\033.Protocol.InventorySlo"
+  "tInfo\"H\n\017S_SystemMessage\022\017\n\007message\030\001 \001("
+  "\t\022$\n\004type\030\002 \001(\0162\026.Protocol.EMessageType\""
+  "G\n\rS_MonsterList\022\r\n\005mapId\030\001 \001(\005\022\'\n\010monst"
+  "ers\030\002 \003(\0132\025.Protocol.MonsterInfo\"#\n\013Vect"
+  "or2Info\022\t\n\001x\030\001 \001(\005\022\t\n\001y\030\002 \001(\005\"\231\001\n\016Player"
+  "MoveInfo\022\020\n\010playerId\030\001 \001(\005\022\'\n\tdirection\030"
+  "\002 \001(\0162\024.Protocol.EDirection\022%\n\006newPos\030\003 "
+  "\001(\0132\025.Protocol.Vector2Info\022%\n\006result\030\004 \001"
+  "(\0162\025.Protocol.EMoveResult\"}\n\024CharacterSu"
+  "mmaryInfo\022\020\n\010username\030\001 \001(\t\022\r\n\005level\030\002 \001"
+  "(\005\022!\n\006gender\030\003 \001(\0162\021.Protocol.EGender\022!\n"
+  "\006region\030\004 \001(\0162\021.Protocol.ERegion\"w\n\nPlay"
+  "erInfo\022\n\n\002id\030\001 \001(\005\022\020\n\010username\030\002 \001(\t\022\"\n\003"
+  "pos\030\003 \001(\0132\025.Protocol.Vector2Info\022\'\n\tdire"
+  "ction\030\004 \001(\0162\024.Protocol.EDirection\"Z\n\021Inv"
+  "entorySlotInfo\022\021\n\tslotIndex\030\001 \001(\005\022\016\n\006ite"
+  "mId\030\002 \001(\005\022\r\n\005count\030\003 \001(\005\022\023\n\013isQuickslot\030"
+  "\004 \001(\010\"\204\001\n\013MonsterInfo\022\021\n\tmonsterId\030\001 \001(\005"
+  "\022\025\n\rmonsterTypeId\030\002 \001(\005\022\"\n\003pos\030\003 \001(\0132\025.P"
+  "rotocol.Vector2Info\022\'\n\tdirection\030\004 \001(\0162\024"
+  ".Protocol.EDirection*\206\007\n\005MsgId\022\027\n\023C_JWT_"
+  "LOGIN_REQUEST\020\000\022\025\n\021S_JWT_LOGIN_REPLY\020\001\022\036"
+  "\n\032C_CREATE_CHARACTER_REQUEST\020\002\022\034\n\030S_CREA"
+  "TE_CHARACTER_REPLY\020\003\022\034\n\030C_CHARACTER_LIST"
+  "_REQUEST\020\004\022\032\n\026S_CHARACTER_LIST_REPLY\020\005\022\036"
+  "\n\032C_DELETE_CHARACTER_REQUEST\020\006\022\034\n\030S_DELE"
+  "TE_CHARACTER_REPLY\020\007\022\020\n\014C_ENTER_GAME\020\010\022\020"
+  "\n\014S_ENTER_GAME\020\t\022\021\n\rS_PLAYER_LIST\020\n\022\034\n\030S"
+  "_BROADCAST_PLAYER_ENTER\020\013\022\020\n\014C_LEAVE_GAM"
+  "E\020\014\022\020\n\014S_LEAVE_GAME\020\r\022\034\n\030S_BROADCAST_PLA"
+  "YER_LEAVE\020\016\022\031\n\025C_PLAYER_MOVE_REQUEST\020\017\022\027"
+  "\n\023S_PLAYER_MOVE_REPLY\020\020\022\033\n\027S_BROADCAST_P"
+  "LAYER_MOVE\020\021\022\027\n\023S_CHANGE_ROOM_BEGIN\020\022\022\027\n"
+  "\023C_CHANGE_ROOM_READY\020\023\022\030\n\024S_CHANGE_ROOM_"
+  "COMMIT\020\024\022\023\n\017S_SPAWN_MONSTER\020\025\022\025\n\021S_DESPA"
+  "WN_MONSTER\020\026\022\034\n\030S_BROADCAST_MONSTER_MOVE"
+  "\020\027\022\036\n\032S_BROADCAST_MONSTER_ATTACK\020\030\022\035\n\031S_"
+  "BROADCAST_MONSTER_DEATH\020\031\022\033\n\027C_PLAYER_AT"
+  "TACK_REQUEST\020\032\022\035\n\031S_BROADCAST_PLAYER_ATT"
+  "ACK\020\033\022\027\n\023C_INVENTORY_REQUEST\020\034\022\025\n\021S_INVE"
+  "NTORY_REPLY\020\035\022\026\n\022C_ITEM_USE_REQUEST\020\036\022\024\n"
+  "\020S_ITEM_USE_REPLY\020\037\022\026\n\022S_INVENTORY_UPDAT"
+  "E\020 \022\024\n\020S_SYSTEM_MESSAGE\020!\022\022\n\016S_MONSTER_L"
+  "IST\020\"*S\n\014ELoginResult\022\013\n\007SUCCESS\020\000\022\021\n\rIN"
+  "VALID_TOKEN\020\001\022\021\n\rTOKEN_EXPIRED\020\002\022\020\n\014SERV"
+  "ER_ERROR\020\003*>\n\007EGender\022\017\n\013GENDER_NONE\020\000\022\017"
+  "\n\013GENDER_MALE\020\001\022\021\n\rGENDER_FEMALE\020\002*:\n\007ER"
+  "egion\022\017\n\013REGION_NONE\020\000\022\r\n\tREGION_GO\020\001\022\017\n"
+  "\013REGION_BACK\020\002*C\n\nEDirection\022\n\n\006DIR_UP\020\000"
+  "\022\014\n\010DIR_DOWN\020\001\022\014\n\010DIR_LEFT\020\002\022\r\n\tDIR_RIGH"
+  "T\020\003*|\n\014ELeaveReason\022\021\n\rLEAVE_UNKNOWN\020\000\022\020"
+  "\n\014LEAVE_LOGOUT\020\001\022\025\n\021LEAVE_CHANGE_ROOM\020\002\022"
+  "\032\n\026LEAVE_CHANGE_CHARACTER\020\003\022\024\n\020LEAVE_DIS"
+  "CONNECT\020\004*_\n\013EMoveResult\022\020\n\014MOVE_UNKNOWN"
+  "\020\000\022\013\n\007MOVE_OK\020\001\022\014\n\010MOVE_DIR\020\002\022\021\n\rMOVE_CO"
+  "OLDOWN\020\003\022\020\n\014MOVE_BLOCKED\020\004*I\n\014EEnterReas"
+  "on\022\021\n\rENTER_UNKNOWN\020\000\022\017\n\013ENTER_LOGIN\020\001\022\025"
+  "\n\021ENTER_CHANGE_ROOM\020\002*9\n\016EDespawnReason\022"
+  "\023\n\017DESPAWN_UNKNOWN\020\000\022\022\n\016DESPAWN_KILLED\020\001"
+  "*~\n\tEItemType\022\025\n\021ITEM_TYPE_UNKNOWN\020\000\022\030\n\024"
+  "ITEM_TYPE_CONSUMABLE\020\001\022\027\n\023ITEM_TYPE_EQUI"
+  "PMENT\020\002\022\023\n\017ITEM_TYPE_QUEST\020\003\022\022\n\016ITEM_TYP"
+  "E_MISC\020\004*a\n\014EMessageType\022\020\n\014MESSAGE_INFO"
+  "\020\000\022\023\n\017MESSAGE_WARNING\020\001\022\021\n\rMESSAGE_ERROR"
+  "\020\002\022\027\n\023MESSAGE_DROP_FAILED\020\003B\033\252\002\030Google.P"
+  "rotobuf.Protocolb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 4862, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 4784, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
     &descriptor_table_Protocol_2eproto_once, nullptr, 0, 41,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
@@ -5430,13 +5420,8 @@ void C_ChangeRoomReady::InternalSwap(C_ChangeRoomReady* other) {
 
 class S_ChangeRoomCommit::_Internal {
  public:
-  static const ::Protocol::S_PlayerList& snapshots(const S_ChangeRoomCommit* msg);
 };
 
-const ::Protocol::S_PlayerList&
-S_ChangeRoomCommit::_Internal::snapshots(const S_ChangeRoomCommit* msg) {
-  return *msg->_impl_.snapshots_;
-}
 S_ChangeRoomCommit::S_ChangeRoomCommit(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
@@ -5447,15 +5432,11 @@ S_ChangeRoomCommit::S_ChangeRoomCommit(const S_ChangeRoomCommit& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   S_ChangeRoomCommit* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.snapshots_){nullptr}
-    , decltype(_impl_.transitionid_){}
+      decltype(_impl_.transitionid_){}
     , decltype(_impl_.mapid_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_snapshots()) {
-    _this->_impl_.snapshots_ = new ::Protocol::S_PlayerList(*from._impl_.snapshots_);
-  }
   ::memcpy(&_impl_.transitionid_, &from._impl_.transitionid_,
     static_cast<size_t>(reinterpret_cast<char*>(&_impl_.mapid_) -
     reinterpret_cast<char*>(&_impl_.transitionid_)) + sizeof(_impl_.mapid_));
@@ -5467,8 +5448,7 @@ inline void S_ChangeRoomCommit::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.snapshots_){nullptr}
-    , decltype(_impl_.transitionid_){0}
+      decltype(_impl_.transitionid_){0}
     , decltype(_impl_.mapid_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
@@ -5485,7 +5465,6 @@ S_ChangeRoomCommit::~S_ChangeRoomCommit() {
 
 inline void S_ChangeRoomCommit::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  if (this != internal_default_instance()) delete _impl_.snapshots_;
 }
 
 void S_ChangeRoomCommit::SetCachedSize(int size) const {
@@ -5498,10 +5477,6 @@ void S_ChangeRoomCommit::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaForAllocation() == nullptr && _impl_.snapshots_ != nullptr) {
-    delete _impl_.snapshots_;
-  }
-  _impl_.snapshots_ = nullptr;
   ::memset(&_impl_.transitionid_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&_impl_.mapid_) -
       reinterpret_cast<char*>(&_impl_.transitionid_)) + sizeof(_impl_.mapid_));
@@ -5526,14 +5501,6 @@ const char* S_ChangeRoomCommit::_InternalParse(const char* ptr, ::_pbi::ParseCon
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
           _impl_.mapid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // .Protocol.S_PlayerList snapshots = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          ptr = ctx->ParseMessage(_internal_mutable_snapshots(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -5579,13 +5546,6 @@ uint8_t* S_ChangeRoomCommit::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_mapid(), target);
   }
 
-  // .Protocol.S_PlayerList snapshots = 3;
-  if (this->_internal_has_snapshots()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(3, _Internal::snapshots(this),
-        _Internal::snapshots(this).GetCachedSize(), target, stream);
-  }
-
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -5601,13 +5561,6 @@ size_t S_ChangeRoomCommit::ByteSizeLong() const {
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
-
-  // .Protocol.S_PlayerList snapshots = 3;
-  if (this->_internal_has_snapshots()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *_impl_.snapshots_);
-  }
 
   // int32 transitionId = 1;
   if (this->_internal_transitionid() != 0) {
@@ -5637,10 +5590,6 @@ void S_ChangeRoomCommit::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, con
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_has_snapshots()) {
-    _this->_internal_mutable_snapshots()->::Protocol::S_PlayerList::MergeFrom(
-        from._internal_snapshots());
-  }
   if (from._internal_transitionid() != 0) {
     _this->_internal_set_transitionid(from._internal_transitionid());
   }
@@ -5667,9 +5616,9 @@ void S_ChangeRoomCommit::InternalSwap(S_ChangeRoomCommit* other) {
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(S_ChangeRoomCommit, _impl_.mapid_)
       + sizeof(S_ChangeRoomCommit::_impl_.mapid_)
-      - PROTOBUF_FIELD_OFFSET(S_ChangeRoomCommit, _impl_.snapshots_)>(
-          reinterpret_cast<char*>(&_impl_.snapshots_),
-          reinterpret_cast<char*>(&other->_impl_.snapshots_));
+      - PROTOBUF_FIELD_OFFSET(S_ChangeRoomCommit, _impl_.transitionid_)>(
+          reinterpret_cast<char*>(&_impl_.transitionid_),
+          reinterpret_cast<char*>(&other->_impl_.transitionid_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata S_ChangeRoomCommit::GetMetadata() const {
@@ -5682,8 +5631,13 @@ void S_ChangeRoomCommit::InternalSwap(S_ChangeRoomCommit* other) {
 
 class S_SpawnMonster::_Internal {
  public:
+  static const ::Protocol::MonsterInfo& monster(const S_SpawnMonster* msg);
 };
 
+const ::Protocol::MonsterInfo&
+S_SpawnMonster::_Internal::monster(const S_SpawnMonster* msg) {
+  return *msg->_impl_.monster_;
+}
 S_SpawnMonster::S_SpawnMonster(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
@@ -5694,17 +5648,13 @@ S_SpawnMonster::S_SpawnMonster(const S_SpawnMonster& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   S_SpawnMonster* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.monsterid_){}
-    , decltype(_impl_.monstertypeid_){}
-    , decltype(_impl_.x_){}
-    , decltype(_impl_.y_){}
-    , decltype(_impl_.dir_){}
+      decltype(_impl_.monster_){nullptr}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&_impl_.monsterid_, &from._impl_.monsterid_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.dir_) -
-    reinterpret_cast<char*>(&_impl_.monsterid_)) + sizeof(_impl_.dir_));
+  if (from._internal_has_monster()) {
+    _this->_impl_.monster_ = new ::Protocol::MonsterInfo(*from._impl_.monster_);
+  }
   // @@protoc_insertion_point(copy_constructor:Protocol.S_SpawnMonster)
 }
 
@@ -5713,11 +5663,7 @@ inline void S_SpawnMonster::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.monsterid_){0}
-    , decltype(_impl_.monstertypeid_){0}
-    , decltype(_impl_.x_){0}
-    , decltype(_impl_.y_){0}
-    , decltype(_impl_.dir_){0}
+      decltype(_impl_.monster_){nullptr}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -5733,6 +5679,7 @@ S_SpawnMonster::~S_SpawnMonster() {
 
 inline void S_SpawnMonster::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete _impl_.monster_;
 }
 
 void S_SpawnMonster::SetCachedSize(int size) const {
@@ -5745,9 +5692,10 @@ void S_SpawnMonster::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&_impl_.monsterid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_impl_.dir_) -
-      reinterpret_cast<char*>(&_impl_.monsterid_)) + sizeof(_impl_.dir_));
+  if (GetArenaForAllocation() == nullptr && _impl_.monster_ != nullptr) {
+    delete _impl_.monster_;
+  }
+  _impl_.monster_ = nullptr;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -5757,44 +5705,11 @@ const char* S_SpawnMonster::_InternalParse(const char* ptr, ::_pbi::ParseContext
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // int32 monsterId = 1;
+      // .Protocol.MonsterInfo monster = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          _impl_.monsterid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_monster(), ptr);
           CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // int32 monsterTypeId = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
-          _impl_.monstertypeid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // int32 x = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
-          _impl_.x_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // int32 y = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
-          _impl_.y_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // .Protocol.EDirection dir = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
-          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-          _internal_set_dir(static_cast<::Protocol::EDirection>(val));
         } else
           goto handle_unusual;
         continue;
@@ -5827,35 +5742,11 @@ uint8_t* S_SpawnMonster::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // int32 monsterId = 1;
-  if (this->_internal_monsterid() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_monsterid(), target);
-  }
-
-  // int32 monsterTypeId = 2;
-  if (this->_internal_monstertypeid() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_monstertypeid(), target);
-  }
-
-  // int32 x = 3;
-  if (this->_internal_x() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(3, this->_internal_x(), target);
-  }
-
-  // int32 y = 4;
-  if (this->_internal_y() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(4, this->_internal_y(), target);
-  }
-
-  // .Protocol.EDirection dir = 5;
-  if (this->_internal_dir() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteEnumToArray(
-      5, this->_internal_dir(), target);
+  // .Protocol.MonsterInfo monster = 1;
+  if (this->_internal_has_monster()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::monster(this),
+        _Internal::monster(this).GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -5874,30 +5765,11 @@ size_t S_SpawnMonster::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // int32 monsterId = 1;
-  if (this->_internal_monsterid() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_monsterid());
-  }
-
-  // int32 monsterTypeId = 2;
-  if (this->_internal_monstertypeid() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_monstertypeid());
-  }
-
-  // int32 x = 3;
-  if (this->_internal_x() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_x());
-  }
-
-  // int32 y = 4;
-  if (this->_internal_y() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_y());
-  }
-
-  // .Protocol.EDirection dir = 5;
-  if (this->_internal_dir() != 0) {
+  // .Protocol.MonsterInfo monster = 1;
+  if (this->_internal_has_monster()) {
     total_size += 1 +
-      ::_pbi::WireFormatLite::EnumSize(this->_internal_dir());
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.monster_);
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -5918,20 +5790,9 @@ void S_SpawnMonster::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const :
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_monsterid() != 0) {
-    _this->_internal_set_monsterid(from._internal_monsterid());
-  }
-  if (from._internal_monstertypeid() != 0) {
-    _this->_internal_set_monstertypeid(from._internal_monstertypeid());
-  }
-  if (from._internal_x() != 0) {
-    _this->_internal_set_x(from._internal_x());
-  }
-  if (from._internal_y() != 0) {
-    _this->_internal_set_y(from._internal_y());
-  }
-  if (from._internal_dir() != 0) {
-    _this->_internal_set_dir(from._internal_dir());
+  if (from._internal_has_monster()) {
+    _this->_internal_mutable_monster()->::Protocol::MonsterInfo::MergeFrom(
+        from._internal_monster());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -5950,12 +5811,7 @@ bool S_SpawnMonster::IsInitialized() const {
 void S_SpawnMonster::InternalSwap(S_SpawnMonster* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(S_SpawnMonster, _impl_.dir_)
-      + sizeof(S_SpawnMonster::_impl_.dir_)
-      - PROTOBUF_FIELD_OFFSET(S_SpawnMonster, _impl_.monsterid_)>(
-          reinterpret_cast<char*>(&_impl_.monsterid_),
-          reinterpret_cast<char*>(&other->_impl_.monsterid_));
+  swap(_impl_.monster_, other->_impl_.monster_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata S_SpawnMonster::GetMetadata() const {
@@ -9766,6 +9622,7 @@ MonsterInfo::MonsterInfo(const MonsterInfo& from)
   new (&_impl_) Impl_{
       decltype(_impl_.pos_){nullptr}
     , decltype(_impl_.monsterid_){}
+    , decltype(_impl_.monstertypeid_){}
     , decltype(_impl_.direction_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
@@ -9786,6 +9643,7 @@ inline void MonsterInfo::SharedCtor(
   new (&_impl_) Impl_{
       decltype(_impl_.pos_){nullptr}
     , decltype(_impl_.monsterid_){0}
+    , decltype(_impl_.monstertypeid_){0}
     , decltype(_impl_.direction_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
@@ -9839,17 +9697,25 @@ const char* MonsterInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext* c
         } else
           goto handle_unusual;
         continue;
-      // .Protocol.Vector2Info pos = 2;
+      // int32 monsterTypeId = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.monstertypeid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .Protocol.Vector2Info pos = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           ptr = ctx->ParseMessage(_internal_mutable_pos(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
-      // .Protocol.EDirection direction = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+      // .Protocol.EDirection direction = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
           uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
           _internal_set_direction(static_cast<::Protocol::EDirection>(val));
@@ -9891,18 +9757,24 @@ uint8_t* MonsterInfo::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_monsterid(), target);
   }
 
-  // .Protocol.Vector2Info pos = 2;
+  // int32 monsterTypeId = 2;
+  if (this->_internal_monstertypeid() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_monstertypeid(), target);
+  }
+
+  // .Protocol.Vector2Info pos = 3;
   if (this->_internal_has_pos()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(2, _Internal::pos(this),
+      InternalWriteMessage(3, _Internal::pos(this),
         _Internal::pos(this).GetCachedSize(), target, stream);
   }
 
-  // .Protocol.EDirection direction = 3;
+  // .Protocol.EDirection direction = 4;
   if (this->_internal_direction() != 0) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
-      3, this->_internal_direction(), target);
+      4, this->_internal_direction(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -9921,7 +9793,7 @@ size_t MonsterInfo::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // .Protocol.Vector2Info pos = 2;
+  // .Protocol.Vector2Info pos = 3;
   if (this->_internal_has_pos()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
@@ -9933,7 +9805,12 @@ size_t MonsterInfo::ByteSizeLong() const {
     total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_monsterid());
   }
 
-  // .Protocol.EDirection direction = 3;
+  // int32 monsterTypeId = 2;
+  if (this->_internal_monstertypeid() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_monstertypeid());
+  }
+
+  // .Protocol.EDirection direction = 4;
   if (this->_internal_direction() != 0) {
     total_size += 1 +
       ::_pbi::WireFormatLite::EnumSize(this->_internal_direction());
@@ -9963,6 +9840,9 @@ void MonsterInfo::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PR
   }
   if (from._internal_monsterid() != 0) {
     _this->_internal_set_monsterid(from._internal_monsterid());
+  }
+  if (from._internal_monstertypeid() != 0) {
+    _this->_internal_set_monstertypeid(from._internal_monstertypeid());
   }
   if (from._internal_direction() != 0) {
     _this->_internal_set_direction(from._internal_direction());
