@@ -48,14 +48,17 @@ void MonsterCombatSystem::TickOne(Monster& m, IMonsterEntityLinker& linker, IMon
 		int dist = Mdist(m.core.pos, Pos2{ pv.x, pv.y });
 
 		if (dist <= stats.attackRangeTiles) {  // 1칸 거리
-			if (m.state != MState::Combat) {
-				GConsoleLogger->WriteStdOut(Color::GREEN, L"[Combat] Monster:%d enters Ready state (target player:%d)", m.core.id, bestId);
+			if (m.state != MState::Combat && m.state != MState::Ready) {
+				GConsoleLogger->WriteStdOut(Color::GREEN, L"[Combat] Monster:%d enters Ready state (target player:%d)\n", m.core.id, bestId);
 				m.state = MState::Ready;  // 처음 접근시만 Ready
 			}
 		}
-		else {  // 멀리 있으면
-			GConsoleLogger->WriteStdOut(Color::WHITE, L"[Combat] Monster:%d chasing player:%d (dist:%d)", m.core.id, bestId, dist);
-			m.state = MState::Chase;  // 추적
+		else{  // 멀리 있고 전투 모드면 추적
+			if (m.state == MState::Combat)
+			{
+				GConsoleLogger->WriteStdOut(Color::WHITE, L"[Combat] Monster:%d chasing player in Combat state:%d (dist:%d)\n", m.core.id, bestId, dist);
+				m.state = MState::Chase;  // 추적
+			}
 		}
 		m.targetPlayerId = bestId;
 	}
@@ -70,7 +73,7 @@ void MonsterCombatSystem::TickOne(Monster& m, IMonsterEntityLinker& linker, IMon
 			if (linker.TryGetPlayer(bestId, pv)) {
 				int dist = Mdist(m.core.pos, Pos2{ pv.x, pv.y });
 				if (dist <= stats.attackRangeTiles) {
-					GConsoleLogger->WriteStdOut(Color::WHITE, L"[Combat] Monster:%d attacks player:%d (dmg:%d)", m.core.id, bestId, stats.atk);
+					GConsoleLogger->WriteStdOut(Color::WHITE, L"[Combat] Monster:%d attacks player:%d (dmg:%d)\n", m.core.id, bestId, stats.atk);
 					linker.ApplyDamageToPlayer(bestId, stats.atk, (int)m.core.id);
 					cast.BroadcastMonsterAttack(m.core.id, bestId);
 					m.nextAttackAtMs = now + stats.attackCooldownMs;

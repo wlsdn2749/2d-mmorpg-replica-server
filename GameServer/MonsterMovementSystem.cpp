@@ -102,7 +102,6 @@ void MonsterMovementSystem::TickOne(Monster& m,
 			break;
 		}
 		case MState::Chase:
-		case MState::Combat:
 		{
 			if (m.targetPlayerId == -1)
 			{
@@ -115,7 +114,7 @@ void MonsterMovementSystem::TickOne(Monster& m,
 			Protocol::EDirection dir = Protocol::EDirection::DIR_UP; // 
 			if (linker.TryGetPlayer(m.targetPlayerId, pv)) {
 				dir = FaceTo(m.core.pos, Pos2{ pv.x, pv.y });
-				GConsoleLogger->WriteStdOut(Color::WHITE, L"[Movement] Monster:%d tracking player:%d from (%d,%d) to (%d,%d) \n", 
+				GConsoleLogger->WriteStdOut(Color::WHITE, L"[Movement] Monster:%d tracking player:%d from (%d,%d) to (%d,%d) \n",
 					m.core.id, m.targetPlayerId, m.core.pos.x, m.core.pos.y, pv.x, pv.y);
 			}
 
@@ -125,6 +124,24 @@ void MonsterMovementSystem::TickOne(Monster& m,
 			else
 				m.nextMoveAtMs = clock.NowMs() + 200; // 막히면 짧게 대기
 			break;
+		}
+		case MState::Combat:
+		{
+			// 전투 시 이동 X
+			if (m.targetPlayerId == -1)
+			{
+				m.state = MState::Patrol;
+				m.wasAttacked = false;
+				break;
+			}
+
+			IMonsterEntityLinker::PlayerView pv;
+			Protocol::EDirection dir = Protocol::EDirection::DIR_UP; // 
+			if (linker.TryGetPlayer(m.targetPlayerId, pv)) {
+				dir = FaceTo(m.core.pos, Pos2{ pv.x, pv.y });
+				GConsoleLogger->WriteStdOut(Color::WHITE, L"[Movement] Monster:%d Entering Combat System player:%d from (%d,%d) to (%d,%d) \n",
+					m.core.id, m.targetPlayerId, m.core.pos.x, m.core.pos.y, pv.x, pv.y);
+			}
 		}
 		case MState::Return:
 		{
