@@ -9,7 +9,7 @@ public static class MonsterSync
     static S_MonsterList _pendingSnapshot;
     static readonly Dictionary<int, MonsterInfo> _pendingSpawns = new();
     static readonly Dictionary<int, S_BroadcastMonsterMove> _pendingMoves = new();
-
+    static readonly Dictionary<int, S_BroadcastMonsterAttack> _pendingAttacks = new();
     // 맵이 바뀐다(또는 최초 접속으로 이 맵 진입한다)
     public static void OnMapActivated(int mapId)
     {
@@ -99,8 +99,19 @@ public static class MonsterSync
         if (!MonsterSpawner.Exists(msg.MonsterId)) { _pendingMoves[msg.MonsterId] = msg; return; }
         MonsterSpawner.UpdateMove(msg);
     }
+    public static void OnAttack(S_BroadcastMonsterAttack msg)
+    {
+        if (!MonsterSpawner.Exists(msg.MonsterId)) { _pendingAttacks[msg.MonsterId] = msg; return; }
+        MonsterSpawner.UpdateAttack(msg);
+    }
 
     public static void OnDespawn(S_DespawnMonster msg)
+    {
+        _pendingMoves.Remove(msg.MonsterId);
+        _pendingSpawns.Remove(msg.MonsterId);
+        MonsterSpawner.Despawn(msg);
+    }
+    public static void OnDespawn(S_BroadcastMonsterDeath msg)
     {
         _pendingMoves.Remove(msg.MonsterId);
         _pendingSpawns.Remove(msg.MonsterId);

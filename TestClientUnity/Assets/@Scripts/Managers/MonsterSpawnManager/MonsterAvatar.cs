@@ -22,7 +22,10 @@ public class MonsterAvatar : MonoBehaviour
         _target = null;
         if (_anim) _anim.SetBool("IsMoving", false);
     }
-
+    public void OnAttack()
+    {
+        if (_anim) _anim.SetTrigger("Attack");
+    }
     public void Move()
     {
         if (!_target.HasValue) return;

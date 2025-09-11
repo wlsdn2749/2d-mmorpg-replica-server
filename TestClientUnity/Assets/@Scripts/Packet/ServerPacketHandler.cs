@@ -378,7 +378,7 @@ namespace Packet
         }
         internal static void HANDLE_S_DespawnMonster(PacketSession session, S_DespawnMonster despawnMonster)
         {
-            Debug.Log("몬스터 삭제");
+            Debug.Log("[HANDLE_S_DespawnMonster] 패킷 수신완료");
             MonsterSync.OnDespawn(despawnMonster);
         }
         internal static void HANDLE_S_BroadcastMonsterMove(PacketSession session, S_BroadcastMonsterMove broadMonsterMove)
@@ -389,12 +389,12 @@ namespace Packet
         internal static void HANDLE_S_BroadcastMonsterAttack(PacketSession session, S_BroadcastMonsterAttack broadMonsterAtk)
         {
             Debug.Log($"{broadMonsterAtk.TargetPid},{broadMonsterAtk.MonsterId}");
-
-
+            MonsterSync.OnAttack(broadMonsterAtk);
         }
         internal static void HANDLE_S_BroadcastMonsterDeath(PacketSession session, S_BroadcastMonsterDeath broadMonsterDeath)
         {
-
+            Debug.Log("[HANDLE_S_BroadcastMonsterDeath] 패킷 수신완료");    
+            MonsterSync.OnDespawn(broadMonsterDeath);
         }
         internal static void HANDLE_S_BroadcastPlayerAttack(PacketSession session, S_BroadcastPlayerAttack broadPlayerAtk)
         {
@@ -422,6 +422,18 @@ namespace Packet
         {
             Debug.Log($"[SystemMessage] {sysMsg.Message}");
             
+        }
+        internal static void HANDLE_S_NpcInteractReply(PacketSession session, S_NpcInteractReply npcInter)
+        {
+
+        }
+        internal static void HANDLE_S_NpcShopOpen(PacketSession session, S_NpcShopOpen shopOpen)
+        {
+
+        }
+        internal static void HANDLE_S_NpcShopBuyReply(PacketSession session, S_NpcShopBuyReply buyItem)
+        {
+
         }
     }
 }

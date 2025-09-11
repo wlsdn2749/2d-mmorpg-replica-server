@@ -75,6 +75,21 @@ public static class MonsterSpawner
         av.SmoothMoveTo(new Vector3(msg.X, msg.Y, 0));
         av.SetDirection(msg.Dir);
     }
+    public static void UpdateAttack(S_BroadcastMonsterAttack msg)
+    {
+        if (!_spawned.TryGetValue(msg.MonsterId, out var go) || go == null)
+        {
+            Debug.LogWarning($"[MonsterSpawner] Attack update for missing {msg.MonsterId}");
+            return;
+        }
+        var av = go.GetComponent<MonsterAvatar>();
+        if (av == null)
+        {
+            Debug.LogWarning($"[MonsterSpawner] Avatar missing for {msg.MonsterId}");
+            return;
+        }
+        av.OnAttack();
+    }
 
     public static void Despawn(S_DespawnMonster msg)
     {
@@ -84,7 +99,14 @@ public static class MonsterSpawner
             _spawned.Remove(msg.MonsterId);
         }
     }
-
+    public static void Despawn(S_BroadcastMonsterDeath msg)
+    {
+        if (_spawned.TryGetValue(msg.MonsterId, out var go))
+        {
+            Object.Destroy(go);
+            _spawned.Remove(msg.MonsterId);
+        }
+    }
     public static void DespawnAll()
     {
         foreach (var kv in _spawned) if (kv.Value) Object.Destroy(kv.Value);
@@ -94,6 +116,6 @@ public static class MonsterSpawner
             if (kv.Value != null)
                 Object.Destroy(kv.Value);
         }
-        _spawned.Clear(); // ✅ 참조도 제거
+        _spawned.Clear(); 
     }
 }
