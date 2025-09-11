@@ -36,7 +36,7 @@ struct IMonsterBroadcaster {
 	virtual void SpawnMonster(const Monster& m) = 0;
 	virtual void DespawnMonster(EntityId id, Protocol::EDespawnReason reason) = 0; // 0:Dead, 1:Manual, ...
 	virtual void BroadcastMonsterMove(EntityId id, int x, int y, Protocol::EDirection dir) = 0;
-	virtual void BroadcastMonsterAttack(EntityId id, int targetPid) = 0;
+	virtual void BroadcastMonsterAttack(EntityId id, int targetPid, int damage, int hpAfter) = 0;
 	virtual void BroadcastMonsterDeath(EntityId id) = 0;
 };
 

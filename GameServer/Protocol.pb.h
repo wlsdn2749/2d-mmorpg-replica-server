@@ -4526,6 +4526,8 @@ class S_BroadcastMonsterAttack final :
   enum : int {
     kMonsterIdFieldNumber = 1,
     kTargetPidFieldNumber = 2,
+    kDamageFieldNumber = 3,
+    kHpAfterFieldNumber = 4,
   };
   // int32 monsterId = 1;
   void clear_monsterid();
@@ -4545,6 +4547,24 @@ class S_BroadcastMonsterAttack final :
   void _internal_set_targetpid(int32_t value);
   public:
 
+  // int32 damage = 3;
+  void clear_damage();
+  int32_t damage() const;
+  void set_damage(int32_t value);
+  private:
+  int32_t _internal_damage() const;
+  void _internal_set_damage(int32_t value);
+  public:
+
+  // int32 hpAfter = 4;
+  void clear_hpafter();
+  int32_t hpafter() const;
+  void set_hpafter(int32_t value);
+  private:
+  int32_t _internal_hpafter() const;
+  void _internal_set_hpafter(int32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:Protocol.S_BroadcastMonsterAttack)
  private:
   class _Internal;
@@ -4555,6 +4575,8 @@ class S_BroadcastMonsterAttack final :
   struct Impl_ {
     int32_t monsterid_;
     int32_t targetpid_;
+    int32_t damage_;
+    int32_t hpafter_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -9643,6 +9665,46 @@ inline void S_BroadcastMonsterAttack::_internal_set_targetpid(int32_t value) {
 inline void S_BroadcastMonsterAttack::set_targetpid(int32_t value) {
   _internal_set_targetpid(value);
   // @@protoc_insertion_point(field_set:Protocol.S_BroadcastMonsterAttack.targetPid)
+}
+
+// int32 damage = 3;
+inline void S_BroadcastMonsterAttack::clear_damage() {
+  _impl_.damage_ = 0;
+}
+inline int32_t S_BroadcastMonsterAttack::_internal_damage() const {
+  return _impl_.damage_;
+}
+inline int32_t S_BroadcastMonsterAttack::damage() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_BroadcastMonsterAttack.damage)
+  return _internal_damage();
+}
+inline void S_BroadcastMonsterAttack::_internal_set_damage(int32_t value) {
+  
+  _impl_.damage_ = value;
+}
+inline void S_BroadcastMonsterAttack::set_damage(int32_t value) {
+  _internal_set_damage(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_BroadcastMonsterAttack.damage)
+}
+
+// int32 hpAfter = 4;
+inline void S_BroadcastMonsterAttack::clear_hpafter() {
+  _impl_.hpafter_ = 0;
+}
+inline int32_t S_BroadcastMonsterAttack::_internal_hpafter() const {
+  return _impl_.hpafter_;
+}
+inline int32_t S_BroadcastMonsterAttack::hpafter() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_BroadcastMonsterAttack.hpAfter)
+  return _internal_hpafter();
+}
+inline void S_BroadcastMonsterAttack::_internal_set_hpafter(int32_t value) {
+  
+  _impl_.hpafter_ = value;
+}
+inline void S_BroadcastMonsterAttack::set_hpafter(int32_t value) {
+  _internal_set_hpafter(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_BroadcastMonsterAttack.hpAfter)
 }
 
 // -------------------------------------------------------------------

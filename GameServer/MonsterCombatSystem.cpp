@@ -67,7 +67,7 @@ void MonsterCombatSystem::ExecuteAttack(Monster& m, IMonsterEntityLinker& linker
 			if (dist <= stats.attackRangeTiles) {
 				GConsoleLogger->WriteStdOut(Color::WHITE, L"[Combat] Monster:%d attacks player:%d (dmg:%d)\n", m.core.id, m.targetPlayerId, stats.atk);
 				linker.ApplyDamageToPlayer(m.targetPlayerId, stats.atk, (int)m.core.id);
-				cast.BroadcastMonsterAttack(m.core.id, m.targetPlayerId);
+				cast.BroadcastMonsterAttack(m.core.id, m.targetPlayerId, stats.atk, pv.hp-stats.atk); // TODO 나중에 로직 수정
 				m.nextAttackAtMs = now + stats.attackCooldownMs;
 			}
 		}
