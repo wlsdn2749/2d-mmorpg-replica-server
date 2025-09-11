@@ -497,6 +497,74 @@ struct S_MonsterListDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_MonsterListDefaultTypeInternal _S_MonsterList_default_instance_;
+PROTOBUF_CONSTEXPR C_NpcInteractRequest::C_NpcInteractRequest(
+    ::_pbi::ConstantInitialized) {}
+struct C_NpcInteractRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR C_NpcInteractRequestDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~C_NpcInteractRequestDefaultTypeInternal() {}
+  union {
+    C_NpcInteractRequest _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 C_NpcInteractRequestDefaultTypeInternal _C_NpcInteractRequest_default_instance_;
+PROTOBUF_CONSTEXPR S_NpcInteractReply::S_NpcInteractReply(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.dialogs_)*/{}
+  , /*decltype(_impl_.interactiontype_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct S_NpcInteractReplyDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR S_NpcInteractReplyDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~S_NpcInteractReplyDefaultTypeInternal() {}
+  union {
+    S_NpcInteractReply _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_NpcInteractReplyDefaultTypeInternal _S_NpcInteractReply_default_instance_;
+PROTOBUF_CONSTEXPR S_NpcShopOpen::S_NpcShopOpen(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.items_)*/{}
+  , /*decltype(_impl_.npcid_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct S_NpcShopOpenDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR S_NpcShopOpenDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~S_NpcShopOpenDefaultTypeInternal() {}
+  union {
+    S_NpcShopOpen _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_NpcShopOpenDefaultTypeInternal _S_NpcShopOpen_default_instance_;
+PROTOBUF_CONSTEXPR C_NpcShopBuyRequest::C_NpcShopBuyRequest(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.npcid_)*/0
+  , /*decltype(_impl_.itemid_)*/0
+  , /*decltype(_impl_.quantity_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct C_NpcShopBuyRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR C_NpcShopBuyRequestDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~C_NpcShopBuyRequestDefaultTypeInternal() {}
+  union {
+    C_NpcShopBuyRequest _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 C_NpcShopBuyRequestDefaultTypeInternal _C_NpcShopBuyRequest_default_instance_;
+PROTOBUF_CONSTEXPR S_NpcShopBuyReply::S_NpcShopBuyReply(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.detail_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.success_)*/false
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct S_NpcShopBuyReplyDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR S_NpcShopBuyReplyDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~S_NpcShopBuyReplyDefaultTypeInternal() {}
+  union {
+    S_NpcShopBuyReply _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_NpcShopBuyReplyDefaultTypeInternal _S_NpcShopBuyReply_default_instance_;
 PROTOBUF_CONSTEXPR Vector2Info::Vector2Info(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.x_)*/0
@@ -591,8 +659,23 @@ struct MonsterInfoDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 MonsterInfoDefaultTypeInternal _MonsterInfo_default_instance_;
+PROTOBUF_CONSTEXPR ShopItemInfo::ShopItemInfo(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.itemid_)*/0
+  , /*decltype(_impl_.quantity_)*/0
+  , /*decltype(_impl_.price_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct ShopItemInfoDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ShopItemInfoDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~ShopItemInfoDefaultTypeInternal() {}
+  union {
+    ShopItemInfo _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ShopItemInfoDefaultTypeInternal _ShopItemInfo_default_instance_;
 }  // namespace Protocol
-static ::_pb::Metadata file_level_metadata_Protocol_2eproto[41];
+static ::_pb::Metadata file_level_metadata_Protocol_2eproto[47];
 static const ::_pb::EnumDescriptor* file_level_enum_descriptors_Protocol_2eproto[11];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_Protocol_2eproto = nullptr;
 
@@ -867,6 +950,45 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   PROTOBUF_FIELD_OFFSET(::Protocol::S_MonsterList, _impl_.mapid_),
   PROTOBUF_FIELD_OFFSET(::Protocol::S_MonsterList, _impl_.monsters_),
   ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_NpcInteractRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_NpcInteractReply, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_NpcInteractReply, _impl_.dialogs_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_NpcInteractReply, _impl_.interactiontype_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_NpcShopOpen, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_NpcShopOpen, _impl_.npcid_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_NpcShopOpen, _impl_.items_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_NpcShopBuyRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_NpcShopBuyRequest, _impl_.npcid_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_NpcShopBuyRequest, _impl_.itemid_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_NpcShopBuyRequest, _impl_.quantity_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_NpcShopBuyReply, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_NpcShopBuyReply, _impl_.success_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_NpcShopBuyReply, _impl_.detail_),
+  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::Vector2Info, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -924,6 +1046,15 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   PROTOBUF_FIELD_OFFSET(::Protocol::MonsterInfo, _impl_.monstertypeid_),
   PROTOBUF_FIELD_OFFSET(::Protocol::MonsterInfo, _impl_.pos_),
   PROTOBUF_FIELD_OFFSET(::Protocol::MonsterInfo, _impl_.direction_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::Protocol::ShopItemInfo, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::Protocol::ShopItemInfo, _impl_.itemid_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::ShopItemInfo, _impl_.quantity_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::ShopItemInfo, _impl_.price_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::Protocol::C_JwtLoginRequest)},
@@ -961,12 +1092,18 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 246, -1, -1, sizeof(::Protocol::S_InventoryUpdate)},
   { 253, -1, -1, sizeof(::Protocol::S_SystemMessage)},
   { 261, -1, -1, sizeof(::Protocol::S_MonsterList)},
-  { 269, -1, -1, sizeof(::Protocol::Vector2Info)},
-  { 277, -1, -1, sizeof(::Protocol::PlayerMoveInfo)},
-  { 287, -1, -1, sizeof(::Protocol::CharacterSummaryInfo)},
-  { 297, -1, -1, sizeof(::Protocol::PlayerInfo)},
-  { 307, -1, -1, sizeof(::Protocol::InventorySlotInfo)},
-  { 317, -1, -1, sizeof(::Protocol::MonsterInfo)},
+  { 269, -1, -1, sizeof(::Protocol::C_NpcInteractRequest)},
+  { 275, -1, -1, sizeof(::Protocol::S_NpcInteractReply)},
+  { 283, -1, -1, sizeof(::Protocol::S_NpcShopOpen)},
+  { 291, -1, -1, sizeof(::Protocol::C_NpcShopBuyRequest)},
+  { 300, -1, -1, sizeof(::Protocol::S_NpcShopBuyReply)},
+  { 308, -1, -1, sizeof(::Protocol::Vector2Info)},
+  { 316, -1, -1, sizeof(::Protocol::PlayerMoveInfo)},
+  { 326, -1, -1, sizeof(::Protocol::CharacterSummaryInfo)},
+  { 336, -1, -1, sizeof(::Protocol::PlayerInfo)},
+  { 346, -1, -1, sizeof(::Protocol::InventorySlotInfo)},
+  { 356, -1, -1, sizeof(::Protocol::MonsterInfo)},
+  { 366, -1, -1, sizeof(::Protocol::ShopItemInfo)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -1005,12 +1142,18 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::Protocol::_S_InventoryUpdate_default_instance_._instance,
   &::Protocol::_S_SystemMessage_default_instance_._instance,
   &::Protocol::_S_MonsterList_default_instance_._instance,
+  &::Protocol::_C_NpcInteractRequest_default_instance_._instance,
+  &::Protocol::_S_NpcInteractReply_default_instance_._instance,
+  &::Protocol::_S_NpcShopOpen_default_instance_._instance,
+  &::Protocol::_C_NpcShopBuyRequest_default_instance_._instance,
+  &::Protocol::_S_NpcShopBuyReply_default_instance_._instance,
   &::Protocol::_Vector2Info_default_instance_._instance,
   &::Protocol::_PlayerMoveInfo_default_instance_._instance,
   &::Protocol::_CharacterSummaryInfo_default_instance_._instance,
   &::Protocol::_PlayerInfo_default_instance_._instance,
   &::Protocol::_InventorySlotInfo_default_instance_._instance,
   &::Protocol::_MonsterInfo_default_instance_._instance,
+  &::Protocol::_ShopItemInfo_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -1071,75 +1214,87 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "tInfo\"H\n\017S_SystemMessage\022\017\n\007message\030\001 \001("
   "\t\022$\n\004type\030\002 \001(\0162\026.Protocol.EMessageType\""
   "G\n\rS_MonsterList\022\r\n\005mapId\030\001 \001(\005\022\'\n\010monst"
-  "ers\030\002 \003(\0132\025.Protocol.MonsterInfo\"#\n\013Vect"
-  "or2Info\022\t\n\001x\030\001 \001(\005\022\t\n\001y\030\002 \001(\005\"\231\001\n\016Player"
-  "MoveInfo\022\020\n\010playerId\030\001 \001(\005\022\'\n\tdirection\030"
-  "\002 \001(\0162\024.Protocol.EDirection\022%\n\006newPos\030\003 "
-  "\001(\0132\025.Protocol.Vector2Info\022%\n\006result\030\004 \001"
-  "(\0162\025.Protocol.EMoveResult\"}\n\024CharacterSu"
-  "mmaryInfo\022\020\n\010username\030\001 \001(\t\022\r\n\005level\030\002 \001"
-  "(\005\022!\n\006gender\030\003 \001(\0162\021.Protocol.EGender\022!\n"
-  "\006region\030\004 \001(\0162\021.Protocol.ERegion\"w\n\nPlay"
-  "erInfo\022\n\n\002id\030\001 \001(\005\022\020\n\010username\030\002 \001(\t\022\"\n\003"
-  "pos\030\003 \001(\0132\025.Protocol.Vector2Info\022\'\n\tdire"
-  "ction\030\004 \001(\0162\024.Protocol.EDirection\"Z\n\021Inv"
-  "entorySlotInfo\022\021\n\tslotIndex\030\001 \001(\005\022\016\n\006ite"
-  "mId\030\002 \001(\005\022\r\n\005count\030\003 \001(\005\022\023\n\013isQuickslot\030"
-  "\004 \001(\010\"\204\001\n\013MonsterInfo\022\021\n\tmonsterId\030\001 \001(\005"
-  "\022\025\n\rmonsterTypeId\030\002 \001(\005\022\"\n\003pos\030\003 \001(\0132\025.P"
-  "rotocol.Vector2Info\022\'\n\tdirection\030\004 \001(\0162\024"
-  ".Protocol.EDirection*\206\007\n\005MsgId\022\027\n\023C_JWT_"
-  "LOGIN_REQUEST\020\000\022\025\n\021S_JWT_LOGIN_REPLY\020\001\022\036"
-  "\n\032C_CREATE_CHARACTER_REQUEST\020\002\022\034\n\030S_CREA"
-  "TE_CHARACTER_REPLY\020\003\022\034\n\030C_CHARACTER_LIST"
-  "_REQUEST\020\004\022\032\n\026S_CHARACTER_LIST_REPLY\020\005\022\036"
-  "\n\032C_DELETE_CHARACTER_REQUEST\020\006\022\034\n\030S_DELE"
-  "TE_CHARACTER_REPLY\020\007\022\020\n\014C_ENTER_GAME\020\010\022\020"
-  "\n\014S_ENTER_GAME\020\t\022\021\n\rS_PLAYER_LIST\020\n\022\034\n\030S"
-  "_BROADCAST_PLAYER_ENTER\020\013\022\020\n\014C_LEAVE_GAM"
-  "E\020\014\022\020\n\014S_LEAVE_GAME\020\r\022\034\n\030S_BROADCAST_PLA"
-  "YER_LEAVE\020\016\022\031\n\025C_PLAYER_MOVE_REQUEST\020\017\022\027"
-  "\n\023S_PLAYER_MOVE_REPLY\020\020\022\033\n\027S_BROADCAST_P"
-  "LAYER_MOVE\020\021\022\027\n\023S_CHANGE_ROOM_BEGIN\020\022\022\027\n"
-  "\023C_CHANGE_ROOM_READY\020\023\022\030\n\024S_CHANGE_ROOM_"
-  "COMMIT\020\024\022\023\n\017S_SPAWN_MONSTER\020\025\022\025\n\021S_DESPA"
-  "WN_MONSTER\020\026\022\034\n\030S_BROADCAST_MONSTER_MOVE"
-  "\020\027\022\036\n\032S_BROADCAST_MONSTER_ATTACK\020\030\022\035\n\031S_"
-  "BROADCAST_MONSTER_DEATH\020\031\022\033\n\027C_PLAYER_AT"
-  "TACK_REQUEST\020\032\022\035\n\031S_BROADCAST_PLAYER_ATT"
-  "ACK\020\033\022\027\n\023C_INVENTORY_REQUEST\020\034\022\025\n\021S_INVE"
-  "NTORY_REPLY\020\035\022\026\n\022C_ITEM_USE_REQUEST\020\036\022\024\n"
-  "\020S_ITEM_USE_REPLY\020\037\022\026\n\022S_INVENTORY_UPDAT"
-  "E\020 \022\024\n\020S_SYSTEM_MESSAGE\020!\022\022\n\016S_MONSTER_L"
-  "IST\020\"*S\n\014ELoginResult\022\013\n\007SUCCESS\020\000\022\021\n\rIN"
-  "VALID_TOKEN\020\001\022\021\n\rTOKEN_EXPIRED\020\002\022\020\n\014SERV"
-  "ER_ERROR\020\003*>\n\007EGender\022\017\n\013GENDER_NONE\020\000\022\017"
-  "\n\013GENDER_MALE\020\001\022\021\n\rGENDER_FEMALE\020\002*:\n\007ER"
-  "egion\022\017\n\013REGION_NONE\020\000\022\r\n\tREGION_GO\020\001\022\017\n"
-  "\013REGION_BACK\020\002*C\n\nEDirection\022\n\n\006DIR_UP\020\000"
-  "\022\014\n\010DIR_DOWN\020\001\022\014\n\010DIR_LEFT\020\002\022\r\n\tDIR_RIGH"
-  "T\020\003*|\n\014ELeaveReason\022\021\n\rLEAVE_UNKNOWN\020\000\022\020"
-  "\n\014LEAVE_LOGOUT\020\001\022\025\n\021LEAVE_CHANGE_ROOM\020\002\022"
-  "\032\n\026LEAVE_CHANGE_CHARACTER\020\003\022\024\n\020LEAVE_DIS"
-  "CONNECT\020\004*_\n\013EMoveResult\022\020\n\014MOVE_UNKNOWN"
-  "\020\000\022\013\n\007MOVE_OK\020\001\022\014\n\010MOVE_DIR\020\002\022\021\n\rMOVE_CO"
-  "OLDOWN\020\003\022\020\n\014MOVE_BLOCKED\020\004*I\n\014EEnterReas"
-  "on\022\021\n\rENTER_UNKNOWN\020\000\022\017\n\013ENTER_LOGIN\020\001\022\025"
-  "\n\021ENTER_CHANGE_ROOM\020\002*9\n\016EDespawnReason\022"
-  "\023\n\017DESPAWN_UNKNOWN\020\000\022\022\n\016DESPAWN_KILLED\020\001"
-  "*~\n\tEItemType\022\025\n\021ITEM_TYPE_UNKNOWN\020\000\022\030\n\024"
-  "ITEM_TYPE_CONSUMABLE\020\001\022\027\n\023ITEM_TYPE_EQUI"
-  "PMENT\020\002\022\023\n\017ITEM_TYPE_QUEST\020\003\022\022\n\016ITEM_TYP"
-  "E_MISC\020\004*a\n\014EMessageType\022\020\n\014MESSAGE_INFO"
-  "\020\000\022\023\n\017MESSAGE_WARNING\020\001\022\021\n\rMESSAGE_ERROR"
-  "\020\002\022\027\n\023MESSAGE_DROP_FAILED\020\003B\033\252\002\030Google.P"
-  "rotobuf.Protocolb\006proto3"
+  "ers\030\002 \003(\0132\025.Protocol.MonsterInfo\"\026\n\024C_Np"
+  "cInteractRequest\">\n\022S_NpcInteractReply\022\017"
+  "\n\007dialogs\030\001 \003(\t\022\027\n\017interactionType\030\002 \001(\005"
+  "\"E\n\rS_NpcShopOpen\022\r\n\005npcId\030\001 \001(\005\022%\n\005item"
+  "s\030\002 \003(\0132\026.Protocol.ShopItemInfo\"F\n\023C_Npc"
+  "ShopBuyRequest\022\r\n\005npcId\030\001 \001(\005\022\016\n\006itemId\030"
+  "\002 \001(\005\022\020\n\010quantity\030\003 \001(\005\"4\n\021S_NpcShopBuyR"
+  "eply\022\017\n\007success\030\001 \001(\010\022\016\n\006detail\030\002 \001(\t\"#\n"
+  "\013Vector2Info\022\t\n\001x\030\001 \001(\005\022\t\n\001y\030\002 \001(\005\"\231\001\n\016P"
+  "layerMoveInfo\022\020\n\010playerId\030\001 \001(\005\022\'\n\tdirec"
+  "tion\030\002 \001(\0162\024.Protocol.EDirection\022%\n\006newP"
+  "os\030\003 \001(\0132\025.Protocol.Vector2Info\022%\n\006resul"
+  "t\030\004 \001(\0162\025.Protocol.EMoveResult\"}\n\024Charac"
+  "terSummaryInfo\022\020\n\010username\030\001 \001(\t\022\r\n\005leve"
+  "l\030\002 \001(\005\022!\n\006gender\030\003 \001(\0162\021.Protocol.EGend"
+  "er\022!\n\006region\030\004 \001(\0162\021.Protocol.ERegion\"w\n"
+  "\nPlayerInfo\022\n\n\002id\030\001 \001(\005\022\020\n\010username\030\002 \001("
+  "\t\022\"\n\003pos\030\003 \001(\0132\025.Protocol.Vector2Info\022\'\n"
+  "\tdirection\030\004 \001(\0162\024.Protocol.EDirection\"Z"
+  "\n\021InventorySlotInfo\022\021\n\tslotIndex\030\001 \001(\005\022\016"
+  "\n\006itemId\030\002 \001(\005\022\r\n\005count\030\003 \001(\005\022\023\n\013isQuick"
+  "slot\030\004 \001(\010\"\204\001\n\013MonsterInfo\022\021\n\tmonsterId\030"
+  "\001 \001(\005\022\025\n\rmonsterTypeId\030\002 \001(\005\022\"\n\003pos\030\003 \001("
+  "\0132\025.Protocol.Vector2Info\022\'\n\tdirection\030\004 "
+  "\001(\0162\024.Protocol.EDirection\"\?\n\014ShopItemInf"
+  "o\022\016\n\006itemId\030\001 \001(\005\022\020\n\010quantity\030\002 \001(\005\022\r\n\005p"
+  "rice\030\003 \001(\005*\207\010\n\005MsgId\022\027\n\023C_JWT_LOGIN_REQU"
+  "EST\020\000\022\025\n\021S_JWT_LOGIN_REPLY\020\001\022\036\n\032C_CREATE"
+  "_CHARACTER_REQUEST\020\002\022\034\n\030S_CREATE_CHARACT"
+  "ER_REPLY\020\003\022\034\n\030C_CHARACTER_LIST_REQUEST\020\004"
+  "\022\032\n\026S_CHARACTER_LIST_REPLY\020\005\022\036\n\032C_DELETE"
+  "_CHARACTER_REQUEST\020\006\022\034\n\030S_DELETE_CHARACT"
+  "ER_REPLY\020\007\022\020\n\014C_ENTER_GAME\020\010\022\020\n\014S_ENTER_"
+  "GAME\020\t\022\021\n\rS_PLAYER_LIST\020\n\022\034\n\030S_BROADCAST"
+  "_PLAYER_ENTER\020\013\022\020\n\014C_LEAVE_GAME\020\014\022\020\n\014S_L"
+  "EAVE_GAME\020\r\022\034\n\030S_BROADCAST_PLAYER_LEAVE\020"
+  "\016\022\031\n\025C_PLAYER_MOVE_REQUEST\020\017\022\027\n\023S_PLAYER"
+  "_MOVE_REPLY\020\020\022\033\n\027S_BROADCAST_PLAYER_MOVE"
+  "\020\021\022\027\n\023S_CHANGE_ROOM_BEGIN\020\022\022\027\n\023C_CHANGE_"
+  "ROOM_READY\020\023\022\030\n\024S_CHANGE_ROOM_COMMIT\020\024\022\023"
+  "\n\017S_SPAWN_MONSTER\020\025\022\025\n\021S_DESPAWN_MONSTER"
+  "\020\026\022\034\n\030S_BROADCAST_MONSTER_MOVE\020\027\022\036\n\032S_BR"
+  "OADCAST_MONSTER_ATTACK\020\030\022\035\n\031S_BROADCAST_"
+  "MONSTER_DEATH\020\031\022\033\n\027C_PLAYER_ATTACK_REQUE"
+  "ST\020\032\022\035\n\031S_BROADCAST_PLAYER_ATTACK\020\033\022\027\n\023C"
+  "_INVENTORY_REQUEST\020\034\022\025\n\021S_INVENTORY_REPL"
+  "Y\020\035\022\026\n\022C_ITEM_USE_REQUEST\020\036\022\024\n\020S_ITEM_US"
+  "E_REPLY\020\037\022\026\n\022S_INVENTORY_UPDATE\020 \022\024\n\020S_S"
+  "YSTEM_MESSAGE\020!\022\022\n\016S_MONSTER_LIST\020\"\022\032\n\026C"
+  "_NPC_INTERACT_REQUEST\020#\022\030\n\024S_NPC_INTERAC"
+  "T_REPLY\020$\022\023\n\017S_NPC_SHOP_OPEN\020%\022\032\n\026C_NPC_"
+  "SHOP_BUY_REQUEST\020&\022\030\n\024S_NPC_SHOP_BUY_REP"
+  "LY\020\'*S\n\014ELoginResult\022\013\n\007SUCCESS\020\000\022\021\n\rINV"
+  "ALID_TOKEN\020\001\022\021\n\rTOKEN_EXPIRED\020\002\022\020\n\014SERVE"
+  "R_ERROR\020\003*>\n\007EGender\022\017\n\013GENDER_NONE\020\000\022\017\n"
+  "\013GENDER_MALE\020\001\022\021\n\rGENDER_FEMALE\020\002*:\n\007ERe"
+  "gion\022\017\n\013REGION_NONE\020\000\022\r\n\tREGION_GO\020\001\022\017\n\013"
+  "REGION_BACK\020\002*C\n\nEDirection\022\n\n\006DIR_UP\020\000\022"
+  "\014\n\010DIR_DOWN\020\001\022\014\n\010DIR_LEFT\020\002\022\r\n\tDIR_RIGHT"
+  "\020\003*|\n\014ELeaveReason\022\021\n\rLEAVE_UNKNOWN\020\000\022\020\n"
+  "\014LEAVE_LOGOUT\020\001\022\025\n\021LEAVE_CHANGE_ROOM\020\002\022\032"
+  "\n\026LEAVE_CHANGE_CHARACTER\020\003\022\024\n\020LEAVE_DISC"
+  "ONNECT\020\004*_\n\013EMoveResult\022\020\n\014MOVE_UNKNOWN\020"
+  "\000\022\013\n\007MOVE_OK\020\001\022\014\n\010MOVE_DIR\020\002\022\021\n\rMOVE_COO"
+  "LDOWN\020\003\022\020\n\014MOVE_BLOCKED\020\004*I\n\014EEnterReaso"
+  "n\022\021\n\rENTER_UNKNOWN\020\000\022\017\n\013ENTER_LOGIN\020\001\022\025\n"
+  "\021ENTER_CHANGE_ROOM\020\002*9\n\016EDespawnReason\022\023"
+  "\n\017DESPAWN_UNKNOWN\020\000\022\022\n\016DESPAWN_KILLED\020\001*"
+  "~\n\tEItemType\022\025\n\021ITEM_TYPE_UNKNOWN\020\000\022\030\n\024I"
+  "TEM_TYPE_CONSUMABLE\020\001\022\027\n\023ITEM_TYPE_EQUIP"
+  "MENT\020\002\022\023\n\017ITEM_TYPE_QUEST\020\003\022\022\n\016ITEM_TYPE"
+  "_MISC\020\004*a\n\014EMessageType\022\020\n\014MESSAGE_INFO\020"
+  "\000\022\023\n\017MESSAGE_WARNING\020\001\022\021\n\rMESSAGE_ERROR\020"
+  "\002\022\027\n\023MESSAGE_DROP_FAILED\020\003B\033\252\002\030Google.Pr"
+  "otobuf.Protocolb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 4784, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 5263, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
-    &descriptor_table_Protocol_2eproto_once, nullptr, 0, 41,
+    &descriptor_table_Protocol_2eproto_once, nullptr, 0, 47,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
     file_level_metadata_Protocol_2eproto, file_level_enum_descriptors_Protocol_2eproto,
     file_level_service_descriptors_Protocol_2eproto,
@@ -1192,6 +1347,11 @@ bool MsgId_IsValid(int value) {
     case 32:
     case 33:
     case 34:
+    case 35:
+    case 36:
+    case 37:
+    case 38:
+    case 39:
       return true;
     default:
       return false;
@@ -8249,6 +8409,940 @@ void S_MonsterList::InternalSwap(S_MonsterList* other) {
 
 // ===================================================================
 
+class C_NpcInteractRequest::_Internal {
+ public:
+};
+
+C_NpcInteractRequest::C_NpcInteractRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase(arena, is_message_owned) {
+  // @@protoc_insertion_point(arena_constructor:Protocol.C_NpcInteractRequest)
+}
+C_NpcInteractRequest::C_NpcInteractRequest(const C_NpcInteractRequest& from)
+  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase() {
+  C_NpcInteractRequest* const _this = this; (void)_this;
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:Protocol.C_NpcInteractRequest)
+}
+
+
+
+
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData C_NpcInteractRequest::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl,
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl,
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*C_NpcInteractRequest::GetClassData() const { return &_class_data_; }
+
+
+
+
+
+
+
+::PROTOBUF_NAMESPACE_ID::Metadata C_NpcInteractRequest::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
+      file_level_metadata_Protocol_2eproto[35]);
+}
+
+// ===================================================================
+
+class S_NpcInteractReply::_Internal {
+ public:
+};
+
+S_NpcInteractReply::S_NpcInteractReply(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:Protocol.S_NpcInteractReply)
+}
+S_NpcInteractReply::S_NpcInteractReply(const S_NpcInteractReply& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  S_NpcInteractReply* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.dialogs_){from._impl_.dialogs_}
+    , decltype(_impl_.interactiontype_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_impl_.interactiontype_ = from._impl_.interactiontype_;
+  // @@protoc_insertion_point(copy_constructor:Protocol.S_NpcInteractReply)
+}
+
+inline void S_NpcInteractReply::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.dialogs_){arena}
+    , decltype(_impl_.interactiontype_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+S_NpcInteractReply::~S_NpcInteractReply() {
+  // @@protoc_insertion_point(destructor:Protocol.S_NpcInteractReply)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void S_NpcInteractReply::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.dialogs_.~RepeatedPtrField();
+}
+
+void S_NpcInteractReply::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void S_NpcInteractReply::Clear() {
+// @@protoc_insertion_point(message_clear_start:Protocol.S_NpcInteractReply)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.dialogs_.Clear();
+  _impl_.interactiontype_ = 0;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* S_NpcInteractReply::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // repeated string dialogs = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            auto str = _internal_add_dialogs();
+            ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+            CHK_(ptr);
+            CHK_(::_pbi::VerifyUTF8(str, "Protocol.S_NpcInteractReply.dialogs"));
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 interactionType = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.interactiontype_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* S_NpcInteractReply::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Protocol.S_NpcInteractReply)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // repeated string dialogs = 1;
+  for (int i = 0, n = this->_internal_dialogs_size(); i < n; i++) {
+    const auto& s = this->_internal_dialogs(i);
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      s.data(), static_cast<int>(s.length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "Protocol.S_NpcInteractReply.dialogs");
+    target = stream->WriteString(1, s, target);
+  }
+
+  // int32 interactionType = 2;
+  if (this->_internal_interactiontype() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_interactiontype(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Protocol.S_NpcInteractReply)
+  return target;
+}
+
+size_t S_NpcInteractReply::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Protocol.S_NpcInteractReply)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated string dialogs = 1;
+  total_size += 1 *
+      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(_impl_.dialogs_.size());
+  for (int i = 0, n = _impl_.dialogs_.size(); i < n; i++) {
+    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+      _impl_.dialogs_.Get(i));
+  }
+
+  // int32 interactionType = 2;
+  if (this->_internal_interactiontype() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_interactiontype());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData S_NpcInteractReply::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    S_NpcInteractReply::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*S_NpcInteractReply::GetClassData() const { return &_class_data_; }
+
+
+void S_NpcInteractReply::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<S_NpcInteractReply*>(&to_msg);
+  auto& from = static_cast<const S_NpcInteractReply&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:Protocol.S_NpcInteractReply)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  _this->_impl_.dialogs_.MergeFrom(from._impl_.dialogs_);
+  if (from._internal_interactiontype() != 0) {
+    _this->_internal_set_interactiontype(from._internal_interactiontype());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void S_NpcInteractReply::CopyFrom(const S_NpcInteractReply& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.S_NpcInteractReply)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool S_NpcInteractReply::IsInitialized() const {
+  return true;
+}
+
+void S_NpcInteractReply::InternalSwap(S_NpcInteractReply* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.dialogs_.InternalSwap(&other->_impl_.dialogs_);
+  swap(_impl_.interactiontype_, other->_impl_.interactiontype_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata S_NpcInteractReply::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
+      file_level_metadata_Protocol_2eproto[36]);
+}
+
+// ===================================================================
+
+class S_NpcShopOpen::_Internal {
+ public:
+};
+
+S_NpcShopOpen::S_NpcShopOpen(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:Protocol.S_NpcShopOpen)
+}
+S_NpcShopOpen::S_NpcShopOpen(const S_NpcShopOpen& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  S_NpcShopOpen* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.items_){from._impl_.items_}
+    , decltype(_impl_.npcid_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_impl_.npcid_ = from._impl_.npcid_;
+  // @@protoc_insertion_point(copy_constructor:Protocol.S_NpcShopOpen)
+}
+
+inline void S_NpcShopOpen::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.items_){arena}
+    , decltype(_impl_.npcid_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+S_NpcShopOpen::~S_NpcShopOpen() {
+  // @@protoc_insertion_point(destructor:Protocol.S_NpcShopOpen)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void S_NpcShopOpen::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.items_.~RepeatedPtrField();
+}
+
+void S_NpcShopOpen::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void S_NpcShopOpen::Clear() {
+// @@protoc_insertion_point(message_clear_start:Protocol.S_NpcShopOpen)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.items_.Clear();
+  _impl_.npcid_ = 0;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* S_NpcShopOpen::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int32 npcId = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.npcid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // repeated .Protocol.ShopItemInfo items = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_items(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* S_NpcShopOpen::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Protocol.S_NpcShopOpen)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int32 npcId = 1;
+  if (this->_internal_npcid() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_npcid(), target);
+  }
+
+  // repeated .Protocol.ShopItemInfo items = 2;
+  for (unsigned i = 0,
+      n = static_cast<unsigned>(this->_internal_items_size()); i < n; i++) {
+    const auto& repfield = this->_internal_items(i);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+        InternalWriteMessage(2, repfield, repfield.GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Protocol.S_NpcShopOpen)
+  return target;
+}
+
+size_t S_NpcShopOpen::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Protocol.S_NpcShopOpen)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated .Protocol.ShopItemInfo items = 2;
+  total_size += 1UL * this->_internal_items_size();
+  for (const auto& msg : this->_impl_.items_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  // int32 npcId = 1;
+  if (this->_internal_npcid() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_npcid());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData S_NpcShopOpen::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    S_NpcShopOpen::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*S_NpcShopOpen::GetClassData() const { return &_class_data_; }
+
+
+void S_NpcShopOpen::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<S_NpcShopOpen*>(&to_msg);
+  auto& from = static_cast<const S_NpcShopOpen&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:Protocol.S_NpcShopOpen)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  _this->_impl_.items_.MergeFrom(from._impl_.items_);
+  if (from._internal_npcid() != 0) {
+    _this->_internal_set_npcid(from._internal_npcid());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void S_NpcShopOpen::CopyFrom(const S_NpcShopOpen& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.S_NpcShopOpen)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool S_NpcShopOpen::IsInitialized() const {
+  return true;
+}
+
+void S_NpcShopOpen::InternalSwap(S_NpcShopOpen* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.items_.InternalSwap(&other->_impl_.items_);
+  swap(_impl_.npcid_, other->_impl_.npcid_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata S_NpcShopOpen::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
+      file_level_metadata_Protocol_2eproto[37]);
+}
+
+// ===================================================================
+
+class C_NpcShopBuyRequest::_Internal {
+ public:
+};
+
+C_NpcShopBuyRequest::C_NpcShopBuyRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:Protocol.C_NpcShopBuyRequest)
+}
+C_NpcShopBuyRequest::C_NpcShopBuyRequest(const C_NpcShopBuyRequest& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  C_NpcShopBuyRequest* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.npcid_){}
+    , decltype(_impl_.itemid_){}
+    , decltype(_impl_.quantity_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::memcpy(&_impl_.npcid_, &from._impl_.npcid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.quantity_) -
+    reinterpret_cast<char*>(&_impl_.npcid_)) + sizeof(_impl_.quantity_));
+  // @@protoc_insertion_point(copy_constructor:Protocol.C_NpcShopBuyRequest)
+}
+
+inline void C_NpcShopBuyRequest::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.npcid_){0}
+    , decltype(_impl_.itemid_){0}
+    , decltype(_impl_.quantity_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+C_NpcShopBuyRequest::~C_NpcShopBuyRequest() {
+  // @@protoc_insertion_point(destructor:Protocol.C_NpcShopBuyRequest)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void C_NpcShopBuyRequest::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void C_NpcShopBuyRequest::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void C_NpcShopBuyRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:Protocol.C_NpcShopBuyRequest)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&_impl_.npcid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.quantity_) -
+      reinterpret_cast<char*>(&_impl_.npcid_)) + sizeof(_impl_.quantity_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* C_NpcShopBuyRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int32 npcId = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.npcid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 itemId = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.itemid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 quantity = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          _impl_.quantity_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* C_NpcShopBuyRequest::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Protocol.C_NpcShopBuyRequest)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int32 npcId = 1;
+  if (this->_internal_npcid() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_npcid(), target);
+  }
+
+  // int32 itemId = 2;
+  if (this->_internal_itemid() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_itemid(), target);
+  }
+
+  // int32 quantity = 3;
+  if (this->_internal_quantity() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(3, this->_internal_quantity(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Protocol.C_NpcShopBuyRequest)
+  return target;
+}
+
+size_t C_NpcShopBuyRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Protocol.C_NpcShopBuyRequest)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // int32 npcId = 1;
+  if (this->_internal_npcid() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_npcid());
+  }
+
+  // int32 itemId = 2;
+  if (this->_internal_itemid() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_itemid());
+  }
+
+  // int32 quantity = 3;
+  if (this->_internal_quantity() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_quantity());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData C_NpcShopBuyRequest::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    C_NpcShopBuyRequest::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*C_NpcShopBuyRequest::GetClassData() const { return &_class_data_; }
+
+
+void C_NpcShopBuyRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<C_NpcShopBuyRequest*>(&to_msg);
+  auto& from = static_cast<const C_NpcShopBuyRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:Protocol.C_NpcShopBuyRequest)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_npcid() != 0) {
+    _this->_internal_set_npcid(from._internal_npcid());
+  }
+  if (from._internal_itemid() != 0) {
+    _this->_internal_set_itemid(from._internal_itemid());
+  }
+  if (from._internal_quantity() != 0) {
+    _this->_internal_set_quantity(from._internal_quantity());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void C_NpcShopBuyRequest::CopyFrom(const C_NpcShopBuyRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.C_NpcShopBuyRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool C_NpcShopBuyRequest::IsInitialized() const {
+  return true;
+}
+
+void C_NpcShopBuyRequest::InternalSwap(C_NpcShopBuyRequest* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(C_NpcShopBuyRequest, _impl_.quantity_)
+      + sizeof(C_NpcShopBuyRequest::_impl_.quantity_)
+      - PROTOBUF_FIELD_OFFSET(C_NpcShopBuyRequest, _impl_.npcid_)>(
+          reinterpret_cast<char*>(&_impl_.npcid_),
+          reinterpret_cast<char*>(&other->_impl_.npcid_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata C_NpcShopBuyRequest::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
+      file_level_metadata_Protocol_2eproto[38]);
+}
+
+// ===================================================================
+
+class S_NpcShopBuyReply::_Internal {
+ public:
+};
+
+S_NpcShopBuyReply::S_NpcShopBuyReply(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:Protocol.S_NpcShopBuyReply)
+}
+S_NpcShopBuyReply::S_NpcShopBuyReply(const S_NpcShopBuyReply& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  S_NpcShopBuyReply* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.detail_){}
+    , decltype(_impl_.success_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.detail_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.detail_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_detail().empty()) {
+    _this->_impl_.detail_.Set(from._internal_detail(), 
+      _this->GetArenaForAllocation());
+  }
+  _this->_impl_.success_ = from._impl_.success_;
+  // @@protoc_insertion_point(copy_constructor:Protocol.S_NpcShopBuyReply)
+}
+
+inline void S_NpcShopBuyReply::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.detail_){}
+    , decltype(_impl_.success_){false}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.detail_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.detail_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+S_NpcShopBuyReply::~S_NpcShopBuyReply() {
+  // @@protoc_insertion_point(destructor:Protocol.S_NpcShopBuyReply)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void S_NpcShopBuyReply::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.detail_.Destroy();
+}
+
+void S_NpcShopBuyReply::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void S_NpcShopBuyReply::Clear() {
+// @@protoc_insertion_point(message_clear_start:Protocol.S_NpcShopBuyReply)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.detail_.ClearToEmpty();
+  _impl_.success_ = false;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* S_NpcShopBuyReply::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // bool success = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.success_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // string detail = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_detail();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "Protocol.S_NpcShopBuyReply.detail"));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* S_NpcShopBuyReply::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Protocol.S_NpcShopBuyReply)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // bool success = 1;
+  if (this->_internal_success() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(1, this->_internal_success(), target);
+  }
+
+  // string detail = 2;
+  if (!this->_internal_detail().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_detail().data(), static_cast<int>(this->_internal_detail().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "Protocol.S_NpcShopBuyReply.detail");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_detail(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Protocol.S_NpcShopBuyReply)
+  return target;
+}
+
+size_t S_NpcShopBuyReply::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Protocol.S_NpcShopBuyReply)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string detail = 2;
+  if (!this->_internal_detail().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_detail());
+  }
+
+  // bool success = 1;
+  if (this->_internal_success() != 0) {
+    total_size += 1 + 1;
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData S_NpcShopBuyReply::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    S_NpcShopBuyReply::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*S_NpcShopBuyReply::GetClassData() const { return &_class_data_; }
+
+
+void S_NpcShopBuyReply::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<S_NpcShopBuyReply*>(&to_msg);
+  auto& from = static_cast<const S_NpcShopBuyReply&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:Protocol.S_NpcShopBuyReply)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_detail().empty()) {
+    _this->_internal_set_detail(from._internal_detail());
+  }
+  if (from._internal_success() != 0) {
+    _this->_internal_set_success(from._internal_success());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void S_NpcShopBuyReply::CopyFrom(const S_NpcShopBuyReply& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.S_NpcShopBuyReply)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool S_NpcShopBuyReply::IsInitialized() const {
+  return true;
+}
+
+void S_NpcShopBuyReply::InternalSwap(S_NpcShopBuyReply* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.detail_, lhs_arena,
+      &other->_impl_.detail_, rhs_arena
+  );
+  swap(_impl_.success_, other->_impl_.success_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata S_NpcShopBuyReply::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
+      file_level_metadata_Protocol_2eproto[39]);
+}
+
+// ===================================================================
+
 class Vector2Info::_Internal {
  public:
 };
@@ -8455,7 +9549,7 @@ void Vector2Info::InternalSwap(Vector2Info* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata Vector2Info::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[35]);
+      file_level_metadata_Protocol_2eproto[40]);
 }
 
 // ===================================================================
@@ -8737,7 +9831,7 @@ void PlayerMoveInfo::InternalSwap(PlayerMoveInfo* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata PlayerMoveInfo::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[36]);
+      file_level_metadata_Protocol_2eproto[41]);
 }
 
 // ===================================================================
@@ -9030,7 +10124,7 @@ void CharacterSummaryInfo::InternalSwap(CharacterSummaryInfo* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata CharacterSummaryInfo::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[37]);
+      file_level_metadata_Protocol_2eproto[42]);
 }
 
 // ===================================================================
@@ -9337,7 +10431,7 @@ void PlayerInfo::InternalSwap(PlayerInfo* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata PlayerInfo::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[38]);
+      file_level_metadata_Protocol_2eproto[43]);
 }
 
 // ===================================================================
@@ -9596,7 +10690,7 @@ void InventorySlotInfo::InternalSwap(InventorySlotInfo* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata InventorySlotInfo::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[39]);
+      file_level_metadata_Protocol_2eproto[44]);
 }
 
 // ===================================================================
@@ -9875,7 +10969,242 @@ void MonsterInfo::InternalSwap(MonsterInfo* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata MonsterInfo::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[40]);
+      file_level_metadata_Protocol_2eproto[45]);
+}
+
+// ===================================================================
+
+class ShopItemInfo::_Internal {
+ public:
+};
+
+ShopItemInfo::ShopItemInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:Protocol.ShopItemInfo)
+}
+ShopItemInfo::ShopItemInfo(const ShopItemInfo& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  ShopItemInfo* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.itemid_){}
+    , decltype(_impl_.quantity_){}
+    , decltype(_impl_.price_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::memcpy(&_impl_.itemid_, &from._impl_.itemid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.price_) -
+    reinterpret_cast<char*>(&_impl_.itemid_)) + sizeof(_impl_.price_));
+  // @@protoc_insertion_point(copy_constructor:Protocol.ShopItemInfo)
+}
+
+inline void ShopItemInfo::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.itemid_){0}
+    , decltype(_impl_.quantity_){0}
+    , decltype(_impl_.price_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+ShopItemInfo::~ShopItemInfo() {
+  // @@protoc_insertion_point(destructor:Protocol.ShopItemInfo)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void ShopItemInfo::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void ShopItemInfo::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void ShopItemInfo::Clear() {
+// @@protoc_insertion_point(message_clear_start:Protocol.ShopItemInfo)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&_impl_.itemid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.price_) -
+      reinterpret_cast<char*>(&_impl_.itemid_)) + sizeof(_impl_.price_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* ShopItemInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int32 itemId = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.itemid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 quantity = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.quantity_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 price = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          _impl_.price_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* ShopItemInfo::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Protocol.ShopItemInfo)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int32 itemId = 1;
+  if (this->_internal_itemid() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_itemid(), target);
+  }
+
+  // int32 quantity = 2;
+  if (this->_internal_quantity() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_quantity(), target);
+  }
+
+  // int32 price = 3;
+  if (this->_internal_price() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(3, this->_internal_price(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Protocol.ShopItemInfo)
+  return target;
+}
+
+size_t ShopItemInfo::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Protocol.ShopItemInfo)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // int32 itemId = 1;
+  if (this->_internal_itemid() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_itemid());
+  }
+
+  // int32 quantity = 2;
+  if (this->_internal_quantity() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_quantity());
+  }
+
+  // int32 price = 3;
+  if (this->_internal_price() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_price());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ShopItemInfo::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    ShopItemInfo::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ShopItemInfo::GetClassData() const { return &_class_data_; }
+
+
+void ShopItemInfo::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<ShopItemInfo*>(&to_msg);
+  auto& from = static_cast<const ShopItemInfo&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:Protocol.ShopItemInfo)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_itemid() != 0) {
+    _this->_internal_set_itemid(from._internal_itemid());
+  }
+  if (from._internal_quantity() != 0) {
+    _this->_internal_set_quantity(from._internal_quantity());
+  }
+  if (from._internal_price() != 0) {
+    _this->_internal_set_price(from._internal_price());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void ShopItemInfo::CopyFrom(const ShopItemInfo& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.ShopItemInfo)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ShopItemInfo::IsInitialized() const {
+  return true;
+}
+
+void ShopItemInfo::InternalSwap(ShopItemInfo* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(ShopItemInfo, _impl_.price_)
+      + sizeof(ShopItemInfo::_impl_.price_)
+      - PROTOBUF_FIELD_OFFSET(ShopItemInfo, _impl_.itemid_)>(
+          reinterpret_cast<char*>(&_impl_.itemid_),
+          reinterpret_cast<char*>(&other->_impl_.itemid_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata ShopItemInfo::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
+      file_level_metadata_Protocol_2eproto[46]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -10021,6 +11350,26 @@ template<> PROTOBUF_NOINLINE ::Protocol::S_MonsterList*
 Arena::CreateMaybeMessage< ::Protocol::S_MonsterList >(Arena* arena) {
   return Arena::CreateMessageInternal< ::Protocol::S_MonsterList >(arena);
 }
+template<> PROTOBUF_NOINLINE ::Protocol::C_NpcInteractRequest*
+Arena::CreateMaybeMessage< ::Protocol::C_NpcInteractRequest >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Protocol::C_NpcInteractRequest >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Protocol::S_NpcInteractReply*
+Arena::CreateMaybeMessage< ::Protocol::S_NpcInteractReply >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Protocol::S_NpcInteractReply >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Protocol::S_NpcShopOpen*
+Arena::CreateMaybeMessage< ::Protocol::S_NpcShopOpen >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Protocol::S_NpcShopOpen >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Protocol::C_NpcShopBuyRequest*
+Arena::CreateMaybeMessage< ::Protocol::C_NpcShopBuyRequest >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Protocol::C_NpcShopBuyRequest >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Protocol::S_NpcShopBuyReply*
+Arena::CreateMaybeMessage< ::Protocol::S_NpcShopBuyReply >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Protocol::S_NpcShopBuyReply >(arena);
+}
 template<> PROTOBUF_NOINLINE ::Protocol::Vector2Info*
 Arena::CreateMaybeMessage< ::Protocol::Vector2Info >(Arena* arena) {
   return Arena::CreateMessageInternal< ::Protocol::Vector2Info >(arena);
@@ -10044,6 +11393,10 @@ Arena::CreateMaybeMessage< ::Protocol::InventorySlotInfo >(Arena* arena) {
 template<> PROTOBUF_NOINLINE ::Protocol::MonsterInfo*
 Arena::CreateMaybeMessage< ::Protocol::MonsterInfo >(Arena* arena) {
   return Arena::CreateMessageInternal< ::Protocol::MonsterInfo >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Protocol::ShopItemInfo*
+Arena::CreateMaybeMessage< ::Protocol::ShopItemInfo >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Protocol::ShopItemInfo >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

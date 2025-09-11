@@ -5,6 +5,7 @@
 #include "GameSession.h"
 #include "MapData.h"
 #include <optional>
+#include "Npc.h"
 
 /*------------------------
 		Room (Base)
@@ -134,5 +135,24 @@ protected:
 private:
 	// 예약 버퍼(간단 구현: 이번 틱 동안만 유효)
 	mutable std::unordered_set<int64_t> _reserved; // (nx<<32)|ny
+
+/*--------------------
+	NPC Extension
+--------------------*/
+private:
+	std::unordered_map<int, Npc> _npcs;
+	std::unordered_map<Pos2, int> _npcPositions; 
+
+public:
+	void LoadNpcs(); // 맵 로딩 시 호출
+	void HandleNpcInteract(PlayerRef player, int interactionType);
+	Npc* FindNpcByPosition(int x, int y);
+	Npc* FindNpcByPosition(const Pos2& pos);
+	Npc* FindNpcById(int npcId);
+
+// NPC 외부 진입점
+public:
+	void SendNpcInfo(PlayerRef player);
+
 };
 

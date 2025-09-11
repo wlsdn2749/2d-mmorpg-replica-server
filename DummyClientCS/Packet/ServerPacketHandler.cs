@@ -340,5 +340,20 @@ namespace Packet
                 Console.WriteLine($"[S_MonsterList] Id:{monster.MonsterId} TypeId:{monster.MonsterTypeId} Pos:({monster.Pos.X}, {monster.Pos.Y}), Dir:{monster.Direction}");
             }
         }
+
+        internal static void HANDLE_S_NpcShopOpen(PacketSession session, S_NpcShopOpen open)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void HANDLE_S_NpcShopBuyReply(PacketSession session, S_NpcShopBuyReply reply)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void HANDLE_S_NpcInteractReply(PacketSession session, S_NpcInteractReply reply)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
