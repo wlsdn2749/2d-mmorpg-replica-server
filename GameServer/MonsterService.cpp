@@ -16,13 +16,12 @@ void MonsterService::Tick(int64_t /*deltaMs*/) {
 	// 리스폰 처리
 	_spawner.Tick(_container, _cast, _clock);
 
-
-	// 이동 처리
-	_move.Tick(_container, _spawner, _map, _linker, _cast, _clock, _rng);
-
-
-	// 전투 처리
+	// 전투 처리 + 타겟 설정
+	// 타겟 설정하고 이동해야, 로직이 매끄러움
 	_combat.Tick(_container, _spawner, _linker, _cast, _clock, _statsByType);
+
+	// 이동 처리 + 상태 전이
+	_move.Tick(_container, _spawner, _map, _linker, _cast, _clock, _rng);
 }
 
 
@@ -75,12 +74,7 @@ bool MonsterService::ApplyDamageToMonster(EntityId id, int dmg, int srcPlayerId,
 	Monster* m = _container.Find(id);
 	if (!m) return false;
 
-	if (m->state == MState::Ready)
-	{
-		GConsoleLogger->WriteStdOut(Color::WHITE, L"[Combat] Monster:%d attacked! Ready->Combat transition", id);
-		m->state = MState::Combat;
-	}
-
+	m->wasAttacked = true;
 	m->curHp = m->curHp - dmg;
 	hpAfter = m->curHp;
 	if(m->curHp > 0)
