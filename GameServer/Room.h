@@ -21,9 +21,9 @@ public:
 		string	name				= "Room"; 
 		uint32	tickMs				= 50;
 		size_t	capacity			= 200; // 최대 수용량
-		int		moveCooldownTicks	= 10; // 10*50 = 500ms
-		int		rotateCooldownTicks	= 10;
-		int		periodicSaveTicksMs = 180 * 1000;
+		int		moveCooldownTicks	= 4; // 4*50 = 200ms
+		int		rotateCooldownTicks	= 4; // 4*50 = 200ms
+ 		int		periodicSaveTicksMs = 180 * 1000;
 	};
 
 	explicit Room(Cfg cfg);

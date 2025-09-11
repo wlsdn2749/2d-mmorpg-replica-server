@@ -42,10 +42,12 @@ namespace Packet
 	    PKT_S_ItemUseReply = 31,
 	    PKT_S_InventoryUpdate = 32,
 	    PKT_S_SystemMessage = 33,
-	    PKT_C_NpcInteract = 34,
-	    PKT_S_NpcShopOpen = 35,
-	    PKT_C_NpcShopBuyRequest = 36,
-	    PKT_S_NpcShopBuyReply = 37,
+	    PKT_S_MonsterList = 34,
+	    PKT_C_NpcInteractRequest = 35,
+	    PKT_S_NpcInteractReply = 36,
+	    PKT_S_NpcShopOpen = 37,
+	    PKT_C_NpcShopBuyRequest = 38,
+	    PKT_S_NpcShopBuyReply = 39,
     }
     public class ServerPacketManager
     {
@@ -82,7 +84,7 @@ namespace Packet
         public static ArraySegment<byte> MakeSendBuffer(C_PlayerAttackRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PlayerAttackRequest);
         public static ArraySegment<byte> MakeSendBuffer(C_InventoryRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_InventoryRequest);
         public static ArraySegment<byte> MakeSendBuffer(C_ItemUseRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_ItemUseRequest);
-        public static ArraySegment<byte> MakeSendBuffer(C_NpcInteract pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_NpcInteract);
+        public static ArraySegment<byte> MakeSendBuffer(C_NpcInteractRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_NpcInteractRequest);
         public static ArraySegment<byte> MakeSendBuffer(C_NpcShopBuyRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_NpcShopBuyRequest);
 
         void Register()
@@ -114,6 +116,8 @@ namespace Packet
             RegisterHandler((ushort)PacketID.PKT_S_ItemUseReply, ServerPacketHandler.HANDLE_S_ItemUseReply, S_ItemUseReply.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_InventoryUpdate, ServerPacketHandler.HANDLE_S_InventoryUpdate, S_InventoryUpdate.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_SystemMessage, ServerPacketHandler.HANDLE_S_SystemMessage, S_SystemMessage.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_MonsterList, ServerPacketHandler.HANDLE_S_MonsterList, S_MonsterList.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_NpcInteractReply, ServerPacketHandler.HANDLE_S_NpcInteractReply, S_NpcInteractReply.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_NpcShopOpen, ServerPacketHandler.HANDLE_S_NpcShopOpen, S_NpcShopOpen.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_NpcShopBuyReply, ServerPacketHandler.HANDLE_S_NpcShopBuyReply, S_NpcShopBuyReply.Parser);
             

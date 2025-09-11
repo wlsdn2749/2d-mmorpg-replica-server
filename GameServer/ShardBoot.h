@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <cstdint>
 
 void StartShardedQueues(int totalRooms, int roomsPerQueue, uint32 timeBudgetMs);

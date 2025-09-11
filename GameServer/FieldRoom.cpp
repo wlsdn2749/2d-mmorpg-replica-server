@@ -95,6 +95,17 @@ void FieldRoom::SendSystemMessageToPlayer(int playerId, const std::string& messa
 	}
 }
 
+void FieldRoom::SendMonstersToPlayer(PlayerRef p)
+{
+	auto pkt = _monsters->BuildMonsterSnapShot(RoomId());
+	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
+	if (auto s = p->ownerSession.lock())
+	{
+		auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
+		s->Send(sendBuffer);
+	}
+}
+
 void FieldRoom::InitRoomSystems()
 {
 	_lastMonsterTickMs = _clock.NowMs(); // 첫 기준 시각
@@ -107,17 +118,23 @@ void FieldRoom::OnEnter(const PlayerRef& p)
 {
 	GConsoleLogger->WriteStdOut(Color::WHITE, L"[%d]: [%s] Has Join the [%s].\n", p->playerId, StrToWstr(p->username).c_str(), StrToWstr(RoomName()).c_str());
 
-	// 1. 내 클라에 현재 월드 스냅샷 (기존 유저들) 전송
-	auto pkt = BuildPlayerListSnapshot(p);
-	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
-	if (auto s = p->ownerSession.lock())
-	{
-		auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
-		s->Send(sendBuffer);
+	// 플레이어 전송
+	{ 
+		// 플레이어 스냅샷을 -> 접속한 플레이어에게 전달
+		auto pkt = BuildPlayerListSnapshot(p);
+		if (auto s = p->ownerSession.lock())
+		{
+			auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
+			s->Send(sendBuffer);
+		}
+		
+		// 플레이어가 입장함을 -> 다른 플레이어에게 전달
+		BroadcastEnter(p);
 	}
 
-	// 2. 기존 유저들에게 나 등장 브로드캐스트
-	BroadcastEnter(p);
+	// 맵에 있는 몬스터 전송 -> 접속한 플레이어에게 전달 - 나중에 이부분은 합칠 예정
+	SendMonstersToPlayer(p);
+	
 }
 
 void FieldRoom::OnLeave(const PlayerRef& p)
@@ -219,15 +236,19 @@ void FieldRoom::MonsterEntityLinkerImpl::ApplyDamageToPlayer(int pid, int dmg, i
 }
 
 // ------------------- Broadcaster -------------------
-void FieldRoom::MonsterBroadcasterImpl::SpawnMonster(const Monster& m)
+void FieldRoom::MonsterBroadcasterImpl::SpawnMonster(const Monster& monster)
 {
 	Protocol::S_SpawnMonster pkt;
-	pkt.set_monsterid(m.core.id);
-	pkt.set_monstertypeid(m.typeId);
-	pkt.set_x(m.core.pos.x);
-	pkt.set_y(m.core.pos.y);
-	pkt.set_dir(m.core.dir);
-	GConsoleLogger->WriteStdOut(Color::YELLOW, L"몬스터 스폰 Id: %d, x: %d, y: %d, dir: %d\n", m.core.id, m.core.pos.x, m.core.pos.y, (int)m.core.dir);
+	auto* info = pkt.mutable_monster();
+	info->set_monsterid(monster.core.id);
+	info->set_monstertypeid(monster.typeId);
+	auto* pos = info->mutable_pos();
+	pos->set_x(monster.core.pos.x);
+	pos->set_y(monster.core.pos.y);
+
+	info->set_direction(monster.core.dir);
+	
+	GConsoleLogger->WriteStdOut(Color::YELLOW, L"몬스터 스폰 Id: %d, typeId: %d, x: %d, y: %d, dir: %d\n", monster.core.id, monster.typeId, monster.core.pos.x, monster.core.pos.y, (int)monster.core.dir);
 	_r.Broadcast(ClientPacketHandler::MakeSendBuffer(pkt));
 }
 
@@ -262,6 +283,7 @@ void FieldRoom::MonsterBroadcasterImpl::BroadcastMonsterDeath(EntityId id)
 	pkt.set_monsterid(id);
 	_r.Broadcast(ClientPacketHandler::MakeSendBuffer(pkt));
 }
+
 
 // ------------------- Clock/Rng -------------------
 int64_t FieldRoom::MonsterClockImpl::NowMs() const
@@ -323,13 +345,14 @@ void FieldRoom::InitMonsters()
 	auto monsterStatDatas = std::make_unique<vector<pair<int, MonsterStats>>>();
 	auto spawnPointCfgDatas = std::make_unique<vector<SpawnPointCfg>>();
 
+	for(int i=0; i<5; i++)
 	{
 		// 기본 몬스터 (움직이는)
 		int monsterId = 1001;
 		MonsterStats monsterStats = { 30, 5, 1, 1, 1200, 1 };
 		monsterStatDatas->push_back({ monsterId, monsterStats });
 
-		SpawnPointCfg spawnPointCfg = { 1, 15, -4, 5, 1, 8000, 10, monsterId };
+		SpawnPointCfg spawnPointCfg = { 1, 15+i, -4-i, 5, 1, 8000, 10, monsterId };
 		spawnPointCfgDatas->push_back(spawnPointCfg);
 	}
 

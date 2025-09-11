@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "MonsterContainer.h"
 
 const Monster* MonsterContainer::Find(EntityId id) const {
@@ -79,4 +79,27 @@ void MonsterContainer::DecAlive(int spId) {
 	auto it = _aliveBySpawn.find(spId);
 	if (it == _aliveBySpawn.end()) return;
 	if (--it->second <= 0) _aliveBySpawn.erase(it);
+}
+
+
+Protocol::S_MonsterList MonsterContainer::BuildMonsterSnapShot(int mapId) const
+{
+	Protocol::S_MonsterList pkt;
+	pkt.set_mapid(mapId);
+
+	auto* out = pkt.mutable_monsters();
+	out->Reserve(static_cast<int>(_monsters.size()));
+
+	for (const auto& [entityId, monster] : _monsters)
+	{
+		Protocol::MonsterInfo* info = out->Add();
+		info->set_monsterid(monster.core.id);
+		info->set_monstertypeid(monster.typeId);
+		auto* pos = info->mutable_pos();
+		pos->set_x(monster.core.pos.x);
+		pos->set_y(monster.core.pos.y);
+
+		info->set_direction(monster.core.dir);
+	}
+	return pkt;
 }

@@ -54,18 +54,20 @@ public:
 	void Initialize(const NpcConfig& cfg);
 	void HandleInteraction(int playerId, ENpcInteractionType type);
 	bool IsNearby(const Pos2& playerPos, int maxDistance = 1) const;
+	Protocol::S_NpcInteractReply GetBasicInfo() const;
 
 public:
-	// Getter
-	int NpcId() {return core.id;}
-	const std::string& Name() {return name;}
-	ENpcRole Role() {return role;}
-	ENpcState State() {return state;}
-	Pos2 Position() {return core.pos;}
+	// Getter 
+	const int NpcId() const {return core.id;}
+	const std::string& Name() const {return name;}
+	const ENpcRole Role() const {return role;}
+	const ENpcState State() const {return state;}
+	const Pos2 Position() const {return core.pos;}
 
 	NpcDialogComponent* GetDialogComponent() { return _dialog.get(); }
 	NpcShopComponent* GetShopComponent() { return _shop.get(); }
 	NpcQuestComponent* GetQuestComponent() { return _quest.get(); }
+
 private:
 	std::unique_ptr<NpcDialogComponent> _dialog;
 	std::unique_ptr<NpcShopComponent> _shop;

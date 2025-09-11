@@ -12,13 +12,48 @@ void Npc::Initialize(const NpcConfig& cfg)
 	// questIds
 }
 
+const ENpcInteractionType Npc::GetAvailableType() const
+{
+	switch (role)
+	{
+	case ENpcRole::Dialog: 
+		return ENpcInteractionType::Talk;
+	case ENpcRole::Shop:
+		return ENpcInteractionType::Shop;
+	case ENpcRole::Quest:
+		return ENpcInteractionType::Quest;
+	}
+}
+
 void Npc::HandleInteraction(int playerId, ENpcInteractionType type)
 {
-	;
+	switch (type)
+	{
+	case ENpcInteractionType::Quest:
+	case ENpcInteractionType::Talk:
+		break;
+	case ENpcInteractionType::Shop:
+		//_shop->
+		break;
+	default:
+		break;
+	}
 }
 
 bool Npc::IsNearby(const Pos2& playerPos, int maxDistance) const
 {
-	// TODO implementation
-	return false; 
+	return Manhattan(Position(), playerPos) <= maxDistance;
 }
+
+Protocol::S_NpcInteractReply Npc::GetBasicInfo() const
+{
+	Protocol::S_NpcInteractReply pkt;
+	auto* dialogs = pkt.mutable_dialogs();
+	dialogs->Add();
+	
+	auto type = GetAvailableType();
+	pkt.set_interactiontype(static_cast<int>(type));
+	return pkt;
+}
+
+

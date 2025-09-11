@@ -16,10 +16,6 @@ struct Pos2 {
 	constexpr bool operator!=(const Pos2& o) const { return !(*this == o); }
 	constexpr Pos2 operator+(const Pos2& o) const { return { x + o.x, y + o.y }; }
 	constexpr Pos2 operator-(const Pos2& o) const { return { x - o.x, y - o.y }; }
-
-	static inline int32 Manhattan(const Pos2& a, const Pos2& b) {
-		return std::abs(a.x - b.x) + std::abs(a.y - b.y);
-	}
 };
 
 template<>
@@ -32,6 +28,10 @@ struct std::hash<Pos2>
 		return x ^ (y << 1); // or use boost::hash_combine
 	}
 };
+
+static inline int32 Manhattan(const Pos2& a, const Pos2& b) {
+	return std::abs(a.x - b.x) + std::abs(a.y - b.y);
+}
 
 static inline Pos2 DirToDelta4(Protocol::EDirection d) {
 	switch (d) {

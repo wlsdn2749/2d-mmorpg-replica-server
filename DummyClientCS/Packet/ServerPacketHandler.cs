@@ -204,21 +204,6 @@ namespace Packet
             Console.WriteLine($">>> 씬 전환: '{newSceneName}' 로딩 중...");
             Console.WriteLine($">>> 새로운 맵 환경 및 UI 초기화 완료");
             
-            // 새로운 룸의 플레이어 정보 처리
-            if (commit.Snapshots != null)
-            {
-                var snapshots = commit.Snapshots;
-                NetDebug.MyPlayerId = snapshots.MyPlayerId;
-                Console.WriteLine($"내 플레이어 ID: {snapshots.MyPlayerId}");
-                Console.WriteLine($"새로운 룸의 본인 포함 다른 플레이어 수: {snapshots.Players.Count}");
-                
-                foreach (var player in snapshots.Players)
-                {
-                    var pos = NetDebug.PosToStr(player.Pos);
-                    var dir = NetDebug.DirToStr(player.Direction);
-                    Console.WriteLine($"  - 플레이어ID: {player.Id}, 이름: {player.Username}, 위치: {pos}, 방향: {dir}");
-                }
-            }
         }
 
         internal static void HANDLE_S_LeaveGame(PacketSession session, S_LeaveGame game)
@@ -347,12 +332,26 @@ namespace Packet
             }
         }
 
+        internal static void HANDLE_S_MonsterList(PacketSession session, S_MonsterList list)
+        {
+            Console.WriteLine($"MapId : {list.MapId} ");
+            foreach(MonsterInfo monster in list.Monsters)
+            {
+                Console.WriteLine($"[S_MonsterList] Id:{monster.MonsterId} TypeId:{monster.MonsterTypeId} Pos:({monster.Pos.X}, {monster.Pos.Y}), Dir:{monster.Direction}");
+            }
+        }
+
         internal static void HANDLE_S_NpcShopOpen(PacketSession session, S_NpcShopOpen open)
         {
             throw new NotImplementedException();
         }
 
         internal static void HANDLE_S_NpcShopBuyReply(PacketSession session, S_NpcShopBuyReply reply)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void HANDLE_S_NpcInteractReply(PacketSession session, S_NpcInteractReply reply)
         {
             throw new NotImplementedException();
         }

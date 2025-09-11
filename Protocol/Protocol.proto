@@ -39,10 +39,12 @@ enum MsgId
 	S_ITEM_USE_REPLY = 31;
 	S_INVENTORY_UPDATE = 32;
 	S_SYSTEM_MESSAGE = 33;
-	C_NPC_INTERACT = 34;
-	S_NPC_SHOP_OPEN = 35;
-	C_NPC_SHOP_BUY_REQUEST = 36;
-	S_NPC_SHOP_BUY_REPLY = 37;
+	S_MONSTER_LIST = 34;
+	C_NPC_INTERACT_REQUEST = 35;
+	S_NPC_INTERACT_REPLY = 36;
+	S_NPC_SHOP_OPEN = 37;
+	C_NPC_SHOP_BUY_REQUEST = 38;
+	S_NPC_SHOP_BUY_REPLY = 39;
 }
 
 // 클라 -> 게임 서버 jwt 로그인 인증 (0)
@@ -181,16 +183,12 @@ message C_ChangeRoomReady {
 message S_ChangeRoomCommit {
   int32 transitionId = 1;
   int32 mapId = 2;
-  S_PlayerList snapshots = 3; // 들어오자마자 월드 동기화
+  // Snapshot은 OnEnter에서 PlayerList보내는것으로 대신함
 }
 
 // (21) 서버 -> 클라 : 몬스터 스폰 알림
 message S_SpawnMonster {
-	int32 monsterId = 1; // Entity Unique id
-	int32 monsterTypeId = 2; // Monster Type (Template or Resources Id)
-	int32 x = 3; // Tile Pos X
-	int32 y = 4; // Tile Pos Y
-	EDirection dir = 5; // 방향 
+	MonsterInfo monster = 1;
 }
 
 // (22) 서버 -> 클라 몬스터 디스폰(제거) 알림 
@@ -261,25 +259,38 @@ message S_SystemMessage {
 	EMessageType type = 2;
 }
 
-// (34) 클라 -> 서버 : NPCInteract 요청
-message C_NpcInteract {
-	int32 interactionType = 1; // 0=Talk, 1=Shop, 2=Quest
+// (34) 서버 -> 클라 :  몬스터 리스트 스냅샷
+message S_MonsterList
+{
+	int32 mapId = 1;
+	repeated MonsterInfo monsters = 2;
 }
 
-// (35) 서버 -> 클라 : 상점 정보 전달
+// (35) 클라 -> 서버 : Npc 정보 요청
+message C_NpcInteractRequest {
+	
+}
+
+// (36) 서버 -> 클라 : Npc 정보 응답
+message S_NpcInteractReply { 
+	repeated string dialogs = 2;
+	int32 interactionType = 3; // 0=Talk, 1=Shop, 2=Quest
+}
+
+// (37) 서버 -> 클라 : 상점 정보 전달
 message S_NpcShopOpen {
 	int32 npcId = 1;
 	repeated ShopItemInfo items = 2;
 }
 
-// (36) 클라 -> 서버 : 상점 아이템 구매 요청
+// (38) 클라 -> 서버 : 상점 아이템 구매 요청
 message C_NpcShopBuyRequest {
 	int32 npcId = 1;
 	int32 itemId = 2;
 	int32 quantity = 3;
 }
 
-// (37) 서버 -> 클라 : 상점 아이템 구매 요청 응답
+// (39) 서버 -> 클라 : 상점 아이템 구매 요청 응답
 message S_NpcShopBuyReply {
 	bool success = 1;
 	string detail = 2;
@@ -287,6 +298,7 @@ message S_NpcShopBuyReply {
 
 // TODO (xx) 서버 -> 클라 : S_BroadcastPlayerHpChanged
 // TODO (xx) 서버 -> 클라 : S_BroadcastPlayerDeath
+
 
 enum ELoginResult
 {
@@ -403,6 +415,14 @@ message InventorySlotInfo
 	int32 itemId = 2;
 	int32 count = 3;
 	bool isQuickslot = 4;
+}
+
+message MonsterInfo
+{
+	int32 monsterId = 1; // Entity Unique id
+	int32 monsterTypeId = 2; // Monster Type (Template or Resources Id)
+	Vector2Info pos = 3;
+	EDirection direction = 4;
 }
 
 message ShopItemInfo
