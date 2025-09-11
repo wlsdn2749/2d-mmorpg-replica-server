@@ -150,5 +150,9 @@ public:
 	Npc* FindNpcByPosition(const Pos2& pos);
 	Npc* FindNpcById(int npcId);
 
+// NPC 외부 진입점
+public:
+	void SendNpcInfo(PlayerRef player);
+
 };
 

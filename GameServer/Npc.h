@@ -63,6 +63,7 @@ public:
 	const ENpcRole Role() const {return role;}
 	const ENpcState State() const {return state;}
 	const Pos2 Position() const {return core.pos;}
+	const ENpcInteractionType GetAvailableType() const;
 
 	NpcDialogComponent* GetDialogComponent() { return _dialog.get(); }
 	NpcShopComponent* GetShopComponent() { return _shop.get(); }

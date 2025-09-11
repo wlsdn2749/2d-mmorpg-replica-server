@@ -273,8 +273,8 @@ message C_NpcInteractRequest {
 
 // (36) 서버 -> 클라 : Npc 정보 응답
 message S_NpcInteractReply { 
-	repeated string dialogs = 2;
-	int32 interactionType = 3; // 0=Talk, 1=Shop, 2=Quest
+	repeated string dialogs = 1;
+	int32 interactionType = 2; // 0=Talk, 1=Shop, 2=Quest
 }
 
 // (37) 서버 -> 클라 : 상점 정보 전달

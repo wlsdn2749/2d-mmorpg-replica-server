@@ -450,7 +450,6 @@ bool Handle_C_NpcInteractRequest(PacketSessionRef& session, Protocol::C_NpcInter
 	PlayerRef player = gameSession->_currentPlayer;
 
 	RoomRef room = player->GetRoom();
-	Npc* npc = room->DoAsync(&Room::FindNpcByPosition, player->GetPos());
 }
 bool Handle_C_NpcShopBuyRequest(PacketSessionRef& session, Protocol::C_NpcShopBuyRequest& pkt)
 {
