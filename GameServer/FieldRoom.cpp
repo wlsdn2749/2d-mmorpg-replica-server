@@ -269,11 +269,15 @@ void FieldRoom::MonsterBroadcasterImpl::BroadcastMonsterMove(EntityId id, int x,
 	_r.Broadcast(ClientPacketHandler::MakeSendBuffer(pkt));
 }
 
-void FieldRoom::MonsterBroadcasterImpl::BroadcastMonsterAttack(EntityId id, int targetPid)
+void FieldRoom::MonsterBroadcasterImpl::BroadcastMonsterAttack(EntityId id, int targetPid, int damage, int hpAfter)
 {
 	Protocol::S_BroadcastMonsterAttack pkt;
 	pkt.set_monsterid(id);
 	pkt.set_targetpid(targetPid);
+	pkt.set_damage(damage);
+	pkt.set_hpafter(hpAfter);
+	GConsoleLogger->WriteStdOut(Color::GREEN, L"[Monster] Monster:%d attacks PlayerId:%d (dmg:%d hp:%d->%d)",
+		id, targetPid, damage, hpAfter+damage, hpAfter);
 	_r.Broadcast(ClientPacketHandler::MakeSendBuffer(pkt));
 }
 

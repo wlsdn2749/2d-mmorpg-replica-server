@@ -99,7 +99,7 @@ private:
         void SpawnMonster(const Monster& m) override;
         void DespawnMonster(EntityId id, Protocol::EDespawnReason reason) override;
         void BroadcastMonsterMove(EntityId id, int x, int y, Protocol::EDirection dir) override;
-        void BroadcastMonsterAttack(EntityId id, int targetPid) override;
+        void BroadcastMonsterAttack(EntityId id, int targetPid, int damage, int hpAfter) override;
         void BroadcastMonsterDeath(EntityId id) override;
     private: 
         FieldRoom& _r;

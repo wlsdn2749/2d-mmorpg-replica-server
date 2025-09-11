@@ -355,6 +355,8 @@ PROTOBUF_CONSTEXPR S_BroadcastMonsterAttack::S_BroadcastMonsterAttack(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.monsterid_)*/0
   , /*decltype(_impl_.targetpid_)*/0
+  , /*decltype(_impl_.damage_)*/0
+  , /*decltype(_impl_.hpafter_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct S_BroadcastMonsterAttackDefaultTypeInternal {
   PROTOBUF_CONSTEXPR S_BroadcastMonsterAttackDefaultTypeInternal()
@@ -875,6 +877,8 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_BroadcastMonsterAttack, _impl_.monsterid_),
   PROTOBUF_FIELD_OFFSET(::Protocol::S_BroadcastMonsterAttack, _impl_.targetpid_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_BroadcastMonsterAttack, _impl_.damage_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_BroadcastMonsterAttack, _impl_.hpafter_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_BroadcastMonsterDeath, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -1082,28 +1086,28 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 169, -1, -1, sizeof(::Protocol::S_DespawnMonster)},
   { 177, -1, -1, sizeof(::Protocol::S_BroadcastMonsterMove)},
   { 187, -1, -1, sizeof(::Protocol::S_BroadcastMonsterAttack)},
-  { 195, -1, -1, sizeof(::Protocol::S_BroadcastMonsterDeath)},
-  { 202, -1, -1, sizeof(::Protocol::C_PlayerAttackRequest)},
-  { 208, -1, -1, sizeof(::Protocol::S_BroadcastPlayerAttack)},
-  { 218, -1, -1, sizeof(::Protocol::C_InventoryRequest)},
-  { 224, -1, -1, sizeof(::Protocol::S_InventoryReply)},
-  { 231, -1, -1, sizeof(::Protocol::C_ItemUseRequest)},
-  { 238, -1, -1, sizeof(::Protocol::S_ItemUseReply)},
-  { 246, -1, -1, sizeof(::Protocol::S_InventoryUpdate)},
-  { 253, -1, -1, sizeof(::Protocol::S_SystemMessage)},
-  { 261, -1, -1, sizeof(::Protocol::S_MonsterList)},
-  { 269, -1, -1, sizeof(::Protocol::C_NpcInteractRequest)},
-  { 275, -1, -1, sizeof(::Protocol::S_NpcInteractReply)},
-  { 283, -1, -1, sizeof(::Protocol::S_NpcShopOpen)},
-  { 291, -1, -1, sizeof(::Protocol::C_NpcShopBuyRequest)},
-  { 300, -1, -1, sizeof(::Protocol::S_NpcShopBuyReply)},
-  { 308, -1, -1, sizeof(::Protocol::Vector2Info)},
-  { 316, -1, -1, sizeof(::Protocol::PlayerMoveInfo)},
-  { 326, -1, -1, sizeof(::Protocol::CharacterSummaryInfo)},
-  { 336, -1, -1, sizeof(::Protocol::PlayerInfo)},
-  { 346, -1, -1, sizeof(::Protocol::InventorySlotInfo)},
-  { 356, -1, -1, sizeof(::Protocol::MonsterInfo)},
-  { 366, -1, -1, sizeof(::Protocol::ShopItemInfo)},
+  { 197, -1, -1, sizeof(::Protocol::S_BroadcastMonsterDeath)},
+  { 204, -1, -1, sizeof(::Protocol::C_PlayerAttackRequest)},
+  { 210, -1, -1, sizeof(::Protocol::S_BroadcastPlayerAttack)},
+  { 220, -1, -1, sizeof(::Protocol::C_InventoryRequest)},
+  { 226, -1, -1, sizeof(::Protocol::S_InventoryReply)},
+  { 233, -1, -1, sizeof(::Protocol::C_ItemUseRequest)},
+  { 240, -1, -1, sizeof(::Protocol::S_ItemUseReply)},
+  { 248, -1, -1, sizeof(::Protocol::S_InventoryUpdate)},
+  { 255, -1, -1, sizeof(::Protocol::S_SystemMessage)},
+  { 263, -1, -1, sizeof(::Protocol::S_MonsterList)},
+  { 271, -1, -1, sizeof(::Protocol::C_NpcInteractRequest)},
+  { 277, -1, -1, sizeof(::Protocol::S_NpcInteractReply)},
+  { 285, -1, -1, sizeof(::Protocol::S_NpcShopOpen)},
+  { 293, -1, -1, sizeof(::Protocol::C_NpcShopBuyRequest)},
+  { 302, -1, -1, sizeof(::Protocol::S_NpcShopBuyReply)},
+  { 310, -1, -1, sizeof(::Protocol::Vector2Info)},
+  { 318, -1, -1, sizeof(::Protocol::PlayerMoveInfo)},
+  { 328, -1, -1, sizeof(::Protocol::CharacterSummaryInfo)},
+  { 338, -1, -1, sizeof(::Protocol::PlayerInfo)},
+  { 348, -1, -1, sizeof(::Protocol::InventorySlotInfo)},
+  { 358, -1, -1, sizeof(::Protocol::MonsterInfo)},
+  { 368, -1, -1, sizeof(::Protocol::ShopItemInfo)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -1198,101 +1202,102 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "onsterId\030\001 \001(\005\022(\n\006reason\030\002 \001(\0162\030.Protoco"
   "l.EDespawnReason\"d\n\026S_BroadcastMonsterMo"
   "ve\022\021\n\tmonsterId\030\001 \001(\005\022\t\n\001x\030\002 \001(\005\022\t\n\001y\030\003 "
-  "\001(\005\022!\n\003dir\030\004 \001(\0162\024.Protocol.EDirection\"@"
+  "\001(\005\022!\n\003dir\030\004 \001(\0162\024.Protocol.EDirection\"a"
   "\n\030S_BroadcastMonsterAttack\022\021\n\tmonsterId\030"
-  "\001 \001(\005\022\021\n\ttargetPid\030\002 \001(\005\",\n\027S_BroadcastM"
-  "onsterDeath\022\021\n\tmonsterId\030\001 \001(\005\"\027\n\025C_Play"
-  "erAttackRequest\"^\n\027S_BroadcastPlayerAtta"
-  "ck\022\020\n\010playerId\030\001 \001(\005\022\020\n\010targetId\030\002 \001(\005\022\016"
-  "\n\006damage\030\003 \001(\005\022\017\n\007hpAfter\030\004 \001(\005\"\024\n\022C_Inv"
-  "entoryRequest\">\n\020S_InventoryReply\022*\n\005slo"
-  "ts\030\001 \003(\0132\033.Protocol.InventorySlotInfo\"%\n"
-  "\020C_ItemUseRequest\022\021\n\tslotIndex\030\001 \001(\005\"7\n\016"
-  "S_ItemUseReply\022\017\n\007success\030\001 \001(\010\022\024\n\014error"
-  "Message\030\002 \001(\t\"F\n\021S_InventoryUpdate\0221\n\014ch"
-  "angedSlots\030\001 \003(\0132\033.Protocol.InventorySlo"
-  "tInfo\"H\n\017S_SystemMessage\022\017\n\007message\030\001 \001("
-  "\t\022$\n\004type\030\002 \001(\0162\026.Protocol.EMessageType\""
-  "G\n\rS_MonsterList\022\r\n\005mapId\030\001 \001(\005\022\'\n\010monst"
-  "ers\030\002 \003(\0132\025.Protocol.MonsterInfo\"\026\n\024C_Np"
-  "cInteractRequest\">\n\022S_NpcInteractReply\022\017"
-  "\n\007dialogs\030\001 \003(\t\022\027\n\017interactionType\030\002 \001(\005"
-  "\"E\n\rS_NpcShopOpen\022\r\n\005npcId\030\001 \001(\005\022%\n\005item"
-  "s\030\002 \003(\0132\026.Protocol.ShopItemInfo\"F\n\023C_Npc"
-  "ShopBuyRequest\022\r\n\005npcId\030\001 \001(\005\022\016\n\006itemId\030"
-  "\002 \001(\005\022\020\n\010quantity\030\003 \001(\005\"4\n\021S_NpcShopBuyR"
-  "eply\022\017\n\007success\030\001 \001(\010\022\016\n\006detail\030\002 \001(\t\"#\n"
-  "\013Vector2Info\022\t\n\001x\030\001 \001(\005\022\t\n\001y\030\002 \001(\005\"\231\001\n\016P"
-  "layerMoveInfo\022\020\n\010playerId\030\001 \001(\005\022\'\n\tdirec"
-  "tion\030\002 \001(\0162\024.Protocol.EDirection\022%\n\006newP"
-  "os\030\003 \001(\0132\025.Protocol.Vector2Info\022%\n\006resul"
-  "t\030\004 \001(\0162\025.Protocol.EMoveResult\"}\n\024Charac"
-  "terSummaryInfo\022\020\n\010username\030\001 \001(\t\022\r\n\005leve"
-  "l\030\002 \001(\005\022!\n\006gender\030\003 \001(\0162\021.Protocol.EGend"
-  "er\022!\n\006region\030\004 \001(\0162\021.Protocol.ERegion\"w\n"
-  "\nPlayerInfo\022\n\n\002id\030\001 \001(\005\022\020\n\010username\030\002 \001("
-  "\t\022\"\n\003pos\030\003 \001(\0132\025.Protocol.Vector2Info\022\'\n"
-  "\tdirection\030\004 \001(\0162\024.Protocol.EDirection\"Z"
-  "\n\021InventorySlotInfo\022\021\n\tslotIndex\030\001 \001(\005\022\016"
-  "\n\006itemId\030\002 \001(\005\022\r\n\005count\030\003 \001(\005\022\023\n\013isQuick"
-  "slot\030\004 \001(\010\"\204\001\n\013MonsterInfo\022\021\n\tmonsterId\030"
-  "\001 \001(\005\022\025\n\rmonsterTypeId\030\002 \001(\005\022\"\n\003pos\030\003 \001("
-  "\0132\025.Protocol.Vector2Info\022\'\n\tdirection\030\004 "
-  "\001(\0162\024.Protocol.EDirection\"\?\n\014ShopItemInf"
-  "o\022\016\n\006itemId\030\001 \001(\005\022\020\n\010quantity\030\002 \001(\005\022\r\n\005p"
-  "rice\030\003 \001(\005*\207\010\n\005MsgId\022\027\n\023C_JWT_LOGIN_REQU"
-  "EST\020\000\022\025\n\021S_JWT_LOGIN_REPLY\020\001\022\036\n\032C_CREATE"
-  "_CHARACTER_REQUEST\020\002\022\034\n\030S_CREATE_CHARACT"
-  "ER_REPLY\020\003\022\034\n\030C_CHARACTER_LIST_REQUEST\020\004"
-  "\022\032\n\026S_CHARACTER_LIST_REPLY\020\005\022\036\n\032C_DELETE"
-  "_CHARACTER_REQUEST\020\006\022\034\n\030S_DELETE_CHARACT"
-  "ER_REPLY\020\007\022\020\n\014C_ENTER_GAME\020\010\022\020\n\014S_ENTER_"
-  "GAME\020\t\022\021\n\rS_PLAYER_LIST\020\n\022\034\n\030S_BROADCAST"
-  "_PLAYER_ENTER\020\013\022\020\n\014C_LEAVE_GAME\020\014\022\020\n\014S_L"
-  "EAVE_GAME\020\r\022\034\n\030S_BROADCAST_PLAYER_LEAVE\020"
-  "\016\022\031\n\025C_PLAYER_MOVE_REQUEST\020\017\022\027\n\023S_PLAYER"
-  "_MOVE_REPLY\020\020\022\033\n\027S_BROADCAST_PLAYER_MOVE"
-  "\020\021\022\027\n\023S_CHANGE_ROOM_BEGIN\020\022\022\027\n\023C_CHANGE_"
-  "ROOM_READY\020\023\022\030\n\024S_CHANGE_ROOM_COMMIT\020\024\022\023"
-  "\n\017S_SPAWN_MONSTER\020\025\022\025\n\021S_DESPAWN_MONSTER"
-  "\020\026\022\034\n\030S_BROADCAST_MONSTER_MOVE\020\027\022\036\n\032S_BR"
-  "OADCAST_MONSTER_ATTACK\020\030\022\035\n\031S_BROADCAST_"
-  "MONSTER_DEATH\020\031\022\033\n\027C_PLAYER_ATTACK_REQUE"
-  "ST\020\032\022\035\n\031S_BROADCAST_PLAYER_ATTACK\020\033\022\027\n\023C"
-  "_INVENTORY_REQUEST\020\034\022\025\n\021S_INVENTORY_REPL"
-  "Y\020\035\022\026\n\022C_ITEM_USE_REQUEST\020\036\022\024\n\020S_ITEM_US"
-  "E_REPLY\020\037\022\026\n\022S_INVENTORY_UPDATE\020 \022\024\n\020S_S"
-  "YSTEM_MESSAGE\020!\022\022\n\016S_MONSTER_LIST\020\"\022\032\n\026C"
-  "_NPC_INTERACT_REQUEST\020#\022\030\n\024S_NPC_INTERAC"
-  "T_REPLY\020$\022\023\n\017S_NPC_SHOP_OPEN\020%\022\032\n\026C_NPC_"
-  "SHOP_BUY_REQUEST\020&\022\030\n\024S_NPC_SHOP_BUY_REP"
-  "LY\020\'*S\n\014ELoginResult\022\013\n\007SUCCESS\020\000\022\021\n\rINV"
-  "ALID_TOKEN\020\001\022\021\n\rTOKEN_EXPIRED\020\002\022\020\n\014SERVE"
-  "R_ERROR\020\003*>\n\007EGender\022\017\n\013GENDER_NONE\020\000\022\017\n"
-  "\013GENDER_MALE\020\001\022\021\n\rGENDER_FEMALE\020\002*:\n\007ERe"
-  "gion\022\017\n\013REGION_NONE\020\000\022\r\n\tREGION_GO\020\001\022\017\n\013"
-  "REGION_BACK\020\002*C\n\nEDirection\022\n\n\006DIR_UP\020\000\022"
-  "\014\n\010DIR_DOWN\020\001\022\014\n\010DIR_LEFT\020\002\022\r\n\tDIR_RIGHT"
-  "\020\003*|\n\014ELeaveReason\022\021\n\rLEAVE_UNKNOWN\020\000\022\020\n"
-  "\014LEAVE_LOGOUT\020\001\022\025\n\021LEAVE_CHANGE_ROOM\020\002\022\032"
-  "\n\026LEAVE_CHANGE_CHARACTER\020\003\022\024\n\020LEAVE_DISC"
-  "ONNECT\020\004*_\n\013EMoveResult\022\020\n\014MOVE_UNKNOWN\020"
-  "\000\022\013\n\007MOVE_OK\020\001\022\014\n\010MOVE_DIR\020\002\022\021\n\rMOVE_COO"
-  "LDOWN\020\003\022\020\n\014MOVE_BLOCKED\020\004*I\n\014EEnterReaso"
-  "n\022\021\n\rENTER_UNKNOWN\020\000\022\017\n\013ENTER_LOGIN\020\001\022\025\n"
-  "\021ENTER_CHANGE_ROOM\020\002*9\n\016EDespawnReason\022\023"
-  "\n\017DESPAWN_UNKNOWN\020\000\022\022\n\016DESPAWN_KILLED\020\001*"
-  "~\n\tEItemType\022\025\n\021ITEM_TYPE_UNKNOWN\020\000\022\030\n\024I"
-  "TEM_TYPE_CONSUMABLE\020\001\022\027\n\023ITEM_TYPE_EQUIP"
-  "MENT\020\002\022\023\n\017ITEM_TYPE_QUEST\020\003\022\022\n\016ITEM_TYPE"
-  "_MISC\020\004*a\n\014EMessageType\022\020\n\014MESSAGE_INFO\020"
-  "\000\022\023\n\017MESSAGE_WARNING\020\001\022\021\n\rMESSAGE_ERROR\020"
-  "\002\022\027\n\023MESSAGE_DROP_FAILED\020\003B\033\252\002\030Google.Pr"
-  "otobuf.Protocolb\006proto3"
+  "\001 \001(\005\022\021\n\ttargetPid\030\002 \001(\005\022\016\n\006damage\030\003 \001(\005"
+  "\022\017\n\007hpAfter\030\004 \001(\005\",\n\027S_BroadcastMonsterD"
+  "eath\022\021\n\tmonsterId\030\001 \001(\005\"\027\n\025C_PlayerAttac"
+  "kRequest\"^\n\027S_BroadcastPlayerAttack\022\020\n\010p"
+  "layerId\030\001 \001(\005\022\020\n\010targetId\030\002 \001(\005\022\016\n\006damag"
+  "e\030\003 \001(\005\022\017\n\007hpAfter\030\004 \001(\005\"\024\n\022C_InventoryR"
+  "equest\">\n\020S_InventoryReply\022*\n\005slots\030\001 \003("
+  "\0132\033.Protocol.InventorySlotInfo\"%\n\020C_Item"
+  "UseRequest\022\021\n\tslotIndex\030\001 \001(\005\"7\n\016S_ItemU"
+  "seReply\022\017\n\007success\030\001 \001(\010\022\024\n\014errorMessage"
+  "\030\002 \001(\t\"F\n\021S_InventoryUpdate\0221\n\014changedSl"
+  "ots\030\001 \003(\0132\033.Protocol.InventorySlotInfo\"H"
+  "\n\017S_SystemMessage\022\017\n\007message\030\001 \001(\t\022$\n\004ty"
+  "pe\030\002 \001(\0162\026.Protocol.EMessageType\"G\n\rS_Mo"
+  "nsterList\022\r\n\005mapId\030\001 \001(\005\022\'\n\010monsters\030\002 \003"
+  "(\0132\025.Protocol.MonsterInfo\"\026\n\024C_NpcIntera"
+  "ctRequest\">\n\022S_NpcInteractReply\022\017\n\007dialo"
+  "gs\030\001 \003(\t\022\027\n\017interactionType\030\002 \001(\005\"E\n\rS_N"
+  "pcShopOpen\022\r\n\005npcId\030\001 \001(\005\022%\n\005items\030\002 \003(\013"
+  "2\026.Protocol.ShopItemInfo\"F\n\023C_NpcShopBuy"
+  "Request\022\r\n\005npcId\030\001 \001(\005\022\016\n\006itemId\030\002 \001(\005\022\020"
+  "\n\010quantity\030\003 \001(\005\"4\n\021S_NpcShopBuyReply\022\017\n"
+  "\007success\030\001 \001(\010\022\016\n\006detail\030\002 \001(\t\"#\n\013Vector"
+  "2Info\022\t\n\001x\030\001 \001(\005\022\t\n\001y\030\002 \001(\005\"\231\001\n\016PlayerMo"
+  "veInfo\022\020\n\010playerId\030\001 \001(\005\022\'\n\tdirection\030\002 "
+  "\001(\0162\024.Protocol.EDirection\022%\n\006newPos\030\003 \001("
+  "\0132\025.Protocol.Vector2Info\022%\n\006result\030\004 \001(\016"
+  "2\025.Protocol.EMoveResult\"}\n\024CharacterSumm"
+  "aryInfo\022\020\n\010username\030\001 \001(\t\022\r\n\005level\030\002 \001(\005"
+  "\022!\n\006gender\030\003 \001(\0162\021.Protocol.EGender\022!\n\006r"
+  "egion\030\004 \001(\0162\021.Protocol.ERegion\"w\n\nPlayer"
+  "Info\022\n\n\002id\030\001 \001(\005\022\020\n\010username\030\002 \001(\t\022\"\n\003po"
+  "s\030\003 \001(\0132\025.Protocol.Vector2Info\022\'\n\tdirect"
+  "ion\030\004 \001(\0162\024.Protocol.EDirection\"Z\n\021Inven"
+  "torySlotInfo\022\021\n\tslotIndex\030\001 \001(\005\022\016\n\006itemI"
+  "d\030\002 \001(\005\022\r\n\005count\030\003 \001(\005\022\023\n\013isQuickslot\030\004 "
+  "\001(\010\"\204\001\n\013MonsterInfo\022\021\n\tmonsterId\030\001 \001(\005\022\025"
+  "\n\rmonsterTypeId\030\002 \001(\005\022\"\n\003pos\030\003 \001(\0132\025.Pro"
+  "tocol.Vector2Info\022\'\n\tdirection\030\004 \001(\0162\024.P"
+  "rotocol.EDirection\"\?\n\014ShopItemInfo\022\016\n\006it"
+  "emId\030\001 \001(\005\022\020\n\010quantity\030\002 \001(\005\022\r\n\005price\030\003 "
+  "\001(\005*\207\010\n\005MsgId\022\027\n\023C_JWT_LOGIN_REQUEST\020\000\022\025"
+  "\n\021S_JWT_LOGIN_REPLY\020\001\022\036\n\032C_CREATE_CHARAC"
+  "TER_REQUEST\020\002\022\034\n\030S_CREATE_CHARACTER_REPL"
+  "Y\020\003\022\034\n\030C_CHARACTER_LIST_REQUEST\020\004\022\032\n\026S_C"
+  "HARACTER_LIST_REPLY\020\005\022\036\n\032C_DELETE_CHARAC"
+  "TER_REQUEST\020\006\022\034\n\030S_DELETE_CHARACTER_REPL"
+  "Y\020\007\022\020\n\014C_ENTER_GAME\020\010\022\020\n\014S_ENTER_GAME\020\t\022"
+  "\021\n\rS_PLAYER_LIST\020\n\022\034\n\030S_BROADCAST_PLAYER"
+  "_ENTER\020\013\022\020\n\014C_LEAVE_GAME\020\014\022\020\n\014S_LEAVE_GA"
+  "ME\020\r\022\034\n\030S_BROADCAST_PLAYER_LEAVE\020\016\022\031\n\025C_"
+  "PLAYER_MOVE_REQUEST\020\017\022\027\n\023S_PLAYER_MOVE_R"
+  "EPLY\020\020\022\033\n\027S_BROADCAST_PLAYER_MOVE\020\021\022\027\n\023S"
+  "_CHANGE_ROOM_BEGIN\020\022\022\027\n\023C_CHANGE_ROOM_RE"
+  "ADY\020\023\022\030\n\024S_CHANGE_ROOM_COMMIT\020\024\022\023\n\017S_SPA"
+  "WN_MONSTER\020\025\022\025\n\021S_DESPAWN_MONSTER\020\026\022\034\n\030S"
+  "_BROADCAST_MONSTER_MOVE\020\027\022\036\n\032S_BROADCAST"
+  "_MONSTER_ATTACK\020\030\022\035\n\031S_BROADCAST_MONSTER"
+  "_DEATH\020\031\022\033\n\027C_PLAYER_ATTACK_REQUEST\020\032\022\035\n"
+  "\031S_BROADCAST_PLAYER_ATTACK\020\033\022\027\n\023C_INVENT"
+  "ORY_REQUEST\020\034\022\025\n\021S_INVENTORY_REPLY\020\035\022\026\n\022"
+  "C_ITEM_USE_REQUEST\020\036\022\024\n\020S_ITEM_USE_REPLY"
+  "\020\037\022\026\n\022S_INVENTORY_UPDATE\020 \022\024\n\020S_SYSTEM_M"
+  "ESSAGE\020!\022\022\n\016S_MONSTER_LIST\020\"\022\032\n\026C_NPC_IN"
+  "TERACT_REQUEST\020#\022\030\n\024S_NPC_INTERACT_REPLY"
+  "\020$\022\023\n\017S_NPC_SHOP_OPEN\020%\022\032\n\026C_NPC_SHOP_BU"
+  "Y_REQUEST\020&\022\030\n\024S_NPC_SHOP_BUY_REPLY\020\'*S\n"
+  "\014ELoginResult\022\013\n\007SUCCESS\020\000\022\021\n\rINVALID_TO"
+  "KEN\020\001\022\021\n\rTOKEN_EXPIRED\020\002\022\020\n\014SERVER_ERROR"
+  "\020\003*>\n\007EGender\022\017\n\013GENDER_NONE\020\000\022\017\n\013GENDER"
+  "_MALE\020\001\022\021\n\rGENDER_FEMALE\020\002*:\n\007ERegion\022\017\n"
+  "\013REGION_NONE\020\000\022\r\n\tREGION_GO\020\001\022\017\n\013REGION_"
+  "BACK\020\002*C\n\nEDirection\022\n\n\006DIR_UP\020\000\022\014\n\010DIR_"
+  "DOWN\020\001\022\014\n\010DIR_LEFT\020\002\022\r\n\tDIR_RIGHT\020\003*|\n\014E"
+  "LeaveReason\022\021\n\rLEAVE_UNKNOWN\020\000\022\020\n\014LEAVE_"
+  "LOGOUT\020\001\022\025\n\021LEAVE_CHANGE_ROOM\020\002\022\032\n\026LEAVE"
+  "_CHANGE_CHARACTER\020\003\022\024\n\020LEAVE_DISCONNECT\020"
+  "\004*_\n\013EMoveResult\022\020\n\014MOVE_UNKNOWN\020\000\022\013\n\007MO"
+  "VE_OK\020\001\022\014\n\010MOVE_DIR\020\002\022\021\n\rMOVE_COOLDOWN\020\003"
+  "\022\020\n\014MOVE_BLOCKED\020\004*I\n\014EEnterReason\022\021\n\rEN"
+  "TER_UNKNOWN\020\000\022\017\n\013ENTER_LOGIN\020\001\022\025\n\021ENTER_"
+  "CHANGE_ROOM\020\002*9\n\016EDespawnReason\022\023\n\017DESPA"
+  "WN_UNKNOWN\020\000\022\022\n\016DESPAWN_KILLED\020\001*~\n\tEIte"
+  "mType\022\025\n\021ITEM_TYPE_UNKNOWN\020\000\022\030\n\024ITEM_TYP"
+  "E_CONSUMABLE\020\001\022\027\n\023ITEM_TYPE_EQUIPMENT\020\002\022"
+  "\023\n\017ITEM_TYPE_QUEST\020\003\022\022\n\016ITEM_TYPE_MISC\020\004"
+  "*a\n\014EMessageType\022\020\n\014MESSAGE_INFO\020\000\022\023\n\017ME"
+  "SSAGE_WARNING\020\001\022\021\n\rMESSAGE_ERROR\020\002\022\027\n\023ME"
+  "SSAGE_DROP_FAILED\020\003B\033\252\002\030Google.Protobuf."
+  "Protocolb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 5263, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 5296, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
     &descriptor_table_Protocol_2eproto_once, nullptr, 0, 47,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
@@ -6474,12 +6479,14 @@ S_BroadcastMonsterAttack::S_BroadcastMonsterAttack(const S_BroadcastMonsterAttac
   new (&_impl_) Impl_{
       decltype(_impl_.monsterid_){}
     , decltype(_impl_.targetpid_){}
+    , decltype(_impl_.damage_){}
+    , decltype(_impl_.hpafter_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::memcpy(&_impl_.monsterid_, &from._impl_.monsterid_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.targetpid_) -
-    reinterpret_cast<char*>(&_impl_.monsterid_)) + sizeof(_impl_.targetpid_));
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.hpafter_) -
+    reinterpret_cast<char*>(&_impl_.monsterid_)) + sizeof(_impl_.hpafter_));
   // @@protoc_insertion_point(copy_constructor:Protocol.S_BroadcastMonsterAttack)
 }
 
@@ -6490,6 +6497,8 @@ inline void S_BroadcastMonsterAttack::SharedCtor(
   new (&_impl_) Impl_{
       decltype(_impl_.monsterid_){0}
     , decltype(_impl_.targetpid_){0}
+    , decltype(_impl_.damage_){0}
+    , decltype(_impl_.hpafter_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -6518,8 +6527,8 @@ void S_BroadcastMonsterAttack::Clear() {
   (void) cached_has_bits;
 
   ::memset(&_impl_.monsterid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_impl_.targetpid_) -
-      reinterpret_cast<char*>(&_impl_.monsterid_)) + sizeof(_impl_.targetpid_));
+      reinterpret_cast<char*>(&_impl_.hpafter_) -
+      reinterpret_cast<char*>(&_impl_.monsterid_)) + sizeof(_impl_.hpafter_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -6541,6 +6550,22 @@ const char* S_BroadcastMonsterAttack::_InternalParse(const char* ptr, ::_pbi::Pa
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
           _impl_.targetpid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 damage = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          _impl_.damage_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 hpAfter = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          _impl_.hpafter_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -6586,6 +6611,18 @@ uint8_t* S_BroadcastMonsterAttack::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_targetpid(), target);
   }
 
+  // int32 damage = 3;
+  if (this->_internal_damage() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(3, this->_internal_damage(), target);
+  }
+
+  // int32 hpAfter = 4;
+  if (this->_internal_hpafter() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(4, this->_internal_hpafter(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -6612,6 +6649,16 @@ size_t S_BroadcastMonsterAttack::ByteSizeLong() const {
     total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_targetpid());
   }
 
+  // int32 damage = 3;
+  if (this->_internal_damage() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_damage());
+  }
+
+  // int32 hpAfter = 4;
+  if (this->_internal_hpafter() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_hpafter());
+  }
+
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
@@ -6636,6 +6683,12 @@ void S_BroadcastMonsterAttack::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_ms
   if (from._internal_targetpid() != 0) {
     _this->_internal_set_targetpid(from._internal_targetpid());
   }
+  if (from._internal_damage() != 0) {
+    _this->_internal_set_damage(from._internal_damage());
+  }
+  if (from._internal_hpafter() != 0) {
+    _this->_internal_set_hpafter(from._internal_hpafter());
+  }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -6654,8 +6707,8 @@ void S_BroadcastMonsterAttack::InternalSwap(S_BroadcastMonsterAttack* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(S_BroadcastMonsterAttack, _impl_.targetpid_)
-      + sizeof(S_BroadcastMonsterAttack::_impl_.targetpid_)
+      PROTOBUF_FIELD_OFFSET(S_BroadcastMonsterAttack, _impl_.hpafter_)
+      + sizeof(S_BroadcastMonsterAttack::_impl_.hpafter_)
       - PROTOBUF_FIELD_OFFSET(S_BroadcastMonsterAttack, _impl_.monsterid_)>(
           reinterpret_cast<char*>(&_impl_.monsterid_),
           reinterpret_cast<char*>(&other->_impl_.monsterid_));
