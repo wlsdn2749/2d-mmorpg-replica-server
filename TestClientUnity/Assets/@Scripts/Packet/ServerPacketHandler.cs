@@ -400,10 +400,20 @@ namespace Packet
         {
             Debug.Log("공격패킷수신");
             var attacker = PlayerSpawner.Get(broadPlayerAtk.PlayerId);
+            var targetInfo = broadPlayerAtk;
             if (attacker)
             {
-                
-                
+                Debug.Log("데미지 텍스트 플로팅");
+                var damageText = ObjectPoolManager.Instance.GetObject("DamageText");
+                damageText.GetComponent<DamageText>().Show(broadPlayerAtk.Damage, MonsterSync.MonsterPos(broadPlayerAtk)+new Vector2(0,0.5f));
+                Debug.Log(broadPlayerAtk.HpAfter);
+            }
+            var go = MonsterSpawner.Get(broadPlayerAtk.TargetId /* 또는 monsterId */);
+            if (go)
+            {
+                var mh = go.GetComponent<MonsterHealth>();
+                if (mh) mh.SetHp(broadPlayerAtk.HpAfter); // 서버가 hpAfter를 내려주면 그대로
+                                               // 없으면 mh.ApplyDamage(msg.damage);
             }
         }
         internal static void HANDLE_S_InventoryReply(PacketSession session, S_InventoryReply invenApply)

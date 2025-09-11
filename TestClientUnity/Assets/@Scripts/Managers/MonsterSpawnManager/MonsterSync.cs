@@ -1,5 +1,6 @@
 ﻿using Google.Protobuf.Protocol;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 public static class MonsterSync
 {
@@ -7,9 +8,11 @@ public static class MonsterSync
     static bool _sceneReady = false;
 
     static S_MonsterList _pendingSnapshot;
+    static Vector2 _monsterPos;
     static readonly Dictionary<int, MonsterInfo> _pendingSpawns = new();
     static readonly Dictionary<int, S_BroadcastMonsterMove> _pendingMoves = new();
     static readonly Dictionary<int, S_BroadcastMonsterAttack> _pendingAttacks = new();
+    static readonly Dictionary<int, S_BroadcastPlayerAttack> _pendingPlayerAttacks = new();
     // 맵이 바뀐다(또는 최초 접속으로 이 맵 진입한다)
     public static void OnMapActivated(int mapId)
     {
@@ -98,6 +101,17 @@ public static class MonsterSync
     {
         if (!MonsterSpawner.Exists(msg.MonsterId)) { _pendingMoves[msg.MonsterId] = msg; return; }
         MonsterSpawner.UpdateMove(msg);
+    }
+    public static Vector2 MonsterPos(S_BroadcastPlayerAttack msg)
+    {
+        if (!MonsterSpawner.Exists(msg.TargetId)) { _pendingPlayerAttacks[msg.TargetId] = msg; return Vector2.zero; }
+        _monsterPos = MonsterSpawner.MonsterPos(msg);
+        return _monsterPos;
+    }
+    public static void OnHit(S_BroadcastPlayerAttack msg)
+    {
+        if (!MonsterSpawner.Exists(msg.TargetId)) { _pendingPlayerAttacks[msg.TargetId] = msg; return; }
+        MonsterSpawner.OnHit(msg);
     }
     public static void OnAttack(S_BroadcastMonsterAttack msg)
     {

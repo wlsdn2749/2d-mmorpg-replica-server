@@ -13,8 +13,8 @@ public static class MonsterSpawner
         {
             if (_container == null)
             {
-                var go = GameObject.Find("@Monsters") ?? new GameObject("@Monsters");
-                _container = go.transform;
+                var monster = GameObject.Find("@Monsters") ?? new GameObject("@Monsters");
+                _container = monster.transform;
             }
             return _container;
         }
@@ -75,6 +75,15 @@ public static class MonsterSpawner
         av.SmoothMoveTo(new Vector3(msg.X, msg.Y, 0));
         av.SetDirection(msg.Dir);
     }
+    public static Vector2 MonsterPos(S_BroadcastPlayerAttack msg)
+    {
+        if(!_spawned.TryGetValue(msg.TargetId, out var go) || go == null)
+        {
+            Debug.LogWarning($"[MonsterSpawner] Move update for missing {msg.TargetId}");
+            return Vector2.zero ;
+        }
+        return go.transform.position;
+    }
     public static void UpdateAttack(S_BroadcastMonsterAttack msg)
     {
         if (!_spawned.TryGetValue(msg.MonsterId, out var go) || go == null)
@@ -98,6 +107,21 @@ public static class MonsterSpawner
             Object.Destroy(go);
             _spawned.Remove(msg.MonsterId);
         }
+    }
+    public static void OnHit(S_BroadcastPlayerAttack msg)
+    {
+        if (!_spawned.TryGetValue(msg.TargetId, out var go) || go == null)
+        {
+            Debug.LogWarning($"[MonsterSpawner] Hit update for missing {msg.TargetId}");
+            return;
+        }
+        var mh = go.GetComponent<MonsterHealth>();
+        if (mh == null)
+        {
+            Debug.LogWarning($"[MonsterSpawner] Avatar missing for {msg.TargetId}");
+            return;
+        }
+        mh.SetHp(msg.HpAfter);
     }
     public static void Despawn(S_BroadcastMonsterDeath msg)
     {
