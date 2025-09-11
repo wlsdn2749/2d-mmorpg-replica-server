@@ -40,6 +40,11 @@ enum MsgId
 	S_INVENTORY_UPDATE = 32;
 	S_SYSTEM_MESSAGE = 33;
 	S_MONSTER_LIST = 34;
+	C_NPC_INTERACT_REQUEST = 35;
+	S_NPC_INTERACT_REPLY = 36;
+	S_NPC_SHOP_OPEN = 37;
+	C_NPC_SHOP_BUY_REQUEST = 38;
+	S_NPC_SHOP_BUY_REPLY = 39;
 }
 
 // 클라 -> 게임 서버 jwt 로그인 인증 (0)
@@ -114,38 +119,38 @@ message S_PlayerList
 	repeated PlayerInfo players = 3;
 }
 
-// (9)
+// (11)
 message S_BroadcastPlayerEnter
 {
 	PlayerInfo player = 1;
 }
 
-// (10)
+// (12)
 message C_LeaveGame
 {
 	ELeaveReason reason = 1;
 }
 
-// (11)
+// (13)
 message S_LeaveGame
 {
 	bool success = 1;
 	string detail = 2;
 }
 
-// (12)
+// (14)
 message S_BroadcastPlayerLeave
 {
 	int32 playerId = 1;
 	ELeaveReason reason = 2;
 }
-// (13)
+// (15)
 message C_PlayerMoveRequest
 {
 	Vector2Info clickWorldPos = 1;
 }
 
-// (14)
+// (16)
 message S_PlayerMoveReply
 {
 	int32 playerId = 1;
@@ -156,43 +161,43 @@ message S_PlayerMoveReply
 	EDirection direction = 6;
 }
 
-// (15)
+// (17)
 message S_BroadcastPlayerMove
 {
 	int32 tick = 1;
 	repeated PlayerMoveInfo playerMoves = 2; // 변경된 플레이어만 담을 것
 }
 
-// (16) 서버가 시작 알림 (클라 입력 잠금, 로딩 UI)
+// (18) 서버가 시작 알림 (클라 입력 잠금, 로딩 UI)
 message S_ChangeRoomBegin {
   int32 transitionId = 1;
   int32 mapId        = 2;
 }
 
-// (17) 클라가 준비 완료 통보(리소스/타일맵 로드 완료)
+// (19) 클라가 준비 완료 통보(리소스/타일맵 로드 완료)
 message C_ChangeRoomReady {
   int32 transitionId = 1;
 }
 
-// (18) 서버가 최종 스폰 좌표/스냅샷 확정
+// (20) 서버가 최종 스폰 좌표/스냅샷 확정
 message S_ChangeRoomCommit {
   int32 transitionId = 1;
   int32 mapId = 2;
   // Snapshot은 OnEnter에서 PlayerList보내는것으로 대신함
 }
 
-// (19) 서버 -> 클라 : 몬스터 스폰 알림
+// (21) 서버 -> 클라 : 몬스터 스폰 알림
 message S_SpawnMonster {
 	MonsterInfo monster = 1;
 }
 
-// (20) 서버 -> 클라 몬스터 디스폰(제거) 알림 
+// (22) 서버 -> 클라 몬스터 디스폰(제거) 알림 
 message S_DespawnMonster {
 	int32 monsterId = 1;
 	EDespawnReason reason = 2; // 정수 코드 EDespawnReason 참고
 }
 
-// (21) 서버 -> 클라 : 몬스터 이동 브로드 캐스트
+// (23) 서버 -> 클라 : 몬스터 이동 브로드 캐스트
 message S_BroadcastMonsterMove {
 	int32 monsterId = 1;
 	int32 x			= 2; // 이동 위치 X
@@ -200,62 +205,59 @@ message S_BroadcastMonsterMove {
 	EDirection dir	= 4; // 방향
 }
 
-// (22) 서버 -> 클라 : 몬스터 공격 브로드 캐스트
+// (24) 서버 -> 클라 : 몬스터 공격 브로드 캐스트
 message S_BroadcastMonsterAttack {
 	int32 monsterId = 1;
 	int32 targetPid = 2; // 공격 대상 Player Id
 }
 
-// (23) 서버 -> 클라 : 몬스터 사망 브로드 캐스트
+// (25) 서버 -> 클라 : 몬스터 사망 브로드 캐스트
 message S_BroadcastMonsterDeath {
 	int32 monsterId = 1;
 }
-// (24) 클라 -> 서버 : 플레이어 공격 서버 전송
+// (26) 클라 -> 서버 : 플레이어 공격 서버 전송
 message C_PlayerAttackRequest {
 
 }
 
-// (25) 서버 -> 클라 : 플레이어 공격 브로드 캐스트
+// (27) 서버 -> 클라 : 플레이어 공격 브로드 캐스트
 message S_BroadcastPlayerAttack {
 	int32 playerId = 1;
 	int32 targetId = 2;
 	int32 damage = 3;
 	int32 hpAfter = 4;
 }
-// (26) 클라 -> 서버 : 인벤토리 조회 요청
+// (28) 클라 -> 서버 : 인벤토리 조회 요청
 message C_InventoryRequest {
 
 }
 
-// (27) 서버 -> 클라 : 인벤토리 응답
+// (29) 서버 -> 클라 : 인벤토리 응답
 message S_InventoryReply {
 	repeated InventorySlotInfo slots = 1;
 }
 
-// (28) 클라 -> 서버 : 아이템 사용 요청
+// (30) 클라 -> 서버 : 아이템 사용 요청
 message C_ItemUseRequest {
 	int32 slotIndex = 1;
 }
 
-// (29) 서버 -> 클라 : 아이템 사용 응답
+// (31) 서버 -> 클라 : 아이템 사용 응답
 message S_ItemUseReply {
 	bool success = 1;
 	string errorMessage = 2;
 }
 
-// (30) 서버 -> 클라 : 인벤토리 업데이트 브로드캐스트
+// (32) 서버 -> 클라 : 인벤토리 업데이트 브로드캐스트
 message S_InventoryUpdate {
 	repeated InventorySlotInfo changedSlots = 1;
 }
 
-// (31) 서버 -> 클라 : 시스템 메시지 (드랍,.. 등등)
-message S_SystemMessage{
+// (33) 서버 -> 클라 : 시스템 메시지 (드랍,.. 등등)
+message S_SystemMessage {
 	string message = 1;
 	EMessageType type = 2;
 }
-
-// TODO (32) 서버 -> 클라 : S_BroadcastPlayerHpChanged
-// TODO (33) 서버 -> 클라 : S_BroadcastPlayerDeath
 
 // (34) 서버 -> 클라 :  몬스터 리스트 스냅샷
 message S_MonsterList
@@ -263,6 +265,40 @@ message S_MonsterList
 	int32 mapId = 1;
 	repeated MonsterInfo monsters = 2;
 }
+
+// (35) 클라 -> 서버 : Npc 정보 요청
+message C_NpcInteractRequest {
+	
+}
+
+// (36) 서버 -> 클라 : Npc 정보 응답
+message S_NpcInteractReply { 
+	repeated string dialogs = 1;
+	int32 interactionType = 2; // 0=Talk, 1=Shop, 2=Quest
+}
+
+// (37) 서버 -> 클라 : 상점 정보 전달
+message S_NpcShopOpen {
+	int32 npcId = 1;
+	repeated ShopItemInfo items = 2;
+}
+
+// (38) 클라 -> 서버 : 상점 아이템 구매 요청
+message C_NpcShopBuyRequest {
+	int32 npcId = 1;
+	int32 itemId = 2;
+	int32 quantity = 3;
+}
+
+// (39) 서버 -> 클라 : 상점 아이템 구매 요청 응답
+message S_NpcShopBuyReply {
+	bool success = 1;
+	string detail = 2;
+}
+
+// TODO (xx) 서버 -> 클라 : S_BroadcastPlayerHpChanged
+// TODO (xx) 서버 -> 클라 : S_BroadcastPlayerDeath
+
 
 enum ELoginResult
 {
@@ -387,4 +423,11 @@ message MonsterInfo
 	int32 monsterTypeId = 2; // Monster Type (Template or Resources Id)
 	Vector2Info pos = 3;
 	EDirection direction = 4;
+}
+
+message ShopItemInfo
+{
+	int32 itemId = 1;
+	int32 quantity = 2; // 수량
+	int32 price = 3;	// 1개당 가격
 }

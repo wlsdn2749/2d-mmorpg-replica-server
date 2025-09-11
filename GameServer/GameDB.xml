@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <GameDB>
   <!-- ====== 계정 관련 DB ======-->
   <Table name="Accounts">
@@ -49,6 +49,7 @@
     <Column name="posX" type="int" notnull="true" default="0"/>
     <Column name="posY" type="int" notnull="true" default="0"/>
     <Column name="dir" type="int" notnull="true" default="0"/>
+    <Column name="money" type="int" notnull="true" default="10000"/>
     <Column name="isActive" type="int" notnull="true" default="1"/>
     <Column name="createdAt" type="datetime" notnull="true" default="SYSUTCDATETIME()"/>
     <Index type="clustered">
@@ -101,7 +102,7 @@
         SET NOCOUNT ON;
 
         SELECT
-            characterId, username, posX, posY, gender, region, dir, level
+            characterId, username, posX, posY, gender, region, dir, level, money
         FROM [dbo].[Characters]
         WHERE [userId] = @userId AND [isActive] = 1
         ORDER BY [level] DESC;
@@ -117,6 +118,7 @@
     <Param name="@hp" type="int"/>
     <Param name="@level" type="int"/>
     <Param name="@exp" type="int"/>
+    <Param name="@money" type="int"/>
     <Body>
       <![CDATA[
       SET NOCOUNT ON;
@@ -130,7 +132,8 @@
           lastRoom = @lastRoom,
           hp = @hp,
           level = @level,
-          exp = @exp
+          exp = @exp,
+          money = @money
       WHERE characterId = @characterId;
     ]]>
     </Body>
@@ -142,7 +145,7 @@
       SET NOCOUNT ON;
       SET XACT_ABORT ON;
       SELECT
-        posX, posY, dir, lastRoom, hp, level, exp
+        posX, posY, dir, lastRoom, hp, level, exp, money
       FROM [dbo].[Characters]
       WHERE [characterId] = @characterId
      ]]>

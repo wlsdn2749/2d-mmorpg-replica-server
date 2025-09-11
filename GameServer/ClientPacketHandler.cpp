@@ -439,3 +439,19 @@ bool Handle_C_ItemUseRequest(PacketSessionRef& session, Protocol::C_ItemUseReque
 
 	return true;
 }
+
+bool Handle_C_NpcInteractRequest(PacketSessionRef& session, Protocol::C_NpcInteractRequest& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+
+	RoomRef room = player->GetRoom();
+}
+bool Handle_C_NpcShopBuyRequest(PacketSessionRef& session, Protocol::C_NpcShopBuyRequest& pkt)
+{
+	return false;
+}

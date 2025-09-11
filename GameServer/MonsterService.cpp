@@ -33,7 +33,6 @@ void MonsterService::OnMonsterExternalKill(EntityId id) {
 	_cast.BroadcastMonsterDeath(id);
 	_cast.DespawnMonster(id, Protocol::EDespawnReason::DESPAWN_UNKNOWN);
 
-
 	// 리스폰 예약
 	// 해당 스폰 포인트 설정을 찾아 respawnDelayMs로 예약
 	// (간단 구현: 스폰 초기 설정을 순회)

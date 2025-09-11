@@ -74,6 +74,12 @@ extern C_JwtLoginRequestDefaultTypeInternal _C_JwtLoginRequest_default_instance_
 class C_LeaveGame;
 struct C_LeaveGameDefaultTypeInternal;
 extern C_LeaveGameDefaultTypeInternal _C_LeaveGame_default_instance_;
+class C_NpcInteractRequest;
+struct C_NpcInteractRequestDefaultTypeInternal;
+extern C_NpcInteractRequestDefaultTypeInternal _C_NpcInteractRequest_default_instance_;
+class C_NpcShopBuyRequest;
+struct C_NpcShopBuyRequestDefaultTypeInternal;
+extern C_NpcShopBuyRequestDefaultTypeInternal _C_NpcShopBuyRequest_default_instance_;
 class C_PlayerAttackRequest;
 struct C_PlayerAttackRequestDefaultTypeInternal;
 extern C_PlayerAttackRequestDefaultTypeInternal _C_PlayerAttackRequest_default_instance_;
@@ -155,6 +161,15 @@ extern S_LeaveGameDefaultTypeInternal _S_LeaveGame_default_instance_;
 class S_MonsterList;
 struct S_MonsterListDefaultTypeInternal;
 extern S_MonsterListDefaultTypeInternal _S_MonsterList_default_instance_;
+class S_NpcInteractReply;
+struct S_NpcInteractReplyDefaultTypeInternal;
+extern S_NpcInteractReplyDefaultTypeInternal _S_NpcInteractReply_default_instance_;
+class S_NpcShopBuyReply;
+struct S_NpcShopBuyReplyDefaultTypeInternal;
+extern S_NpcShopBuyReplyDefaultTypeInternal _S_NpcShopBuyReply_default_instance_;
+class S_NpcShopOpen;
+struct S_NpcShopOpenDefaultTypeInternal;
+extern S_NpcShopOpenDefaultTypeInternal _S_NpcShopOpen_default_instance_;
 class S_PlayerList;
 struct S_PlayerListDefaultTypeInternal;
 extern S_PlayerListDefaultTypeInternal _S_PlayerList_default_instance_;
@@ -167,6 +182,9 @@ extern S_SpawnMonsterDefaultTypeInternal _S_SpawnMonster_default_instance_;
 class S_SystemMessage;
 struct S_SystemMessageDefaultTypeInternal;
 extern S_SystemMessageDefaultTypeInternal _S_SystemMessage_default_instance_;
+class ShopItemInfo;
+struct ShopItemInfoDefaultTypeInternal;
+extern ShopItemInfoDefaultTypeInternal _ShopItemInfo_default_instance_;
 class Vector2Info;
 struct Vector2InfoDefaultTypeInternal;
 extern Vector2InfoDefaultTypeInternal _Vector2Info_default_instance_;
@@ -181,6 +199,8 @@ template<> ::Protocol::C_InventoryRequest* Arena::CreateMaybeMessage<::Protocol:
 template<> ::Protocol::C_ItemUseRequest* Arena::CreateMaybeMessage<::Protocol::C_ItemUseRequest>(Arena*);
 template<> ::Protocol::C_JwtLoginRequest* Arena::CreateMaybeMessage<::Protocol::C_JwtLoginRequest>(Arena*);
 template<> ::Protocol::C_LeaveGame* Arena::CreateMaybeMessage<::Protocol::C_LeaveGame>(Arena*);
+template<> ::Protocol::C_NpcInteractRequest* Arena::CreateMaybeMessage<::Protocol::C_NpcInteractRequest>(Arena*);
+template<> ::Protocol::C_NpcShopBuyRequest* Arena::CreateMaybeMessage<::Protocol::C_NpcShopBuyRequest>(Arena*);
 template<> ::Protocol::C_PlayerAttackRequest* Arena::CreateMaybeMessage<::Protocol::C_PlayerAttackRequest>(Arena*);
 template<> ::Protocol::C_PlayerMoveRequest* Arena::CreateMaybeMessage<::Protocol::C_PlayerMoveRequest>(Arena*);
 template<> ::Protocol::CharacterSummaryInfo* Arena::CreateMaybeMessage<::Protocol::CharacterSummaryInfo>(Arena*);
@@ -208,10 +228,14 @@ template<> ::Protocol::S_ItemUseReply* Arena::CreateMaybeMessage<::Protocol::S_I
 template<> ::Protocol::S_JwtLoginReply* Arena::CreateMaybeMessage<::Protocol::S_JwtLoginReply>(Arena*);
 template<> ::Protocol::S_LeaveGame* Arena::CreateMaybeMessage<::Protocol::S_LeaveGame>(Arena*);
 template<> ::Protocol::S_MonsterList* Arena::CreateMaybeMessage<::Protocol::S_MonsterList>(Arena*);
+template<> ::Protocol::S_NpcInteractReply* Arena::CreateMaybeMessage<::Protocol::S_NpcInteractReply>(Arena*);
+template<> ::Protocol::S_NpcShopBuyReply* Arena::CreateMaybeMessage<::Protocol::S_NpcShopBuyReply>(Arena*);
+template<> ::Protocol::S_NpcShopOpen* Arena::CreateMaybeMessage<::Protocol::S_NpcShopOpen>(Arena*);
 template<> ::Protocol::S_PlayerList* Arena::CreateMaybeMessage<::Protocol::S_PlayerList>(Arena*);
 template<> ::Protocol::S_PlayerMoveReply* Arena::CreateMaybeMessage<::Protocol::S_PlayerMoveReply>(Arena*);
 template<> ::Protocol::S_SpawnMonster* Arena::CreateMaybeMessage<::Protocol::S_SpawnMonster>(Arena*);
 template<> ::Protocol::S_SystemMessage* Arena::CreateMaybeMessage<::Protocol::S_SystemMessage>(Arena*);
+template<> ::Protocol::ShopItemInfo* Arena::CreateMaybeMessage<::Protocol::ShopItemInfo>(Arena*);
 template<> ::Protocol::Vector2Info* Arena::CreateMaybeMessage<::Protocol::Vector2Info>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace Protocol {
@@ -252,12 +276,17 @@ enum MsgId : int {
   S_INVENTORY_UPDATE = 32,
   S_SYSTEM_MESSAGE = 33,
   S_MONSTER_LIST = 34,
+  C_NPC_INTERACT_REQUEST = 35,
+  S_NPC_INTERACT_REPLY = 36,
+  S_NPC_SHOP_OPEN = 37,
+  C_NPC_SHOP_BUY_REQUEST = 38,
+  S_NPC_SHOP_BUY_REPLY = 39,
   MsgId_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   MsgId_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool MsgId_IsValid(int value);
 constexpr MsgId MsgId_MIN = C_JWT_LOGIN_REQUEST;
-constexpr MsgId MsgId_MAX = S_MONSTER_LIST;
+constexpr MsgId MsgId_MAX = S_NPC_SHOP_BUY_REPLY;
 constexpr int MsgId_ARRAYSIZE = MsgId_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MsgId_descriptor();
@@ -6056,6 +6085,800 @@ class S_MonsterList final :
 };
 // -------------------------------------------------------------------
 
+class C_NpcInteractRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:Protocol.C_NpcInteractRequest) */ {
+ public:
+  inline C_NpcInteractRequest() : C_NpcInteractRequest(nullptr) {}
+  explicit PROTOBUF_CONSTEXPR C_NpcInteractRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  C_NpcInteractRequest(const C_NpcInteractRequest& from);
+  C_NpcInteractRequest(C_NpcInteractRequest&& from) noexcept
+    : C_NpcInteractRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline C_NpcInteractRequest& operator=(const C_NpcInteractRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline C_NpcInteractRequest& operator=(C_NpcInteractRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const C_NpcInteractRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const C_NpcInteractRequest* internal_default_instance() {
+    return reinterpret_cast<const C_NpcInteractRequest*>(
+               &_C_NpcInteractRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    35;
+
+  friend void swap(C_NpcInteractRequest& a, C_NpcInteractRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(C_NpcInteractRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(C_NpcInteractRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  C_NpcInteractRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<C_NpcInteractRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
+  inline void CopyFrom(const C_NpcInteractRequest& from) {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(*this, from);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
+  void MergeFrom(const C_NpcInteractRequest& from) {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(*this, from);
+  }
+  public:
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.C_NpcInteractRequest";
+  }
+  protected:
+  explicit C_NpcInteractRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:Protocol.C_NpcInteractRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+  };
+  friend struct ::TableStruct_Protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
+class S_NpcInteractReply final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.S_NpcInteractReply) */ {
+ public:
+  inline S_NpcInteractReply() : S_NpcInteractReply(nullptr) {}
+  ~S_NpcInteractReply() override;
+  explicit PROTOBUF_CONSTEXPR S_NpcInteractReply(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  S_NpcInteractReply(const S_NpcInteractReply& from);
+  S_NpcInteractReply(S_NpcInteractReply&& from) noexcept
+    : S_NpcInteractReply() {
+    *this = ::std::move(from);
+  }
+
+  inline S_NpcInteractReply& operator=(const S_NpcInteractReply& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline S_NpcInteractReply& operator=(S_NpcInteractReply&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const S_NpcInteractReply& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const S_NpcInteractReply* internal_default_instance() {
+    return reinterpret_cast<const S_NpcInteractReply*>(
+               &_S_NpcInteractReply_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    36;
+
+  friend void swap(S_NpcInteractReply& a, S_NpcInteractReply& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(S_NpcInteractReply* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(S_NpcInteractReply* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  S_NpcInteractReply* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<S_NpcInteractReply>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const S_NpcInteractReply& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const S_NpcInteractReply& from) {
+    S_NpcInteractReply::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S_NpcInteractReply* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.S_NpcInteractReply";
+  }
+  protected:
+  explicit S_NpcInteractReply(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kDialogsFieldNumber = 1,
+    kInteractionTypeFieldNumber = 2,
+  };
+  // repeated string dialogs = 1;
+  int dialogs_size() const;
+  private:
+  int _internal_dialogs_size() const;
+  public:
+  void clear_dialogs();
+  const std::string& dialogs(int index) const;
+  std::string* mutable_dialogs(int index);
+  void set_dialogs(int index, const std::string& value);
+  void set_dialogs(int index, std::string&& value);
+  void set_dialogs(int index, const char* value);
+  void set_dialogs(int index, const char* value, size_t size);
+  std::string* add_dialogs();
+  void add_dialogs(const std::string& value);
+  void add_dialogs(std::string&& value);
+  void add_dialogs(const char* value);
+  void add_dialogs(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& dialogs() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_dialogs();
+  private:
+  const std::string& _internal_dialogs(int index) const;
+  std::string* _internal_add_dialogs();
+  public:
+
+  // int32 interactionType = 2;
+  void clear_interactiontype();
+  int32_t interactiontype() const;
+  void set_interactiontype(int32_t value);
+  private:
+  int32_t _internal_interactiontype() const;
+  void _internal_set_interactiontype(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Protocol.S_NpcInteractReply)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> dialogs_;
+    int32_t interactiontype_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_Protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
+class S_NpcShopOpen final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.S_NpcShopOpen) */ {
+ public:
+  inline S_NpcShopOpen() : S_NpcShopOpen(nullptr) {}
+  ~S_NpcShopOpen() override;
+  explicit PROTOBUF_CONSTEXPR S_NpcShopOpen(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  S_NpcShopOpen(const S_NpcShopOpen& from);
+  S_NpcShopOpen(S_NpcShopOpen&& from) noexcept
+    : S_NpcShopOpen() {
+    *this = ::std::move(from);
+  }
+
+  inline S_NpcShopOpen& operator=(const S_NpcShopOpen& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline S_NpcShopOpen& operator=(S_NpcShopOpen&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const S_NpcShopOpen& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const S_NpcShopOpen* internal_default_instance() {
+    return reinterpret_cast<const S_NpcShopOpen*>(
+               &_S_NpcShopOpen_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    37;
+
+  friend void swap(S_NpcShopOpen& a, S_NpcShopOpen& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(S_NpcShopOpen* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(S_NpcShopOpen* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  S_NpcShopOpen* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<S_NpcShopOpen>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const S_NpcShopOpen& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const S_NpcShopOpen& from) {
+    S_NpcShopOpen::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S_NpcShopOpen* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.S_NpcShopOpen";
+  }
+  protected:
+  explicit S_NpcShopOpen(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kItemsFieldNumber = 2,
+    kNpcIdFieldNumber = 1,
+  };
+  // repeated .Protocol.ShopItemInfo items = 2;
+  int items_size() const;
+  private:
+  int _internal_items_size() const;
+  public:
+  void clear_items();
+  ::Protocol::ShopItemInfo* mutable_items(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::ShopItemInfo >*
+      mutable_items();
+  private:
+  const ::Protocol::ShopItemInfo& _internal_items(int index) const;
+  ::Protocol::ShopItemInfo* _internal_add_items();
+  public:
+  const ::Protocol::ShopItemInfo& items(int index) const;
+  ::Protocol::ShopItemInfo* add_items();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::ShopItemInfo >&
+      items() const;
+
+  // int32 npcId = 1;
+  void clear_npcid();
+  int32_t npcid() const;
+  void set_npcid(int32_t value);
+  private:
+  int32_t _internal_npcid() const;
+  void _internal_set_npcid(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Protocol.S_NpcShopOpen)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::ShopItemInfo > items_;
+    int32_t npcid_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_Protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
+class C_NpcShopBuyRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.C_NpcShopBuyRequest) */ {
+ public:
+  inline C_NpcShopBuyRequest() : C_NpcShopBuyRequest(nullptr) {}
+  ~C_NpcShopBuyRequest() override;
+  explicit PROTOBUF_CONSTEXPR C_NpcShopBuyRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  C_NpcShopBuyRequest(const C_NpcShopBuyRequest& from);
+  C_NpcShopBuyRequest(C_NpcShopBuyRequest&& from) noexcept
+    : C_NpcShopBuyRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline C_NpcShopBuyRequest& operator=(const C_NpcShopBuyRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline C_NpcShopBuyRequest& operator=(C_NpcShopBuyRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const C_NpcShopBuyRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const C_NpcShopBuyRequest* internal_default_instance() {
+    return reinterpret_cast<const C_NpcShopBuyRequest*>(
+               &_C_NpcShopBuyRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    38;
+
+  friend void swap(C_NpcShopBuyRequest& a, C_NpcShopBuyRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(C_NpcShopBuyRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(C_NpcShopBuyRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  C_NpcShopBuyRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<C_NpcShopBuyRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const C_NpcShopBuyRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const C_NpcShopBuyRequest& from) {
+    C_NpcShopBuyRequest::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(C_NpcShopBuyRequest* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.C_NpcShopBuyRequest";
+  }
+  protected:
+  explicit C_NpcShopBuyRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kNpcIdFieldNumber = 1,
+    kItemIdFieldNumber = 2,
+    kQuantityFieldNumber = 3,
+  };
+  // int32 npcId = 1;
+  void clear_npcid();
+  int32_t npcid() const;
+  void set_npcid(int32_t value);
+  private:
+  int32_t _internal_npcid() const;
+  void _internal_set_npcid(int32_t value);
+  public:
+
+  // int32 itemId = 2;
+  void clear_itemid();
+  int32_t itemid() const;
+  void set_itemid(int32_t value);
+  private:
+  int32_t _internal_itemid() const;
+  void _internal_set_itemid(int32_t value);
+  public:
+
+  // int32 quantity = 3;
+  void clear_quantity();
+  int32_t quantity() const;
+  void set_quantity(int32_t value);
+  private:
+  int32_t _internal_quantity() const;
+  void _internal_set_quantity(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Protocol.C_NpcShopBuyRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int32_t npcid_;
+    int32_t itemid_;
+    int32_t quantity_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_Protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
+class S_NpcShopBuyReply final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.S_NpcShopBuyReply) */ {
+ public:
+  inline S_NpcShopBuyReply() : S_NpcShopBuyReply(nullptr) {}
+  ~S_NpcShopBuyReply() override;
+  explicit PROTOBUF_CONSTEXPR S_NpcShopBuyReply(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  S_NpcShopBuyReply(const S_NpcShopBuyReply& from);
+  S_NpcShopBuyReply(S_NpcShopBuyReply&& from) noexcept
+    : S_NpcShopBuyReply() {
+    *this = ::std::move(from);
+  }
+
+  inline S_NpcShopBuyReply& operator=(const S_NpcShopBuyReply& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline S_NpcShopBuyReply& operator=(S_NpcShopBuyReply&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const S_NpcShopBuyReply& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const S_NpcShopBuyReply* internal_default_instance() {
+    return reinterpret_cast<const S_NpcShopBuyReply*>(
+               &_S_NpcShopBuyReply_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    39;
+
+  friend void swap(S_NpcShopBuyReply& a, S_NpcShopBuyReply& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(S_NpcShopBuyReply* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(S_NpcShopBuyReply* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  S_NpcShopBuyReply* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<S_NpcShopBuyReply>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const S_NpcShopBuyReply& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const S_NpcShopBuyReply& from) {
+    S_NpcShopBuyReply::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S_NpcShopBuyReply* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.S_NpcShopBuyReply";
+  }
+  protected:
+  explicit S_NpcShopBuyReply(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kDetailFieldNumber = 2,
+    kSuccessFieldNumber = 1,
+  };
+  // string detail = 2;
+  void clear_detail();
+  const std::string& detail() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_detail(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_detail();
+  PROTOBUF_NODISCARD std::string* release_detail();
+  void set_allocated_detail(std::string* detail);
+  private:
+  const std::string& _internal_detail() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_detail(const std::string& value);
+  std::string* _internal_mutable_detail();
+  public:
+
+  // bool success = 1;
+  void clear_success();
+  bool success() const;
+  void set_success(bool value);
+  private:
+  bool _internal_success() const;
+  void _internal_set_success(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Protocol.S_NpcShopBuyReply)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr detail_;
+    bool success_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_Protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
 class Vector2Info final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.Vector2Info) */ {
  public:
@@ -6104,7 +6927,7 @@ class Vector2Info final :
                &_Vector2Info_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    35;
+    40;
 
   friend void swap(Vector2Info& a, Vector2Info& b) {
     a.Swap(&b);
@@ -6263,7 +7086,7 @@ class PlayerMoveInfo final :
                &_PlayerMoveInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    36;
+    41;
 
   friend void swap(PlayerMoveInfo& a, PlayerMoveInfo& b) {
     a.Swap(&b);
@@ -6453,7 +7276,7 @@ class CharacterSummaryInfo final :
                &_CharacterSummaryInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    37;
+    42;
 
   friend void swap(CharacterSummaryInfo& a, CharacterSummaryInfo& b) {
     a.Swap(&b);
@@ -6639,7 +7462,7 @@ class PlayerInfo final :
                &_PlayerInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    38;
+    43;
 
   friend void swap(PlayerInfo& a, PlayerInfo& b) {
     a.Swap(&b);
@@ -6834,7 +7657,7 @@ class InventorySlotInfo final :
                &_InventorySlotInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    39;
+    44;
 
   friend void swap(InventorySlotInfo& a, InventorySlotInfo& b) {
     a.Swap(&b);
@@ -7015,7 +7838,7 @@ class MonsterInfo final :
                &_MonsterInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    40;
+    45;
 
   friend void swap(MonsterInfo& a, MonsterInfo& b) {
     a.Swap(&b);
@@ -7150,6 +7973,176 @@ class MonsterInfo final :
     int32_t monsterid_;
     int32_t monstertypeid_;
     int direction_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_Protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
+class ShopItemInfo final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.ShopItemInfo) */ {
+ public:
+  inline ShopItemInfo() : ShopItemInfo(nullptr) {}
+  ~ShopItemInfo() override;
+  explicit PROTOBUF_CONSTEXPR ShopItemInfo(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  ShopItemInfo(const ShopItemInfo& from);
+  ShopItemInfo(ShopItemInfo&& from) noexcept
+    : ShopItemInfo() {
+    *this = ::std::move(from);
+  }
+
+  inline ShopItemInfo& operator=(const ShopItemInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ShopItemInfo& operator=(ShopItemInfo&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ShopItemInfo& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const ShopItemInfo* internal_default_instance() {
+    return reinterpret_cast<const ShopItemInfo*>(
+               &_ShopItemInfo_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    46;
+
+  friend void swap(ShopItemInfo& a, ShopItemInfo& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(ShopItemInfo* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ShopItemInfo* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  ShopItemInfo* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<ShopItemInfo>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const ShopItemInfo& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const ShopItemInfo& from) {
+    ShopItemInfo::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ShopItemInfo* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.ShopItemInfo";
+  }
+  protected:
+  explicit ShopItemInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kItemIdFieldNumber = 1,
+    kQuantityFieldNumber = 2,
+    kPriceFieldNumber = 3,
+  };
+  // int32 itemId = 1;
+  void clear_itemid();
+  int32_t itemid() const;
+  void set_itemid(int32_t value);
+  private:
+  int32_t _internal_itemid() const;
+  void _internal_set_itemid(int32_t value);
+  public:
+
+  // int32 quantity = 2;
+  void clear_quantity();
+  int32_t quantity() const;
+  void set_quantity(int32_t value);
+  private:
+  int32_t _internal_quantity() const;
+  void _internal_set_quantity(int32_t value);
+  public:
+
+  // int32 price = 3;
+  void clear_price();
+  int32_t price() const;
+  void set_price(int32_t value);
+  private:
+  int32_t _internal_price() const;
+  void _internal_set_price(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Protocol.ShopItemInfo)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int32_t itemid_;
+    int32_t quantity_;
+    int32_t price_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -9094,6 +10087,311 @@ S_MonsterList::monsters() const {
 
 // -------------------------------------------------------------------
 
+// C_NpcInteractRequest
+
+// -------------------------------------------------------------------
+
+// S_NpcInteractReply
+
+// repeated string dialogs = 1;
+inline int S_NpcInteractReply::_internal_dialogs_size() const {
+  return _impl_.dialogs_.size();
+}
+inline int S_NpcInteractReply::dialogs_size() const {
+  return _internal_dialogs_size();
+}
+inline void S_NpcInteractReply::clear_dialogs() {
+  _impl_.dialogs_.Clear();
+}
+inline std::string* S_NpcInteractReply::add_dialogs() {
+  std::string* _s = _internal_add_dialogs();
+  // @@protoc_insertion_point(field_add_mutable:Protocol.S_NpcInteractReply.dialogs)
+  return _s;
+}
+inline const std::string& S_NpcInteractReply::_internal_dialogs(int index) const {
+  return _impl_.dialogs_.Get(index);
+}
+inline const std::string& S_NpcInteractReply::dialogs(int index) const {
+  // @@protoc_insertion_point(field_get:Protocol.S_NpcInteractReply.dialogs)
+  return _internal_dialogs(index);
+}
+inline std::string* S_NpcInteractReply::mutable_dialogs(int index) {
+  // @@protoc_insertion_point(field_mutable:Protocol.S_NpcInteractReply.dialogs)
+  return _impl_.dialogs_.Mutable(index);
+}
+inline void S_NpcInteractReply::set_dialogs(int index, const std::string& value) {
+  _impl_.dialogs_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_NpcInteractReply.dialogs)
+}
+inline void S_NpcInteractReply::set_dialogs(int index, std::string&& value) {
+  _impl_.dialogs_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:Protocol.S_NpcInteractReply.dialogs)
+}
+inline void S_NpcInteractReply::set_dialogs(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.dialogs_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:Protocol.S_NpcInteractReply.dialogs)
+}
+inline void S_NpcInteractReply::set_dialogs(int index, const char* value, size_t size) {
+  _impl_.dialogs_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Protocol.S_NpcInteractReply.dialogs)
+}
+inline std::string* S_NpcInteractReply::_internal_add_dialogs() {
+  return _impl_.dialogs_.Add();
+}
+inline void S_NpcInteractReply::add_dialogs(const std::string& value) {
+  _impl_.dialogs_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:Protocol.S_NpcInteractReply.dialogs)
+}
+inline void S_NpcInteractReply::add_dialogs(std::string&& value) {
+  _impl_.dialogs_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:Protocol.S_NpcInteractReply.dialogs)
+}
+inline void S_NpcInteractReply::add_dialogs(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.dialogs_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:Protocol.S_NpcInteractReply.dialogs)
+}
+inline void S_NpcInteractReply::add_dialogs(const char* value, size_t size) {
+  _impl_.dialogs_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:Protocol.S_NpcInteractReply.dialogs)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+S_NpcInteractReply::dialogs() const {
+  // @@protoc_insertion_point(field_list:Protocol.S_NpcInteractReply.dialogs)
+  return _impl_.dialogs_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+S_NpcInteractReply::mutable_dialogs() {
+  // @@protoc_insertion_point(field_mutable_list:Protocol.S_NpcInteractReply.dialogs)
+  return &_impl_.dialogs_;
+}
+
+// int32 interactionType = 2;
+inline void S_NpcInteractReply::clear_interactiontype() {
+  _impl_.interactiontype_ = 0;
+}
+inline int32_t S_NpcInteractReply::_internal_interactiontype() const {
+  return _impl_.interactiontype_;
+}
+inline int32_t S_NpcInteractReply::interactiontype() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_NpcInteractReply.interactionType)
+  return _internal_interactiontype();
+}
+inline void S_NpcInteractReply::_internal_set_interactiontype(int32_t value) {
+  
+  _impl_.interactiontype_ = value;
+}
+inline void S_NpcInteractReply::set_interactiontype(int32_t value) {
+  _internal_set_interactiontype(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_NpcInteractReply.interactionType)
+}
+
+// -------------------------------------------------------------------
+
+// S_NpcShopOpen
+
+// int32 npcId = 1;
+inline void S_NpcShopOpen::clear_npcid() {
+  _impl_.npcid_ = 0;
+}
+inline int32_t S_NpcShopOpen::_internal_npcid() const {
+  return _impl_.npcid_;
+}
+inline int32_t S_NpcShopOpen::npcid() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_NpcShopOpen.npcId)
+  return _internal_npcid();
+}
+inline void S_NpcShopOpen::_internal_set_npcid(int32_t value) {
+  
+  _impl_.npcid_ = value;
+}
+inline void S_NpcShopOpen::set_npcid(int32_t value) {
+  _internal_set_npcid(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_NpcShopOpen.npcId)
+}
+
+// repeated .Protocol.ShopItemInfo items = 2;
+inline int S_NpcShopOpen::_internal_items_size() const {
+  return _impl_.items_.size();
+}
+inline int S_NpcShopOpen::items_size() const {
+  return _internal_items_size();
+}
+inline void S_NpcShopOpen::clear_items() {
+  _impl_.items_.Clear();
+}
+inline ::Protocol::ShopItemInfo* S_NpcShopOpen::mutable_items(int index) {
+  // @@protoc_insertion_point(field_mutable:Protocol.S_NpcShopOpen.items)
+  return _impl_.items_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::ShopItemInfo >*
+S_NpcShopOpen::mutable_items() {
+  // @@protoc_insertion_point(field_mutable_list:Protocol.S_NpcShopOpen.items)
+  return &_impl_.items_;
+}
+inline const ::Protocol::ShopItemInfo& S_NpcShopOpen::_internal_items(int index) const {
+  return _impl_.items_.Get(index);
+}
+inline const ::Protocol::ShopItemInfo& S_NpcShopOpen::items(int index) const {
+  // @@protoc_insertion_point(field_get:Protocol.S_NpcShopOpen.items)
+  return _internal_items(index);
+}
+inline ::Protocol::ShopItemInfo* S_NpcShopOpen::_internal_add_items() {
+  return _impl_.items_.Add();
+}
+inline ::Protocol::ShopItemInfo* S_NpcShopOpen::add_items() {
+  ::Protocol::ShopItemInfo* _add = _internal_add_items();
+  // @@protoc_insertion_point(field_add:Protocol.S_NpcShopOpen.items)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::ShopItemInfo >&
+S_NpcShopOpen::items() const {
+  // @@protoc_insertion_point(field_list:Protocol.S_NpcShopOpen.items)
+  return _impl_.items_;
+}
+
+// -------------------------------------------------------------------
+
+// C_NpcShopBuyRequest
+
+// int32 npcId = 1;
+inline void C_NpcShopBuyRequest::clear_npcid() {
+  _impl_.npcid_ = 0;
+}
+inline int32_t C_NpcShopBuyRequest::_internal_npcid() const {
+  return _impl_.npcid_;
+}
+inline int32_t C_NpcShopBuyRequest::npcid() const {
+  // @@protoc_insertion_point(field_get:Protocol.C_NpcShopBuyRequest.npcId)
+  return _internal_npcid();
+}
+inline void C_NpcShopBuyRequest::_internal_set_npcid(int32_t value) {
+  
+  _impl_.npcid_ = value;
+}
+inline void C_NpcShopBuyRequest::set_npcid(int32_t value) {
+  _internal_set_npcid(value);
+  // @@protoc_insertion_point(field_set:Protocol.C_NpcShopBuyRequest.npcId)
+}
+
+// int32 itemId = 2;
+inline void C_NpcShopBuyRequest::clear_itemid() {
+  _impl_.itemid_ = 0;
+}
+inline int32_t C_NpcShopBuyRequest::_internal_itemid() const {
+  return _impl_.itemid_;
+}
+inline int32_t C_NpcShopBuyRequest::itemid() const {
+  // @@protoc_insertion_point(field_get:Protocol.C_NpcShopBuyRequest.itemId)
+  return _internal_itemid();
+}
+inline void C_NpcShopBuyRequest::_internal_set_itemid(int32_t value) {
+  
+  _impl_.itemid_ = value;
+}
+inline void C_NpcShopBuyRequest::set_itemid(int32_t value) {
+  _internal_set_itemid(value);
+  // @@protoc_insertion_point(field_set:Protocol.C_NpcShopBuyRequest.itemId)
+}
+
+// int32 quantity = 3;
+inline void C_NpcShopBuyRequest::clear_quantity() {
+  _impl_.quantity_ = 0;
+}
+inline int32_t C_NpcShopBuyRequest::_internal_quantity() const {
+  return _impl_.quantity_;
+}
+inline int32_t C_NpcShopBuyRequest::quantity() const {
+  // @@protoc_insertion_point(field_get:Protocol.C_NpcShopBuyRequest.quantity)
+  return _internal_quantity();
+}
+inline void C_NpcShopBuyRequest::_internal_set_quantity(int32_t value) {
+  
+  _impl_.quantity_ = value;
+}
+inline void C_NpcShopBuyRequest::set_quantity(int32_t value) {
+  _internal_set_quantity(value);
+  // @@protoc_insertion_point(field_set:Protocol.C_NpcShopBuyRequest.quantity)
+}
+
+// -------------------------------------------------------------------
+
+// S_NpcShopBuyReply
+
+// bool success = 1;
+inline void S_NpcShopBuyReply::clear_success() {
+  _impl_.success_ = false;
+}
+inline bool S_NpcShopBuyReply::_internal_success() const {
+  return _impl_.success_;
+}
+inline bool S_NpcShopBuyReply::success() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_NpcShopBuyReply.success)
+  return _internal_success();
+}
+inline void S_NpcShopBuyReply::_internal_set_success(bool value) {
+  
+  _impl_.success_ = value;
+}
+inline void S_NpcShopBuyReply::set_success(bool value) {
+  _internal_set_success(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_NpcShopBuyReply.success)
+}
+
+// string detail = 2;
+inline void S_NpcShopBuyReply::clear_detail() {
+  _impl_.detail_.ClearToEmpty();
+}
+inline const std::string& S_NpcShopBuyReply::detail() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_NpcShopBuyReply.detail)
+  return _internal_detail();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void S_NpcShopBuyReply::set_detail(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.detail_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Protocol.S_NpcShopBuyReply.detail)
+}
+inline std::string* S_NpcShopBuyReply::mutable_detail() {
+  std::string* _s = _internal_mutable_detail();
+  // @@protoc_insertion_point(field_mutable:Protocol.S_NpcShopBuyReply.detail)
+  return _s;
+}
+inline const std::string& S_NpcShopBuyReply::_internal_detail() const {
+  return _impl_.detail_.Get();
+}
+inline void S_NpcShopBuyReply::_internal_set_detail(const std::string& value) {
+  
+  _impl_.detail_.Set(value, GetArenaForAllocation());
+}
+inline std::string* S_NpcShopBuyReply::_internal_mutable_detail() {
+  
+  return _impl_.detail_.Mutable(GetArenaForAllocation());
+}
+inline std::string* S_NpcShopBuyReply::release_detail() {
+  // @@protoc_insertion_point(field_release:Protocol.S_NpcShopBuyReply.detail)
+  return _impl_.detail_.Release();
+}
+inline void S_NpcShopBuyReply::set_allocated_detail(std::string* detail) {
+  if (detail != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.detail_.SetAllocated(detail, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.detail_.IsDefault()) {
+    _impl_.detail_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:Protocol.S_NpcShopBuyReply.detail)
+}
+
+// -------------------------------------------------------------------
+
 // Vector2Info
 
 // int32 x = 1;
@@ -9826,9 +11124,85 @@ inline void MonsterInfo::set_direction(::Protocol::EDirection value) {
   // @@protoc_insertion_point(field_set:Protocol.MonsterInfo.direction)
 }
 
+// -------------------------------------------------------------------
+
+// ShopItemInfo
+
+// int32 itemId = 1;
+inline void ShopItemInfo::clear_itemid() {
+  _impl_.itemid_ = 0;
+}
+inline int32_t ShopItemInfo::_internal_itemid() const {
+  return _impl_.itemid_;
+}
+inline int32_t ShopItemInfo::itemid() const {
+  // @@protoc_insertion_point(field_get:Protocol.ShopItemInfo.itemId)
+  return _internal_itemid();
+}
+inline void ShopItemInfo::_internal_set_itemid(int32_t value) {
+  
+  _impl_.itemid_ = value;
+}
+inline void ShopItemInfo::set_itemid(int32_t value) {
+  _internal_set_itemid(value);
+  // @@protoc_insertion_point(field_set:Protocol.ShopItemInfo.itemId)
+}
+
+// int32 quantity = 2;
+inline void ShopItemInfo::clear_quantity() {
+  _impl_.quantity_ = 0;
+}
+inline int32_t ShopItemInfo::_internal_quantity() const {
+  return _impl_.quantity_;
+}
+inline int32_t ShopItemInfo::quantity() const {
+  // @@protoc_insertion_point(field_get:Protocol.ShopItemInfo.quantity)
+  return _internal_quantity();
+}
+inline void ShopItemInfo::_internal_set_quantity(int32_t value) {
+  
+  _impl_.quantity_ = value;
+}
+inline void ShopItemInfo::set_quantity(int32_t value) {
+  _internal_set_quantity(value);
+  // @@protoc_insertion_point(field_set:Protocol.ShopItemInfo.quantity)
+}
+
+// int32 price = 3;
+inline void ShopItemInfo::clear_price() {
+  _impl_.price_ = 0;
+}
+inline int32_t ShopItemInfo::_internal_price() const {
+  return _impl_.price_;
+}
+inline int32_t ShopItemInfo::price() const {
+  // @@protoc_insertion_point(field_get:Protocol.ShopItemInfo.price)
+  return _internal_price();
+}
+inline void ShopItemInfo::_internal_set_price(int32_t value) {
+  
+  _impl_.price_ = value;
+}
+inline void ShopItemInfo::set_price(int32_t value) {
+  _internal_set_price(value);
+  // @@protoc_insertion_point(field_set:Protocol.ShopItemInfo.price)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
