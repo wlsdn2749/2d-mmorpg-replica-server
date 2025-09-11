@@ -29,7 +29,6 @@ void MonsterSpawnerSystem::Init(MonsterContainer& repo, const std::vector<SpawnP
 void MonsterSpawnerSystem::Tick(MonsterContainer& repo, IMonsterBroadcaster& cast, IMonsterClock& clock) {
 	const int64_t now = clock.NowMs();
 
-
 	// 리스폰 due 처리
 	RespawnTask task;
 	while (repo.PopRespawn(now, task)) {
