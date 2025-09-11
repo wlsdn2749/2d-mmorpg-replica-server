@@ -345,13 +345,14 @@ void FieldRoom::InitMonsters()
 	auto monsterStatDatas = std::make_unique<vector<pair<int, MonsterStats>>>();
 	auto spawnPointCfgDatas = std::make_unique<vector<SpawnPointCfg>>();
 
+	for(int i=0; i<5; i++)
 	{
 		// 기본 몬스터 (움직이는)
 		int monsterId = 1001;
 		MonsterStats monsterStats = { 30, 5, 1, 1, 1200, 1 };
 		monsterStatDatas->push_back({ monsterId, monsterStats });
 
-		SpawnPointCfg spawnPointCfg = { 1, 15, -4, 5, 1, 8000, 10, monsterId };
+		SpawnPointCfg spawnPointCfg = { 1, 15+i, -4-i, 5, 1, 8000, 10, monsterId };
 		spawnPointCfgDatas->push_back(spawnPointCfg);
 	}
 
