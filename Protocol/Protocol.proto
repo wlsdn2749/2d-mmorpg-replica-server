@@ -209,6 +209,8 @@ message S_BroadcastMonsterMove {
 message S_BroadcastMonsterAttack {
 	int32 monsterId = 1;
 	int32 targetPid = 2; // 공격 대상 Player Id
+	int32 damage = 3;
+	int32 hpAfter = 4;
 }
 
 // (25) 서버 -> 클라 : 몬스터 사망 브로드 캐스트
