@@ -108,7 +108,6 @@
     <Compile Include="Assets\@Scripts\Managers\SoundManager\BGMManager.cs" />
     <Compile Include="Assets\@Scripts\Managers\UIManager\Auth_UI\CreateAccount_UI.cs" />
     <Compile Include="Assets\@Scripts\Network\SessionStore.cs" />
-    <Compile Include="Assets\@Scripts\SimpleNetworkUI.cs" />
     <Compile Include="Assets\@Scripts\Managers\ObjectManager\ObjectPoolManager.cs" />
     <Compile Include="Assets\@Scripts\Protocol\Protocol.cs" />
     <Compile Include="Assets\@Scripts\PlayerController\PlayerInfo\PlayerIdentity.cs" />
@@ -120,7 +119,6 @@
     <Compile Include="Assets\@Scripts\Managers\MonsterSpawnManager\MonsterIdentity.cs" />
     <Compile Include="Assets\@Scripts\Managers\MonsterSpawnManager\MonsterResourceLoader.cs" />
     <Compile Include="Assets\@Scripts\Managers\PortalManager\PortalMeta.cs" />
-    <Compile Include="Assets\@Scripts\SimpleCall.cs" />
     <Compile Include="Assets\@Scripts\Managers\MonsterSpawnManager\MonsterUI.cs" />
     <Compile Include="Assets\@Scripts\Network\ServerSession.cs" />
     <Compile Include="Assets\@Scripts\Managers\NetworkManager.cs" />

@@ -1,4 +1,4 @@
-using Cysharp.Net.Http;
+ï»¿using Cysharp.Net.Http;
 using Google.Protobuf.Protocol;
 using Grpc.Core;
 using Grpc.Net.Client;
@@ -35,7 +35,7 @@ public class Auth_UI : MonoBehaviour
     void Start()
     {
         _handler = new YetAnotherHttpHandler { Http2Only = true };
-        _channel = GrpcChannel.ForAddress("http://127.0.0.1:8080",
+        _channel = GrpcChannel.ForAddress("https://serotina.gyu.be:8443",
             new GrpcChannelOptions
             {
                 HttpHandler = _handler,
@@ -58,13 +58,13 @@ public class Auth_UI : MonoBehaviour
     {
         var id = _idField.text?.Trim();
         var password = _pwField.text ?? "";
-        if (string.IsNullOrEmpty(id)) // ¾ÆÀÌµğ ÀÔ·ÂÇÊµå°¡ ºñ¿öÁ®ÀÖÀ»¶§
+        if (string.IsNullOrEmpty(id)) // ì•„ì´ë”” ì…ë ¥í•„ë“œê°€ ë¹„ì›Œì ¸ìˆì„ë•Œ
         {
             AuthNotice_UI.Instance.gameObject.SetActive(true);
             AuthNotice_UI.Instance.ShowNotice(NoticeCode.LoginFailNullID);
             return;
         }
-        if (string.IsNullOrEmpty(password)) // ÆĞ½º¿öµå ÀÔ·ÂÇÊµå°¡ ºñ¿öÁ®ÀÖÀ»¶§
+        if (string.IsNullOrEmpty(password)) // íŒ¨ìŠ¤ì›Œë“œ ì…ë ¥í•„ë“œê°€ ë¹„ì›Œì ¸ìˆì„ë•Œ
         {
             AuthNotice_UI.Instance.gameObject.SetActive(true);
             AuthNotice_UI.Instance.ShowNotice(NoticeCode.LoginFailNullPW);
@@ -103,13 +103,13 @@ public class Auth_UI : MonoBehaviour
         var token = jwtToken;
         if (string.IsNullOrEmpty(token))
         {
-            Debug.LogWarning("[UI] accessTokenÀÌ ºñ¾îÀÖ½À´Ï´Ù.");
+            Debug.LogWarning("[UI] accessTokenì´ ë¹„ì–´ìˆìŠµë‹ˆë‹¤.");
             return;
         }
         
         var req = new C_JwtLoginRequest { AccessToken = token };
-        var sendBuffer = ServerPacketManager.MakeSendBuffer(req); // PKT_C_JwtLoginRequest·Î ¸ÅÇÎµÊ
+        var sendBuffer = ServerPacketManager.MakeSendBuffer(req); // PKT_C_JwtLoginRequestë¡œ ë§¤í•‘ë¨
         NetworkManager.Instance.Send(sendBuffer);
-        Debug.Log($"[UI] JWT ·Î±×ÀÎ ¿äÃ» Àü¼Û: len={sendBuffer.Count}");
+        Debug.Log($"[UI] JWT ë¡œê·¸ì¸ ìš”ì²­ ì „ì†¡: len={sendBuffer.Count}");
     }
 }

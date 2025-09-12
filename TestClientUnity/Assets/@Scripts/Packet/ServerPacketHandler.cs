@@ -442,5 +442,9 @@ namespace Packet
         {
 
         }
+        internal static void HANDLE_S_PlayerStat(PacketSession session, S_PlayerStat playerStat)
+        {
+
+        }
     }
 }

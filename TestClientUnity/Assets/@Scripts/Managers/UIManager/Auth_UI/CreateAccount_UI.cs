@@ -1,4 +1,4 @@
-using Cysharp.Net.Http;
+ï»¿using Cysharp.Net.Http;
 using Grpc.Core;
 using Grpc.Net.Client;
 using Mmorpg2d.Auth;
@@ -19,17 +19,17 @@ public static class Authenticate
                 Email = (id ?? "").Trim().ToLowerInvariant(),
                 Password = password ?? ""
             });
-            Debug.Log($"[°¡ÀÔ °á°ú] {reply.Success} / {reply.Detail}");
+            Debug.Log($"[ê°€ì… ê²°ê³¼] {reply.Success} / {reply.Detail}");
             return reply.Success;
         }
         catch (RpcException ex)
         {
-            Debug.LogError($"[°¡ÀÔ RPC ¿À·ù] {ex.StatusCode} / {ex.Status.Detail}");
+            Debug.LogError($"[ê°€ì… RPC ì˜¤ë¥˜] {ex.StatusCode} / {ex.Status.Detail}");
             return false;
         }
         catch (Exception ex)
         {
-            Debug.LogError($"[°¡ÀÔ ¿¹¿Ü] {ex.Message}");
+            Debug.LogError($"[ê°€ì… ì˜ˆì™¸] {ex.Message}");
             return false;
         }
     }
@@ -44,13 +44,13 @@ public static class Authenticate
         }
         catch (RpcException ex)
         {
-            Debug.LogError($"[Áßº¹È®ÀÎ RPC ¿À·ù] {ex.StatusCode} / {ex.Status.Detail}");
-            return (false, "¼­¹ö Åë½Å ¿À·ù");
+            Debug.LogError($"[ì¤‘ë³µí™•ì¸ RPC ì˜¤ë¥˜] {ex.StatusCode} / {ex.Status.Detail}");
+            return (false, "ì„œë²„ í†µì‹  ì˜¤ë¥˜");
         }
         catch (Exception ex)
         {
-            Debug.LogError($"[Áßº¹È®ÀÎ ¿¹¿Ü] {ex.Message}");
-            return (false, "¿¹¿Ü ¹ß»ı");
+            Debug.LogError($"[ì¤‘ë³µí™•ì¸ ì˜ˆì™¸] {ex.Message}");
+            return (false, "ì˜ˆì™¸ ë°œìƒ");
         }
     }
     public static async Task<(bool success, string detail, string jwt)> LoginAsync(Auth.AuthClient client, string id, string password)
@@ -62,13 +62,13 @@ public static class Authenticate
                 Email = id, 
                 Password = password
             });
-            Debug.Log("gRPC ÀÀ´ä: " + reply.Success + "\ngRPC Detail" + reply.Detail + "\nJwt" + reply.Jwt);
+            Debug.Log("gRPC ì‘ë‹µ: " + reply.Success + "\ngRPC Detail" + reply.Detail + "\nJwt" + reply.Jwt);
               
             return (reply.Success,reply.Detail,reply.Jwt);
         }
         catch (System.Exception ex)
         {
-            Debug.LogError("gRPC ¿À·ù: " + ex.Message);
+            Debug.LogError("gRPC ì˜¤ë¥˜: " + ex.Message);
             return (false,ex.Message,"");
         }
     }
@@ -103,12 +103,12 @@ public class CreateAccount_UI : MonoBehaviour
         if (_createAccountBtn) _createAccountBtn.onClick.AddListener(OnClickCreateAccount);
         if (_ExitCreateAccountBtn) _ExitCreateAccountBtn.onClick.AddListener(OnClickExitCreateAccount);
         if (_idDuplicateCheckBtn) _idDuplicateCheckBtn.onClick.AddListener(OnClickIdDuplicateCheck);
-        if (_idField) _idField.onValueChanged.AddListener(OnIdChanged); // ÀÔ·Â Áï½Ã °Ë»ç
+        if (_idField) _idField.onValueChanged.AddListener(OnIdChanged); // ì…ë ¥ ì¦‰ì‹œ ê²€ì‚¬
     }
     void Start()
     {
         _handler = new YetAnotherHttpHandler { Http2Only = true };
-        _channel = GrpcChannel.ForAddress("http://127.0.0.1:8080",
+        _channel = GrpcChannel.ForAddress("https://serotina.gyu.be:8443",
             new GrpcChannelOptions 
             { 
                 HttpHandler = _handler,
@@ -124,7 +124,7 @@ public class CreateAccount_UI : MonoBehaviour
         var pw = _pwField.text ?? "";
         var pw2 = _pwCheckField.text ?? "";
 
-        // ÀÔ·Â °ËÁõ
+        // ì…ë ¥ ê²€ì¦
         if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(pw) || string.IsNullOrEmpty(pw2))
         {
             AuthNotice_UI.Instance.gameObject.SetActive(true);
@@ -133,34 +133,34 @@ public class CreateAccount_UI : MonoBehaviour
         }
         if (pw != pw2)
         {
-            _pwRecheckText.text = "ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.";
+            _pwRecheckText.text = "ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.";
             AuthNotice_UI.Instance.gameObject.SetActive(true);
             AuthNotice_UI.Instance.ShowNotice(NoticeCode.CreateAccountFail);
             return;
         }
         if (_checkID == false)
         {
-            _idUseableText.text = "Email Áßº¹ È®ÀÎÀÌ ÇÊ¿äÇÕ´Ï´Ù.";
+            _idUseableText.text = "Email ì¤‘ë³µ í™•ì¸ì´ í•„ìš”í•©ë‹ˆë‹¤.";
             _idUseableText.color = Color.red;
             return;
         }
         _createAccountBtn.interactable = false;
 
-        // ½ÇÁ¦ °¡ÀÔ È£Ãâ
+        // ì‹¤ì œ ê°€ì… í˜¸ì¶œ
         var ok = await Authenticate.DoCreateAccountAsync(_client, id, pw);
 
-        // UI ¾÷µ¥ÀÌÆ®
+        // UI ì—…ë°ì´íŠ¸
         AuthNotice_UI.Instance.gameObject.SetActive(true);
         AuthNotice_UI.Instance.ShowNotice(ok ? NoticeCode.CreateAccountSucess : NoticeCode.CreateAccountFail);
 
         _createAccountBtn.interactable = true;
     }
-    void OnClickExitCreateAccount() // È¸¿ø°¡ÀÔ ÆĞ³Î ³ª°¡±â
+    void OnClickExitCreateAccount() // íšŒì›ê°€ì… íŒ¨ë„ ë‚˜ê°€ê¸°
     {
-        // ex_1 >> Á¤¸» Ã¢À» ´İÀ»°Å³Ä°í ¹°¾îº¸°í ´İ±â
-        // ex_2 >> ¹Ù·Î ´İ±â
+        // ex_1 >> ì •ë§ ì°½ì„ ë‹«ì„ê±°ëƒê³  ë¬¼ì–´ë³´ê³  ë‹«ê¸°
+        // ex_2 >> ë°”ë¡œ ë‹«ê¸°
 
-        // ÀÏ´Ü ¹Ù·Î ´İ°í ´Ù½Ã ·Î±×ÀÎ ÆĞ³Î ¶ç¿ì´Â °É·Î ±¸ÇöÇÔ.
+        // ì¼ë‹¨ ë°”ë¡œ ë‹«ê³  ë‹¤ì‹œ ë¡œê·¸ì¸ íŒ¨ë„ ë„ìš°ëŠ” ê±¸ë¡œ êµ¬í˜„í•¨.
         AuthNotice_UI.Instance.gameObject.SetActive(true);
         AuthNotice_UI.Instance.ShowNotice(NoticeCode.CheckExitCreateAccountPanel);
     }
@@ -178,27 +178,27 @@ public class CreateAccount_UI : MonoBehaviour
         var email = value?.Trim() ?? "";
         _checkID = IsValidEmail(email);
 
-        // ¾ÆÀÌµğ°¡ ¹Ù²î¸é Áßº¹È®ÀÎ °á°ú´Â ¹«È¿È­
+        // ì•„ì´ë””ê°€ ë°”ë€Œë©´ ì¤‘ë³µí™•ì¸ ê²°ê³¼ëŠ” ë¬´íš¨í™”
         _checkID = false;
         if (_checkID == false)
         {
-            _idUseableText.text = "Email Áßº¹È®ÀÎÀÌ ÇÊ¿äÇÕ´Ï´Ù.";
+            _idUseableText.text = "Email ì¤‘ë³µí™•ì¸ì´ í•„ìš”í•©ë‹ˆë‹¤.";
             _idUseableText.color= Color.red;
         }
     }
-    private async void OnClickIdDuplicateCheck() //¾ÆÀÌµğ Áßº¹È®ÀÎ ¹öÆ° ÀÌº¥Æ®
+    private async void OnClickIdDuplicateCheck() //ì•„ì´ë”” ì¤‘ë³µí™•ì¸ ë²„íŠ¼ ì´ë²¤íŠ¸
     {
         var id = _idField.text?.Trim();
         if (string.IsNullOrEmpty(id))
         {
-            _idUseableText.text = "¾ÆÀÌµğ¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä!";
+            _idUseableText.text = "ì•„ì´ë””ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”!";
             _idUseableText.color = Color.red;
             _checkID = false;
             return;
         }
         else if (!IsValidEmail(id))
         {
-            _idUseableText.text = "EmailÇü½ÄÀ¸·Î ÀÔ·ÂÇØÁÖ¼¼¿ä!";
+            _idUseableText.text = "Emailí˜•ì‹ìœ¼ë¡œ ì…ë ¥í•´ì£¼ì„¸ìš”!";
             _idUseableText.color = Color.red;
             _checkID = false;
         }
@@ -207,13 +207,13 @@ public class CreateAccount_UI : MonoBehaviour
             var ok = await Authenticate.CheckEmailAsync(_client, _idField.text);
             if (ok.available)
             {
-                _idUseableText.text = "»ç¿ë°¡´ÉÇÑ IDÀÔ´Ï´Ù!";
+                _idUseableText.text = "ì‚¬ìš©ê°€ëŠ¥í•œ IDì…ë‹ˆë‹¤!";
                 _idUseableText.color = Color.green;
                 _checkID = true;
             }
             else
             {
-                _idUseableText.text = "ÀÌ¹Ì Á¸ÀçÇÏ´Â EmailÀÔ´Ï´Ù!";
+                _idUseableText.text = "ì´ë¯¸ ì¡´ì¬í•˜ëŠ” Emailì…ë‹ˆë‹¤!";
                 _idUseableText.color = Color.red;
                 _checkID = false;
             }
@@ -222,14 +222,14 @@ public class CreateAccount_UI : MonoBehaviour
     }
     void CheckPassword()
     {
-        if (_pwField.text == _pwCheckField.text && _pwField.text != "") // ºñ¹Ğ¹øÈ£¿Í ºñ¹Ğ¹øÈ£ ÀçÈ®ÀÎ ÇÊµåÀÇ ÅØ½ºÆ®°¡ ¸ğµÎ °°°í ºñ¾îÀÖÁö ¾Ê´Ù¸é
+        if (_pwField.text == _pwCheckField.text && _pwField.text != "") // ë¹„ë°€ë²ˆí˜¸ì™€ ë¹„ë°€ë²ˆí˜¸ ì¬í™•ì¸ í•„ë“œì˜ í…ìŠ¤íŠ¸ê°€ ëª¨ë‘ ê°™ê³  ë¹„ì–´ìˆì§€ ì•Šë‹¤ë©´
         {
-            _pwRecheckText.text = "ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÕ´Ï´Ù!";
+            _pwRecheckText.text = "ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•©ë‹ˆë‹¤!";
             _pwRecheckText.color = Color.green;
         }
-        else // ºñ¹Ğ¹øÈ£¿Í ºñ¹Ğ¹øÈ£ ÀçÈ®ÀÎ ÇÊµåÀÇ °ªÀÌ ´Ù¸¦¶§
+        else // ë¹„ë°€ë²ˆí˜¸ì™€ ë¹„ë°€ë²ˆí˜¸ ì¬í™•ì¸ í•„ë“œì˜ ê°’ì´ ë‹¤ë¥¼ë•Œ
         {
-            _pwRecheckText.text = "ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù."; 
+            _pwRecheckText.text = "ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤."; 
             _pwRecheckText.color = Color.red;
         }
     }
@@ -245,16 +245,16 @@ public class CreateAccount_UI : MonoBehaviour
     
     private void Update()
     {
-        if (_pwCheckField.text == "") // ºñ¹Ğ¹øÈ£Ã¼Å© ÀÔ·ÂÇÊµå°¡ ºñ¾îÀÖ´Ù¸é
+        if (_pwCheckField.text == "") // ë¹„ë°€ë²ˆí˜¸ì²´í¬ ì…ë ¥í•„ë“œê°€ ë¹„ì–´ìˆë‹¤ë©´
         {
             if (_pwField.text == "")
             {
-                _pwRecheckText.text = "ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.";
+                _pwRecheckText.text = "ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.";
                 _pwRecheckText.color = Color.white;
             }
             else
             {
-                _pwRecheckText.text = "ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.";
+                _pwRecheckText.text = "ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.";
                 _pwRecheckText.color = Color.red;
             }
         }
