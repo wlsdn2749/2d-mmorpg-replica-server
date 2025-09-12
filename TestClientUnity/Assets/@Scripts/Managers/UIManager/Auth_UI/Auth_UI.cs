@@ -35,7 +35,7 @@ public class Auth_UI : MonoBehaviour
     void Start()
     {
         _handler = new YetAnotherHttpHandler { Http2Only = true };
-        _channel = GrpcChannel.ForAddress("https://serotina.gyu.be:8443",
+        _channel = GrpcChannel.ForAddress("http://127.0.0.1:8080",
             new GrpcChannelOptions
             {
                 HttpHandler = _handler,
