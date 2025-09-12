@@ -355,5 +355,11 @@ namespace Packet
         {
             throw new NotImplementedException();
         }
+
+        internal static void HANDLE_S_PlayerStat(PacketSession session, S_PlayerStat stat)
+        {
+            var info = stat.StatInfo;
+            Console.WriteLine($"MaxHp : {info.MaxHp}, Hp: {info.Hp}, Exp: {info.Exp}, Lv, {info.Level}, Money: {info.Money} ");
+        }
     }
 }

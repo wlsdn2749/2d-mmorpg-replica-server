@@ -41,7 +41,9 @@ public:
 		return true;
 	}
 
-    bool ProcessMonsterDropInRoom(EntityId typeId, int srcPlayerId); // 플레이어에게 드랍 
+    bool ProcessMonsterDropInRoom(EntityId typeId, int srcPlayerId); // 플레이어에게 드랍
+    bool ProcessMonsterMoneyInRoom(EntityId typeId, int srcPlayerId); // 플레이어에게 돈
+    bool ProcessMonsterExpInRoom(EntityId typeId, int srcPlayerId); // 플레이어에게 Exp
 
     void SendInventoryUpdateToPlayer(int killPlayerId);
     void SendSystemMessageToPlayer(int playerId, const std::string& message, Protocol::EMessageType type);
