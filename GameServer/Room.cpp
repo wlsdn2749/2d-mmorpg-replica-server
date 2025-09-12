@@ -154,6 +154,8 @@ void Room::Enter(PlayerRef p)
     AddPlayerInternal(p, spawn, p->core.dir);  // 내부 등록 (SetRoom 포함)
 
 	GConsoleLogger->WriteStdOut(Color::GREEN, L"Room에 Enter 입장\n");
+
+    OnPlayerStatChanged(p);
 	OnEnter(p); // 여기서 모두에게 BroadCasting?
 
     // 데이터 저장
@@ -546,10 +548,18 @@ void Room::ChangeRoomReady(const PlayerRef& p, const Protocol::C_ChangeRoomReady
         });
 }
 
+void Room::OnRecvAttackReq(const PlayerRef& p, const Protocol::C_PlayerAttackRequest& pkt)
+{
+    Protocol::S_BroadcastPlayerTryAttack tryAttackPkt;
+    tryAttackPkt.set_playerid(p->core.id);
+
+    Broadcast(ClientPacketHandler::MakeSendBuffer(tryAttackPkt));
+}
+
 void Room::OnPlayerStatChanged(const PlayerRef& p)
 {
     Protocol::S_PlayerStat pkt;
-    pkt.set_allocated_statinfo(p->GetPlayerStatInfo().get());
+    pkt.mutable_statinfo()->CopyFrom(*p->GetPlayerStatInfo());
 
     if (auto s = p->ownerSession.lock())
     {
