@@ -45,6 +45,7 @@ enum MsgId
 	S_NPC_SHOP_OPEN = 37;
 	C_NPC_SHOP_BUY_REQUEST = 38;
 	S_NPC_SHOP_BUY_REPLY = 39;
+	S_PLAYER_STAT = 40;
 }
 
 // 클라 -> 게임 서버 jwt 로그인 인증 (0)
@@ -298,6 +299,11 @@ message S_NpcShopBuyReply {
 	string detail = 2;
 }
 
+// 40 (서버) -> 클라 : 플레이어 스텟 전달
+message S_PlayerStat {
+	PlayerStatInfo statInfo = 1;
+}
+
 // TODO (xx) 서버 -> 클라 : S_BroadcastPlayerHpChanged
 // TODO (xx) 서버 -> 클라 : S_BroadcastPlayerDeath
 
@@ -432,4 +438,13 @@ message ShopItemInfo
 	int32 itemId = 1;
 	int32 quantity = 2; // 수량
 	int32 price = 3;	// 1개당 가격
+}
+
+message PlayerStatInfo
+{
+	int32 maxHp = 1;
+	int32 hp = 2;
+	int32 exp = 3;
+	int32 level = 4;
+	int32 money = 5;
 }

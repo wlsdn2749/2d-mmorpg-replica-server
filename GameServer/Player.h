@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "TypeCore.h"       // EntityId, EntityKind
 #include "GeometryCore.h"   // Pos2, Dir
 #include "EntityCore.h"     // EntityCore
@@ -59,22 +59,42 @@ private:
 	HP 등 전투 수치 + 레벨
 -------------------------------*/
 public:
+	inline int MaxHp() const {return _maxHp;}
 	inline int Hp() const { return _hp; }
 	inline int Atk() const { return _atk; }
 	inline int Def() const {return _def; }
 	inline int Level() const {return _level; }
 	inline int Exp() const {return _exp; }
+	inline int Money() const {return _money; };
 
-	void SetHp(int hp) {_hp = hp; }
-	void SetAtk(int atk) {_atk = atk;}
-	void SetDef(int def) {_def = def;}
-	void SetLevel(int level) {_level = level;}
-	void SetExp(int exp) {_exp = exp;}
+	inline void SetMaxHp(int maxHp) {_maxHp = maxHp;}
+	inline void SetHp(int hp) {_hp = hp; }
+	inline void SetAtk(int atk) {_atk = atk;}
+	inline void SetDef(int def) {_def = def;}
+	inline void SetLevel(int level) {_level = level;}
+	inline void SetExp(int exp) {_exp = exp;}
+	inline void SetMoney(int money) {_money = money;}
+
+	inline void AddMoney(int money) {_money += money; }
+	inline void AddLevel(int level = 1) {_level += level; }
+	inline void AddExp(int exp) 
+	{
+		// 나중에 경험치 시스템으로 분할
+		_exp += exp;
+
+		const int pendingAddLevel = static_cast<int>(_exp / 500);
+		const int remainingExp = static_cast<int>(_exp % 500);
+		AddLevel(pendingAddLevel);
+		SetExp(remainingExp);
+	}
 
 	bool ApplyDamage(int dmg, int srcMonsterId) {
 		_hp = std::max(0, _hp - std::max(0, dmg));
 		return (_hp == 0); // dead?
 	}
+
+	std::unique_ptr<Protocol::PlayerStatInfo> GetPlayerStatInfo() const;
+	
 
 public: // TODO 나중에 private로 수정 필
 	int _hp { 30 };
@@ -83,6 +103,7 @@ public: // TODO 나중에 private로 수정 필
 	int _def { 5 };
 	int _level { 1 };
 	int _exp { 0 };
+	int _money { 0 };
 
 /*---------------------------------
 	Inventory System
