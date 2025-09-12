@@ -32,8 +32,7 @@ bool MonsterMovementSystem::TryRotate(Monster& m,
 	m.core.dir = targetDir;
 	m.needsRotation = false;
 	cast.BroadcastMonsterMove(m.core.id, m.core.pos.x, m.core.pos.y, targetDir);
-	GConsoleLogger->WriteStdOut(Color::GREEN, L"[MonsterMove] Monster:%d rotated to dir:%d\n", 
-		m.core.id, (int)targetDir);
+	//GConsoleLogger->WriteStdOut(Color::GREEN, L"[MonsterMove] Monster:%d rotated to dir:%d\n", 	m.core.id, (int)targetDir);
 	return true;
 }
 
@@ -48,8 +47,7 @@ bool MonsterMovementSystem::TryStep(Monster& m,
 	m.core.pos = to;
 	m.core.dir = dir;
 	cast.BroadcastMonsterMove(m.core.id, to.x, to.y, dir);
-	GConsoleLogger->WriteStdOut(Color::GREEN, L"[MonsterMove] Monster:%d moved to (%d,%d) dir:%d\n", 
-		m.core.id, to.x, to.y, (int)dir);
+	//GConsoleLogger->WriteStdOut(Color::GREEN, L"[MonsterMove] Monster:%d moved to (%d,%d) dir:%d\n", m.core.id, to.x, to.y, (int)dir);
 	return true;
 }
 
@@ -242,8 +240,8 @@ void MonsterMovementSystem::ExecutePatrolState(Monster& m, IMonsterMapQuery& map
 		m.patrolTargetSteps = rng.NextInt(3, 5); // 3-5칸
 		m.patrolStepsRemaining = m.patrolTargetSteps;
 		m.needsRotation = (m.core.dir != m.targetDirection);
-		GConsoleLogger->WriteStdOut(Color::WHITE, L"[Patrol] Monster:%d starting patrol: dir=%d, steps=%d\n", 
-			m.core.id, (int)m.targetDirection, m.patrolTargetSteps);
+		/*GConsoleLogger->WriteStdOut(Color::WHITE, L"[Patrol] Monster:%d starting patrol: dir=%d, steps=%d\n", 
+			m.core.id, (int)m.targetDirection, m.patrolTargetSteps);*/
 	}
 	
 	// 회전이 필요하면 회전 먼저

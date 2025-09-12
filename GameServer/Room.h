@@ -100,7 +100,7 @@ public:
 	void ChangeRoomBegin(const PlayerRef& p, const PortalLink& link);
 	void OnRecvMoveReq(PlayerRef p, const Protocol::C_PlayerMoveRequest& req);
 	void ChangeRoomReady(const PlayerRef& p, const Protocol::C_ChangeRoomReady& pkt);
-	virtual void OnRecvAttackReq(const PlayerRef& p, const Protocol::C_PlayerAttackRequest& pkt) {}
+	virtual void OnRecvAttackReq(const PlayerRef& p, const Protocol::C_PlayerAttackRequest& pkt);
 	virtual void OnPlayerStatChanged(const PlayerRef& p);
 
 /*--------------------------------------------
