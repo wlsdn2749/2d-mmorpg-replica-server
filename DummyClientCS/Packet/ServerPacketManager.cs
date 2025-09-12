@@ -49,6 +49,7 @@ namespace Packet
 	    PKT_C_NpcShopBuyRequest = 38,
 	    PKT_S_NpcShopBuyReply = 39,
 	    PKT_S_PlayerStat = 40,
+	    PKT_S_BroadcastPlayerTryAttack = 41,
     }
     public class ServerPacketManager
     {
@@ -122,6 +123,7 @@ namespace Packet
             RegisterHandler((ushort)PacketID.PKT_S_NpcShopOpen, ServerPacketHandler.HANDLE_S_NpcShopOpen, S_NpcShopOpen.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_NpcShopBuyReply, ServerPacketHandler.HANDLE_S_NpcShopBuyReply, S_NpcShopBuyReply.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_PlayerStat, ServerPacketHandler.HANDLE_S_PlayerStat, S_PlayerStat.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_BroadcastPlayerTryAttack, ServerPacketHandler.HANDLE_S_BroadcastPlayerTryAttack, S_BroadcastPlayerTryAttack.Parser);
             
                   
         }

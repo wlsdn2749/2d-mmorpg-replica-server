@@ -46,6 +46,7 @@ enum MsgId
 	C_NPC_SHOP_BUY_REQUEST = 38;
 	S_NPC_SHOP_BUY_REPLY = 39;
 	S_PLAYER_STAT = 40;
+	S_BROADCAST_PLAYER_TRY_ATTACK = 41;
 }
 
 // 클라 -> 게임 서버 jwt 로그인 인증 (0)
@@ -302,6 +303,12 @@ message S_NpcShopBuyReply {
 // 40 (서버) -> 클라 : 플레이어 스텟 전달
 message S_PlayerStat {
 	PlayerStatInfo statInfo = 1;
+}
+
+// (41) 서버 -> 클라 : 플레이어 공격 시도 브로드캐스트
+message S_BroadcastPlayerTryAttack 
+{
+	int32 playerId = 1;
 }
 
 // TODO (xx) 서버 -> 클라 : S_BroadcastPlayerHpChanged

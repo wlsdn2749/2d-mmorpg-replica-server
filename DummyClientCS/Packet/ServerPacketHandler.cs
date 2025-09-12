@@ -237,7 +237,7 @@ namespace Packet
 
         internal static void HANDLE_S_BroadcastMonsterMove(PacketSession session, S_BroadcastMonsterMove move)
         {
-            Console.WriteLine($"[S_BroadcastMonsterMove] Monster Has been moved");
+            //Console.WriteLine($"[S_BroadcastMonsterMove] Monster Has been moved");
         }
 
         internal static void HANDLE_S_BroadcastMonsterAttack(PacketSession session, S_BroadcastMonsterAttack attack)
@@ -360,6 +360,11 @@ namespace Packet
         {
             var info = stat.StatInfo;
             Console.WriteLine($"MaxHp : {info.MaxHp}, Hp: {info.Hp}, Exp: {info.Exp}, Lv, {info.Level}, Money: {info.Money} ");
+        }
+
+        internal static void HANDLE_S_BroadcastPlayerTryAttack(PacketSession session, S_BroadcastPlayerTryAttack attack)
+        {
+            Console.WriteLine($"공격시도 전달받음 Pid : {attack.PlayerId}");
         }
     }
 }

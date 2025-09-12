@@ -214,6 +214,8 @@ void FieldRoom::OnPlayerMoved(const PlayerRef& p, int ox, int oy)
 
 void FieldRoom::OnRecvAttackReq(const PlayerRef& p, const Protocol::C_PlayerAttackRequest& req)
 {
+	Room::OnRecvAttackReq(p, req);
+
 	if(!_pCombat) return;
 	const int64_t nowMs = Time::NowSteadyMs();
 	_pCombat->HandleAttack(p, nowMs);
@@ -281,7 +283,7 @@ void FieldRoom::MonsterBroadcasterImpl::BroadcastMonsterMove(EntityId id, int x,
 	Protocol::S_BroadcastMonsterMove pkt;
 	pkt.set_monsterid(id);
 	pkt.set_x(x); pkt.set_y(y); pkt.set_dir(dir);
-	GConsoleLogger->WriteStdOut(Color::GREEN, L"몬스터 이동 Id: %d, x: %d, y: %d, dir: %d\n", id, x, y, (int) dir);
+	//GConsoleLogger->WriteStdOut(Color::GREEN, L"몬스터 이동 Id: %d, x: %d, y: %d, dir: %d\n", id, x, y, (int) dir);
 	_r.Broadcast(ClientPacketHandler::MakeSendBuffer(pkt));
 }
 

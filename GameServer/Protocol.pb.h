@@ -125,6 +125,9 @@ extern S_BroadcastPlayerLeaveDefaultTypeInternal _S_BroadcastPlayerLeave_default
 class S_BroadcastPlayerMove;
 struct S_BroadcastPlayerMoveDefaultTypeInternal;
 extern S_BroadcastPlayerMoveDefaultTypeInternal _S_BroadcastPlayerMove_default_instance_;
+class S_BroadcastPlayerTryAttack;
+struct S_BroadcastPlayerTryAttackDefaultTypeInternal;
+extern S_BroadcastPlayerTryAttackDefaultTypeInternal _S_BroadcastPlayerTryAttack_default_instance_;
 class S_ChangeRoomBegin;
 struct S_ChangeRoomBeginDefaultTypeInternal;
 extern S_ChangeRoomBeginDefaultTypeInternal _S_ChangeRoomBegin_default_instance_;
@@ -222,6 +225,7 @@ template<> ::Protocol::S_BroadcastPlayerAttack* Arena::CreateMaybeMessage<::Prot
 template<> ::Protocol::S_BroadcastPlayerEnter* Arena::CreateMaybeMessage<::Protocol::S_BroadcastPlayerEnter>(Arena*);
 template<> ::Protocol::S_BroadcastPlayerLeave* Arena::CreateMaybeMessage<::Protocol::S_BroadcastPlayerLeave>(Arena*);
 template<> ::Protocol::S_BroadcastPlayerMove* Arena::CreateMaybeMessage<::Protocol::S_BroadcastPlayerMove>(Arena*);
+template<> ::Protocol::S_BroadcastPlayerTryAttack* Arena::CreateMaybeMessage<::Protocol::S_BroadcastPlayerTryAttack>(Arena*);
 template<> ::Protocol::S_ChangeRoomBegin* Arena::CreateMaybeMessage<::Protocol::S_ChangeRoomBegin>(Arena*);
 template<> ::Protocol::S_ChangeRoomCommit* Arena::CreateMaybeMessage<::Protocol::S_ChangeRoomCommit>(Arena*);
 template<> ::Protocol::S_CharacterListReply* Arena::CreateMaybeMessage<::Protocol::S_CharacterListReply>(Arena*);
@@ -290,12 +294,13 @@ enum MsgId : int {
   C_NPC_SHOP_BUY_REQUEST = 38,
   S_NPC_SHOP_BUY_REPLY = 39,
   S_PLAYER_STAT = 40,
+  S_BROADCAST_PLAYER_TRY_ATTACK = 41,
   MsgId_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   MsgId_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool MsgId_IsValid(int value);
 constexpr MsgId MsgId_MIN = C_JWT_LOGIN_REQUEST;
-constexpr MsgId MsgId_MAX = S_PLAYER_STAT;
+constexpr MsgId MsgId_MAX = S_BROADCAST_PLAYER_TRY_ATTACK;
 constexpr int MsgId_ARRAYSIZE = MsgId_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MsgId_descriptor();
@@ -7067,6 +7072,154 @@ class S_PlayerStat final :
 };
 // -------------------------------------------------------------------
 
+class S_BroadcastPlayerTryAttack final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.S_BroadcastPlayerTryAttack) */ {
+ public:
+  inline S_BroadcastPlayerTryAttack() : S_BroadcastPlayerTryAttack(nullptr) {}
+  ~S_BroadcastPlayerTryAttack() override;
+  explicit PROTOBUF_CONSTEXPR S_BroadcastPlayerTryAttack(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  S_BroadcastPlayerTryAttack(const S_BroadcastPlayerTryAttack& from);
+  S_BroadcastPlayerTryAttack(S_BroadcastPlayerTryAttack&& from) noexcept
+    : S_BroadcastPlayerTryAttack() {
+    *this = ::std::move(from);
+  }
+
+  inline S_BroadcastPlayerTryAttack& operator=(const S_BroadcastPlayerTryAttack& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline S_BroadcastPlayerTryAttack& operator=(S_BroadcastPlayerTryAttack&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const S_BroadcastPlayerTryAttack& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const S_BroadcastPlayerTryAttack* internal_default_instance() {
+    return reinterpret_cast<const S_BroadcastPlayerTryAttack*>(
+               &_S_BroadcastPlayerTryAttack_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    41;
+
+  friend void swap(S_BroadcastPlayerTryAttack& a, S_BroadcastPlayerTryAttack& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(S_BroadcastPlayerTryAttack* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(S_BroadcastPlayerTryAttack* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  S_BroadcastPlayerTryAttack* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<S_BroadcastPlayerTryAttack>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const S_BroadcastPlayerTryAttack& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const S_BroadcastPlayerTryAttack& from) {
+    S_BroadcastPlayerTryAttack::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S_BroadcastPlayerTryAttack* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.S_BroadcastPlayerTryAttack";
+  }
+  protected:
+  explicit S_BroadcastPlayerTryAttack(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPlayerIdFieldNumber = 1,
+  };
+  // int32 playerId = 1;
+  void clear_playerid();
+  int32_t playerid() const;
+  void set_playerid(int32_t value);
+  private:
+  int32_t _internal_playerid() const;
+  void _internal_set_playerid(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Protocol.S_BroadcastPlayerTryAttack)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int32_t playerid_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_Protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
 class Vector2Info final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.Vector2Info) */ {
  public:
@@ -7115,7 +7268,7 @@ class Vector2Info final :
                &_Vector2Info_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    41;
+    42;
 
   friend void swap(Vector2Info& a, Vector2Info& b) {
     a.Swap(&b);
@@ -7274,7 +7427,7 @@ class PlayerMoveInfo final :
                &_PlayerMoveInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    42;
+    43;
 
   friend void swap(PlayerMoveInfo& a, PlayerMoveInfo& b) {
     a.Swap(&b);
@@ -7464,7 +7617,7 @@ class CharacterSummaryInfo final :
                &_CharacterSummaryInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    43;
+    44;
 
   friend void swap(CharacterSummaryInfo& a, CharacterSummaryInfo& b) {
     a.Swap(&b);
@@ -7650,7 +7803,7 @@ class PlayerInfo final :
                &_PlayerInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    44;
+    45;
 
   friend void swap(PlayerInfo& a, PlayerInfo& b) {
     a.Swap(&b);
@@ -7845,7 +7998,7 @@ class InventorySlotInfo final :
                &_InventorySlotInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    45;
+    46;
 
   friend void swap(InventorySlotInfo& a, InventorySlotInfo& b) {
     a.Swap(&b);
@@ -8026,7 +8179,7 @@ class MonsterInfo final :
                &_MonsterInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    46;
+    47;
 
   friend void swap(MonsterInfo& a, MonsterInfo& b) {
     a.Swap(&b);
@@ -8216,7 +8369,7 @@ class ShopItemInfo final :
                &_ShopItemInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    47;
+    48;
 
   friend void swap(ShopItemInfo& a, ShopItemInfo& b) {
     a.Swap(&b);
@@ -8386,7 +8539,7 @@ class PlayerStatInfo final :
                &_PlayerStatInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    48;
+    49;
 
   friend void swap(PlayerStatInfo& a, PlayerStatInfo& b) {
     a.Swap(&b);
@@ -10906,6 +11059,30 @@ inline void S_PlayerStat::set_allocated_statinfo(::Protocol::PlayerStatInfo* sta
 
 // -------------------------------------------------------------------
 
+// S_BroadcastPlayerTryAttack
+
+// int32 playerId = 1;
+inline void S_BroadcastPlayerTryAttack::clear_playerid() {
+  _impl_.playerid_ = 0;
+}
+inline int32_t S_BroadcastPlayerTryAttack::_internal_playerid() const {
+  return _impl_.playerid_;
+}
+inline int32_t S_BroadcastPlayerTryAttack::playerid() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_BroadcastPlayerTryAttack.playerId)
+  return _internal_playerid();
+}
+inline void S_BroadcastPlayerTryAttack::_internal_set_playerid(int32_t value) {
+  
+  _impl_.playerid_ = value;
+}
+inline void S_BroadcastPlayerTryAttack::set_playerid(int32_t value) {
+  _internal_set_playerid(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_BroadcastPlayerTryAttack.playerId)
+}
+
+// -------------------------------------------------------------------
+
 // Vector2Info
 
 // int32 x = 1;
@@ -11809,6 +11986,8 @@ inline void PlayerStatInfo::set_money(int32_t value) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
