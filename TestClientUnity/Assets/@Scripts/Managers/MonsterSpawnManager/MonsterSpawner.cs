@@ -22,7 +22,7 @@ public static class MonsterSpawner
 
     public static bool Exists(int id) => _spawned.ContainsKey(id);
     public static GameObject Get(int id) => _spawned.TryGetValue(id, out var go) ? go : null;
-
+    
     // 스냅샷/스폰 패킷 통합 진입점
     public static GameObject SpawnDirect(int id, int typeId, Vector3 pos, EDirection dir)
     {
@@ -82,7 +82,13 @@ public static class MonsterSpawner
             Debug.LogWarning($"[MonsterSpawner] Move update for missing {msg.TargetId}");
             return Vector2.zero ;
         }
-        return go.transform.position;
+        var mu = go.GetComponent<MonsterUI>();
+        if (mu == null)
+        {
+            Debug.LogWarning($"[MonsterSpawner] Avatar missing for {msg.TargetId}");
+            return Vector2.zero;
+        }
+        return go.transform.position + mu.DamageTextOffset;
     }
     public static void UpdateAttack(S_BroadcastMonsterAttack msg)
     {
@@ -121,7 +127,7 @@ public static class MonsterSpawner
             Debug.LogWarning($"[MonsterSpawner] Avatar missing for {msg.TargetId}");
             return;
         }
-        mh.SetHp(msg.HpAfter);
+        //mh.AfterHp(msg.HpAfter);
     }
     public static void Despawn(S_BroadcastMonsterDeath msg)
     {

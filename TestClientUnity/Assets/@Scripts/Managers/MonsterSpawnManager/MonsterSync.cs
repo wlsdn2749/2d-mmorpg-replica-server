@@ -104,7 +104,7 @@ public static class MonsterSync
     }
     public static Vector2 MonsterPos(S_BroadcastPlayerAttack msg)
     {
-        if (!MonsterSpawner.Exists(msg.TargetId)) { _pendingPlayerAttacks[msg.TargetId] = msg; return Vector2.zero; }
+        if (!MonsterSpawner.Exists(msg.TargetId)) { _pendingPlayerAttacks[msg.TargetId] = msg; return _monsterPos; }
         _monsterPos = MonsterSpawner.MonsterPos(msg);
         return _monsterPos;
     }

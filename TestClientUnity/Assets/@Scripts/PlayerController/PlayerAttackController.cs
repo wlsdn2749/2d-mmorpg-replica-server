@@ -25,10 +25,10 @@ public class PlayerAttackController : MonoBehaviour
     }
     void PlayerNormalAttack() // Aniamition Event
     {
+        if (!_playerIdentity.IsLocalPlayer) return;
         var req = new C_PlayerAttackRequest();
         var send = ServerPacketManager.MakeSendBuffer(req);
         NetworkManager.Instance.Send(send);
-        Debug.Log("공격 패킷 송신");
     }
     // Update is called once per frame
     void Update()

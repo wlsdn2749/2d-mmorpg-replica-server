@@ -29,8 +29,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.65, z: 0}
   m_LocalScale: {x: 1, y: 0.13, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 60678263653881457}
+  m_Children: []
   m_Father: {fileID: 1543127926515223725}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3037452120217559268
@@ -79,7 +78,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1028004179
   m_SortingLayer: 4
-  m_SortingOrder: 3
+  m_SortingOrder: 2
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.3679245, g: 0.3245372, b: 0.3245372, a: 1}
   m_FlipX: 0
@@ -217,6 +216,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5067895370239455866}
+  - {fileID: 60678263653881457}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1770931933915489327
@@ -337,10 +337,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea17b339c6b40274ebe22c232bdc806a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterUI
-  bg: {fileID: 3037452120217559268}
-  fill: {fileID: 7821163908519579722}
   fillPivot: {fileID: 60678263653881457}
-  lerpTime: 0.08
+  lerpSpeed: 10
 --- !u!114 &88706529794364585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,7 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterHealth
   <MaxHp>k__BackingField: 9999
-  <CurrentHp>k__BackingField: 9999
+  <CurrentHp>k__BackingField: 0
 --- !u!1 &6293889107898134975
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,11 +377,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6293889107898134975}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.5, y: 0.65, z: 0}
+  m_LocalScale: {x: 1, y: 0.13, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3053106450139448775}
-  m_Father: {fileID: 5067895370239455866}
+  m_Father: {fileID: 1543127926515223725}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

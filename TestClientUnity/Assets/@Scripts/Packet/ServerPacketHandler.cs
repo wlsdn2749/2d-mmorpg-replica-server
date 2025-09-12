@@ -368,7 +368,6 @@ namespace Packet
         }
         internal static void HANDLE_S_MonsterList(PacketSession session, S_MonsterList list)
         {
-            Debug.Log($"몬스터 리스트 스냅샷 패킷 수신완료 \n[S_MonsterList] map={list.MapId}, count={list.Monsters?.Count ?? 0}");
             MonsterSync.ApplySnapshot(list);
         }
         internal static void HANDLE_S_SpawnMonster(PacketSession session, S_SpawnMonster spawnMonster)
@@ -378,43 +377,41 @@ namespace Packet
         }
         internal static void HANDLE_S_DespawnMonster(PacketSession session, S_DespawnMonster despawnMonster)
         {
-            Debug.Log("[HANDLE_S_DespawnMonster] 패킷 수신완료");
             MonsterSync.OnDespawn(despawnMonster);
         }
         internal static void HANDLE_S_BroadcastMonsterMove(PacketSession session, S_BroadcastMonsterMove broadMonsterMove)
         {
-            Debug.Log("몬스터 이동 패킷 수신완료");
             MonsterSync.OnMove(broadMonsterMove);
         }
         internal static void HANDLE_S_BroadcastMonsterAttack(PacketSession session, S_BroadcastMonsterAttack broadMonsterAtk)
         {
-            Debug.Log($"{broadMonsterAtk.TargetPid},{broadMonsterAtk.MonsterId}");
             MonsterSync.OnAttack(broadMonsterAtk);
         }
         internal static void HANDLE_S_BroadcastMonsterDeath(PacketSession session, S_BroadcastMonsterDeath broadMonsterDeath)
         {
-            Debug.Log("[HANDLE_S_BroadcastMonsterDeath] 패킷 수신완료");    
             MonsterSync.OnDespawn(broadMonsterDeath);
         }
+        private static Vector2 MonsterPos(S_BroadcastPlayerAttack msg)=> MonsterSync.MonsterPos(msg);
         internal static void HANDLE_S_BroadcastPlayerAttack(PacketSession session, S_BroadcastPlayerAttack broadPlayerAtk)
         {
-            Debug.Log("공격패킷수신");
             var attacker = PlayerSpawner.Get(broadPlayerAtk.PlayerId);
-            var targetInfo = broadPlayerAtk;
             if (attacker)
             {
-                Debug.Log("데미지 텍스트 플로팅");
-                var damageText = ObjectPoolManager.Instance.GetObject("DamageText");
-                damageText.GetComponent<DamageText>().Show(broadPlayerAtk.Damage, MonsterSync.MonsterPos(broadPlayerAtk)+new Vector2(0,0.5f));
-                Debug.Log(broadPlayerAtk.HpAfter);
+                var pid = attacker.GetComponent<PlayerIdentity>();
+                var anim = attacker.GetComponent<Animator>();
+                if (pid == null || !pid.IsLocalPlayer)
+                    anim?.SetTrigger("Attack");
             }
-            var go = MonsterSpawner.Get(broadPlayerAtk.TargetId /* 또는 monsterId */);
-            if (go)
+            var damageText = ObjectPoolManager.Instance.GetObject("DamageText");
+            damageText.GetComponent<DamageText>().Show(broadPlayerAtk.Damage, MonsterSync.MonsterPos(broadPlayerAtk));
+            var go = MonsterSpawner.Get(broadPlayerAtk.TargetId);
+            if (!go)
             {
-                var mh = go.GetComponent<MonsterHealth>();
-                if (mh) mh.SetHp(broadPlayerAtk.HpAfter); // 서버가 hpAfter를 내려주면 그대로
-                                               // 없으면 mh.ApplyDamage(msg.damage);
+                return;
             }
+            var mh = go.GetComponent<MonsterHealth>();
+            if (!mh) return;
+            mh.InitByAttackPacket(broadPlayerAtk.HpAfter, broadPlayerAtk.Damage);
         }
         internal static void HANDLE_S_InventoryReply(PacketSession session, S_InventoryReply invenApply)
         {
