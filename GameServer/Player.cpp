@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "Player.h"
 
 #include "Room.h"
@@ -14,6 +14,7 @@ void Player::GetCharacterStat(CharacterRepository::CharacterStat& outStat) const
 	outStat.hp = Hp();
 	outStat.level = Level();
 	outStat.exp = Exp();
+	outStat.money = Money();
 }
 
 void Player::LoadCharacterStat(const CharacterRepository::CharacterStat& stat)
@@ -27,6 +28,7 @@ void Player::LoadCharacterStat(const CharacterRepository::CharacterStat& stat)
 	SetHp(stat.hp);
 	SetLevel(stat.level);
 	SetExp(stat.exp);
+	SetMoney(stat.money);
 }
 
 std::future<void> Player::SaveCharacterToDB()
@@ -37,6 +39,17 @@ std::future<void> Player::SaveCharacterToDB()
 	CharacterRepository::UpdateCharacterStatsAsync(stat); // 연결종료 시, Stats 저장
 	auto fut = SaveInventoryToDB(); // 연결 종료시, DB 저장
 	return fut;
+}
+
+std::unique_ptr<Protocol::PlayerStatInfo> Player::GetPlayerStatInfo() const
+{
+	auto infoPkt = std::make_unique<Protocol::PlayerStatInfo>();
+	infoPkt->set_maxhp(MaxHp());
+	infoPkt->set_hp(Hp());
+	infoPkt->set_exp(Exp());
+	infoPkt->set_level(Level());
+	infoPkt->set_money(Money());
+	return infoPkt;
 }
 
 std::future<void> Player::LoadInventoryFromDB()

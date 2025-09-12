@@ -546,6 +546,21 @@ void Room::ChangeRoomReady(const PlayerRef& p, const Protocol::C_ChangeRoomReady
         });
 }
 
+void Room::OnPlayerStatChanged(const PlayerRef& p)
+{
+    Protocol::S_PlayerStat pkt;
+    pkt.set_allocated_statinfo(p->GetPlayerStatInfo().get());
+
+    if (auto s = p->ownerSession.lock())
+    {
+        s->Send(ClientPacketHandler::MakeSendBuffer(pkt));
+        GConsoleLogger->WriteStdOut(Color::GREEN, L"[OnPlayerStatChanged: Hp, Exp, Money ... changed");
+    }
+
+    // Stat 정보 DB에 저장
+    p->SaveCharacterToDB();
+}
+
 void Room::SendMoveAck(PlayerRef p, int clientSeq, Protocol::EMoveResult result)
 {
     if (!p) return;

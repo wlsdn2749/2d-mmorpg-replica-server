@@ -65,6 +65,22 @@ bool FieldRoom::ProcessMonsterDropInRoom(EntityId monsterId, int killerPlayerId)
 	return true;
 }
 
+bool FieldRoom::ProcessMonsterMoneyInRoom(EntityId typeId, int srcPlayerId)
+{
+	const int dropMoney = 500; /*TODO 나중에 sheet 기반으로 변경*/
+	auto player = FindPlayer(srcPlayerId);
+	player->AddMoney(dropMoney);
+	return true;
+}
+
+bool FieldRoom::ProcessMonsterExpInRoom(EntityId typeId, int srcPlayerId)
+{
+	const int dropExp = 100; /*TODO 나중에 sheet 기반으로 변경*/
+	auto player = FindPlayer(srcPlayerId);
+	player->AddExp(dropExp);
+	return true;
+}
+
 void FieldRoom::SendInventoryUpdateToPlayer(int killPlayerId)
 {
 	auto player = FindPlayer(killPlayerId);
@@ -427,7 +443,14 @@ bool FieldRoom::PlayerMonsterLinkerImpl::ApplyDamageToMonster(int monsterId, int
 	// 몬스터가 죽었는지 확인 (hpAfter <= 0)
 	if (result && hpAfter <= 0)
 	{
-		_r.ProcessMonsterDropInRoom(mv.typeId, srcPlayerId); // 플레이어에게 드랍 
+		// TODO 경험치 시스템 - Cfg
+		_r.ProcessMonsterExpInRoom(mv.typeId, srcPlayerId);
+		// TODO 돈 지급 - Cfg
+		_r.ProcessMonsterMoneyInRoom(mv.typeId, srcPlayerId);
+		_r.ProcessMonsterDropInRoom(mv.typeId, srcPlayerId); // 플레이어에게 드랍
+
+		auto player = _r.FindPlayer(srcPlayerId);
+		_r.OnPlayerStatChanged(player);
 	}
 	
 	return result;
