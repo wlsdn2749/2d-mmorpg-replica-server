@@ -392,9 +392,9 @@ namespace Packet
             MonsterSync.OnDespawn(broadMonsterDeath);
         }
         private static Vector2 MonsterPos(S_BroadcastPlayerAttack msg)=> MonsterSync.MonsterPos(msg);
-        internal static void HANDLE_S_BroadcastPlayerAttack(PacketSession session, S_BroadcastPlayerAttack broadPlayerAtk)
+        internal static void HANDLE_S_BroadcastPlayerTryAttack(PacketSession session, S_BroadcastPlayerTryAttack playerAttack)
         {
-            var attacker = PlayerSpawner.Get(broadPlayerAtk.PlayerId);
+            var attacker = PlayerSpawner.Get(playerAttack.PlayerId);
             if (attacker)
             {
                 var pid = attacker.GetComponent<PlayerIdentity>();
@@ -402,6 +402,9 @@ namespace Packet
                 if (pid == null || !pid.IsLocalPlayer)
                     anim?.SetTrigger("Attack");
             }
+        }
+        internal static void HANDLE_S_BroadcastPlayerAttack(PacketSession session, S_BroadcastPlayerAttack broadPlayerAtk)
+        {
             var damageText = ObjectPoolManager.Instance.GetObject("DamageText");
             damageText.GetComponent<DamageText>().Show(broadPlayerAtk.Damage, MonsterSync.MonsterPos(broadPlayerAtk));
             var go = MonsterSpawner.Get(broadPlayerAtk.TargetId);
