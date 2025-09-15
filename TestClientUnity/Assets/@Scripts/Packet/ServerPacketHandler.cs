@@ -391,7 +391,6 @@ namespace Packet
         {
             MonsterSync.OnDespawn(broadMonsterDeath);
         }
-        private static Vector2 MonsterPos(S_BroadcastPlayerAttack msg)=> MonsterSync.MonsterPos(msg);
         internal static void HANDLE_S_BroadcastPlayerTryAttack(PacketSession session, S_BroadcastPlayerTryAttack playerAttack)
         {
             var attacker = PlayerSpawner.Get(playerAttack.PlayerId);
