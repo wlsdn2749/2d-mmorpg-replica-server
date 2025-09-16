@@ -293,8 +293,7 @@ void MonsterMovementSystem::ExecuteCombatState(Monster& m, IMonsterEntityLinker&
 			if (m.core.dir != targetDir) {
 				this->TryRotate(m, targetDir, cast);
 			}
-			GConsoleLogger->WriteStdOut(Color::WHITE, L"[Movement] Monster:%d in combat facing player:%d\n",
-				m.core.id, m.targetPlayerId);
+			//GConsoleLogger->WriteStdOut(Color::WHITE, L"[Movement] Monster:%d in combat facing player:%d\n",m.core.id, m.targetPlayerId);
 		}
 	}
 }
@@ -308,8 +307,7 @@ void MonsterMovementSystem::ExecuteChaseState(Monster& m, IMonsterEntityLinker& 
 	Protocol::EDirection targetDir = Protocol::EDirection::DIR_UP;
 	if (linker.TryGetPlayer(m.targetPlayerId, pv)) {
 		targetDir = FaceTo(m.core.pos, Pos2{ pv.x, pv.y });
-		GConsoleLogger->WriteStdOut(Color::WHITE, L"[Movement] Monster:%d tracking player:%d from (%d,%d) to (%d,%d)\n",
-			m.core.id, m.targetPlayerId, m.core.pos.x, m.core.pos.y, pv.x, pv.y);
+		//GConsoleLogger->WriteStdOut(Color::WHITE, L"[Movement] Monster:%d tracking player:%d from (%d,%d) to (%d,%d)\n",m.core.id, m.targetPlayerId, m.core.pos.x, m.core.pos.y, pv.x, pv.y);
 	}
 
 	int stepMs = 1000 / stats.moveSpeedTilesPerSec;

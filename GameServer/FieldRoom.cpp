@@ -361,11 +361,10 @@ void FieldRoom::InitMonsters()
 		// 1001번 몬스터 (일반 몬스터)
 		if (monsterDataMap.find(1001) != monsterDataMap.end())
 		{
-			for(int i=0; i<5; i++)
-			{
-				SpawnPointCfg spawnPointCfg = { 1+i, 15+i, -4-i, 5, 1, 8000, 10, 1001 };
-				spawnPointCfgDatas->push_back(spawnPointCfg);
-			}
+
+			SpawnPointCfg spawnPointCfg = { 1, 15, -4, 5, 5, 8000, 10, 1001 };
+			spawnPointCfgDatas->push_back(spawnPointCfg);
+
 		}
 
 		// 2001번 몬스터 (다른 몬스터 타입)
