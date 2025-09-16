@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Google.Protobuf.Protocol;
+using UnityEngine;
 using UnityEngine.Rendering;
 
 public class HUDManager : MonoBehaviour
@@ -6,8 +7,7 @@ public class HUDManager : MonoBehaviour
     public static HUDManager Instance { get; private set; }
     [SerializeField] private GameObject _systemUIPanel; // 시스템 UI 오브젝트
     [SerializeField] private bool _isSystemUIActive = false;
-    //[SerializeField] private string _sceneName;
-    //[SerializeField] private bool _activeUIOnScene = false;
+    [SerializeField] private GameObject _playerInfoPanel; // 플레이어 정보 UI 오브젝트
     void Awake()
     {
         // 중복 인스턴스 방지
@@ -26,7 +26,24 @@ public class HUDManager : MonoBehaviour
     {
         _systemUIPanel.SetActive(false);
     }
-    public void SetSystemUI(bool on)
+    public void SetPlayerInfo(PlayerStatInfo info)
+    {
+        _playerInfoPanel.GetComponent<UI_PlayerInfo>().InitInfo(info);
+    }
+    public void OnOffPlayerInfoUI(bool on)
+    {
+        if (on)
+        {
+            _playerInfoPanel.SetActive(true);
+            return;
+        }
+        else
+        {
+            _playerInfoPanel.SetActive(false);
+            return;
+        }
+    }
+    public void OnOffSystemUI(bool on)
     {
         if (on)
         {

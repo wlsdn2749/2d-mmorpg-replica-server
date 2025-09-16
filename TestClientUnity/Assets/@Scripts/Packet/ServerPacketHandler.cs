@@ -445,13 +445,14 @@ namespace Packet
         {
 
         }
-        internal static void HANDLE_S_PlayerStat(PacketSession session, S_PlayerStat playerStat)
+        internal static void HANDLE_S_PlayerStat(PacketSession session, S_PlayerStat playerInfo)
         {
-            Debug.Log($"최대 체력 : {playerStat.StatInfo.MaxHp}");
-            Debug.Log($"현재 체력 : {playerStat.StatInfo.Hp}");
-            Debug.Log($"경험치 : {playerStat.StatInfo.Exp}");
-            Debug.Log($"레벨 : {playerStat.StatInfo.Level}");
-            Debug.Log($"돈 : {playerStat.StatInfo.Money}");
+            Debug.Log($"최대 체력 : {playerInfo.StatInfo.MaxHp}");
+            Debug.Log($"현재 체력 : {playerInfo.StatInfo.Hp}");
+            Debug.Log($"경험치 : {playerInfo.StatInfo.Exp}");
+            Debug.Log($"레벨 : {playerInfo.StatInfo.Level}");
+            Debug.Log($"돈 : {playerInfo.StatInfo.Money}");
+            HUDManager.Instance.SetPlayerInfo(playerInfo.StatInfo);
         }
     }
 }
