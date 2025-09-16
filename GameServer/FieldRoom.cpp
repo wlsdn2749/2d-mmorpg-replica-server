@@ -5,6 +5,8 @@
 #include "DropManager.h"
 #include "ItemManager.h"
 #include "MonsterDataParser.h"
+
+#include "SpawnPointDataParser.h"
 #include <random>
 
 
@@ -357,22 +359,30 @@ void FieldRoom::InitMonsters()
 			monsterStatDatas->push_back({ monsterId, monsterRecord.stats });
 		}
 
-		// 스폰 포인트 설정 (임시 하드코딩 - 향후 SpawnPoint_data.json으로 이동 예정)
-		// 1001번 몬스터 (일반 몬스터)
-		if (monsterDataMap.find(1001) != monsterDataMap.end())
+		// SpawnPoint_data.json에서 스폰 데이터 로드
+		
+		auto spawnPointDataMap = SpawnPointDataParser::LoadSpawnPointData();
+
+		for (const auto& [id, spawnPointRecord] : spawnPointDataMap)
 		{
-
-			SpawnPointCfg spawnPointCfg = { 1, 15, -4, 5, 5, 8000, 10, 1001 };
-			spawnPointCfgDatas->push_back(spawnPointCfg);
-
+			spawnPointCfgDatas->push_back(spawnPointRecord.cfg);
 		}
 
-		// 2001번 몬스터 (다른 몬스터 타입)
-		if (monsterDataMap.find(2001) != monsterDataMap.end())
-		{
-			SpawnPointCfg spawnPointCfg = { 20, 18, -8, 3, 1, 6000, 8, 2001 };
-			spawnPointCfgDatas->push_back(spawnPointCfg);
-		}
+		//// 1001번 몬스터 (일반 몬스터)
+		//if (monsterDataMap.find(1001) != monsterDataMap.end())
+		//{
+
+		//	SpawnPointCfg spawnPointCfg = { 1, 15, -4, 5, 1, 8000, 10, 1001 };
+		//	spawnPointCfgDatas->push_back(spawnPointCfg);
+
+		//}
+
+		//// 2001번 몬스터 (다른 몬스터 타입)
+		//if (monsterDataMap.find(2001) != monsterDataMap.end())
+		//{
+		//	SpawnPointCfg spawnPointCfg = { 2, 18, -8, 3, 1, 6000, 8, 2001 };
+		//	spawnPointCfgDatas->push_back(spawnPointCfg);
+		//}
 
 		// 허수아비 몬스터 9999 (하드코딩 유지 - JSON에 없을 경우 대비)
 		if (monsterDataMap.find(9999) == monsterDataMap.end())

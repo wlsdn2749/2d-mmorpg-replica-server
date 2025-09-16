@@ -143,7 +143,7 @@
     <PreBuildEvent>
       <Command>CALL $(SolutionDIr)Protocol\GenPackets.bat
 CALL $(SolutionDIr)Common\Procedures\GenProcs.bat
-CALL $(SolutionDir)Common\SheetLoader\DeploySheetData.bat
+CALL $(SolutionDir)Tools\SheetLoader\DeploySheetData.bat
 xcopy /Y /D $(SolutionDir)third_party\openssl\bin\libcrypto-3-x64.dll "$(OutDir)"
 xcopy /Y /D $(SolutionDir)third_party\openssl\bin\libssl-3-x64.dll "$(OutDir)"
 xcopy /Y /D $(SolutionDir)GameServer\appsettings.json "$(OutDir)"
@@ -171,7 +171,7 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <PreBuildEvent>
       <Command>CALL $(SolutionDIr)Protocol\GenPackets.bat
 CALL $(SolutionDIr)Common\Procedures\GenProcs.bat
-CALL $(SolutionDir)Common\SheetLoader\DeploySheetData.bat
+CALL $(SolutionDir)Tools\SheetLoader\DeploySheetData.bat
 xcopy /Y /D $(SolutionDir)third_party\openssl\bin\libcrypto-3-x64.dll "$(OutDir)"
 xcopy /Y /D $(SolutionDir)third_party\openssl\bin\libssl-3-x64.dll "$(OutDir)"
 xcopy /Y /D $(SolutionDir)GameServer\appsettings.json "$(OutDir)"
@@ -234,6 +234,7 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClCompile Include="ShardBoot.cpp" />
     <ClCompile Include="SharedOwner.cpp" />
     <ClCompile Include="MonsterSpawnerSystem.cpp" />
+    <ClCompile Include="SpawnPointDataParser.cpp" />
     <ClCompile Include="TimeUtils.cpp" />
     <ClCompile Include="TownRoom.cpp" />
     <ClCompile Include="TypeCore.cpp" />
@@ -291,6 +292,7 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClInclude Include="ShardBoot.h" />
     <ClInclude Include="SharedOwner.h" />
     <ClInclude Include="MonsterSpawnerSystem.h" />
+    <ClInclude Include="SpawnPointDataParser.h" />
     <ClInclude Include="StringConvert.h" />
     <ClInclude Include="TimeUtils.h" />
     <ClInclude Include="TownRoom.h" />

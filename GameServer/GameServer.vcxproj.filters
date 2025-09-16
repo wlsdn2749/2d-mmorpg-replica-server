@@ -67,6 +67,9 @@
     <Filter Include="Resources\Maps">
       <UniqueIdentifier>{8928e9f3-add2-4316-9340-46b337252730}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DataParser">
+      <UniqueIdentifier>{b4f7b314-0d52-4ca6-9a30-84008b0b244d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameServer.cpp">
@@ -207,8 +210,15 @@
     <ClCompile Include="NpcShopDataManager.cpp">
       <Filter>GameContents\Npc</Filter>
     </ClCompile>
-    <ClCompile Include="JsonDataParser.cpp" />
-    <ClCompile Include="MonsterDataParser.cpp" />
+    <ClCompile Include="JsonDataParser.cpp">
+      <Filter>DataParser</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterDataParser.cpp">
+      <Filter>DataParser</Filter>
+    </ClCompile>
+    <ClCompile Include="SpawnPointDataParser.cpp">
+      <Filter>DataParser</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -373,8 +383,15 @@
     <ClInclude Include="NpcShopDataManager.h">
       <Filter>GameContents\Npc</Filter>
     </ClInclude>
-    <ClInclude Include="JsonDataParser.h" />
-    <ClInclude Include="MonsterDataParser.h" />
+    <ClInclude Include="MonsterDataParser.h">
+      <Filter>DataParser</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonDataParser.h">
+      <Filter>DataParser</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnPointDataParser.h">
+      <Filter>DataParser</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="appsettings.json">
