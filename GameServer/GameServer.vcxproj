@@ -143,6 +143,7 @@
     <PreBuildEvent>
       <Command>CALL $(SolutionDIr)Protocol\GenPackets.bat
 CALL $(SolutionDIr)Common\Procedures\GenProcs.bat
+CALL $(SolutionDir)Common\SheetLoader\DeploySheetData.bat
 xcopy /Y /D $(SolutionDir)third_party\openssl\bin\libcrypto-3-x64.dll "$(OutDir)"
 xcopy /Y /D $(SolutionDir)third_party\openssl\bin\libssl-3-x64.dll "$(OutDir)"
 xcopy /Y /D $(SolutionDir)GameServer\appsettings.json "$(OutDir)"
@@ -170,6 +171,7 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <PreBuildEvent>
       <Command>CALL $(SolutionDIr)Protocol\GenPackets.bat
 CALL $(SolutionDIr)Common\Procedures\GenProcs.bat
+CALL $(SolutionDir)Common\SheetLoader\DeploySheetData.bat
 xcopy /Y /D $(SolutionDir)third_party\openssl\bin\libcrypto-3-x64.dll "$(OutDir)"
 xcopy /Y /D $(SolutionDir)third_party\openssl\bin\libssl-3-x64.dll "$(OutDir)"
 xcopy /Y /D $(SolutionDir)GameServer\appsettings.json "$(OutDir)"
@@ -187,6 +189,8 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClCompile Include="InventorySystem.cpp" />
     <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="JsonFileUtils.cpp" />
+    <ClCompile Include="JsonDataParser.cpp" />
+    <ClCompile Include="MonsterDataParser.cpp" />
     <ClCompile Include="MonsterCombatSystem.cpp" />
     <ClCompile Include="DBDisPatcher.cpp" />
     <ClCompile Include="DBWorker.cpp" />
@@ -247,6 +251,8 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClInclude Include="InventorySystem.h" />
     <ClInclude Include="ItemManager.h" />
     <ClInclude Include="JsonFileUtils.h" />
+    <ClInclude Include="JsonDataParser.h" />
+    <ClInclude Include="MonsterDataParser.h" />
     <ClInclude Include="MonsterCombatSystem.h" />
     <ClInclude Include="DBDisPatcher.h" />
     <ClInclude Include="DBWorker.h" />
@@ -295,6 +301,7 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <None Include="..\Doc\Plan\inventory-test-data.sql" />
     <None Include="..\Protocol\Protocol.proto" />
     <None Include="appsettings.json" />
+    <None Include="Resources\Data\Monster_data.json" />
     <None Include="Resources\Maps\Baekje_Tilemap_Info.json" />
     <None Include="Resources\Maps\Goguryeo_Tilemap_Info.json" />
     <None Include="Resources\Maps\HuntingField_Tilemap_Info.json" />

@@ -61,6 +61,12 @@
     <Filter Include="GameContents\Npc">
       <UniqueIdentifier>{1e5cf317-bed0-42cc-9568-458a50d65d1b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Data">
+      <UniqueIdentifier>{b7092787-e58e-445c-b7d6-dc239833bc6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Maps">
+      <UniqueIdentifier>{8928e9f3-add2-4316-9340-46b337252730}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameServer.cpp">
@@ -201,6 +207,8 @@
     <ClCompile Include="NpcShopDataManager.cpp">
       <Filter>GameContents\Npc</Filter>
     </ClCompile>
+    <ClCompile Include="JsonDataParser.cpp" />
+    <ClCompile Include="MonsterDataParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -365,6 +373,8 @@
     <ClInclude Include="NpcShopDataManager.h">
       <Filter>GameContents\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="JsonDataParser.h" />
+    <ClInclude Include="MonsterDataParser.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="appsettings.json">
@@ -380,13 +390,16 @@
       <Filter>DB\Test</Filter>
     </None>
     <None Include="Resources\Maps\HuntingField_Tilemap_Info.json">
-      <Filter>Resources</Filter>
+      <Filter>Resources\Maps</Filter>
     </None>
     <None Include="Resources\Maps\Baekje_Tilemap_Info.json">
-      <Filter>Resources</Filter>
+      <Filter>Resources\Maps</Filter>
     </None>
     <None Include="Resources\Maps\Goguryeo_Tilemap_Info.json">
-      <Filter>Resources</Filter>
+      <Filter>Resources\Maps</Filter>
+    </None>
+    <None Include="Resources\Data\Monster_data.json">
+      <Filter>Resources\Data</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

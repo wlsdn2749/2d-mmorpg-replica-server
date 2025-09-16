@@ -1,11 +1,10 @@
 ﻿#include "pch.h"
 #include "FieldRoom.h"
-#include "pch.h"
-#include "FieldRoom.h"
 #include "ClientPacketHandler.h"
 #include "RoomManager.h"
 #include "DropManager.h"
 #include "ItemManager.h"
+#include "MonsterDataParser.h"
 #include <random>
 
 
@@ -344,50 +343,61 @@ void FieldRoom::InitMonsters()
 {
 	MonsterService::Cfg cfg;
 
-	// 스탯/스폰 설정 (예시)
-	//cfg.statsByType.emplace(1001, MonsterStats(
-	//	30, // MaxHp
-	//	5, // atk
-	//	1, // move tile per sec
-	//	1, // atk range tile
-	//	1200, // leash Radius Tiles
-	//	6 // aggroRangeTile
-	//));
-
-	//cfg.spawns.push_back(SpawnPointCfg(
-	//	1,   // spawnPointId
-	//	20,  // x
-	//	15,  // y
-	//	5,   // maxAlive
-	//	1,   // initialSpawn
-	//	8000,// respawnDelayMs
-	//	10,  // leashRadiusTiles
-	//	1001 // monsterTypeId
-	//));
+	// JSON에서 몬스터 데이터 로드
 	auto monsterStatDatas = std::make_unique<vector<pair<int, MonsterStats>>>();
 	auto spawnPointCfgDatas = std::make_unique<vector<SpawnPointCfg>>();
 
-	for(int i=0; i<5; i++)
+	try
 	{
-		// 기본 몬스터 (움직이는)
-		int monsterId = 1001;
-		MonsterStats monsterStats = { 30, 5, 1, 1, 1200, 1 };
-		monsterStatDatas->push_back({ monsterId, monsterStats });
+		// Monster_data.json에서 몬스터 스탯 데이터 로드
+		auto monsterDataMap = MonsterDataParser::LoadMonsterData();
 
-		SpawnPointCfg spawnPointCfg = { 1, 15+i, -4-i, 5, 1, 8000, 10, monsterId };
-		spawnPointCfgDatas->push_back(spawnPointCfg);
+		for (const auto& [monsterId, monsterRecord] : monsterDataMap)
+		{
+			monsterStatDatas->push_back({ monsterId, monsterRecord.stats });
+		}
+
+		// 스폰 포인트 설정 (임시 하드코딩 - 향후 SpawnPoint_data.json으로 이동 예정)
+		// 1001번 몬스터 (일반 몬스터)
+		if (monsterDataMap.find(1001) != monsterDataMap.end())
+		{
+			for(int i=0; i<5; i++)
+			{
+				SpawnPointCfg spawnPointCfg = { 1+i, 15+i, -4-i, 5, 1, 8000, 10, 1001 };
+				spawnPointCfgDatas->push_back(spawnPointCfg);
+			}
+		}
+
+		// 2001번 몬스터 (다른 몬스터 타입)
+		if (monsterDataMap.find(2001) != monsterDataMap.end())
+		{
+			SpawnPointCfg spawnPointCfg = { 20, 18, -8, 3, 1, 6000, 8, 2001 };
+			spawnPointCfgDatas->push_back(spawnPointCfg);
+		}
+
+		// 허수아비 몬스터 9999 (하드코딩 유지 - JSON에 없을 경우 대비)
+		if (monsterDataMap.find(9999) == monsterDataMap.end())
+		{
+			// JSON에 허수아비가 없으면 하드코딩으로 생성
+			MonsterStats dummyStats = { 9999, 0, 0, 0, 0, 0 };
+			monsterStatDatas->push_back({ 9999, dummyStats });
+		}
+
+		// 허수아비 스폰 포인트
+		SpawnPointCfg dummySpawnPointCfg = { 99, 20, -6, 1, 1, 1000, 0, 9999 };
+		spawnPointCfgDatas->push_back(dummySpawnPointCfg);
 	}
-
+	catch (const std::exception& e)
 	{
-		// 허수아비 몬스터 (고정)
-		int monsterId = 9999;
-		MonsterStats monsterStats = { 9999, 0, 0, 0, 0, 0 };
-		monsterStatDatas->push_back({ monsterId, monsterStats });
-		
-		SpawnPointCfg spawnPointCfg = { 99, 20, -6, 1, 1, 1000, 0, monsterId };
-		spawnPointCfgDatas->push_back(spawnPointCfg);
+		GConsoleLogger->WriteStdOut(Color::RED, L"몬스터 데이터 로딩 실패, 기본값 사용: %s\n", StrToWstr(e.what()).c_str());
+
+		// 에러 발생시 기본 하드코딩 값 사용
+		MonsterStats defaultStats = { 30, 5, 1, 1, 1200, 6 };
+		monsterStatDatas->push_back({ 1001, defaultStats });
+
+		SpawnPointCfg defaultSpawn = { 1, 15, -4, 5, 1, 8000, 10, 1001 };
+		spawnPointCfgDatas->push_back(defaultSpawn);
 	}
-	// Todo: This values has to be altered into sheets
 
 	LoadMonsterStatData(cfg, std::move(monsterStatDatas));
 	LoadMonsterSpawnData(cfg, std::move(spawnPointCfgDatas));
