@@ -8,16 +8,16 @@ public class MonsterHealth : MonoBehaviour
 
     public event Action<int, int> OnHpChanged;
 
-    public void InitByAttackPacket(int afterHp, int damage)
+    public void InitByAttackPacket(int afterHp)
     {
-        if (MaxHp == 0) // 처음 계산될 때만
-        {
-            MaxHp = afterHp + damage;
-            Debug.Log($"[MonsterHealth] MaxHp 유추: {MaxHp}");
-        }
-        SetHp(afterHp-damage);
+        SetHp(afterHp);
     }
-
+    public void SetMaxHp(int monsterTypeId,int fallBack = 100)
+    {
+        var def = MonsterRegistry.Instance.Get(monsterTypeId);
+        MaxHp = def?.MaxHp ?? fallBack; 
+        CurrentHp = MaxHp;
+    }
     public void SetHp(int hp)
     {
         hp = Mathf.Clamp(hp, 0, MaxHp > 0 ? MaxHp : int.MaxValue);

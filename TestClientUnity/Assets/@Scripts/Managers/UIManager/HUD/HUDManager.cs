@@ -1,21 +1,66 @@
-using UnityEngine;
+ï»¿using UnityEngine;
+using UnityEngine.Rendering;
 
 public class HUDManager : MonoBehaviour
 {
     public static HUDManager Instance { get; private set; }
-
+    [SerializeField] private GameObject _systemUIPanel; // ì‹œìŠ¤í…œ UI ì˜¤ë¸Œì íŠ¸
+    [SerializeField] private bool _isSystemUIActive = false;
+    //[SerializeField] private string _sceneName;
+    //[SerializeField] private bool _activeUIOnScene = false;
     void Awake()
     {
-        // Áßº¹ ÀÎ½ºÅÏ½º ¹æÁö
+        // ì¤‘ë³µ ì¸ìŠ¤í„´ìŠ¤ ë°©ì§€
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // ¾À ÀüÈ¯ ½Ã¿¡µµ ÆÄ±«µÇÁö ¾Êµµ·Ï ¼³Á¤
-            Debug.Log("HUDManager Awake() È£ÃâµÊ");
+            DontDestroyOnLoad(gameObject); // ì”¬ ì „í™˜ ì‹œì—ë„ íŒŒê´´ë˜ì§€ ì•Šë„ë¡ ì„¤ì •
+            Debug.Log("HUDManager Awake() í˜¸ì¶œë¨");
         }
         else
         {
-            Destroy(gameObject); // ÀÌ¹Ì ÀÎ½ºÅÏ½º°¡ Á¸ÀçÇÏ¸é ÀÚ½ÅÀ» ÆÄ±«ÇÕ´Ï´Ù.
+            Destroy(gameObject); // ì´ë¯¸ ì¸ìŠ¤í„´ìŠ¤ê°€ ì¡´ì¬í•˜ë©´ ìì‹ ì„ íŒŒê´´í•©ë‹ˆë‹¤.
         }
+    }
+    private void Start()
+    {
+        _systemUIPanel.SetActive(false);
+    }
+    public void SetSystemUI(bool on)
+    {
+        if (on)
+        {
+            _isSystemUIActive = true;
+            _systemUIPanel.SetActive(_isSystemUIActive);
+            return;
+        }
+        else
+        {
+            _isSystemUIActive = false;
+            _systemUIPanel.SetActive(_isSystemUIActive);
+            return;
+        }
+    }
+    public void ShowSystemUI()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (_isSystemUIActive == false)
+            {
+                _isSystemUIActive = true;
+                _systemUIPanel.SetActive(_isSystemUIActive);
+                return;
+            }
+            else if (_isSystemUIActive == true)
+            {
+                _isSystemUIActive = false;
+                _systemUIPanel.SetActive(_isSystemUIActive);
+                return;
+            }
+        }
+    }
+    private void Update()
+    {
+        ShowSystemUI();
     }
 }
