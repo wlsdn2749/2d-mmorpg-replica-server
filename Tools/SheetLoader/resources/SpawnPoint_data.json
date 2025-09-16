@@ -1,0 +1,22 @@
+[
+  {
+    "id": "1",
+    "x": "15",
+    "y": "-4",
+    "maxAlive": "5",
+    "initialSpawn": "5",
+    "respawnDelayMs": "8000",
+    "leashRadiusTiles": "10",
+    "monsterTypeId": "1001"
+  },
+  {
+    "id": "2",
+    "x": "18",
+    "y": "-8",
+    "maxAlive": "3",
+    "initialSpawn": "3",
+    "respawnDelayMs": "6000",
+    "leashRadiusTiles": "8",
+    "monsterTypeId": "2001"
+  }
+]

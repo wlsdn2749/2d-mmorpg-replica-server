@@ -39,9 +39,23 @@ namespace SheetLoad
         // 파일 경로 관리
         private static string GetResourcesPath()
         {
-            string resourcesDir = Path.Combine(AppContext.BaseDirectory, "resources");
-            Directory.CreateDirectory(resourcesDir);
-            return resourcesDir;
+            // 실행 위치에서 상위로 올라가서 원본 소스 위치의 resources 폴더 찾기
+            string currentDir = AppContext.BaseDirectory;
+
+            // bin/Debug/Net9.0/ 에서 4단계 위로 올라가면 SheetLoader 폴더
+            string projectRoot = Directory.GetParent(currentDir)?.Parent?.Parent?.Parent?.FullName;
+
+            if (projectRoot != null)
+            {
+                string resourcesDir = Path.Combine(projectRoot, "resources");
+                Directory.CreateDirectory(resourcesDir);
+                return resourcesDir;
+            }
+
+            // fallback: 기존 방식
+            string fallbackDir = Path.Combine(AppContext.BaseDirectory, "resources");
+            Directory.CreateDirectory(fallbackDir);
+            return fallbackDir;
         }
 
         private SheetsService _sheetService;
