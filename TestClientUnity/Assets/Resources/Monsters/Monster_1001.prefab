@@ -371,7 +371,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MonsterUI
   fillPivot: {fileID: 5545098252832444093}
   lerpSpeed: 10
-  DamageTextOffset: {x: 0, y: 0.5}
+  DamageTextOffset: {x: 0, y: 0.5, z: 0}
 --- !u!114 &1547152997651671034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,5 +384,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbecdb2b0c3451f46b513546dbcb8da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterHealth
-  <MaxHp>k__BackingField: 30
+  <MaxHp>k__BackingField: 0
   <CurrentHp>k__BackingField: 0

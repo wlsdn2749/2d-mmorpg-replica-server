@@ -413,7 +413,8 @@ namespace Packet
             }
             var mh = go.GetComponent<MonsterHealth>();
             if (!mh) return;
-            mh.InitByAttackPacket(broadPlayerAtk.HpAfter, broadPlayerAtk.Damage);
+            Debug.Log(broadPlayerAtk.HpAfter);
+            mh.InitByAttackPacket(broadPlayerAtk.HpAfter);
         }
         internal static void HANDLE_S_InventoryReply(PacketSession session, S_InventoryReply invenApply)
         {
@@ -446,7 +447,11 @@ namespace Packet
         }
         internal static void HANDLE_S_PlayerStat(PacketSession session, S_PlayerStat playerStat)
         {
-
+            Debug.Log($"최대 체력 : {playerStat.StatInfo.MaxHp}");
+            Debug.Log($"현재 체력 : {playerStat.StatInfo.Hp}");
+            Debug.Log($"경험치 : {playerStat.StatInfo.Exp}");
+            Debug.Log($"레벨 : {playerStat.StatInfo.Level}");
+            Debug.Log($"돈 : {playerStat.StatInfo.Money}");
         }
     }
 }

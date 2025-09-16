@@ -66,7 +66,10 @@ public static class MonsterSync
         Debug.Log($"[MonsterSync] ApplySnapshotInternal: count={snap.Monsters.Count}");
         MonsterSpawner.DespawnAll();
 
-        foreach (var info in snap.Monsters) SpawnNow(info);
+        foreach (var info in snap.Monsters) 
+        { 
+            SpawnNow(info); 
+        }
 
         Debug.Log("[MonsterSync] snapshot applied");
     }

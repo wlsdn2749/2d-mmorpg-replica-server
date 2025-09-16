@@ -69,11 +69,6 @@ public class RoomTransitionManager : MonoBehaviour
         // 몬스터 스냅샷과의 맵 불일치 방지용
         MonsterSync.OnMapActivated(msg.MapId);
 
-        LoadingSceneManager.OnSceneActivated = () =>
-        {
-            // Ready 전송 등...
-        };
-
         CurrentState = State.Committed;
     }
 
