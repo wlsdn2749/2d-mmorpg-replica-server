@@ -19,6 +19,8 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ProcedureGenerator", "Tools
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PacketGenerator", "Tools\PacketGenerator\PacketGenerator.pyproj", "{7E34FF35-3060-4C22-B2AE-EADD67E41234}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SheetLoader", "Tools\SheetLoader\SheetLoader.csproj", "{0ED929F7-CE2A-3A42-B33E-F3998C9CF35D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +103,18 @@ Global
 		{7E34FF35-3060-4C22-B2AE-EADD67E41234}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E34FF35-3060-4C22-B2AE-EADD67E41234}.Release|x64.ActiveCfg = Release|Any CPU
 		{7E34FF35-3060-4C22-B2AE-EADD67E41234}.Release|x86.ActiveCfg = Release|Any CPU
+		{0ED929F7-CE2A-3A42-B33E-F3998C9CF35D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ED929F7-CE2A-3A42-B33E-F3998C9CF35D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ED929F7-CE2A-3A42-B33E-F3998C9CF35D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0ED929F7-CE2A-3A42-B33E-F3998C9CF35D}.Debug|x64.Build.0 = Debug|Any CPU
+		{0ED929F7-CE2A-3A42-B33E-F3998C9CF35D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0ED929F7-CE2A-3A42-B33E-F3998C9CF35D}.Debug|x86.Build.0 = Debug|Any CPU
+		{0ED929F7-CE2A-3A42-B33E-F3998C9CF35D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ED929F7-CE2A-3A42-B33E-F3998C9CF35D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ED929F7-CE2A-3A42-B33E-F3998C9CF35D}.Release|x64.ActiveCfg = Release|Any CPU
+		{0ED929F7-CE2A-3A42-B33E-F3998C9CF35D}.Release|x64.Build.0 = Release|Any CPU
+		{0ED929F7-CE2A-3A42-B33E-F3998C9CF35D}.Release|x86.ActiveCfg = Release|Any CPU
+		{0ED929F7-CE2A-3A42-B33E-F3998C9CF35D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -108,6 +122,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{0AE2B359-D9E7-4D9D-B2C6-BEBDA04364B3} = {C8D5274F-AC00-46C7-1F8D-E88E81087A52}
 		{7E34FF35-3060-4C22-B2AE-EADD67E41234} = {C8D5274F-AC00-46C7-1F8D-E88E81087A52}
+		{0ED929F7-CE2A-3A42-B33E-F3998C9CF35D} = {C8D5274F-AC00-46C7-1F8D-E88E81087A52}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {60923D8A-511E-4AA1-913D-200E4240E2EC}

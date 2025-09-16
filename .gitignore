@@ -19,6 +19,9 @@ Protocols/
 *.log
 *.cache
 
+# 보안 파일 (Google Service Account Keys)
+**/service-account-key.json
+
 # 패키지들
 
 # Rider / JetBrains
