@@ -75,10 +75,10 @@ namespace SP
     	int32 _userId = {};
     };
 
-    class UpdateCharacterStats : public DBBind<9,0>
+    class UpdateCharacterStats : public DBBind<10,0>
     {
     public:
-    	UpdateCharacterStats(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spUpdateCharacterStats(?,?,?,?,?,?,?,?,?)}") { }
+    	UpdateCharacterStats(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spUpdateCharacterStats(?,?,?,?,?,?,?,?,?,?)}") { }
     	void ParamIn_CharacterId(int32& v) { BindParam(0, v); };
     	void ParamIn_CharacterId(int32&& v) { _characterId = std::move(v); BindParam(0, _characterId); };
     	void ParamIn_PosX(int32& v) { BindParam(1, v); };
@@ -91,12 +91,14 @@ namespace SP
     	void ParamIn_LastRoom(int32&& v) { _lastRoom = std::move(v); BindParam(4, _lastRoom); };
     	void ParamIn_Hp(int32& v) { BindParam(5, v); };
     	void ParamIn_Hp(int32&& v) { _hp = std::move(v); BindParam(5, _hp); };
-    	void ParamIn_Level(int32& v) { BindParam(6, v); };
-    	void ParamIn_Level(int32&& v) { _level = std::move(v); BindParam(6, _level); };
-    	void ParamIn_Exp(int32& v) { BindParam(7, v); };
-    	void ParamIn_Exp(int32&& v) { _exp = std::move(v); BindParam(7, _exp); };
-    	void ParamIn_Money(int32& v) { BindParam(8, v); };
-    	void ParamIn_Money(int32&& v) { _money = std::move(v); BindParam(8, _money); };
+    	void ParamIn_MaxHp(int32& v) { BindParam(6, v); };
+    	void ParamIn_MaxHp(int32&& v) { _maxHp = std::move(v); BindParam(6, _maxHp); };
+    	void ParamIn_Level(int32& v) { BindParam(7, v); };
+    	void ParamIn_Level(int32&& v) { _level = std::move(v); BindParam(7, _level); };
+    	void ParamIn_Exp(int32& v) { BindParam(8, v); };
+    	void ParamIn_Exp(int32&& v) { _exp = std::move(v); BindParam(8, _exp); };
+    	void ParamIn_Money(int32& v) { BindParam(9, v); };
+    	void ParamIn_Money(int32&& v) { _money = std::move(v); BindParam(9, _money); };
 
     private:
     	int32 _characterId = {};
@@ -105,12 +107,13 @@ namespace SP
     	int32 _dir = {};
     	int32 _lastRoom = {};
     	int32 _hp = {};
+    	int32 _maxHp = {};
     	int32 _level = {};
     	int32 _exp = {};
     	int32 _money = {};
     };
 
-    class GetCharacterStats : public DBBind<1,8>
+    class GetCharacterStats : public DBBind<1,9>
     {
     public:
     	GetCharacterStats(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spGetCharacterStats(?)}") { }
@@ -121,9 +124,10 @@ namespace SP
     	void ColumnOut_Dir(OUT int32& v) { BindCol(2, v); };
     	void ColumnOut_LastRoom(OUT int32& v) { BindCol(3, v); };
     	void ColumnOut_Hp(OUT int32& v) { BindCol(4, v); };
-    	void ColumnOut_Level(OUT int32& v) { BindCol(5, v); };
-    	void ColumnOut_Exp(OUT int32& v) { BindCol(6, v); };
-    	void ColumnOut_Money(OUT int32& v) { BindCol(7, v); };
+    	void ColumnOut_MaxHp(OUT int32& v) { BindCol(5, v); };
+    	void ColumnOut_Level(OUT int32& v) { BindCol(6, v); };
+    	void ColumnOut_Exp(OUT int32& v) { BindCol(7, v); };
+    	void ColumnOut_Money(OUT int32& v) { BindCol(8, v); };
 
     private:
     	int32 _characterId = {};

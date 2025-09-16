@@ -12,9 +12,22 @@ void Player::GetCharacterStat(CharacterRepository::CharacterStat& outStat) const
 	outStat.dir = Dir();
 	outStat.lastRoom = GetRoom()->RoomId();
 	outStat.hp = Hp();
+	outStat.maxHp = MaxHp();
 	outStat.level = Level();
 	outStat.exp = Exp();
 	outStat.money = Money();
+	GConsoleLogger->WriteStdOut(Color::WHITE, L"[GetCharacterStat] characterId:%d, Pos:(%d,%d), Dir:%d, lastRoom:%d, hp:%d, maxHp:%d, exp:%d, money:%d",
+		outStat.characterId,
+		outStat.posX,
+		outStat.posY,
+		outStat.dir,
+		outStat.lastRoom,
+		outStat.hp,
+		outStat.maxHp,
+		outStat.level,
+		outStat.exp,
+		outStat.money
+	);
 }
 
 void Player::LoadCharacterStat(const CharacterRepository::CharacterStat& stat)
@@ -26,9 +39,23 @@ void Player::LoadCharacterStat(const CharacterRepository::CharacterStat& stat)
 	core.dir = stat.dir;
 	SetLastRoomId(stat.lastRoom);
 	SetHp(stat.hp);
+	SetMaxHp(stat.maxHp);
 	SetLevel(stat.level);
 	SetExp(stat.exp);
 	SetMoney(stat.money);
+
+	GConsoleLogger->WriteStdOut(Color::YELLOW, L"[LoadCharacterStat] characterId:%d, Pos:(%d,%d), Dir:%d, lastRoom:%d, hp:%d, maxHp:%d, exp:%d, money:%d",
+		stat.characterId,
+		stat.posX,
+		stat.posY,
+		stat.dir,
+		stat.lastRoom,
+		stat.hp,
+		stat.maxHp,
+		stat.level,
+		stat.exp,
+		stat.money
+	);
 }
 
 std::future<void> Player::SaveCharacterToDB()
