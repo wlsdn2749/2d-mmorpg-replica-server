@@ -34,6 +34,7 @@ struct CharacterRepository
         Protocol::EDirection dir;
         int lastRoom;
         int hp;
+        int maxHp;
         int level;
         int exp;
         int money;
@@ -201,6 +202,7 @@ public:
         sp.ParamIn_Dir(const_cast<int32&>(static_cast<const int32&>(stat.dir)));
         sp.ParamIn_LastRoom(const_cast<int32&>(stat.lastRoom));
         sp.ParamIn_Hp(const_cast<int32&>(stat.hp));
+        sp.ParamIn_MaxHp(const_cast<int32&>(stat.maxHp));
         sp.ParamIn_Level(const_cast<int32&>(stat.level));
         sp.ParamIn_Exp(const_cast<int32&>(stat.exp));
         sp.ParamIn_Money(const_cast<int32&>(stat.money));
@@ -227,6 +229,7 @@ public:
         sp.ColumnOut_Dir(OUT _dir);
         sp.ColumnOut_LastRoom(OUT stat.lastRoom);
         sp.ColumnOut_Hp(OUT stat.hp);
+        sp.ColumnOut_MaxHp(OUT stat.maxHp);
         sp.ColumnOut_Level(OUT stat.level);
         sp.ColumnOut_Exp(OUT stat.exp);
         sp.ColumnOut_Money(OUT stat.money);

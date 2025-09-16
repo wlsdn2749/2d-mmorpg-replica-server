@@ -116,6 +116,7 @@
     <Param name="@dir" type="int"/>
     <Param name="@lastRoom" type="int"/>
     <Param name="@hp" type="int"/>
+    <Param name="@maxHp" type="int"/>
     <Param name="@level" type="int"/>
     <Param name="@exp" type="int"/>
     <Param name="@money" type="int"/>
@@ -131,6 +132,7 @@
           dir = @dir,
           lastRoom = @lastRoom,
           hp = @hp,
+          maxHp = @maxHp,
           level = @level,
           exp = @exp,
           money = @money
@@ -145,7 +147,7 @@
       SET NOCOUNT ON;
       SET XACT_ABORT ON;
       SELECT
-        posX, posY, dir, lastRoom, hp, level, exp, money
+        posX, posY, dir, lastRoom, hp, maxHp, level, exp, money
       FROM [dbo].[Characters]
       WHERE [characterId] = @characterId
      ]]>
