@@ -28,10 +28,10 @@ void PlayerCombatSystem::HandleAttack(const PlayerRef& player, int64 nowMs)
 	GConsoleLogger->WriteStdOut(Color::GREEN, L"[Player] Player:%d attacks Monster:%d (dmg:%d hp:%d->%d)", 
 		pid, mv.id, damage, mv.hp, mv.hp - damage);
 
-	int hpAfter = mv.hp;
 	_pLinker.ApplyDamageToMonster(mv.id, damage, pid); // 여기서 만약 죽으면 Death broadcast
 	_lastAttackAtMs[pid] = nowMs;
 
+	int hpAfter = mv.hp;
 	_pCaster.BroadcastPlayerAttack(pid, mv.id, damage, hpAfter); // 공격 브로드캐스팅
 
 
