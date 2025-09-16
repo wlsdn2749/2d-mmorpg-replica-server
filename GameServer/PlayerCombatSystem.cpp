@@ -31,7 +31,7 @@ void PlayerCombatSystem::HandleAttack(const PlayerRef& player, int64 nowMs)
 	_pLinker.ApplyDamageToMonster(mv.id, damage, pid); // 여기서 만약 죽으면 Death broadcast
 	_lastAttackAtMs[pid] = nowMs;
 
-	int hpAfter = mv.hp;
+	int hpAfter = mv.hp - damage;
 	_pCaster.BroadcastPlayerAttack(pid, mv.id, damage, hpAfter); // 공격 브로드캐스팅
 
 
