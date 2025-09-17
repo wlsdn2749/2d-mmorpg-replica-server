@@ -28,6 +28,10 @@ public class PlayerAvatar : MonoBehaviour
             _animator.SetBool("IsMoving", true);
         }
     }
+    public void OnDamage()
+    {
+        _animator.SetTrigger("Hurt");
+    }
     public void SetDirection(EDirection dir)
     {
         // Animator 정수 파라미터 "Dir" 사용

@@ -24,10 +24,10 @@ public class UI_PlayerInfo : MonoBehaviour
         _playerExpText.text = $"{info.Exp}";
         _playerMoneyText.text = $"{info.Money}";
     }
-    public void UpdateHpBar(float hp, float maxHp)
-    {
-        _playerHpBar.fillAmount = hp / maxHp;
-        _playerHealthText.text = $"{hp} / {maxHp}";
+    public void UpdateHpBar()
+    { 
+        _playerHpBar.fillAmount = PlayerStatus.Instance.GetCurHp() / PlayerStatus.Instance.GetMaxHp();
+        _playerHealthText.text = $"{PlayerStatus.Instance.GetCurHp()} / {PlayerStatus.Instance.GetMaxHp()}";
     }
     public void UpdateExpBar(float exp, float nextExp)
     {
@@ -37,6 +37,6 @@ public class UI_PlayerInfo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateHpBar();
     }
 }

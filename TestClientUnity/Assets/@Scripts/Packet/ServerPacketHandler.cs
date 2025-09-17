@@ -386,6 +386,7 @@ namespace Packet
         internal static void HANDLE_S_BroadcastMonsterAttack(PacketSession session, S_BroadcastMonsterAttack broadMonsterAtk)
         {
             MonsterSync.OnAttack(broadMonsterAtk);
+            PlayerStatus.Instance.OnDamage(broadMonsterAtk);
         }
         internal static void HANDLE_S_BroadcastMonsterDeath(PacketSession session, S_BroadcastMonsterDeath broadMonsterDeath)
         {
@@ -404,7 +405,7 @@ namespace Packet
         }
         internal static void HANDLE_S_BroadcastPlayerAttack(PacketSession session, S_BroadcastPlayerAttack broadPlayerAtk)
         {
-            var damageText = ObjectPoolManager.Instance.GetObject("DamageText");
+            var damageText = ObjectPoolManager.Instance.GetObject("MonsterDamageText");
             damageText.GetComponent<DamageText>().Show(broadPlayerAtk.Damage, MonsterSync.MonsterPos(broadPlayerAtk));
             var go = MonsterSpawner.Get(broadPlayerAtk.TargetId);
             if (!go)
@@ -452,7 +453,7 @@ namespace Packet
             Debug.Log($"경험치 : {playerInfo.StatInfo.Exp}");
             Debug.Log($"레벨 : {playerInfo.StatInfo.Level}");
             Debug.Log($"돈 : {playerInfo.StatInfo.Money}");
-            HUDManager.Instance.SetPlayerInfo(playerInfo.StatInfo);
+            PlayerStatus.Instance.SetPlayerStatus(playerInfo.StatInfo);
         }
     }
 }

@@ -25,6 +25,7 @@ public class HUDManager : MonoBehaviour
     private void Start()
     {
         _systemUIPanel.SetActive(false);
+        _playerInfoPanel.SetActive(false);
     }
     public void SetPlayerInfo(PlayerStatInfo info)
     {
@@ -43,6 +44,7 @@ public class HUDManager : MonoBehaviour
             return;
         }
     }
+
     public void OnOffSystemUI(bool on)
     {
         if (on)
