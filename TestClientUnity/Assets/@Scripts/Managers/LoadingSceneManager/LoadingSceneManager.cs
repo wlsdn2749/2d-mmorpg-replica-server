@@ -37,8 +37,8 @@ public class LoadingSceneManager : MonoBehaviour
     // =========================
     public static void LoadScene(string sceneName)
     {
-        HUDManager.Instance.OnOffSystemUI(false); // 로딩씬에서는 HUD 숨기기
-        HUDManager.Instance.OnOffPlayerInfoUI(false); // 로딩씬에서는 플레이어 정보 UI 숨기기
+        HUDManager.Instance.OnLoadingOffSystemUI(false); // 로딩씬에서는 HUD 숨기기
+        HUDManager.Instance.OnLoadingOffPlayerInfoUI(false); // 로딩씬에서는 플레이어 정보 UI 숨기기
         nextSceneName = sceneName;
         nextSceneIndex = -1;
         SceneManager.LoadScene(LOADING_SCENE_NAME);
@@ -46,8 +46,8 @@ public class LoadingSceneManager : MonoBehaviour
 
     public static void LoadScene(int sceneBuildIndex)
     {
-        HUDManager.Instance.OnOffSystemUI(false); // 로딩씬에서는 HUD 숨기기
-        HUDManager.Instance.OnOffPlayerInfoUI(false); // 로딩씬에서는 플레이어 정보 UI 숨기기
+        HUDManager.Instance.OnLoadingOffSystemUI(false); // 로딩씬에서는 HUD 숨기기
+        HUDManager.Instance.OnLoadingOffPlayerInfoUI(false); // 로딩씬에서는 플레이어 정보 UI 숨기기
         nextSceneIndex = sceneBuildIndex;
         nextSceneName = null;
         SceneManager.LoadScene(LOADING_SCENE_NAME);
@@ -169,7 +169,7 @@ public class LoadingSceneManager : MonoBehaviour
 
                     SceneManager.sceneLoaded += HandleSceneLoaded;
                     op.allowSceneActivation = true; // 이때 다음 씬으로 스위칭
-                    HUDManager.Instance.OnOffPlayerInfoUI(true);
+                    HUDManager.Instance.OnLoadingOffPlayerInfoUI(true);
                 }
             }
             

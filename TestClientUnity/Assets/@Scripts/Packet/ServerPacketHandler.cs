@@ -2,6 +2,7 @@
 using Google.Protobuf.Protocol;
 using ServerCore;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Packet
@@ -419,7 +420,23 @@ namespace Packet
         }
         internal static void HANDLE_S_InventoryReply(PacketSession session, S_InventoryReply invenApply)
         {
-
+            var list = new List<InventorySlot>(invenApply.Slots.Count);
+            foreach (var p in invenApply.Slots)
+            {
+                list.Add(new InventorySlot
+                {
+                    slotIndex = p.SlotIndex,
+                    itemId = p.ItemId,
+                    count = p.Count,
+                    isQuickslot = p.IsQuickslot,
+                    
+                });
+                Debug.Log($"[Inv] Slot {p.SlotIndex}: itemId={p.ItemId}, count={p.Count}, quickslot={p.IsQuickslot}");
+            }
+            var model = InventoryManager.Instance.Model;
+            model.ApplySnapshot(list);
+            HUDManager.Instance.ShowInventory_UI(); // 인벤 UI 켜기 
+            Debug.Log($"[Inv] S_InventoryReply applied: {list.Count} slots");
         }
         internal static void HANDLE_S_ItemUseReply(PacketSession session, S_ItemUseReply useItemApply)
         {

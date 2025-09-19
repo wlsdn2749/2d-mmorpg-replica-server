@@ -41,6 +41,7 @@ public class RoomTransitionManager : MonoBehaviour
             NetworkManager.Instance.Send(ServerPacketManager.MakeSendBuffer(ready));
             WorldFlowState.FinishSceneActivated();
             MonsterSync.OnGameplaySceneActivated();
+            InventoryManager.Instance.RequestInventory();
         };
         LoadingSceneManager.LoadScene(sceneName);
     }
