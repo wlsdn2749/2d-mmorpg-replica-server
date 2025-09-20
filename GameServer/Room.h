@@ -129,7 +129,7 @@ protected:
 	// 파생 훅
 	virtual void OnEnter(const PlayerRef&) {}
 	virtual void OnLeave(const PlayerRef&) {}
-	virtual void OnPlayerHpChanged(int playerId, int newHp);
+	virtual void OnPlayerHpChanged(int playerId);
 	virtual void OnPlayerDeath(int playerId, int killerMonsterId);
 
 

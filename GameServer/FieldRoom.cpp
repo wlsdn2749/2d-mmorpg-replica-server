@@ -178,26 +178,15 @@ void FieldRoom::OnRoomTick()
 }
 
 // HP 변경시 알림
-void FieldRoom::OnPlayerHpChanged(int playerId, int newHp)
+void FieldRoom::OnPlayerHpChanged(int playerId)
 {
-	GConsoleLogger->WriteStdOut(Color::GREEN, L"playerID: %d 가 newHp : %d가 OnPlayerHpChanged", playerId, newHp);
-	//Protocol::S_BroadcastPlayerHp pkt;
-	//pkt.set_playerid(playerId);
-	//pkt.set_hp(newHp);
-
-	//Broadcast(ClientPacketHandler::MakeSendBuffer(pkt));
+	Room::OnPlayerHpChanged(playerId);
 }
 
 // 사망시 알림 (+여기서 리스폰 정책은 추후)
 void FieldRoom::OnPlayerDeath(int playerId, int killerMonsterId)
 {
-	//Protocol::S_BroadcastPlayerDeath pkt;
-	//pkt.set_playerid(playerId);
-	//pkt.set_killermonsterid(killerMonsterId);
-
-	//Broadcast(ClientPacketHandler::MakeSendBuffer(pkt));
-
-	// TODO: 리스폰 규칙(즉시 리스폰/딜레이/마을 복귀 등)은 필요 시 여기서 처리
+	Room::OnPlayerDeath(playerId, killerMonsterId);
 }
 
 void FieldRoom::OnPlayerMoved(const PlayerRef& p, int ox, int oy)
@@ -250,7 +239,7 @@ void FieldRoom::MonsterEntityLinkerImpl::ApplyDamageToPlayer(int pid, int dmg, i
 	auto p = _r.FindPlayer(pid);
 	if (!p) return;
 	const bool dead = p->ApplyDamage(dmg, srcMonsterId); // TODO: 실제 시그니처
-	_r.OnPlayerHpChanged(pid, p->Hp());
+	_r.OnPlayerHpChanged(pid);
 	if (dead) _r.OnPlayerDeath(pid, srcMonsterId);
 }
 
@@ -458,23 +447,24 @@ bool FieldRoom::PlayerMonsterLinkerImpl::ApplyDamageToMonster(int monsterId, int
 	MonsterService::MonsterView mv;
 	if (!_r._monsters->TryGetMonsterView(monsterId, mv)) return false;
 
-	int hpAfter;
-	bool result = !_r._monsters->ApplyDamageToMonster(monsterId, damage, srcPlayerId, hpAfter);
+	int hpAfter = 0;
+	bool isDie = false;
+	_r._monsters->ApplyDamageToMonster(monsterId, damage, srcPlayerId, OUT hpAfter, OUT isDie);
 
 	// 몬스터가 죽었는지 확인 (hpAfter <= 0)
-	if (result && hpAfter <= 0)
+	if (isDie && hpAfter <= 0)
 	{
 		// TODO 경험치 시스템 - Cfg
 		_r.ProcessMonsterExpInRoom(mv.typeId, srcPlayerId);
 		// TODO 돈 지급 - Cfg
 		_r.ProcessMonsterMoneyInRoom(mv.typeId, srcPlayerId);
-		_r.ProcessMonsterDropInRoom(mv.typeId, srcPlayerId); // 플레이어에게 드랍
+		//_r.ProcessMonsterDropInRoom(mv.typeId, srcPlayerId); // 플레이어에게 드랍
 
 		auto player = _r.FindPlayer(srcPlayerId);
 		_r.OnPlayerStatChanged(player);
 	}
 	
-	return result;
+	return isDie;
 
 }
 

@@ -64,8 +64,8 @@ namespace DummyClientCS
                     var pkt = new Google.Protobuf.Protocol.C_CreateCharacterRequest
                     {
                         Username = username,
-                        Gender = 0,
-                        Region = 0
+                        Gender = Google.Protobuf.Protocol.EGender.GenderMale,
+                        Region = Google.Protobuf.Protocol.ERegion.RegionGo,
                     };
 
                     session.Send(ServerPacketManager.MakeSendBuffer(pkt));

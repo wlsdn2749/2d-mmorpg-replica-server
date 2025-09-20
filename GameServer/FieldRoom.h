@@ -58,7 +58,7 @@ protected:
 	void OnLeave(const PlayerRef& p) override;
 
     // 플레이어 처리 훅
-    void OnPlayerHpChanged(int playerId, int newHp) override;
+    void OnPlayerHpChanged(int playerId) override;
     void OnPlayerDeath(int playerId, int killerMonsterId) override;
 
 	//std::optional<SpawnPoint> ResolveSpawn(int portalId) const override; // 스폰

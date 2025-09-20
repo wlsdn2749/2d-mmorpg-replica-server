@@ -44,6 +44,7 @@ public:
 	inline Pos2 GetPos() const { return { core.pos.x, core.pos.y }; }
 	inline void SetPos(int x, int y) { core.pos = { x,y }; }
 	inline void SetDir(Protocol::EDirection d) { core.dir = d; }
+	inline void ResetPos() { core.pos.x = 0, core.pos.y = 0;}
 /*----------------------------------------
 	Player Room 데이터 
 ----------------------------------------*/
@@ -64,7 +65,8 @@ public:
 	inline int Atk() const { return _atk; }
 	inline int Def() const {return _def; }
 	inline int Level() const {return _level; }
-	inline int Exp() const {return _exp; }
+	inline int Exp() const {return _curExp; }
+	inline int MaxExp() const {return _maxExp;}
 	inline int Money() const {return _money; };
 
 	inline void SetMaxHp(int maxHp) {_maxHp = maxHp;}
@@ -72,18 +74,19 @@ public:
 	inline void SetAtk(int atk) {_atk = atk;}
 	inline void SetDef(int def) {_def = def;}
 	inline void SetLevel(int level) {_level = level;}
-	inline void SetExp(int exp) {_exp = exp;}
+	inline void SetExp(int exp) {_curExp = exp;}
 	inline void SetMoney(int money) {_money = money;}
+	inline void SetMaxExp(int maxExp) {_maxExp = maxExp;}
 
 	inline void AddMoney(int money) {_money += money; }
 	inline void AddLevel(int level = 1) {_level += level; }
 	inline void AddExp(int exp) 
 	{
 		// 나중에 경험치 시스템으로 분할
-		_exp += exp;
+		_curExp += exp;
 
-		const int pendingAddLevel = static_cast<int>(_exp / 500);
-		const int remainingExp = static_cast<int>(_exp % 500);
+		const int pendingAddLevel = static_cast<int>(_curExp / _maxExp);
+		const int remainingExp = static_cast<int>(_curExp % _maxExp);
 		AddLevel(pendingAddLevel);
 		SetExp(remainingExp);
 	}
@@ -102,8 +105,15 @@ public: // TODO 나중에 private로 수정 필
 	int _atk { 10 };
 	int _def { 5 };
 	int _level { 1 };
-	int _exp { 0 };
+	int _curExp { 0 };
+	int _maxExp { 500 };
 	int _money { 0 };
+
+/*--------------------------
+	Level System Component
+--------------------------*/
+public:
+
 
 /*---------------------------------
 	Inventory System
@@ -214,5 +224,6 @@ public:
 public:
 	void SetRoom(const shared_ptr<Room>& r) {room = r;}
 	shared_ptr<Room> GetRoom() const		{return room.lock(); }
+
 };
 

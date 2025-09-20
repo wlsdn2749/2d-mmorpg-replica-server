@@ -449,9 +449,18 @@ namespace Packet
         {
             Debug.Log($"최대 체력 : {playerStat.StatInfo.MaxHp}");
             Debug.Log($"현재 체력 : {playerStat.StatInfo.Hp}");
-            Debug.Log($"경험치 : {playerStat.StatInfo.Exp}");
+            Debug.Log($"경험치 : {playerStat.StatInfo.CurExp}");
+            Debug.Log($"최대 경험치 : {playerStat.StatInfo.MaxExp}");
             Debug.Log($"레벨 : {playerStat.StatInfo.Level}");
             Debug.Log($"돈 : {playerStat.StatInfo.Money}");
+        }
+        public static void HANDLE_S_BroadcastPlayerHpChanged(PacketSession arg1, S_BroadcastPlayerHpChanged arg2)
+        {
+            
+        }
+        public static void HANDLE_S_BroadcastPlayerDeath(PacketSession arg1, S_BroadcastPlayerDeath arg2)
+        {
+            
         }
     }
 }
