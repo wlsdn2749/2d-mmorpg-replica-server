@@ -70,6 +70,9 @@
     <Filter Include="DataParser">
       <UniqueIdentifier>{b4f7b314-0d52-4ca6-9a30-84008b0b244d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameContents\LevelSystem">
+      <UniqueIdentifier>{71dec1aa-1ca6-4951-b472-9b449f335448}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameServer.cpp">

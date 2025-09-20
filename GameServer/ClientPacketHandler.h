@@ -49,6 +49,8 @@ enum : uint16
 	PKT_S_NpcShopBuyReply = 39,
 	PKT_S_PlayerStat = 40,
 	PKT_S_BroadcastPlayerTryAttack = 41,
+	PKT_S_BroadcastPlayerHpChanged = 42,
+	PKT_S_BroadcastPlayerDeath = 43,
 
 };
 
@@ -128,6 +130,8 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::S_NpcShopBuyReply& pkt) { return MakeSendBuffer(pkt, PKT_S_NpcShopBuyReply); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_PlayerStat& pkt) { return MakeSendBuffer(pkt, PKT_S_PlayerStat); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerTryAttack& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerTryAttack); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerHpChanged& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerHpChanged); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerDeath& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerDeath); };
 
 private:
 	template<typename PacketType, typename ProcessFunc>

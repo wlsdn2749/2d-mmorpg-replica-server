@@ -47,6 +47,8 @@ enum MsgId
 	S_NPC_SHOP_BUY_REPLY = 39;
 	S_PLAYER_STAT = 40;
 	S_BROADCAST_PLAYER_TRY_ATTACK = 41;
+	S_BROADCAST_PLAYER_HP_CHANGED = 42;
+	S_BROADCAST_PLAYER_DEATH = 43;
 }
 
 // 클라 -> 게임 서버 jwt 로그인 인증 (0)
@@ -311,8 +313,20 @@ message S_BroadcastPlayerTryAttack
 	int32 playerId = 1;
 }
 
-// TODO (xx) 서버 -> 클라 : S_BroadcastPlayerHpChanged
-// TODO (xx) 서버 -> 클라 : S_BroadcastPlayerDeath
+// (42) 서버 -> 클라 : S_BroadcastPlayerHpChanged
+
+message S_BroadcastPlayerHpChanged
+{
+	int32 playerId = 1;
+	int32 hp = 2;
+	int32 maxHp = 3;
+}
+// (43) 서버 -> 클라 : S_BroadcastPlayerDeath
+message S_BroadcastPlayerDeath
+{
+	int32 playerId = 1;
+	int32 killerMonsterId = 2;
+}
 
 
 enum ELoginResult
@@ -451,7 +465,8 @@ message PlayerStatInfo
 {
 	int32 maxHp = 1;
 	int32 hp = 2;
-	int32 exp = 3;
-	int32 level = 4;
-	int32 money = 5;
+	int32 curExp = 3;
+	int32 maxExp = 4;
+	int32 level = 5;
+	int32 money = 6;
 }

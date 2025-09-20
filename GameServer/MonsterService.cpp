@@ -66,21 +66,22 @@ bool MonsterService::TryGetMonsterView(EntityId id, MonsterView& out) const
 
 /* 쓰기 (퍼사드) */
 
-bool MonsterService::ApplyDamageToMonster(EntityId id, int dmg, int srcPlayerId, int& hpAfter)
+void MonsterService::ApplyDamageToMonster(EntityId id, int dmg, int srcPlayerId, int& hpAfter, bool& isDie)
 {
-	if (dmg <= 0) return false;
+	if (dmg <= 0) return;
 
 	Monster* m = _container.Find(id);
-	if (!m) return false;
+	if (!m) return;
 
 	m->wasAttacked = true;
 	m->curHp = m->curHp - dmg;
 	hpAfter = m->curHp;
-	if(m->curHp > 0)
-		return true;
 
+	if(hpAfter > 0) return;
+
+	// hpAfter가 0보다 작으면
+	isDie = true;
 	KillMonster(id, Protocol::EDespawnReason::DESPAWN_KILLED);
-	return true;
 }
 
 void MonsterService::KillMonster(EntityId id, Protocol::EDespawnReason reason)

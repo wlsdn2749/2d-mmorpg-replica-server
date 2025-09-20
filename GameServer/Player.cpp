@@ -73,7 +73,8 @@ std::unique_ptr<Protocol::PlayerStatInfo> Player::GetPlayerStatInfo() const
 	auto infoPkt = std::make_unique<Protocol::PlayerStatInfo>();
 	infoPkt->set_maxhp(MaxHp());
 	infoPkt->set_hp(Hp());
-	infoPkt->set_exp(Exp());
+	infoPkt->set_curexp(Exp());
+	infoPkt->set_maxexp(MaxExp());
 	infoPkt->set_level(Level());
 	infoPkt->set_money(Money());
 	return infoPkt;
