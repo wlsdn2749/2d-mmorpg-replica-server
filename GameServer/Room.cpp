@@ -21,8 +21,8 @@ void Room::Init()
 }
 void Room::StartTicking()
 {
-	// 첫 틱 예약 (이후 OnTickTimer에서 자기 재등록)
-	DoTimer(_cfg.tickMs, &Room::OnTickTimer);
+    // 첫 틱 예약 (이후 OnTickTimer에서 자기 재등록)
+    DoTimer(_cfg.tickMs, &Room::OnTickTimer);
 }
 
 void Room::StartPeriodicSave()
@@ -44,8 +44,8 @@ void Room::SaveAllActivePlayers()
 
 PlayerRef Room::FindPlayer(PlayerId pid)
 {
-	auto it = _players.find(pid);
-	return (it == _players.end()) ? nullptr : it->second;
+    auto it = _players.find(pid);
+    return (it == _players.end()) ? nullptr : it->second;
 }
 
 Protocol::EDirection Room::DecideFacing(const PlayerRef& p, const Protocol::Vector2Info& clickWorldPos)
@@ -134,7 +134,7 @@ Protocol::S_PlayerList Room::BuildPlayerListSnapshot(const PlayerRef& forPlayer,
 }
 
 /*------------------------
-	내부 구현 (룸 스레드)
+    내부 구현 (룸 스레드)
 ------------------------*/
 void Room::Enter(PlayerRef p)
 {
@@ -153,10 +153,10 @@ void Room::Enter(PlayerRef p)
     SpawnPoint spawn { ESpawnType::PLAYER_SPAWN, p->core.pos.x, p->core.pos.y };
     AddPlayerInternal(p, spawn, p->core.dir);  // 내부 등록 (SetRoom 포함)
 
-	GConsoleLogger->WriteStdOut(Color::GREEN, L"Room에 Enter 입장\n");
+    GConsoleLogger->WriteStdOut(Color::GREEN, L"Room에 Enter 입장\n");
 
     OnPlayerStatChanged(p);
-	OnEnter(p); // 여기서 모두에게 BroadCasting?
+    OnEnter(p); // 여기서 모두에게 BroadCasting?
 
     // 데이터 저장
     auto fut = p->SaveCharacterToDB();
@@ -171,19 +171,19 @@ void Room::Leave(PlayerRef p)
 
     RemovePlayerInternal(p->playerId, "Leave");
     GConsoleLogger->WriteStdOut(Color::GREEN, L"Room에서 Leave 퇴장\n");
-	OnLeave(p); // 여기서 모두에게 BroadCasting?
+    OnLeave(p); // 여기서 모두에게 BroadCasting?
 }
 
 void Room::Broadcast(const SendBufferRef& sendBuffer, PlayerId except)
 {
-	// TODO: 필요하면 예외 적용
-	
-	for (auto& [pid, player] : _players)
-	{
-		if(pid == except) continue;
-		if(auto s = player->ownerSession.lock())
-			s->Send(sendBuffer);
-	}
+    // TODO: 필요하면 예외 적용
+    
+    for (auto& [pid, player] : _players)
+    {
+        if(pid == except) continue;
+        if(auto s = player->ownerSession.lock())
+            s->Send(sendBuffer);
+    }
 }
 
 void Room::BroadcastEnter(const PlayerRef& newcomer)
@@ -219,30 +219,57 @@ void Room::BroadcastLeave(const PlayerRef& leaver)
 }
 
 /*------------------------
-		Tick
+        Tick
 ------------------------*/
 void Room::OnTickTimer()
 {
-	++_tick;
+    ++_tick;
 
-	OnRoomTick();
+    OnRoomTick();
 
-	DoTimer(_cfg.tickMs, &Room::OnTickTimer);
+    DoTimer(_cfg.tickMs, &Room::OnTickTimer);
 }
 
 // Room.cpp
-void Room::OnPlayerHpChanged(int playerId, int newHp)
+void Room::OnPlayerHpChanged(int playerId)
 {
-    UNREFERENCED_PARAMETER(playerId);
-    UNREFERENCED_PARAMETER(newHp);
-    // 기본: 아무것도 안 함. 파생(Room)에서 필요 시 오버라이드
+    auto player = FindPlayer(playerId);
+    
+    auto hp = player->Hp();
+    auto maxHp = player->MaxHp();
+
+    GConsoleLogger->WriteStdOut(Color::GREEN, L"playerID: %d 가 MaxHp: %d, Hp : %d가 OnPlayerHpChanged", playerId, maxHp, hp);
+    Protocol::S_BroadcastPlayerHpChanged pkt;
+    pkt.set_playerid(playerId);
+    pkt.set_hp(hp);
+    pkt.set_maxhp(maxHp);
+
+    Broadcast(ClientPacketHandler::MakeSendBuffer(pkt));
 }
 
 void Room::OnPlayerDeath(int playerId, int killerMonsterId)
 {
-    UNREFERENCED_PARAMETER(playerId);
-    UNREFERENCED_PARAMETER(killerMonsterId);
-    // 기본: 아무것도 안 함. 파생(Room)에서 필요 시 오버라이드
+    Protocol::S_BroadcastPlayerDeath pkt;
+    pkt.set_playerid(playerId);
+    pkt.set_killermonsterid(killerMonsterId);
+
+    Broadcast(ClientPacketHandler::MakeSendBuffer(pkt)); // 죽었다고, BroadCast하지만, Leave에서 한번 더 함
+
+    auto player = FindPlayer(playerId);
+    auto dstName = RoomManager::Instance().GetNameByRegion(player->region);
+    auto dstId = RoomManager::Instance().GetRoomIdByName(dstName);
+
+    RoomRef src = static_pointer_cast<Room>(shared_from_this());
+    RoomRef dst = RoomManager::Instance().Find(dstId);
+
+    src->DoAsync([src, dst, player] {
+        src->Leave(player); 
+
+        player->ResetPos();
+        player->SetHp(player->MaxHp()); // 피 풀피로 초기화
+        dst->DoAsync(&Room::Enter, player);
+    });
+
 }
 
 void Room::LoadNpcs()
@@ -452,16 +479,16 @@ void Room::ProcessMovesTick()
 }
 
 /*--------------------------------------------------------
-	입력 수신 (C -> S) - Handler를 통해 Async로 중계됨
+    입력 수신 (C -> S) - Handler를 통해 Async로 중계됨
 --------------------------------------------------------*/
 void Room::OnRecvMoveReq(PlayerRef p, const Protocol::C_PlayerMoveRequest& req)
 {
-	if (!p) return;
-	auto& st = _pstates[p->playerId];
-	st.pending.has = true;
-	st.pending.clickWorldPos = req.clickworldpos();
-	st.pending.clientSeq = 0;
-	st.pending.recvTick = _tick;
+    if (!p) return;
+    auto& st = _pstates[p->playerId];
+    st.pending.has = true;
+    st.pending.clickWorldPos = req.clickworldpos();
+    st.pending.clientSeq = 0;
+    st.pending.recvTick = _tick;
 }
 
 void Room::ChangeRoomBegin(const PlayerRef& p, const PortalLink& link)
@@ -564,7 +591,8 @@ void Room::OnPlayerStatChanged(const PlayerRef& p)
     if (auto s = p->ownerSession.lock())
     {
         s->Send(ClientPacketHandler::MakeSendBuffer(pkt));
-        GConsoleLogger->WriteStdOut(Color::GREEN, L"[OnPlayerStatChanged: Hp, Exp, Money ... changed");
+        //GConsoleLogger->WriteStdOut(Color::GREEN, L"[OnPlayerStatChanged]: %s\n", pkt.DebugString());
+        std::cout << "[OnPlayerStatChanged]:" << pkt.DebugString() << "\n";
     }
 
     // Stat 정보 DB에 저장

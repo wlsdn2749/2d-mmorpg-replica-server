@@ -44,7 +44,7 @@ public:
 	Protocol::S_MonsterList BuildMonsterSnapShot(int mapId) {return _container.BuildMonsterSnapShot(mapId); }
 
 	// 쓰기
-	bool ApplyDamageToMonster(EntityId id, int dmg, int srcPlayerId, int& hpAfter); // hp↓, 0이하면 KillMonster(reason=Dead)
+	void ApplyDamageToMonster(EntityId id, int dmg, int srcPlayerId, int& hpAfter, bool& isDie); // hp↓, 0이하면 KillMonster(reason=Dead)
 	// 사망 처리(디스폰+리스폰 예약+Death 브로드캐스트)
 	void KillMonster(EntityId id, Protocol::EDespawnReason reason);
 

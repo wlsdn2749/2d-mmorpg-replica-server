@@ -4,6 +4,7 @@ using Google.Protobuf.Protocol;
 using Microsoft.VisualBasic;
 using ServerCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -359,12 +360,22 @@ namespace Packet
         internal static void HANDLE_S_PlayerStat(PacketSession session, S_PlayerStat stat)
         {
             var info = stat.StatInfo;
-            Console.WriteLine($"MaxHp : {info.MaxHp}, Hp: {info.Hp}, Exp: {info.Exp}, Lv, {info.Level}, Money: {info.Money} ");
+            Console.WriteLine($"MaxHp : {info.MaxHp}, Hp: {info.Hp}, MaxExp: {info.MaxExp}, Exp: {info.CurExp}, Lv, {info.Level}, Money: {info.Money} ");
         }
 
         internal static void HANDLE_S_BroadcastPlayerTryAttack(PacketSession session, S_BroadcastPlayerTryAttack attack)
         {
             Console.WriteLine($"공격시도 전달받음 Pid : {attack.PlayerId}");
+        }
+
+        internal static void HANDLE_S_BroadcastPlayerHpChanged(PacketSession session, S_BroadcastPlayerHpChanged changed)
+        {
+            Console.WriteLine($"플레이어 HP 변경");
+        }
+
+        internal static void HANDLE_S_BroadcastPlayerDeath(PacketSession session, S_BroadcastPlayerDeath death)
+        {
+            Console.WriteLine($"플레이어가 죽어서 BroadCast");
         }
     }
 }

@@ -9,8 +9,6 @@ public:
 
 	bool CanEnterTile(int nx, int ny) const override;
 
-	// Chat
-
 protected:
 	// 최초 1회 초기화
 	void InitRoomSystems() override;

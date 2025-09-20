@@ -116,9 +116,15 @@ extern S_BroadcastMonsterMoveDefaultTypeInternal _S_BroadcastMonsterMove_default
 class S_BroadcastPlayerAttack;
 struct S_BroadcastPlayerAttackDefaultTypeInternal;
 extern S_BroadcastPlayerAttackDefaultTypeInternal _S_BroadcastPlayerAttack_default_instance_;
+class S_BroadcastPlayerDeath;
+struct S_BroadcastPlayerDeathDefaultTypeInternal;
+extern S_BroadcastPlayerDeathDefaultTypeInternal _S_BroadcastPlayerDeath_default_instance_;
 class S_BroadcastPlayerEnter;
 struct S_BroadcastPlayerEnterDefaultTypeInternal;
 extern S_BroadcastPlayerEnterDefaultTypeInternal _S_BroadcastPlayerEnter_default_instance_;
+class S_BroadcastPlayerHpChanged;
+struct S_BroadcastPlayerHpChangedDefaultTypeInternal;
+extern S_BroadcastPlayerHpChangedDefaultTypeInternal _S_BroadcastPlayerHpChanged_default_instance_;
 class S_BroadcastPlayerLeave;
 struct S_BroadcastPlayerLeaveDefaultTypeInternal;
 extern S_BroadcastPlayerLeaveDefaultTypeInternal _S_BroadcastPlayerLeave_default_instance_;
@@ -222,7 +228,9 @@ template<> ::Protocol::S_BroadcastMonsterAttack* Arena::CreateMaybeMessage<::Pro
 template<> ::Protocol::S_BroadcastMonsterDeath* Arena::CreateMaybeMessage<::Protocol::S_BroadcastMonsterDeath>(Arena*);
 template<> ::Protocol::S_BroadcastMonsterMove* Arena::CreateMaybeMessage<::Protocol::S_BroadcastMonsterMove>(Arena*);
 template<> ::Protocol::S_BroadcastPlayerAttack* Arena::CreateMaybeMessage<::Protocol::S_BroadcastPlayerAttack>(Arena*);
+template<> ::Protocol::S_BroadcastPlayerDeath* Arena::CreateMaybeMessage<::Protocol::S_BroadcastPlayerDeath>(Arena*);
 template<> ::Protocol::S_BroadcastPlayerEnter* Arena::CreateMaybeMessage<::Protocol::S_BroadcastPlayerEnter>(Arena*);
+template<> ::Protocol::S_BroadcastPlayerHpChanged* Arena::CreateMaybeMessage<::Protocol::S_BroadcastPlayerHpChanged>(Arena*);
 template<> ::Protocol::S_BroadcastPlayerLeave* Arena::CreateMaybeMessage<::Protocol::S_BroadcastPlayerLeave>(Arena*);
 template<> ::Protocol::S_BroadcastPlayerMove* Arena::CreateMaybeMessage<::Protocol::S_BroadcastPlayerMove>(Arena*);
 template<> ::Protocol::S_BroadcastPlayerTryAttack* Arena::CreateMaybeMessage<::Protocol::S_BroadcastPlayerTryAttack>(Arena*);
@@ -295,12 +303,14 @@ enum MsgId : int {
   S_NPC_SHOP_BUY_REPLY = 39,
   S_PLAYER_STAT = 40,
   S_BROADCAST_PLAYER_TRY_ATTACK = 41,
+  S_BROADCAST_PLAYER_HP_CHANGED = 42,
+  S_BROADCAST_PLAYER_DEATH = 43,
   MsgId_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   MsgId_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool MsgId_IsValid(int value);
 constexpr MsgId MsgId_MIN = C_JWT_LOGIN_REQUEST;
-constexpr MsgId MsgId_MAX = S_BROADCAST_PLAYER_TRY_ATTACK;
+constexpr MsgId MsgId_MAX = S_BROADCAST_PLAYER_DEATH;
 constexpr int MsgId_ARRAYSIZE = MsgId_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MsgId_descriptor();
@@ -7220,6 +7230,335 @@ class S_BroadcastPlayerTryAttack final :
 };
 // -------------------------------------------------------------------
 
+class S_BroadcastPlayerHpChanged final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.S_BroadcastPlayerHpChanged) */ {
+ public:
+  inline S_BroadcastPlayerHpChanged() : S_BroadcastPlayerHpChanged(nullptr) {}
+  ~S_BroadcastPlayerHpChanged() override;
+  explicit PROTOBUF_CONSTEXPR S_BroadcastPlayerHpChanged(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  S_BroadcastPlayerHpChanged(const S_BroadcastPlayerHpChanged& from);
+  S_BroadcastPlayerHpChanged(S_BroadcastPlayerHpChanged&& from) noexcept
+    : S_BroadcastPlayerHpChanged() {
+    *this = ::std::move(from);
+  }
+
+  inline S_BroadcastPlayerHpChanged& operator=(const S_BroadcastPlayerHpChanged& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline S_BroadcastPlayerHpChanged& operator=(S_BroadcastPlayerHpChanged&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const S_BroadcastPlayerHpChanged& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const S_BroadcastPlayerHpChanged* internal_default_instance() {
+    return reinterpret_cast<const S_BroadcastPlayerHpChanged*>(
+               &_S_BroadcastPlayerHpChanged_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    42;
+
+  friend void swap(S_BroadcastPlayerHpChanged& a, S_BroadcastPlayerHpChanged& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(S_BroadcastPlayerHpChanged* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(S_BroadcastPlayerHpChanged* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  S_BroadcastPlayerHpChanged* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<S_BroadcastPlayerHpChanged>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const S_BroadcastPlayerHpChanged& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const S_BroadcastPlayerHpChanged& from) {
+    S_BroadcastPlayerHpChanged::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S_BroadcastPlayerHpChanged* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.S_BroadcastPlayerHpChanged";
+  }
+  protected:
+  explicit S_BroadcastPlayerHpChanged(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPlayerIdFieldNumber = 1,
+    kHpFieldNumber = 2,
+    kMaxHpFieldNumber = 3,
+  };
+  // int32 playerId = 1;
+  void clear_playerid();
+  int32_t playerid() const;
+  void set_playerid(int32_t value);
+  private:
+  int32_t _internal_playerid() const;
+  void _internal_set_playerid(int32_t value);
+  public:
+
+  // int32 hp = 2;
+  void clear_hp();
+  int32_t hp() const;
+  void set_hp(int32_t value);
+  private:
+  int32_t _internal_hp() const;
+  void _internal_set_hp(int32_t value);
+  public:
+
+  // int32 maxHp = 3;
+  void clear_maxhp();
+  int32_t maxhp() const;
+  void set_maxhp(int32_t value);
+  private:
+  int32_t _internal_maxhp() const;
+  void _internal_set_maxhp(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Protocol.S_BroadcastPlayerHpChanged)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int32_t playerid_;
+    int32_t hp_;
+    int32_t maxhp_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_Protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
+class S_BroadcastPlayerDeath final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.S_BroadcastPlayerDeath) */ {
+ public:
+  inline S_BroadcastPlayerDeath() : S_BroadcastPlayerDeath(nullptr) {}
+  ~S_BroadcastPlayerDeath() override;
+  explicit PROTOBUF_CONSTEXPR S_BroadcastPlayerDeath(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  S_BroadcastPlayerDeath(const S_BroadcastPlayerDeath& from);
+  S_BroadcastPlayerDeath(S_BroadcastPlayerDeath&& from) noexcept
+    : S_BroadcastPlayerDeath() {
+    *this = ::std::move(from);
+  }
+
+  inline S_BroadcastPlayerDeath& operator=(const S_BroadcastPlayerDeath& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline S_BroadcastPlayerDeath& operator=(S_BroadcastPlayerDeath&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const S_BroadcastPlayerDeath& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const S_BroadcastPlayerDeath* internal_default_instance() {
+    return reinterpret_cast<const S_BroadcastPlayerDeath*>(
+               &_S_BroadcastPlayerDeath_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    43;
+
+  friend void swap(S_BroadcastPlayerDeath& a, S_BroadcastPlayerDeath& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(S_BroadcastPlayerDeath* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(S_BroadcastPlayerDeath* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  S_BroadcastPlayerDeath* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<S_BroadcastPlayerDeath>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const S_BroadcastPlayerDeath& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const S_BroadcastPlayerDeath& from) {
+    S_BroadcastPlayerDeath::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S_BroadcastPlayerDeath* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.S_BroadcastPlayerDeath";
+  }
+  protected:
+  explicit S_BroadcastPlayerDeath(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPlayerIdFieldNumber = 1,
+    kKillerMonsterIdFieldNumber = 2,
+  };
+  // int32 playerId = 1;
+  void clear_playerid();
+  int32_t playerid() const;
+  void set_playerid(int32_t value);
+  private:
+  int32_t _internal_playerid() const;
+  void _internal_set_playerid(int32_t value);
+  public:
+
+  // int32 killerMonsterId = 2;
+  void clear_killermonsterid();
+  int32_t killermonsterid() const;
+  void set_killermonsterid(int32_t value);
+  private:
+  int32_t _internal_killermonsterid() const;
+  void _internal_set_killermonsterid(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Protocol.S_BroadcastPlayerDeath)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int32_t playerid_;
+    int32_t killermonsterid_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_Protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
 class Vector2Info final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.Vector2Info) */ {
  public:
@@ -7268,7 +7607,7 @@ class Vector2Info final :
                &_Vector2Info_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    42;
+    44;
 
   friend void swap(Vector2Info& a, Vector2Info& b) {
     a.Swap(&b);
@@ -7427,7 +7766,7 @@ class PlayerMoveInfo final :
                &_PlayerMoveInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    43;
+    45;
 
   friend void swap(PlayerMoveInfo& a, PlayerMoveInfo& b) {
     a.Swap(&b);
@@ -7617,7 +7956,7 @@ class CharacterSummaryInfo final :
                &_CharacterSummaryInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    44;
+    46;
 
   friend void swap(CharacterSummaryInfo& a, CharacterSummaryInfo& b) {
     a.Swap(&b);
@@ -7803,7 +8142,7 @@ class PlayerInfo final :
                &_PlayerInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    45;
+    47;
 
   friend void swap(PlayerInfo& a, PlayerInfo& b) {
     a.Swap(&b);
@@ -7998,7 +8337,7 @@ class InventorySlotInfo final :
                &_InventorySlotInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    46;
+    48;
 
   friend void swap(InventorySlotInfo& a, InventorySlotInfo& b) {
     a.Swap(&b);
@@ -8179,7 +8518,7 @@ class MonsterInfo final :
                &_MonsterInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    47;
+    49;
 
   friend void swap(MonsterInfo& a, MonsterInfo& b) {
     a.Swap(&b);
@@ -8369,7 +8708,7 @@ class ShopItemInfo final :
                &_ShopItemInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    48;
+    50;
 
   friend void swap(ShopItemInfo& a, ShopItemInfo& b) {
     a.Swap(&b);
@@ -8539,7 +8878,7 @@ class PlayerStatInfo final :
                &_PlayerStatInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    49;
+    51;
 
   friend void swap(PlayerStatInfo& a, PlayerStatInfo& b) {
     a.Swap(&b);
@@ -8614,9 +8953,10 @@ class PlayerStatInfo final :
   enum : int {
     kMaxHpFieldNumber = 1,
     kHpFieldNumber = 2,
-    kExpFieldNumber = 3,
-    kLevelFieldNumber = 4,
-    kMoneyFieldNumber = 5,
+    kCurExpFieldNumber = 3,
+    kMaxExpFieldNumber = 4,
+    kLevelFieldNumber = 5,
+    kMoneyFieldNumber = 6,
   };
   // int32 maxHp = 1;
   void clear_maxhp();
@@ -8636,16 +8976,25 @@ class PlayerStatInfo final :
   void _internal_set_hp(int32_t value);
   public:
 
-  // int32 exp = 3;
-  void clear_exp();
-  int32_t exp() const;
-  void set_exp(int32_t value);
+  // int32 curExp = 3;
+  void clear_curexp();
+  int32_t curexp() const;
+  void set_curexp(int32_t value);
   private:
-  int32_t _internal_exp() const;
-  void _internal_set_exp(int32_t value);
+  int32_t _internal_curexp() const;
+  void _internal_set_curexp(int32_t value);
   public:
 
-  // int32 level = 4;
+  // int32 maxExp = 4;
+  void clear_maxexp();
+  int32_t maxexp() const;
+  void set_maxexp(int32_t value);
+  private:
+  int32_t _internal_maxexp() const;
+  void _internal_set_maxexp(int32_t value);
+  public:
+
+  // int32 level = 5;
   void clear_level();
   int32_t level() const;
   void set_level(int32_t value);
@@ -8654,7 +9003,7 @@ class PlayerStatInfo final :
   void _internal_set_level(int32_t value);
   public:
 
-  // int32 money = 5;
+  // int32 money = 6;
   void clear_money();
   int32_t money() const;
   void set_money(int32_t value);
@@ -8673,7 +9022,8 @@ class PlayerStatInfo final :
   struct Impl_ {
     int32_t maxhp_;
     int32_t hp_;
-    int32_t exp_;
+    int32_t curexp_;
+    int32_t maxexp_;
     int32_t level_;
     int32_t money_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -11083,6 +11433,114 @@ inline void S_BroadcastPlayerTryAttack::set_playerid(int32_t value) {
 
 // -------------------------------------------------------------------
 
+// S_BroadcastPlayerHpChanged
+
+// int32 playerId = 1;
+inline void S_BroadcastPlayerHpChanged::clear_playerid() {
+  _impl_.playerid_ = 0;
+}
+inline int32_t S_BroadcastPlayerHpChanged::_internal_playerid() const {
+  return _impl_.playerid_;
+}
+inline int32_t S_BroadcastPlayerHpChanged::playerid() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_BroadcastPlayerHpChanged.playerId)
+  return _internal_playerid();
+}
+inline void S_BroadcastPlayerHpChanged::_internal_set_playerid(int32_t value) {
+  
+  _impl_.playerid_ = value;
+}
+inline void S_BroadcastPlayerHpChanged::set_playerid(int32_t value) {
+  _internal_set_playerid(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_BroadcastPlayerHpChanged.playerId)
+}
+
+// int32 hp = 2;
+inline void S_BroadcastPlayerHpChanged::clear_hp() {
+  _impl_.hp_ = 0;
+}
+inline int32_t S_BroadcastPlayerHpChanged::_internal_hp() const {
+  return _impl_.hp_;
+}
+inline int32_t S_BroadcastPlayerHpChanged::hp() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_BroadcastPlayerHpChanged.hp)
+  return _internal_hp();
+}
+inline void S_BroadcastPlayerHpChanged::_internal_set_hp(int32_t value) {
+  
+  _impl_.hp_ = value;
+}
+inline void S_BroadcastPlayerHpChanged::set_hp(int32_t value) {
+  _internal_set_hp(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_BroadcastPlayerHpChanged.hp)
+}
+
+// int32 maxHp = 3;
+inline void S_BroadcastPlayerHpChanged::clear_maxhp() {
+  _impl_.maxhp_ = 0;
+}
+inline int32_t S_BroadcastPlayerHpChanged::_internal_maxhp() const {
+  return _impl_.maxhp_;
+}
+inline int32_t S_BroadcastPlayerHpChanged::maxhp() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_BroadcastPlayerHpChanged.maxHp)
+  return _internal_maxhp();
+}
+inline void S_BroadcastPlayerHpChanged::_internal_set_maxhp(int32_t value) {
+  
+  _impl_.maxhp_ = value;
+}
+inline void S_BroadcastPlayerHpChanged::set_maxhp(int32_t value) {
+  _internal_set_maxhp(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_BroadcastPlayerHpChanged.maxHp)
+}
+
+// -------------------------------------------------------------------
+
+// S_BroadcastPlayerDeath
+
+// int32 playerId = 1;
+inline void S_BroadcastPlayerDeath::clear_playerid() {
+  _impl_.playerid_ = 0;
+}
+inline int32_t S_BroadcastPlayerDeath::_internal_playerid() const {
+  return _impl_.playerid_;
+}
+inline int32_t S_BroadcastPlayerDeath::playerid() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_BroadcastPlayerDeath.playerId)
+  return _internal_playerid();
+}
+inline void S_BroadcastPlayerDeath::_internal_set_playerid(int32_t value) {
+  
+  _impl_.playerid_ = value;
+}
+inline void S_BroadcastPlayerDeath::set_playerid(int32_t value) {
+  _internal_set_playerid(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_BroadcastPlayerDeath.playerId)
+}
+
+// int32 killerMonsterId = 2;
+inline void S_BroadcastPlayerDeath::clear_killermonsterid() {
+  _impl_.killermonsterid_ = 0;
+}
+inline int32_t S_BroadcastPlayerDeath::_internal_killermonsterid() const {
+  return _impl_.killermonsterid_;
+}
+inline int32_t S_BroadcastPlayerDeath::killermonsterid() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_BroadcastPlayerDeath.killerMonsterId)
+  return _internal_killermonsterid();
+}
+inline void S_BroadcastPlayerDeath::_internal_set_killermonsterid(int32_t value) {
+  
+  _impl_.killermonsterid_ = value;
+}
+inline void S_BroadcastPlayerDeath::set_killermonsterid(int32_t value) {
+  _internal_set_killermonsterid(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_BroadcastPlayerDeath.killerMonsterId)
+}
+
+// -------------------------------------------------------------------
+
 // Vector2Info
 
 // int32 x = 1;
@@ -11923,27 +12381,47 @@ inline void PlayerStatInfo::set_hp(int32_t value) {
   // @@protoc_insertion_point(field_set:Protocol.PlayerStatInfo.hp)
 }
 
-// int32 exp = 3;
-inline void PlayerStatInfo::clear_exp() {
-  _impl_.exp_ = 0;
+// int32 curExp = 3;
+inline void PlayerStatInfo::clear_curexp() {
+  _impl_.curexp_ = 0;
 }
-inline int32_t PlayerStatInfo::_internal_exp() const {
-  return _impl_.exp_;
+inline int32_t PlayerStatInfo::_internal_curexp() const {
+  return _impl_.curexp_;
 }
-inline int32_t PlayerStatInfo::exp() const {
-  // @@protoc_insertion_point(field_get:Protocol.PlayerStatInfo.exp)
-  return _internal_exp();
+inline int32_t PlayerStatInfo::curexp() const {
+  // @@protoc_insertion_point(field_get:Protocol.PlayerStatInfo.curExp)
+  return _internal_curexp();
 }
-inline void PlayerStatInfo::_internal_set_exp(int32_t value) {
+inline void PlayerStatInfo::_internal_set_curexp(int32_t value) {
   
-  _impl_.exp_ = value;
+  _impl_.curexp_ = value;
 }
-inline void PlayerStatInfo::set_exp(int32_t value) {
-  _internal_set_exp(value);
-  // @@protoc_insertion_point(field_set:Protocol.PlayerStatInfo.exp)
+inline void PlayerStatInfo::set_curexp(int32_t value) {
+  _internal_set_curexp(value);
+  // @@protoc_insertion_point(field_set:Protocol.PlayerStatInfo.curExp)
 }
 
-// int32 level = 4;
+// int32 maxExp = 4;
+inline void PlayerStatInfo::clear_maxexp() {
+  _impl_.maxexp_ = 0;
+}
+inline int32_t PlayerStatInfo::_internal_maxexp() const {
+  return _impl_.maxexp_;
+}
+inline int32_t PlayerStatInfo::maxexp() const {
+  // @@protoc_insertion_point(field_get:Protocol.PlayerStatInfo.maxExp)
+  return _internal_maxexp();
+}
+inline void PlayerStatInfo::_internal_set_maxexp(int32_t value) {
+  
+  _impl_.maxexp_ = value;
+}
+inline void PlayerStatInfo::set_maxexp(int32_t value) {
+  _internal_set_maxexp(value);
+  // @@protoc_insertion_point(field_set:Protocol.PlayerStatInfo.maxExp)
+}
+
+// int32 level = 5;
 inline void PlayerStatInfo::clear_level() {
   _impl_.level_ = 0;
 }
@@ -11963,7 +12441,7 @@ inline void PlayerStatInfo::set_level(int32_t value) {
   // @@protoc_insertion_point(field_set:Protocol.PlayerStatInfo.level)
 }
 
-// int32 money = 5;
+// int32 money = 6;
 inline void PlayerStatInfo::clear_money() {
   _impl_.money_ = 0;
 }
@@ -11986,6 +12464,10 @@ inline void PlayerStatInfo::set_money(int32_t value) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

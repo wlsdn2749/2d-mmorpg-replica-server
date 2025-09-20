@@ -7,6 +7,10 @@ ConsoleLogger::ConsoleLogger()
 {
     _stdOut = ::GetStdHandle(STD_OUTPUT_HANDLE);
     _stdErr = ::GetStdHandle(STD_ERROR_HANDLE);
+
+    // UTF-8 코드페이지 설정으로 한국어 출력 지원
+    ::SetConsoleOutputCP(CP_UTF8);
+    ::SetConsoleCP(CP_UTF8);
 }
 
 ConsoleLogger::~ConsoleLogger()
