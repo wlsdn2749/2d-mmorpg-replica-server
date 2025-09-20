@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7789367991130333984}
   - component: {fileID: 5273051360109575782}
   m_Layer: 0
-  m_Name: DamageText
+  m_Name: MonsterDamageText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

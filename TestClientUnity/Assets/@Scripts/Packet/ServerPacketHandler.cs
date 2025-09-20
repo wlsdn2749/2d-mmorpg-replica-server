@@ -2,6 +2,7 @@
 using Google.Protobuf.Protocol;
 using ServerCore;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Packet
@@ -386,6 +387,7 @@ namespace Packet
         internal static void HANDLE_S_BroadcastMonsterAttack(PacketSession session, S_BroadcastMonsterAttack broadMonsterAtk)
         {
             MonsterSync.OnAttack(broadMonsterAtk);
+            PlayerStatus.Instance.OnDamage(broadMonsterAtk);
         }
         internal static void HANDLE_S_BroadcastMonsterDeath(PacketSession session, S_BroadcastMonsterDeath broadMonsterDeath)
         {
@@ -404,7 +406,7 @@ namespace Packet
         }
         internal static void HANDLE_S_BroadcastPlayerAttack(PacketSession session, S_BroadcastPlayerAttack broadPlayerAtk)
         {
-            var damageText = ObjectPoolManager.Instance.GetObject("DamageText");
+            var damageText = ObjectPoolManager.Instance.GetObject("MonsterDamageText");
             damageText.GetComponent<DamageText>().Show(broadPlayerAtk.Damage, MonsterSync.MonsterPos(broadPlayerAtk));
             var go = MonsterSpawner.Get(broadPlayerAtk.TargetId);
             if (!go)
@@ -418,7 +420,23 @@ namespace Packet
         }
         internal static void HANDLE_S_InventoryReply(PacketSession session, S_InventoryReply invenApply)
         {
-
+            var list = new List<InventorySlot>(invenApply.Slots.Count);
+            foreach (var p in invenApply.Slots)
+            {
+                list.Add(new InventorySlot
+                {
+                    slotIndex = p.SlotIndex,
+                    itemId = p.ItemId,
+                    count = p.Count,
+                    isQuickslot = p.IsQuickslot,
+                    
+                });
+                Debug.Log($"[Inv] Slot {p.SlotIndex}: itemId={p.ItemId}, count={p.Count}, quickslot={p.IsQuickslot}");
+            }
+            var model = InventoryManager.Instance.Model;
+            model.ApplySnapshot(list);
+            HUDManager.Instance.ShowInventory_UI(); // 인벤 UI 켜기 
+            Debug.Log($"[Inv] S_InventoryReply applied: {list.Count} slots");
         }
         internal static void HANDLE_S_ItemUseReply(PacketSession session, S_ItemUseReply useItemApply)
         {
@@ -445,14 +463,23 @@ namespace Packet
         {
 
         }
-        internal static void HANDLE_S_PlayerStat(PacketSession session, S_PlayerStat playerStat)
+        internal static void HANDLE_S_PlayerStat(PacketSession session, S_PlayerStat playerInfo)
         {
+<<<<<<< HEAD
             Debug.Log($"최대 체력 : {playerStat.StatInfo.MaxHp}");
             Debug.Log($"현재 체력 : {playerStat.StatInfo.Hp}");
             Debug.Log($"경험치 : {playerStat.StatInfo.CurExp}");
             Debug.Log($"최대 경험치 : {playerStat.StatInfo.MaxExp}");
             Debug.Log($"레벨 : {playerStat.StatInfo.Level}");
             Debug.Log($"돈 : {playerStat.StatInfo.Money}");
+=======
+            Debug.Log($"최대 체력 : {playerInfo.StatInfo.MaxHp}");
+            Debug.Log($"현재 체력 : {playerInfo.StatInfo.Hp}");
+            Debug.Log($"경험치 : {playerInfo.StatInfo.Exp}");
+            Debug.Log($"레벨 : {playerInfo.StatInfo.Level}");
+            Debug.Log($"돈 : {playerInfo.StatInfo.Money}");
+            PlayerStatus.Instance.SetPlayerStatus(playerInfo.StatInfo);
+>>>>>>> main
         }
         public static void HANDLE_S_BroadcastPlayerHpChanged(PacketSession arg1, S_BroadcastPlayerHpChanged arg2)
         {
