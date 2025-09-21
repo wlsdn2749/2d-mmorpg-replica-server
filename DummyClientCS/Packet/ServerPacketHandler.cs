@@ -377,5 +377,22 @@ namespace Packet
         {
             Console.WriteLine($"플레이어가 죽어서 BroadCast");
         }
+
+        internal static void HANDLE_S_BroadcastPlayerChat(PacketSession session, S_BroadcastPlayerChat chat)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"\n===== 채팅 메시지 수신 =====");
+
+            foreach (var chatInfo in chat.PlayerChatInfos)
+            {
+                string chatTypeStr = chatInfo.ChatType == EChatType.ChatRoom ? "[룸]" : "[전체]";
+                string playerIdStr = chatInfo.PlayerId > 0 ? $"플레이어{chatInfo.PlayerId}" : "알수없음";
+
+                Console.WriteLine($"{chatTypeStr} {playerIdStr}: {chatInfo.Message}");
+            }
+
+            Console.WriteLine($"============================");
+            Console.ResetColor();
+        }
     }
 }

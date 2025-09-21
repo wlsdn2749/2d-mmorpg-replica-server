@@ -51,6 +51,9 @@ class Program
             Console.WriteLine("[i] 인벤토리 조회하기");
             Console.WriteLine("[u] 퀵슬롯 사용 (1~9)");
             Console.WriteLine("[o] 슬롯 지정 아이템 사용");
+            Console.WriteLine("\n===== 채팅 테스트 =====");
+            Console.WriteLine("[t] 룸 채팅 (현재 룸의 플레이어들에게만)");
+            Console.WriteLine("[y] 전체 채팅 (모든 룸의 플레이어들에게)");
             Console.WriteLine("\n===== 종료 로직 테스트 =====");
             Console.WriteLine("[x] 룸에서 나가기 (캐릭터 변경)");
             Console.WriteLine("[l] 로그아웃 테스트 (JWT 인증 상태로 복귀)");
@@ -294,6 +297,40 @@ class Program
                     }
                     
                     await SessionManager.Instance.SendItemUseRequest(slotIndex);
+                    break;
+                case "t":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
+                        break;
+                    }
+                    Console.Write("룸 채팅 메시지 입력: ");
+                    string? roomChatMessage = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(roomChatMessage))
+                    {
+                        Console.WriteLine("메시지를 입력해주세요!");
+                        break;
+                    }
+
+                    await SessionManager.Instance.SendRoomChat(roomChatMessage);
+                    break;
+                case "y":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
+                        break;
+                    }
+                    Console.Write("전체 채팅 메시지 입력: ");
+                    string? allChatMessage = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(allChatMessage))
+                    {
+                        Console.WriteLine("메시지를 입력해주세요!");
+                        break;
+                    }
+
+                    await SessionManager.Instance.SendAllChat(allChatMessage);
                     break;
                 case "x":
                     if (!_isInGame)

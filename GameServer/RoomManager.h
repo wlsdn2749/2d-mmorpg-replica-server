@@ -19,6 +19,45 @@ public:
 		_rooms[r->RoomId()] = std::move(r); // r을 Move하기 때문에 mapNametoIds가 먼저
 	}
 
+public:
+	// Execute DoAsync for All Rooms 
+
+	// Lambda or Func 
+	template<typename F>
+	void DoAsyncForAllRooms(F&& f)
+	{
+		for (auto& [roomIOd, room] : _rooms)
+		{
+			if (room)
+			{
+				room->DoAsync(std::forward<F>(f));
+			}
+		}
+	}
+
+	// 멤버함수 포인터 버전
+	template<typename T, typename Ret, typename... FArgs, typename... CallArgs>
+	void DoAsyncForAllRooms(Ret(T::* memFunc)(FArgs...), CallArgs&&... callArgs)
+	{
+		for (auto& [roomId, room] : _rooms)
+		{
+			if (room)
+			{
+				room->DoAsync(memFunc, std::forward<CallArgs>(callArgs)...);
+			}
+		}
+	}
+
+	// 멤버함수 포인터 Const 버전
+	template<typename T, typename Ret, typename... FArgs, typename... CallArgs>
+	void DoAsyncForAllRooms(Ret(T::* memFunc)(FArgs...) const, CallArgs&&... callArgs)
+	{
+		for (auto& [roomId, room] : _rooms) {
+			if (room) {
+				room->DoAsync(memFunc, std::forward<CallArgs>(callArgs)...);
+			}
+		}
+	}
 
 public:
 	// Helper Function

@@ -56,7 +56,6 @@ protected:
 	void ProcessMovesTick(); // 이번 틱에 요청이 있는 플레이어만 처리
 	void SendMoveAck(PlayerRef p, int clientSeq, Protocol::EMoveResult result);
 
-
 /*-----------------
 	Meta Datas
 -----------------*/
@@ -155,5 +154,17 @@ public:
 public:
 	void SendNpcInfo(PlayerRef player);
 
+/*-------------------
+	Chat System
+-------------------*/
+public:
+	void AddChat(GameSessionRef session, Protocol::C_PlayerChat chatPkt); // TODO: 패킷 복사 Too Much
+
+private:
+	void ProcessChatTick();
+
+private:
+	using chatPair = pair<GameSessionRef, Protocol::C_PlayerChat>;
+	Vector<chatPair> _pendingChats;
 };
 

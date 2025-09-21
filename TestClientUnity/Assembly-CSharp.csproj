@@ -122,7 +122,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile-2-Pass.shader" />
     <None Include="Assets\Packages\Grpc.Core.Api.2.71.0\lib\netstandard2.1\Grpc.Core.Api.xml" />
-    <None Include="Assets\Packages\System.Diagnostics.DiagnosticSource.6.0.1\lib\netstandard2.0\System.Diagnostics.DiagnosticSource.dll" />
+    <None Include="Assets\Resources\Data\SpawnPoint_data.json" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\Packages\System.Diagnostics.DiagnosticSource.6.0.1\useSharedDesignerContext.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />

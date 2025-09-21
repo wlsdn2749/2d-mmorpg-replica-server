@@ -293,6 +293,72 @@ namespace DummyClientCS
             }
         }
 
+        // 룸 채팅 전송
+        public async Task SendRoomChat(string message)
+        {
+            if (!_canSendPackets) return;
+
+            if (string.IsNullOrWhiteSpace(message))
+            {
+                Console.WriteLine("❌ 메시지가 비어있습니다.");
+                return;
+            }
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var chatInfo = new Google.Protobuf.Protocol.PlayerChatInfo
+                    {
+                        NonePlayer = true, // 클라이언트->서버 전송시
+                        Message = message,
+                        ChatType = Google.Protobuf.Protocol.EChatType.ChatRoom
+                    };
+
+                    var pkt = new Google.Protobuf.Protocol.C_PlayerChat
+                    {
+                        PlayerChatInfo = chatInfo
+                    };
+
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.WriteLine($"📢 [룸 채팅] '{message}' 전송했습니다.");
+                }
+            }
+        }
+
+        // 전체 채팅 전송
+        public async Task SendAllChat(string message)
+        {
+            if (!_canSendPackets) return;
+
+            if (string.IsNullOrWhiteSpace(message))
+            {
+                Console.WriteLine("❌ 메시지가 비어있습니다.");
+                return;
+            }
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var chatInfo = new Google.Protobuf.Protocol.PlayerChatInfo
+                    {
+                        NonePlayer = true, // 클라이언트->서버 전송시
+                        Message = message,
+                        ChatType = Google.Protobuf.Protocol.EChatType.ChatAll
+                    };
+
+                    var pkt = new Google.Protobuf.Protocol.C_PlayerChat
+                    {
+                        PlayerChatInfo = chatInfo
+                    };
+
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.WriteLine($"🌐 [전체 채팅] '{message}' 전송했습니다.");
+                }
+            }
+        }
+
         // 캐릭터 삭제 요청
         public async Task SendDeleteCharacterRequest(int characterIndex)
         {
