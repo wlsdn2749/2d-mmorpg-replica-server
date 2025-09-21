@@ -450,8 +450,39 @@ bool Handle_C_NpcInteractRequest(PacketSessionRef& session, Protocol::C_NpcInter
 	PlayerRef player = gameSession->_currentPlayer;
 
 	RoomRef room = player->GetRoom();
+
+	// TODO
 }
 bool Handle_C_NpcShopBuyRequest(PacketSessionRef& session, Protocol::C_NpcShopBuyRequest& pkt)
 {
+
+	// TODO
+
 	return false;
+}
+
+bool Handle_C_PlayerChat(PacketSessionRef& session, Protocol::C_PlayerChat& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+	
+	PlayerRef player = gameSession->_currentPlayer;
+
+	RoomRef room = player->GetRoom();
+
+	auto playerChatInfo = pkt.playerchatinfo();
+	switch (playerChatInfo.chattype())
+	{
+		case Protocol::EChatType::CHAT_ROOM:
+			room->DoAsync(&Room::AddChat, gameSession, pkt);
+			break;
+		case Protocol::EChatType::CHAT_ALL:
+			RoomManager::Instance().DoAsyncForAllRooms(&Room::AddChat, gameSession, pkt);
+			break;
+		[[unlikely]] default:
+			ASSERT_CRASH("WRONG VALUE");
+	}
+
 }

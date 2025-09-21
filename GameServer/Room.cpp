@@ -329,6 +329,34 @@ void Room::SendNpcInfo(PlayerRef player)
         s->Send(sendBuffer);
 }
 
+void Room::AddChat(GameSessionRef session, Protocol::C_PlayerChat chatPkt)
+{
+    _pendingChats.emplace_back(session, chatPkt);
+}
+
+void Room::ProcessChatTick()
+{
+    if(_pendingChats.empty()) return; // 비어있을 경우 리턴
+    
+    Protocol::S_BroadcastPlayerChat broadcastChatPkt;
+    broadcastChatPkt.mutable_playerchatinfos()->Reserve(_pendingChats.size()); // 미리 확보
+    for (const auto& [sess, cchat] : _pendingChats)
+    {
+        auto message = cchat.playerchatinfo().message();
+        auto chatType = cchat.playerchatinfo().chattype();
+        Protocol::PlayerChatInfo* chat = broadcastChatPkt.add_playerchatinfos();
+
+        chat->set_playerid(sess->_currentPlayer->playerId);
+        chat->set_message(message);
+        chat->set_chattype(chatType);
+    }
+
+    auto sendBuffer = ClientPacketHandler::MakeSendBuffer(broadcastChatPkt);
+    Broadcast(sendBuffer);
+
+    _pendingChats.clear();
+}
+
 bool Room::CanEnterTile(int nx, int ny) const
 {
     UNREFERENCED_PARAMETER(nx);
@@ -366,6 +394,7 @@ void Room::InitRoomSystems(){}
 void Room::OnRoomTick()
 {
     ProcessMovesTick();
+    ProcessChatTick();
 
     _reserved.clear(); // 예약 버퍼 비움
 }
