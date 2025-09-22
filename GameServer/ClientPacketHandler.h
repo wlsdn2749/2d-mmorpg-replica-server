@@ -53,6 +53,8 @@ enum : uint16
 	PKT_S_BroadcastPlayerDeath = 43,
 	PKT_C_PlayerChat = 44,
 	PKT_S_BroadcastPlayerChat = 45,
+	PKT_C_GiveItemRequest = 46,
+	PKT_S_GiveItemReply = 47,
 
 };
 
@@ -73,6 +75,7 @@ bool Handle_C_ItemUseRequest(PacketSessionRef& session, Protocol::C_ItemUseReque
 bool Handle_C_NpcInteractRequest(PacketSessionRef& session, Protocol::C_NpcInteractRequest& pkt);
 bool Handle_C_NpcShopBuyRequest(PacketSessionRef& session, Protocol::C_NpcShopBuyRequest& pkt);
 bool Handle_C_PlayerChat(PacketSessionRef& session, Protocol::C_PlayerChat& pkt);
+bool Handle_C_GiveItemRequest(PacketSessionRef& session, Protocol::C_GiveItemRequest& pkt);
 
 class ClientPacketHandler
 {
@@ -98,6 +101,7 @@ public:
 		GPacketHandler[PKT_C_NpcInteractRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_NpcInteractRequest>(Handle_C_NpcInteractRequest, session, buffer, len); };
 		GPacketHandler[PKT_C_NpcShopBuyRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_NpcShopBuyRequest>(Handle_C_NpcShopBuyRequest, session, buffer, len); };
 		GPacketHandler[PKT_C_PlayerChat] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PlayerChat>(Handle_C_PlayerChat, session, buffer, len); };
+		GPacketHandler[PKT_C_GiveItemRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_GiveItemRequest>(Handle_C_GiveItemRequest, session, buffer, len); };
 		
 	}
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
@@ -137,6 +141,7 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerHpChanged& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerHpChanged); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerDeath& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerDeath); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerChat& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerChat); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_GiveItemReply& pkt) { return MakeSendBuffer(pkt, PKT_S_GiveItemReply); };
 
 private:
 	template<typename PacketType, typename ProcessFunc>

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <rapidjson/document.h>
 #include <rapidjson/filereadstream.h>
@@ -95,4 +95,9 @@ public:
      * JSON Value에서 문자열을 안전하게 추출
      */
     static std::string SafeGetString(const rapidjson::Value& value, const std::string& fieldName);
+
+    /**
+     * JSON Value에서 Bool 값 안전하게 추출
+     */
+    static bool SafeGetBool(const rapidjson::Value& value, const std::string& fieldName);
 };
