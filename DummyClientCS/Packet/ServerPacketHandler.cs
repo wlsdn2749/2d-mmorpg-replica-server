@@ -394,5 +394,42 @@ namespace Packet
             Console.WriteLine($"============================");
             Console.ResetColor();
         }
+
+        internal static void HANDLE_S_GiveItemReply(PacketSession session, S_GiveItemReply reply)
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+            Console.WriteLine("🎁 [S_GiveItemReply] 아이템 지급 결과");
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+
+            if (reply.Success)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("✅ 아이템 지급 성공!");
+
+                if (reply.AddedSlot != null)
+                {
+                    Console.WriteLine($"📦 추가된 슬롯 정보:");
+                    Console.WriteLine($"   슬롯 인덱스: {reply.AddedSlot.SlotIndex}");
+                    Console.WriteLine($"   아이템 ID: {reply.AddedSlot.ItemId}");
+                    Console.WriteLine($"   수량: {reply.AddedSlot.Count}");
+                    Console.WriteLine($"   퀵슬롯 여부: {(reply.AddedSlot.IsQuickslot ? "예" : "아니오")}");
+                }
+
+                Console.WriteLine("💡 인벤토리 조회('i' 키)로 전체 인벤토리를 확인해보세요!");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("❌ 아이템 지급 실패!");
+                if (!string.IsNullOrEmpty(reply.ErrorMessage))
+                {
+                    Console.WriteLine($"🚫 오류 메시지: {reply.ErrorMessage}");
+                }
+            }
+
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+            Console.ResetColor();
+        }
     }
 }

@@ -51,6 +51,8 @@ enum MsgId
 	S_BROADCAST_PLAYER_DEATH = 43;
 	C_PLAYER_CHAT = 44;
 	S_BROADCAST_PLAYER_CHAT = 45;
+	C_GIVE_ITEM_REQUEST = 46;
+	S_GIVE_ITEM_REPLY = 47;
 }
 
 // 클라 -> 게임 서버 jwt 로그인 인증 (0)
@@ -339,7 +341,22 @@ message C_PlayerChat
 // (45) 서버 -> 클라 : S_BroadcastPlayerChat : Room-Tick마다 Server가 Player에게 모아둔 채팅 송신
 message S_BroadcastPlayerChat
 {
-	repeated PlayerChatInfo playerChatInfos = 1; 
+	repeated PlayerChatInfo playerChatInfos = 1;
+}
+
+// (46) 클라 -> 서버 : 테스트용 아이템 지급 요청
+message C_GiveItemRequest
+{
+	int32 itemId = 1;
+	int32 count = 2;
+}
+
+// (47) 서버 -> 클라 : 아이템 지급 결과 응답
+message S_GiveItemReply
+{
+	bool success = 1;
+	string errorMessage = 2;
+	InventorySlotInfo addedSlot = 3;
 }
 
 enum ELoginResult

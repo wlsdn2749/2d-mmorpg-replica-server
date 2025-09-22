@@ -114,10 +114,7 @@ EUseItemResult InventorySystem::UseItem(int slotIndex)
     if (!itemData || itemData->itemType != Protocol::EItemType::ITEM_TYPE_CONSUMABLE)
         return EUseItemResult::ItemNotUsable;
 
-    // 아이템 효과 적용
-    ApplyItemEffect(slot.itemId, 1);
-
-    // 소비형 아이템은 사용 후 제거
+    // 소비형 아이템은 사용 후 제거 (효과 적용은 Player에서 처리)
     RemoveItem(slotIndex, 1);
 
     return EUseItemResult::Success;
@@ -338,9 +335,3 @@ int InventorySystem::GetMaxStackSize(int itemId) const
     return itemData ? itemData->maxStack : 1;
 }
 
-void InventorySystem::ApplyItemEffect(int itemId, int count)
-{
-    // TODO: 아이템 효과 시스템 구현
-    // 포션 사용 시 HP 회복 등의 효과를 여기서 처리
-    std::cout << "Applied effect for item " << itemId << " (count: " << count << ")" << std::endl;
-}

@@ -51,6 +51,7 @@ class Program
             Console.WriteLine("[i] 인벤토리 조회하기");
             Console.WriteLine("[u] 퀵슬롯 사용 (1~9)");
             Console.WriteLine("[o] 슬롯 지정 아이템 사용");
+            Console.WriteLine("[g] 아이템 지급 테스트 (서버에서 아이템 받기)");
             Console.WriteLine("\n===== 채팅 테스트 =====");
             Console.WriteLine("[t] 룸 채팅 (현재 룸의 플레이어들에게만)");
             Console.WriteLine("[y] 전체 채팅 (모든 룸의 플레이어들에게)");
@@ -297,6 +298,54 @@ class Program
                     }
                     
                     await SessionManager.Instance.SendItemUseRequest(slotIndex);
+                    break;
+                case "g":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
+                        break;
+                    }
+                    Console.Write("아이템 ID 입력 (예: 10001=체력포션): ");
+                    string? itemIdInput = Console.ReadLine();
+
+                    // 아이템ID 유효성 검사
+                    if (string.IsNullOrWhiteSpace(itemIdInput))
+                    {
+                        Console.WriteLine("아이템 ID를 입력해주세요!");
+                        break;
+                    }
+                    if (!Int32.TryParse(itemIdInput, out int itemId))
+                    {
+                        Console.WriteLine("아이템 ID는 숫자여야 합니다!");
+                        break;
+                    }
+                    if (itemId <= 0)
+                    {
+                        Console.WriteLine("아이템 ID는 0보다 큰 숫자여야 합니다!");
+                        break;
+                    }
+
+                    Console.Write("수량 입력 (예: 5): ");
+                    string? countInput = Console.ReadLine();
+
+                    // 수량 유효성 검사
+                    if (string.IsNullOrWhiteSpace(countInput))
+                    {
+                        Console.WriteLine("수량을 입력해주세요!");
+                        break;
+                    }
+                    if (!Int32.TryParse(countInput, out int count))
+                    {
+                        Console.WriteLine("수량은 숫자여야 합니다!");
+                        break;
+                    }
+                    if (count <= 0)
+                    {
+                        Console.WriteLine("수량은 0보다 큰 숫자여야 합니다!");
+                        break;
+                    }
+
+                    await SessionManager.Instance.SendGiveItemRequest(itemId, count);
                     break;
                 case "t":
                     if (!_isInGame)

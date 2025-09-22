@@ -375,11 +375,19 @@ bool Handle_C_ItemUseRequest(PacketSessionRef& session, Protocol::C_ItemUseReque
 		return false;
 
 	int slotIndex = pkt.slotindex();
-	
+
 	GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_ItemUseRequest]: Player가 슬롯[%d] 아이템 사용 요청함 \n", slotIndex);
 
+	// 아이템 정보를 사용 전에 미리 저장 (RemoveItem으로 정보가 변경되기 전)
+	int itemId = player->GetItemIdFromSlot(slotIndex);
+
 	// 아이템 사용 처리
-	EUseItemResult result = player->UseItem(slotIndex);
+	EUseItemResult result = player->UseItem(slotIndex); // 여기서 감소까지 처리
+
+	// 성공 시 아이템 효과 적용
+	if (result == EUseItemResult::Success && itemId > 0) {
+		ItemManager::Instance().ApplyItemEffect(itemId, 1, player);
+	}
 
 	Protocol::S_ItemUseReply replyPkt;
 	replyPkt.set_success(result == EUseItemResult::Success);
@@ -485,4 +493,69 @@ bool Handle_C_PlayerChat(PacketSessionRef& session, Protocol::C_PlayerChat& pkt)
 			ASSERT_CRASH("WRONG VALUE");
 	}
 
+	return true;
+}
+
+bool Handle_C_GiveItemRequest(PacketSessionRef& session, Protocol::C_GiveItemRequest& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+	if (!player)
+		return false;
+
+	Protocol::S_GiveItemReply replyPkt;
+
+	// 아이템 유효성 검사
+	int itemId = pkt.itemid();
+	int count = pkt.count();
+
+	if (itemId <= 0 || count <= 0)
+	{
+		replyPkt.set_success(false);
+		replyPkt.set_errormessage("잘못된 아이템 정보입니다.");
+	}
+	else
+	{
+		// 아이템 지급 시도
+		auto result = player->AddItem(itemId, count);
+		if (result == EAddItemResult::Success)
+		{
+			replyPkt.set_success(true);
+			replyPkt.set_errormessage("");
+
+			// 인벤토리 업데이트 브로드캐스트
+			Protocol::S_InventoryUpdate updatePkt;
+			auto slots = player->GetInventory().ToProtocolSlots();
+			for (const auto& slot : slots)
+			{
+				if (slot.itemid() == itemId)
+				{
+					*updatePkt.add_changedslots() = slot;
+					*replyPkt.mutable_addedslot() = slot;
+					break;
+				}
+			}
+
+			auto updateBuffer = ClientPacketHandler::MakeSendBuffer(updatePkt);
+			session->Send(updateBuffer);
+
+			GConsoleLogger->WriteStdOut(Color::GREEN,
+				L"[테스트] 플레이어 %d에게 아이템 %d개 %d개 지급 완료\n",
+				player->playerId, itemId, count);
+		}
+		else
+		{
+			replyPkt.set_success(false);
+			replyPkt.set_errormessage("아이템 지급에 실패했습니다. (인벤토리 부족 등)");
+		}
+	}
+
+	auto replyBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
+	session->Send(replyBuffer);
+
+	return true;
 }

@@ -5,6 +5,7 @@
 #include "CharacterRepository.h"
 #include "InventorySystem.h"
 #include "InventoryRepository.h"
+#include "ItemManager.h"
 class Room; // 전방 선언
 
 struct PendingRoomChange {
@@ -150,6 +151,12 @@ public:
 			SaveSlotToDB(slotIndex);
 		}
 		return result;
+	}
+
+	// 아이템 사용을 위한 헬퍼 함수 (아이템 정보 반환)
+	int GetItemIdFromSlot(int slotIndex) const {
+		const ItemSlot& slot = _inventory.GetSlot(slotIndex);
+		return slot.IsEmpty() ? 0 : slot.itemId;
 	}
 
 private:

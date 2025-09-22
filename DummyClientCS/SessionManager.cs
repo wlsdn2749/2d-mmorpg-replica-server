@@ -377,5 +377,25 @@ namespace DummyClientCS
                 }
             }
         }
+
+        // 테스트용 아이템 지급 요청
+        public async Task SendGiveItemRequest(int itemId, int count)
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_GiveItemRequest
+                    {
+                        ItemId = itemId,
+                        Count = count
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.WriteLine($"🎁 아이템 지급 요청 전송: ItemID={itemId}, Count={count}");
+                }
+            }
+        }
     }
 }

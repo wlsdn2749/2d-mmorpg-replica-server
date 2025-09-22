@@ -54,6 +54,8 @@ namespace Packet
 	    PKT_S_BroadcastPlayerDeath = 43,
 	    PKT_C_PlayerChat = 44,
 	    PKT_S_BroadcastPlayerChat = 45,
+	    PKT_C_GiveItemRequest = 46,
+	    PKT_S_GiveItemReply = 47,
     }
     public class ServerPacketManager
     {
@@ -93,6 +95,7 @@ namespace Packet
         public static ArraySegment<byte> MakeSendBuffer(C_NpcInteractRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_NpcInteractRequest);
         public static ArraySegment<byte> MakeSendBuffer(C_NpcShopBuyRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_NpcShopBuyRequest);
         public static ArraySegment<byte> MakeSendBuffer(C_PlayerChat pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PlayerChat);
+        public static ArraySegment<byte> MakeSendBuffer(C_GiveItemRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_GiveItemRequest);
 
         void Register()
         {
@@ -132,6 +135,7 @@ namespace Packet
             RegisterHandler((ushort)PacketID.PKT_S_BroadcastPlayerHpChanged, ServerPacketHandler.HANDLE_S_BroadcastPlayerHpChanged, S_BroadcastPlayerHpChanged.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_BroadcastPlayerDeath, ServerPacketHandler.HANDLE_S_BroadcastPlayerDeath, S_BroadcastPlayerDeath.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_BroadcastPlayerChat, ServerPacketHandler.HANDLE_S_BroadcastPlayerChat, S_BroadcastPlayerChat.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_GiveItemReply, ServerPacketHandler.HANDLE_S_GiveItemReply, S_GiveItemReply.Parser);
             
                   
         }
