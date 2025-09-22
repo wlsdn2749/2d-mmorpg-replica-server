@@ -1,0 +1,18 @@
+[
+  {
+    "itemId": "10001",
+    "name": "체력 포션",
+    "description": "HP를 30 회복 시킵니다.",
+    "isStackable": "TRUE",
+    "maxStack": "99",
+    "itemType": "CONSUMABLE"
+  },
+  {
+    "itemId": "10002",
+    "name": "고급 체력 포션",
+    "description": "HP를 50 회복 시킵니다.",
+    "isStackable": "TRUE",
+    "maxStack": "99",
+    "itemType": "CONSUMABLE"
+  }
+]

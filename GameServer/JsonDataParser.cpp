@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "JsonDataParser.h"
 #include <iostream>
 
@@ -96,4 +96,28 @@ std::string JsonDataParser::SafeGetString(const rapidjson::Value& value, const s
     }
 
     return field.GetString();
+}
+
+bool JsonDataParser::SafeGetBool(const rapidjson::Value& value, const std::string& fieldName)
+{
+    if (!value.HasMember(fieldName.c_str()))
+    {
+        throw std::runtime_error("JSON에서 필수 필드를 찾을 수 없습니다. " + fieldName);
+    }
+
+    const auto& field = value[fieldName.c_str()];
+
+    if (!field.IsString())
+    {
+        throw std::runtime_error("잘못된 데이터 타입 (필드: " + fieldName + ", 문자열이 아님)");
+    }
+
+    auto fieldStr = static_cast<string>(field.GetString());
+
+    if(fieldStr == "TRUE") 
+        return true;
+    else if(fieldStr == "FALSE") 
+        return false;
+    else 
+        throw std::runtime_error("TRUE혹은 FASLE값이 아님 :" + string(fieldStr));
 }

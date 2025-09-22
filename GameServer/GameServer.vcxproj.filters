@@ -222,6 +222,7 @@
     <ClCompile Include="SpawnPointDataParser.cpp">
       <Filter>DataParser</Filter>
     </ClCompile>
+    <ClCompile Include="ItemDataParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -395,6 +396,7 @@
     <ClInclude Include="SpawnPointDataParser.h">
       <Filter>DataParser</Filter>
     </ClInclude>
+    <ClInclude Include="ItemDataParser.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="appsettings.json">

@@ -172,18 +172,6 @@
   
   
   <!--===== 아이템, 인벤토리 관련 DB =====-->
-  <Table name="ItemData">
-    <Column name="itemId" type="int" notnull="true"/>
-    <Column name="name" type="nvarchar(64)" notnull="true"/>
-    <Column name="description" type="nvarchar(256)" notnull="false"/>
-    <Column name="isStackable" type="int" notnull="true" default="0"/>
-    <Column name="maxStack" type="int" notnull="true" default="99"/>
-    <Column name="itemType" type="int" notnull="true" default="0"/>
-    <Index type="clustered">
-      <PrimaryKey/>
-      <Column name="itemId"/>
-    </Index>
-  </Table>
   <Table name="CharacterInventory">
     <Column name="characterId" type="int" notnull="true"/>
     <Column name="slotIndex" type="int" notnull="true"/>
@@ -201,12 +189,6 @@
             onUpdate="NO_ACTION">
       <Column local="characterId" ref="characterId"/>
     </ForeignKey>
-    <ForeignKey name="FK_CharacterInventory_itemId_ItemData_itemId"
-            refTable="ItemData"
-            onDelete="NO_ACTION"
-            onUpdate="NO_ACTION">
-     <Column local="itemId" ref="itemId"/>
-    </ForeignKey>
   </Table>
   <!-- ===== 드랍 시스템 관련 DB===== -->
   <Table name="MonsterDropItem">
@@ -220,13 +202,7 @@
     <Index type="clustered">
       <PrimaryKey/>
       <Column name="id"/>
-    </Index>
-    <ForeignKey name="FK_MonsterDropItem_itemId_ItemData_itemId"
-            refTable="ItemData"
-            onDelete="NO_ACTION"
-            onUpdate="NO_ACTION">
-      <Column local="itemId" ref="itemId"/>
-    </ForeignKey>    
+    </Index>  
   </Table>
   <Procedure name="spGetMonsterDropItems">
     <Body>

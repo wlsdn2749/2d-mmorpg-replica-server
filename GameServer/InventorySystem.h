@@ -57,8 +57,6 @@ private:
     bool CanStackItem(int itemId, int slotIndex, int additionalCount) const;
     int GetMaxStackSize(int itemId) const;
 
-    // 아이템 효과 처리
-    void ApplyItemEffect(int itemId, int count);
 
 private:
     std::array<ItemSlot, INVENTORY_TOTAL_SLOTS> _slots;
