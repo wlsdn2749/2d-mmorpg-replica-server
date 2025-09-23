@@ -54,7 +54,6 @@ public static class MonsterSpawner
         var mh = go.GetComponent<MonsterHealth>() ?? go.AddComponent<MonsterHealth>();
         mh.SetMaxHp(typeId);
         _spawned[id] = go;
-        Debug.Log("스냅샷 몬스터 생성 완료");
         return go;
     }
 

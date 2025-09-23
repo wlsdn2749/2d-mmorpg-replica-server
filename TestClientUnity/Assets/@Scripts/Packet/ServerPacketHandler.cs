@@ -465,29 +465,29 @@ namespace Packet
         }
         internal static void HANDLE_S_PlayerStat(PacketSession session, S_PlayerStat playerInfo)
         {
-<<<<<<< HEAD
-            Debug.Log($"최대 체력 : {playerStat.StatInfo.MaxHp}");
-            Debug.Log($"현재 체력 : {playerStat.StatInfo.Hp}");
-            Debug.Log($"경험치 : {playerStat.StatInfo.CurExp}");
-            Debug.Log($"최대 경험치 : {playerStat.StatInfo.MaxExp}");
-            Debug.Log($"레벨 : {playerStat.StatInfo.Level}");
-            Debug.Log($"돈 : {playerStat.StatInfo.Money}");
-=======
             Debug.Log($"최대 체력 : {playerInfo.StatInfo.MaxHp}");
             Debug.Log($"현재 체력 : {playerInfo.StatInfo.Hp}");
-            Debug.Log($"경험치 : {playerInfo.StatInfo.Exp}");
+            Debug.Log($"현재 경험치 : {playerInfo.StatInfo.CurExp}");
+            Debug.Log($"최대 경험치 : {playerInfo.StatInfo.MaxExp}");
             Debug.Log($"레벨 : {playerInfo.StatInfo.Level}");
             Debug.Log($"돈 : {playerInfo.StatInfo.Money}");
             PlayerStatus.Instance.SetPlayerStatus(playerInfo.StatInfo);
->>>>>>> main
         }
-        public static void HANDLE_S_BroadcastPlayerHpChanged(PacketSession arg1, S_BroadcastPlayerHpChanged arg2)
+        public static void HANDLE_S_BroadcastPlayerHpChanged(PacketSession arg1, S_BroadcastPlayerHpChanged hpChanged)
         {
-            
+            PlayerStatus.Instance.UpdateHp(hpChanged);
         }
-        public static void HANDLE_S_BroadcastPlayerDeath(PacketSession arg1, S_BroadcastPlayerDeath arg2)
+        public static void HANDLE_S_BroadcastPlayerDeath(PacketSession arg1, S_BroadcastPlayerDeath playerDie)
         {
-            
+            Debug.Log($"플레이어 죽음{playerDie.PlayerId} / {playerDie.KillerMonsterId}");
+        }
+        public static void HANDLE_S_BroadcastPlayerChat(PacketSession session, S_BroadcastPlayerChat chat)
+        {
+            //var pInfo = new S_BroadcastPlayerChat().PlayerChatInfos;
+            //foreach (var info in pInfo)
+            //{
+                
+            //}
         }
     }
 }

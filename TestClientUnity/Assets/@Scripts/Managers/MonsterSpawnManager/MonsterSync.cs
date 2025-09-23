@@ -17,10 +17,8 @@ public static class MonsterSync
     public static void OnMapActivated(int mapId)
     {
         _currentMapId = mapId;
-        _sceneReady = false;              // 중요: 새 씬 준비 전 상태
+        _sceneReady = false;              
         _pendingMoves.Clear();
-        // 스냅샷/스폰은 큐에 쌓이게 둔다
-        Debug.Log($"[MonsterSync] Map activated: {mapId}");
     }
 
     // 씬 로드 시작 직전에 (선택) 부르면 명시적
@@ -30,7 +28,6 @@ public static class MonsterSync
     public static void OnGameplaySceneActivated()
     {
         _sceneReady = true;
-        Debug.Log("[MonsterSync] Scene ready → flush pending");
 
         // 1) 스냅샷 먼저
         if (_pendingSnapshot != null && _pendingSnapshot.MapId == _currentMapId)
@@ -71,7 +68,6 @@ public static class MonsterSync
             SpawnNow(info); 
         }
 
-        Debug.Log("[MonsterSync] snapshot applied");
     }
 
     public static void OnSpawn(MonsterInfo info)
