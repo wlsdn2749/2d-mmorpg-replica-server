@@ -249,27 +249,46 @@ void Room::OnPlayerHpChanged(int playerId)
 
 void Room::OnPlayerDeath(int playerId, int killerMonsterId)
 {
+    auto player = FindPlayer(playerId);
+    player->SetPlayerState(Player::PlayerState::Dead);
+
+    auto dstName = RoomManager::Instance().GetNameByRegion(player->region);
+    auto dstId = RoomManager::Instance().GetRoomIdByName(dstName);
+
     Protocol::S_BroadcastPlayerDeath pkt;
+    pkt.set_mapid(dstId);
     pkt.set_playerid(playerId);
     pkt.set_killermonsterid(killerMonsterId);
 
     Broadcast(ClientPacketHandler::MakeSendBuffer(pkt)); // 죽었다고, BroadCast하지만, Leave에서 한번 더 함
+}
 
-    auto player = FindPlayer(playerId);
+void Room::PlayerDeathReady(const PlayerRef& player)
+{
+    if (player->GetPlayerState() != Player::PlayerState::Dead) return;
+
     auto dstName = RoomManager::Instance().GetNameByRegion(player->region);
     auto dstId = RoomManager::Instance().GetRoomIdByName(dstName);
+
+    Protocol::S_PlayerDeathCommit pkt;
+    pkt.set_mapid(dstId);
+
+    auto SendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
+    if (auto s = player->ownerSession.lock())
+    {
+        auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
+        s->Send(sendBuffer);
+    }
 
     RoomRef src = static_pointer_cast<Room>(shared_from_this());
     RoomRef dst = RoomManager::Instance().Find(dstId);
 
     src->DoAsync([src, dst, player] {
-        src->Leave(player); 
+        src->Leave(player);
 
-        player->ResetPos();
-        player->SetHp(player->MaxHp()); // 피 풀피로 초기화
+        player->ResetToRespawnState(); // x,y 0으로 초기화 되지만, 리스폰될때 spawnPoint로 변경
         dst->DoAsync(&Room::Enter, player);
     });
-
 }
 
 void Room::LoadNpcs()
@@ -513,6 +532,11 @@ void Room::ProcessMovesTick()
 void Room::OnRecvMoveReq(PlayerRef p, const Protocol::C_PlayerMoveRequest& req)
 {
     if (!p) return;
+    if (p->IsDead())
+    {
+        GConsoleLogger->WriteStdOut(Color::RED, L"[OnRecvMoveReq] 현재 Dead State라 움직일 수 없음 \n");
+        return;
+    }
     auto& st = _pstates[p->playerId];
     st.pending.has = true;
     st.pending.clickWorldPos = req.clickworldpos();
@@ -604,8 +628,11 @@ void Room::ChangeRoomReady(const PlayerRef& p, const Protocol::C_ChangeRoomReady
         });
 }
 
+
 void Room::OnRecvAttackReq(const PlayerRef& p, const Protocol::C_PlayerAttackRequest& pkt)
 {
+    if(p->IsDead()) return;
+
     Protocol::S_BroadcastPlayerTryAttack tryAttackPkt;
     tryAttackPkt.set_playerid(p->core.id);
 

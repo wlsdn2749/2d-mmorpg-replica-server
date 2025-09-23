@@ -204,9 +204,10 @@ void FieldRoom::OnPlayerMoved(const PlayerRef& p, int ox, int oy)
 
 void FieldRoom::OnRecvAttackReq(const PlayerRef& p, const Protocol::C_PlayerAttackRequest& req)
 {
-	Room::OnRecvAttackReq(p, req);
+	if (!_pCombat) return;
+	if (p->IsDead()) return;
 
-	if(!_pCombat) return;
+	Room::OnRecvAttackReq(p, req);
 	const int64_t nowMs = Time::NowSteadyMs();
 	_pCombat->HandleAttack(p, nowMs);
 }

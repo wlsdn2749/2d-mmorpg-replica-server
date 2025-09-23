@@ -469,6 +469,27 @@ bool Handle_C_NpcShopBuyRequest(PacketSessionRef& session, Protocol::C_NpcShopBu
 	return false;
 }
 
+bool Handle_C_PlayerDeathReady(PacketSessionRef& session, Protocol::C_PlayerDeathReady& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+	if (!player)
+		return false;
+
+	RoomRef room = player->GetRoom();
+	if (!room)
+		return false;
+
+	// PlayerDeathReady 호출 - 실제 리스폰 처리
+	room->DoAsync(&Room::PlayerDeathReady, player);
+
+	return true;
+}
+
 bool Handle_C_PlayerChat(PacketSessionRef& session, Protocol::C_PlayerChat& pkt)
 {
 	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
