@@ -218,6 +218,7 @@ void FieldRoom::MonsterEntityLinkerImpl::ForEachPlayerInRange(int cx, int cy, in
 {
 	for (auto& [pid, player] : _r.Players()) {
 		if (!player) continue;
+		if (player->IsDead()) continue;
 		const auto pos = player->GetPos();
 		const int  hp = player->Hp();      // TODO: "
 		int dist = std::abs(pos.x - cx) + std::abs(pos.y - cy);
@@ -230,6 +231,7 @@ bool FieldRoom::MonsterEntityLinkerImpl::TryGetPlayer(int pid, PlayerView& out) 
 {
 	auto p = _r.FindPlayer(pid);
 	if (!p) return false;
+	if (p->IsDead()) return false;
 	const auto pos = p->GetPos();            // TODO
 	out = PlayerView{ pid, pos.x, pos.y, p->Hp() }; // TODO
 	return true;
