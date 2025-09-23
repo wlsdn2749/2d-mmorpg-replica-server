@@ -55,6 +55,8 @@ class Program
             Console.WriteLine("\n===== 채팅 테스트 =====");
             Console.WriteLine("[t] 룸 채팅 (현재 룸의 플레이어들에게만)");
             Console.WriteLine("[y] 전체 채팅 (모든 룸의 플레이어들에게)");
+            Console.WriteLine("\n===== Death 시스템 테스트 =====");
+            Console.WriteLine("[p] 리스폰 요청 (사망 후 부활하기)");
             Console.WriteLine("\n===== 종료 로직 테스트 =====");
             Console.WriteLine("[x] 룸에서 나가기 (캐릭터 변경)");
             Console.WriteLine("[l] 로그아웃 테스트 (JWT 인증 상태로 복귀)");
@@ -380,6 +382,29 @@ class Program
                     }
 
                     await SessionManager.Instance.SendAllChat(allChatMessage);
+                    break;
+                case "p":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
+                        break;
+                    }
+
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine("========================================");
+                    Console.WriteLine("💀➡️✨ [Death 시스템 테스트] 리스폰 요청");
+                    Console.WriteLine("========================================");
+                    Console.WriteLine("⚠️  주의: 이 기능은 사망 상태에서만 작동합니다.");
+                    Console.WriteLine("📝 사용법:");
+                    Console.WriteLine("   1. 몬스터에게 공격받아 사망하세요");
+                    Console.WriteLine("   2. S_BroadcastPlayerDeath 메시지가 나타나면");
+                    Console.WriteLine("   3. 'p' 키를 눌러 리스폰을 요청하세요");
+                    Console.WriteLine("   4. S_PlayerDeathCommit으로 리스폰이 승인됩니다");
+                    Console.WriteLine("   5. S_ChangeRoomCommit으로 목적지 맵으로 이동합니다");
+                    Console.WriteLine("========================================");
+                    Console.ResetColor();
+
+                    await SessionManager.Instance.SendPlayerDeathReady();
                     break;
                 case "x":
                     if (!_isInGame)

@@ -397,5 +397,24 @@ namespace DummyClientCS
                 }
             }
         }
+
+        // 플레이어 리스폰 준비 완료 신호 전송
+        public async Task SendPlayerDeathReady()
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_PlayerDeathReady
+                    {
+                        // 빈 패킷 - 단순히 리스폰 준비 완료를 알림
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.WriteLine("💀➡️✨ 리스폰 준비 완료 신호를 서버에 전송했습니다.");
+                }
+            }
+        }
     }
 }

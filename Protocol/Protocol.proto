@@ -49,10 +49,12 @@ enum MsgId
 	S_BROADCAST_PLAYER_TRY_ATTACK = 41;
 	S_BROADCAST_PLAYER_HP_CHANGED = 42;
 	S_BROADCAST_PLAYER_DEATH = 43;
-	C_PLAYER_CHAT = 44;
-	S_BROADCAST_PLAYER_CHAT = 45;
-	C_GIVE_ITEM_REQUEST = 46;
-	S_GIVE_ITEM_REPLY = 47;
+	C_PLAYER_DEATH_READY = 44;
+	S_PLAYER_DEATH_COMMIT = 45;
+	C_PLAYER_CHAT = 46;
+	S_BROADCAST_PLAYER_CHAT = 47;
+	C_GIVE_ITEM_REQUEST = 48;
+	S_GIVE_ITEM_REPLY = 49;
 }
 
 // 클라 -> 게임 서버 jwt 로그인 인증 (0)
@@ -325,33 +327,44 @@ message S_BroadcastPlayerHpChanged
 	int32 hp = 2;
 	int32 maxHp = 3;
 }
-// (43) 서버 -> 클라 : S_BroadcastPlayerDeath
+// (43) 서버 -> 클라 : S_BroadcastPlayerDeath 플레이어가 죽을 시, 모든 플레이어에게 죽었음을 보냄
 message S_BroadcastPlayerDeath
 {
-	int32 playerId = 1;
-	int32 killerMonsterId = 2;
+	int32 mapId = 1;
+	int32 playerId = 2;
+	int32 killerMonsterId = 3;
+}
+// (44) 클라 -> 서버 : C_PlayerDeathReady 플레이어의 Respawn을 확인
+message C_PlayerDeathReady
+{
+
+}
+// (45) 서버 -> 클라 : PlayerDeathCommit
+message S_PlayerDeathCommit
+{
+	int32 mapId = 1;
 }
 
-// (44) 클라 -> 서버 : C_PlayerChat 채팅 송신
+// (46) 클라 -> 서버 : C_PlayerChat 채팅 송신
 message C_PlayerChat
 {
 	PlayerChatInfo playerChatInfo = 1;
 }
 
-// (45) 서버 -> 클라 : S_BroadcastPlayerChat : Room-Tick마다 Server가 Player에게 모아둔 채팅 송신
+// (47) 서버 -> 클라 : S_BroadcastPlayerChat : Room-Tick마다 Server가 Player에게 모아둔 채팅 송신
 message S_BroadcastPlayerChat
 {
 	repeated PlayerChatInfo playerChatInfos = 1;
 }
 
-// (46) 클라 -> 서버 : 테스트용 아이템 지급 요청
+// (48) 클라 -> 서버 : 테스트용 아이템 지급 요청
 message C_GiveItemRequest
 {
 	int32 itemId = 1;
 	int32 count = 2;
 }
 
-// (47) 서버 -> 클라 : 아이템 지급 결과 응답
+// (49) 서버 -> 클라 : 아이템 지급 결과 응답
 message S_GiveItemReply
 {
 	bool success = 1;
