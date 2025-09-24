@@ -51,10 +51,12 @@ enum : uint16
 	PKT_S_BroadcastPlayerTryAttack = 41,
 	PKT_S_BroadcastPlayerHpChanged = 42,
 	PKT_S_BroadcastPlayerDeath = 43,
-	PKT_C_PlayerChat = 44,
-	PKT_S_BroadcastPlayerChat = 45,
-	PKT_C_GiveItemRequest = 46,
-	PKT_S_GiveItemReply = 47,
+	PKT_C_PlayerDeathReady = 44,
+	PKT_S_PlayerDeathCommit = 45,
+	PKT_C_PlayerChat = 46,
+	PKT_S_BroadcastPlayerChat = 47,
+	PKT_C_GiveItemRequest = 48,
+	PKT_S_GiveItemReply = 49,
 
 };
 
@@ -74,6 +76,7 @@ bool Handle_C_InventoryRequest(PacketSessionRef& session, Protocol::C_InventoryR
 bool Handle_C_ItemUseRequest(PacketSessionRef& session, Protocol::C_ItemUseRequest& pkt);
 bool Handle_C_NpcInteractRequest(PacketSessionRef& session, Protocol::C_NpcInteractRequest& pkt);
 bool Handle_C_NpcShopBuyRequest(PacketSessionRef& session, Protocol::C_NpcShopBuyRequest& pkt);
+bool Handle_C_PlayerDeathReady(PacketSessionRef& session, Protocol::C_PlayerDeathReady& pkt);
 bool Handle_C_PlayerChat(PacketSessionRef& session, Protocol::C_PlayerChat& pkt);
 bool Handle_C_GiveItemRequest(PacketSessionRef& session, Protocol::C_GiveItemRequest& pkt);
 
@@ -100,6 +103,7 @@ public:
 		GPacketHandler[PKT_C_ItemUseRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_ItemUseRequest>(Handle_C_ItemUseRequest, session, buffer, len); };
 		GPacketHandler[PKT_C_NpcInteractRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_NpcInteractRequest>(Handle_C_NpcInteractRequest, session, buffer, len); };
 		GPacketHandler[PKT_C_NpcShopBuyRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_NpcShopBuyRequest>(Handle_C_NpcShopBuyRequest, session, buffer, len); };
+		GPacketHandler[PKT_C_PlayerDeathReady] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PlayerDeathReady>(Handle_C_PlayerDeathReady, session, buffer, len); };
 		GPacketHandler[PKT_C_PlayerChat] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PlayerChat>(Handle_C_PlayerChat, session, buffer, len); };
 		GPacketHandler[PKT_C_GiveItemRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_GiveItemRequest>(Handle_C_GiveItemRequest, session, buffer, len); };
 		
@@ -140,6 +144,7 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerTryAttack& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerTryAttack); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerHpChanged& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerHpChanged); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerDeath& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerDeath); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_PlayerDeathCommit& pkt) { return MakeSendBuffer(pkt, PKT_S_PlayerDeathCommit); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerChat& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerChat); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_GiveItemReply& pkt) { return MakeSendBuffer(pkt, PKT_S_GiveItemReply); };
 

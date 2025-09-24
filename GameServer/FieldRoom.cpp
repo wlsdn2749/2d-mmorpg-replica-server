@@ -204,9 +204,10 @@ void FieldRoom::OnPlayerMoved(const PlayerRef& p, int ox, int oy)
 
 void FieldRoom::OnRecvAttackReq(const PlayerRef& p, const Protocol::C_PlayerAttackRequest& req)
 {
-	Room::OnRecvAttackReq(p, req);
+	if (!_pCombat) return;
+	if (p->IsDead()) return;
 
-	if(!_pCombat) return;
+	Room::OnRecvAttackReq(p, req);
 	const int64_t nowMs = Time::NowSteadyMs();
 	_pCombat->HandleAttack(p, nowMs);
 }
@@ -217,6 +218,7 @@ void FieldRoom::MonsterEntityLinkerImpl::ForEachPlayerInRange(int cx, int cy, in
 {
 	for (auto& [pid, player] : _r.Players()) {
 		if (!player) continue;
+		if (player->IsDead()) continue;
 		const auto pos = player->GetPos();
 		const int  hp = player->Hp();      // TODO: "
 		int dist = std::abs(pos.x - cx) + std::abs(pos.y - cy);
@@ -229,6 +231,7 @@ bool FieldRoom::MonsterEntityLinkerImpl::TryGetPlayer(int pid, PlayerView& out) 
 {
 	auto p = _r.FindPlayer(pid);
 	if (!p) return false;
+	if (p->IsDead()) return false;
 	const auto pos = p->GetPos();            // TODO
 	out = PlayerView{ pid, pos.x, pos.y, p->Hp() }; // TODO
 	return true;

@@ -375,7 +375,27 @@ namespace Packet
 
         internal static void HANDLE_S_BroadcastPlayerDeath(PacketSession session, S_BroadcastPlayerDeath death)
         {
-            Console.WriteLine($"플레이어가 죽어서 BroadCast");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("========================================");
+            Console.WriteLine("💀 [S_BroadcastPlayerDeath] 플레이어 사망!");
+            Console.WriteLine("========================================");
+
+            string playerInfo = death.PlayerId == NetDebug.MyPlayerId && NetDebug.MyPlayerId >= 0 ?
+                $"플레이어 {death.PlayerId} (나)" : $"플레이어 {death.PlayerId}";
+
+            Console.WriteLine($"🎯 사망한 플레이어: {playerInfo}");
+            Console.WriteLine($"⚔️  킬러 몬스터 ID: {death.KillerMonsterId}");
+            Console.WriteLine($"🗺️  리스폰 목적지 맵: {GetSceneNameByMapId(death.MapId)} (MapID: {death.MapId})");
+
+            // 내가 죽었다면 리스폰 준비 신호를 보낼 수 있음을 알림
+            if (death.PlayerId == NetDebug.MyPlayerId && NetDebug.MyPlayerId >= 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("💡 당신이 사망했습니다! 'p' 키를 눌러 리스폰하세요.");
+            }
+
+            Console.WriteLine("========================================");
+            Console.ResetColor();
         }
 
         internal static void HANDLE_S_BroadcastPlayerChat(PacketSession session, S_BroadcastPlayerChat chat)
@@ -429,6 +449,22 @@ namespace Packet
             }
 
             Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+            Console.ResetColor();
+        }
+
+        internal static void HANDLE_S_PlayerDeathCommit(PacketSession session, S_PlayerDeathCommit commit)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("========================================");
+            Console.WriteLine("✨ [S_PlayerDeathCommit] 리스폰 승인!");
+            Console.WriteLine("========================================");
+
+            string destinationMap = GetSceneNameByMapId(commit.MapId);
+            Console.WriteLine($"🎯 리스폰 목적지: {destinationMap} (MapID: {commit.MapId})");
+            Console.WriteLine($"💫 리스폰 처리가 시작됩니다...");
+            Console.WriteLine($"🔄 룸 이동이 곧 완료됩니다.");
+
+            Console.WriteLine("========================================");
             Console.ResetColor();
         }
     }

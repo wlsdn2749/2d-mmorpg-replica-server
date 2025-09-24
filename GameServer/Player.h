@@ -17,6 +17,24 @@ struct PendingRoomChange {
 
 class Player
 {
+/*----------------------------
+	Player State
+----------------------------*/
+public:
+	enum class PlayerState : uint8
+	{
+		Alive, // 생존
+		Dead, // 죽음
+	};
+
+	PlayerState	GetPlayerState() const { return _playerState.load(std::memory_order_acquire); }
+	void		SetPlayerState(PlayerState s) { _playerState.store(s, std::memory_order_release); }
+
+	bool		IsDead() const {return _playerState == Player::PlayerState::Dead;}
+
+private:
+	Atomic<PlayerState> _playerState{ PlayerState::Alive };
+
 
 /*----------------------------
 	Player Fixed Data
@@ -95,6 +113,13 @@ public:
 	bool ApplyDamage(int dmg, int srcMonsterId) {
 		_hp = std::max(0, _hp - std::max(0, dmg));
 		return (_hp == 0); // dead?
+	}
+
+	void ResetToRespawnState()
+	{
+		ResetPos();
+		SetHp(MaxHp()); // 피 Max로
+		SetPlayerState(PlayerState::Alive);
 	}
 
 	std::unique_ptr<Protocol::PlayerStatInfo> GetPlayerStatInfo() const;
