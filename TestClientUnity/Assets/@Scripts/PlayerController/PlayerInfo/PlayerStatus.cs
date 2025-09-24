@@ -1,5 +1,6 @@
 ﻿using Google.Protobuf.Protocol;
 using System.Security.Cryptography.X509Certificates;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerStatus : MonoBehaviour
@@ -54,6 +55,8 @@ public class PlayerStatus : MonoBehaviour
     {
         var go = PlayerSpawner.Get(monsterAttack.TargetPid);
         if (go == null) return;
+        var id = go.GetComponent<PlayerIdentity>();
+        if (!id.IsLocalPlayer) return;
         _curHp = monsterAttack.HpAfter;
         var av = go.GetComponent<PlayerAvatar>();
         _curHp -= monsterAttack.Damage;
@@ -65,7 +68,11 @@ public class PlayerStatus : MonoBehaviour
     {
         var go =  PlayerSpawner.Get(hpChanged.PlayerId);
         if (go == null) return;
-        _curHp = hpChanged.Hp;
-        _maxHp = hpChanged.MaxHp;
+        var local = go.GetComponent<PlayerIdentity>().IsLocalPlayer;
+        if (local)
+        {
+            _curHp = hpChanged.Hp;
+            _maxHp = hpChanged.MaxHp;
+        }
     }
 }

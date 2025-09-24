@@ -3,6 +3,7 @@ using Google.Protobuf.Protocol;
 using ServerCore;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Packet
@@ -117,65 +118,67 @@ namespace Packet
         {
             MonsterSync.OnMapActivated(list.MapId);
 
-            if (!WorldFlowState.HasEnteredWorld||WorldFlowState.OnCharacterChange)
+            // ▶ 최초 접속 루트: 여기서만 씬 로드
+            if (!WorldFlowState.HasEnteredWorld || WorldFlowState.OnCharacterChange)
             {
-                // ▶ 최초 접속 루트: 여기서만 씬 로드
-                string sceneName = GetSceneNameByMapId(list.MapId);
-
-                // 🎯 씬 로딩 시작 알림(중요)
-                MonsterSync.OnGameplaySceneWillLoad();
+                RoomTransitionManager.Instance.BeginSceneGate();
 
                 LoadingSceneManager.OnSceneActivated = () =>
                 {
-                    // 🎯 씬 활성 알림(펜딩된 몬스터 스냅샷/스폰 플러시)
-                    MonsterSync.OnGameplaySceneActivated();
+                    RoomTransitionManager.Instance.MarkSceneReadyAndFlush(() =>
+                    {
+                        MonsterSync.OnGameplaySceneActivated();
 
-                    // 스폰
-                    PlayerSpawner.EnsureExists();
-                    PlayerSpawner.DespawnAll();
+                        // 스폰은 게이트 안에서 실행(ready 후 즉시 실행됨)
+                        RoomTransitionManager.Instance.EnqueueOrRun(() =>
+                        {
+                            PlayerSpawner.EnsureExists();
+                            PlayerSpawner.DespawnAll();
 
-                    int my = list.MyPlayerId;
-                    foreach (var p in list.Players)
-                        PlayerSpawner.SafeSpawn(p, p.Id == my);
+                            int my = list.MyPlayerId;
+                            foreach (var p in list.Players)
+                                PlayerSpawner.SafeSpawn(p, p.Id == my);
 
-                    RoomTransitionManager.Instance?.UnlockInputAfterSpawn();
-
-                    WorldFlowState.HasEnteredWorld = true;
-                    WorldFlowState.OnCharacterChange = false;
-                    WorldFlowState.ActiveMapId = list.MapId;
+                            RoomTransitionManager.Instance.UnlockInputAfterSpawn();
+                            WorldFlowState.HasEnteredWorld = true;
+                            WorldFlowState.OnCharacterChange = false;
+                            WorldFlowState.ActiveMapId = list.MapId;
+                        });
+                    });
                 };
 
-                LoadingSceneManager.LoadScene(sceneName);
+                LoadingSceneManager.LoadScene(list.MapId);
                 return;
             }
 
-            // ▶ 인게임 루트(이미 월드 진입 후)
-            // 씬 로딩은 Begin이 이미 했다. 여기서는 스폰만.
+            // 인게임 루트(이미 월드 진입 후)
             if (WorldFlowState.TransitionInProgress)
             {
-                // (Begin에서 이미 OnGameplaySceneWillLoad 호출되어 있어야 함)
                 LoadingSceneManager.OnSceneActivated = () =>
                 {
-                    // 🎯 씬 활성 알림 (여기서 몬스터 flush)
                     MonsterSync.OnGameplaySceneActivated();
 
-                    PlayerSpawner.EnsureExists();
-                    PlayerSpawner.DespawnAll();
+                    // Begin에서 로딩 중 들어온 리스트도 큐에 적치 후 플러시
+                    RoomTransitionManager.Instance.EnqueueOrRun(() =>
+                    {
+                        PlayerSpawner.EnsureExists();
+                        PlayerSpawner.DespawnAll();
 
-                    int my = list.MyPlayerId;
-                    foreach (var p in list.Players)
-                        PlayerSpawner.SafeSpawn(p, p.Id == my);
+                        int my = list.MyPlayerId;
+                        foreach (var p in list.Players)
+                            PlayerSpawner.SafeSpawn(p, p.Id == my);
 
-                    RoomTransitionManager.Instance?.UnlockInputAfterSpawn();
+                        RoomTransitionManager.Instance?.UnlockInputAfterSpawn();
+                        WorldFlowState.ActiveMapId = list.MapId;
+                    });
                 };
-                // 주의: 여기서 LoadScene 호출 금지!
+                return;
             }
-            else
-            {
-                // 씬이 이미 활성 상태(같은 맵에서 재동기화 등): 즉시 스폰
-                // (씬은 활성 상태라 OnGameplaySceneActivated 한 번 호출해 플러시)
-                MonsterSync.OnGameplaySceneActivated();
 
+            MonsterSync.OnGameplaySceneActivated();
+
+            RoomTransitionManager.Instance.EnqueueOrRun(() =>
+            {
                 PlayerSpawner.EnsureExists();
                 PlayerSpawner.DespawnAll();
 
@@ -185,7 +188,7 @@ namespace Packet
 
                 RoomTransitionManager.Instance?.UnlockInputAfterSpawn();
                 WorldFlowState.ActiveMapId = list.MapId;
-            }
+            });
         }
 
         private static string GetSceneNameByMapId(int mapId)
@@ -200,8 +203,11 @@ namespace Packet
         }
         internal static void HANDLE_S_BroadcastPlayerEnter(PacketSession session, S_BroadcastPlayerEnter broadEnter)
         {
-            Debug.Log("[S_BroadcastPlayerEnter] 누군가 접속해서 그 정보를 받아옴");
-            PlayerSpawner.SafeSpawn(broadEnter.Player, isLocal: false);
+            Debug.Log("[S_BroadcastPlayerEnter] 누군가 접속해서 그 정보를 받아옴"); 
+            RoomTransitionManager.Instance.EnqueueOrRun(() =>
+            {
+                PlayerSpawner.SafeSpawn(broadEnter.Player, isLocal: false);
+            });
         }
 
         internal static void HANDLE_S_BroadcastPlayerLeave(PacketSession session, S_BroadcastPlayerLeave leave)
@@ -480,14 +486,33 @@ namespace Packet
         public static void HANDLE_S_BroadcastPlayerDeath(PacketSession arg1, S_BroadcastPlayerDeath playerDie)
         {
             Debug.Log($"플레이어 죽음{playerDie.PlayerId} / {playerDie.KillerMonsterId}");
+            var go = PlayerSpawner.Get(playerDie.PlayerId);
+            if (go == null)
+            {
+                Debug.Log("playerDeath gameObject is null");
+                return;
+            }
+            var av = go.GetComponent<PlayerAvatar>();
+            if (av == null) 
+            { 
+                Debug.Log("[PlayerDeath] Check PlayerAvatar but this Component is lost!!]"); 
+                return; 
+            }
+            av.PlayerDeath();
+            HUDManager.Instance.ShowDeathPanel(true);
+        }
+        public static void HANDLE_S_PlayerDeathCommit(PacketSession session, S_PlayerDeathCommit commit)
+        {
+            RoomTransitionManager.Instance.OnPlayerDeathCommit(commit);
         }
         public static void HANDLE_S_BroadcastPlayerChat(PacketSession session, S_BroadcastPlayerChat chat)
         {
-            //var pInfo = new S_BroadcastPlayerChat().PlayerChatInfos;
-            //foreach (var info in pInfo)
-            //{
-                
-            //}
+            Debug.Log("[PlayerChat] 수신완료");
+            ChatManager.Instance?.HandleBroadcast(chat);
+        }
+        public static void HANDLE_S_GiveItemReply(PacketSession session, S_GiveItemReply reply)
+        {
+
         }
     }
 }

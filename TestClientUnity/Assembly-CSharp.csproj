@@ -80,6 +80,7 @@
     <Compile Include="Assets\@Scripts\Managers\UIManager\Auth_UI\AuthFlowController.cs" />
     <Compile Include="Assets\@Scripts\Network\RecvBuffer.cs" />
     <Compile Include="Assets\@Scripts\Protocol\Auth.cs" />
+    <Compile Include="Assets\@Scripts\Managers\UIManager\HUD\UI_Death.cs" />
     <Compile Include="Assets\@Scripts\Network\LeaveGameContext.cs" />
     <Compile Include="Assets\@Scripts\Managers\MonsterSpawnManager\MonsterSync.cs" />
     <Compile Include="Assets\@Scripts\Managers\UIManager\HUD\UI_InvetorySlot.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Assets\@Scripts\Managers\MonsterSpawnManager\MonsterAvatar.cs" />
     <Compile Include="Assets\@Scripts\Packet\ServerPacketManager.cs" />
     <Compile Include="Assets\@Scripts\Managers\UIManager\Auth_UI\AuthNotice_UI.cs" />
+    <Compile Include="Assets\@Scripts\Managers\UIManager\HUD\UI_ChatLine.cs" />
     <Compile Include="Assets\@Scripts\Managers\UIManager\Auth_UI\Auth_UI.cs" />
     <Compile Include="Assets\@Scripts\PlayerController\SimpleMover.cs" />
     <Compile Include="Assets\@Scripts\Managers\ObjectManager\PoolAble.cs" />
@@ -118,6 +120,8 @@
     <Compile Include="Assets\@Scripts\Managers\InventoryManager\InventoryManager.cs" />
     <Compile Include="Assets\@Scripts\Managers\ObjectManager\ObjectPoolManager.cs" />
     <Compile Include="Assets\@Scripts\Protocol\Protocol.cs" />
+    <Compile Include="Assets\@Scripts\Managers\UIManager\HUD\UI_Chat.cs" />
+    <Compile Include="Assets\@Scripts\Managers\ChattingManager\ChatManager.cs" />
     <Compile Include="Assets\@Scripts\PlayerController\PlayerInfo\PlayerIdentity.cs" />
     <Compile Include="Assets\@Scripts\Managers\LoadingSceneManager\RoomTransitionManager.cs" />
     <Compile Include="Assets\@Scripts\Network\SendBuffer.cs" />
