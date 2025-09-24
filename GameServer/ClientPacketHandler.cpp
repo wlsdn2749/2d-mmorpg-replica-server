@@ -144,10 +144,10 @@ bool Handle_C_DeleteCharacterRequest(PacketSessionRef& session, Protocol::C_Dele
 	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
 
 	// Room 접속 전에만 삭제 가능하도록 검증
-	if (gameSession->GetState() != GameSession::State::Connected) {
+	if (gameSession->GetState() != GameSession::State::InGame) {
 		Protocol::S_DeleteCharacterReply replyPkt;
 		replyPkt.set_success(false);
-		replyPkt.set_errormessage("게임 진행 중에는 캐릭터를 삭제할 수 없습니다.");
+		replyPkt.set_errormessage("Cannot Delete while state is not State::InGame.");
 		auto sendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
 		session->Send(sendBuffer);
 		return true;
@@ -160,7 +160,7 @@ bool Handle_C_DeleteCharacterRequest(PacketSessionRef& session, Protocol::C_Dele
 	if (characterIndex < 0 || characterIndex >= gameSession->_players.size()) {
 		Protocol::S_DeleteCharacterReply replyPkt;
 		replyPkt.set_success(false);
-		replyPkt.set_errormessage("유효하지 않은 캐릭터입니다.");
+		replyPkt.set_errormessage("Invalid Character ex) Idx is wrong");
 		auto sendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
 		session->Send(sendBuffer);
 		return true;
