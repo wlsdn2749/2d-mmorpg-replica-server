@@ -174,32 +174,24 @@ public class UI_Chat : MonoBehaviour
 
         Debug.Log($"[ChatUI] Spawning line for: {m.message}");
 
-        // ⚠️ parent를 확실히 적용하기 위해 GameObject 오버로드 사용
+        // parent를 확실히 적용하기 위해 GameObject 오버로드 사용
         var go = Instantiate(_linePrefab.gameObject);
         go.transform.SetParent(_content, worldPositionStays: false);
 
-        // 생성 위치 로그
-        Debug.Log($"[ChatUI] spawned: {GetPath(go.transform)}");
 
         var line = go.GetComponent<UI_ChatLine>();
         if (!line) { Debug.LogError("[ChatUI] UI_ChatLine missing on prefab root"); return; }
 
-        string typePrefix = m.chatType == EChatType.ChatAll ? "[전체]" : "[방]";
+        string typePrefix = m.chatType == EChatType.ChatAll ? "[전체]" : "[지역]";
         
         int playerID = m.playerId.Value;
         var player = PlayerSpawner.Get(playerID);
         string playerName = player.GetComponent<PlayerIdentity>().Username;
-        line.SetText($"{typePrefix}{playerName}: {m.message}");
+        line.SetText($"{typePrefix}{playerName}: {m.message}",m.chatType);
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(_content as RectTransform);
     }
 
-    private string GetPath(Transform t)
-    {
-        var p = t.name;
-        while (t.parent != null) { t = t.parent; p = t.name + "/" + p; }
-        return p;
-    }
     private void ScrollToBottom()
     {
         if (_scrollRect == null) return;
