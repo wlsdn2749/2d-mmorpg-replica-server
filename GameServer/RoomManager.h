@@ -26,7 +26,7 @@ public:
 	template<typename F>
 	void DoAsyncForAllRooms(F&& f)
 	{
-		for (auto& [roomIOd, room] : _rooms)
+		for (auto& [roomId, room] : _rooms)
 		{
 			if (room)
 			{
@@ -87,6 +87,24 @@ public:
 	int GetRoomIdByRegion(const Protocol::ERegion region)
 	{
 		return GetRoomIdByName(GetNameByRegion(region));
+	}
+public:
+	// Search PlayerId -> PlayerRef
+	PlayerRef FindPlayerInAllRooms(int32 pid)
+	{
+		PlayerRef result = nullptr;
+		for (const auto& [roomId, room] : _rooms)
+		{
+			if (room)
+			{
+				if (auto player = room->FindPlayer(pid))
+				{
+					result = player;
+					break;
+				}
+			}
+		}
+		return result;
 	}
 
 private:

@@ -467,5 +467,20 @@ namespace Packet
             Console.WriteLine("========================================");
             Console.ResetColor();
         }
+
+        internal static void HANDLE_S_PartyInviteNotify(PacketSession session, S_PartyInviteNotify notify)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void HANDLE_S_PartyInviteReply(PacketSession session, S_PartyInviteReply reply)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void HANDLE_S_BroadcastPartyUpdate(PacketSession session, S_BroadcastPartyUpdate update)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
