@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Apple.ReplayKit;
 
 namespace Packet
 {
@@ -512,7 +513,24 @@ namespace Packet
         }
         public static void HANDLE_S_GiveItemReply(PacketSession session, S_GiveItemReply reply)
         {
-
+            if (reply.Success == false)
+            {
+                Debug.Log($"아이템 추가 요청 실패 : {reply.ErrorMessage}");
+                return;
+            }
+            var list = new List<InventorySlot>(reply.AddedSlot.Count);
+            list.Add(new InventorySlot()
+            {
+                slotIndex = reply.AddedSlot.SlotIndex,
+                itemId = reply.AddedSlot.ItemId,
+                count = reply.AddedSlot.Count,
+                isQuickslot = reply.AddedSlot.IsQuickslot,
+            });
+            Debug.Log($"[Inv] Slot {reply.AddedSlot.SlotIndex}: itemId={reply.AddedSlot.ItemId}, count={reply.AddedSlot.Count}, quickslot={reply.AddedSlot.IsQuickslot}");
+            var model = InventoryManager.Instance.Model;
+            model.ApplySnapshot(list);
+            HUDManager.Instance.ShowInventory_UI(); // 인벤 UI 켜기 
+            Debug.Log($"[Inv] S_InventoryReply applied: {list.Count} slots");
         }
     }
 }

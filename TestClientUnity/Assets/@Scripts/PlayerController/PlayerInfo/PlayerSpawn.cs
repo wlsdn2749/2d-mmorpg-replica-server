@@ -43,7 +43,10 @@ public class PlayerSpawner : MonoBehaviour
         Debug.Log($"[Spawner] spawn id={info.Id} name={info.Username} local={isLocal} pos=({info.Pos.X},{info.Pos.Y})");
         var identity = go.GetComponent<PlayerIdentity>() ?? go.AddComponent<PlayerIdentity>();
         identity.Init(info, isLocal);
-
+        if (identity != null)
+        {
+            PlayerDirectoryManager.Instance?.SetName(info.Id, identity.Username);
+        }
         _spawned[info.Id] = go; //  한 번만 등록
 
         if (isLocal)

@@ -131,6 +131,7 @@
     <Compile Include="Assets\@Scripts\Managers\MonsterSpawnManager\MonsterIdentity.cs" />
     <Compile Include="Assets\@Scripts\Managers\MonsterSpawnManager\MonsterResourceLoader.cs" />
     <Compile Include="Assets\@Scripts\Managers\PortalManager\PortalMeta.cs" />
+    <Compile Include="Assets\@Scripts\Managers\ChattingManager\PlayerDirectoryManager.cs" />
     <Compile Include="Assets\@Scripts\Managers\MonsterSpawnManager\MonsterUI.cs" />
     <Compile Include="Assets\@Scripts\PlayerController\PlayerInfo\PlayerStatus.cs" />
     <Compile Include="Assets\@Scripts\Managers\MonsterSpawnManager\MonsterDB.cs" />

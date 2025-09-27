@@ -172,22 +172,23 @@ public class UI_Chat : MonoBehaviour
         if (!IsAlive(_linePrefab)) { Debug.LogError("[ChatUI] _linePrefab is null"); return; }
         if (!IsAlive(_content)) { Debug.LogError("[ChatUI] _content is null or destroyed"); return; }
 
-        Debug.Log($"[ChatUI] Spawning line for: {m.message}");
-
-        // parent를 확실히 적용하기 위해 GameObject 오버로드 사용
         var go = Instantiate(_linePrefab.gameObject);
         go.transform.SetParent(_content, worldPositionStays: false);
 
-
         var line = go.GetComponent<UI_ChatLine>();
-        if (!line) { Debug.LogError("[ChatUI] UI_ChatLine missing on prefab root"); return; }
+        if (!line) { Debug.LogError("[ChatUI] UI_ChatLine missing"); return; }
 
         string typePrefix = m.chatType == EChatType.ChatAll ? "[전체]" : "[지역]";
-        
-        int playerID = m.playerId.Value;
-        var player = PlayerSpawner.Get(playerID);
-        string playerName = player.GetComponent<PlayerIdentity>().Username;
-        line.SetText($"{typePrefix}{playerName}: {m.message}",m.chatType);
+
+        // ✅ 캐시에서 이름 조회 (씬 오브젝트 접근 금지)
+        string who = null;
+        if (m.playerId.HasValue)
+        {
+            if (!PlayerDirectoryManager.Instance || !PlayerDirectoryManager.Instance.TryGetName(m.playerId.Value, out who))
+                who = m.playerId.Value.ToString(); // 캐시 없으면 ID로 표시
+        }
+
+        line.SetText($"{typePrefix} {who}: {m.message}", m.chatType);
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(_content as RectTransform);
     }

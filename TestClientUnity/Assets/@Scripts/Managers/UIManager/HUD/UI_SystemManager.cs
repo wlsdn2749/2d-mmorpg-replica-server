@@ -10,7 +10,8 @@ public class UI_SystemManager : MonoBehaviour
     [SerializeField] private Button _gameExitBtn;
     [SerializeField] private Button _gameLogOutBtn;
     [SerializeField] private Button _goSelectCharacterBtn;
-    [SerializeField] private Button _inventoryUIBtn;    
+    [SerializeField] private Button _inventoryUIBtn;
+    [SerializeField] private Button _itemRequestBtn;
     [SerializeField] private GameObject _inventoryPanel;
     private void Awake()
     {
@@ -18,6 +19,7 @@ public class UI_SystemManager : MonoBehaviour
         if (_goSelectCharacterBtn) _goSelectCharacterBtn.onClick.AddListener(OnClickGoSelectCharacter);
         if (_gameExitBtn) _gameExitBtn.onClick.AddListener(OnClickGameExit);
         if (_inventoryUIBtn) _inventoryUIBtn.onClick.AddListener(OnClickInventoryUI);
+        if (_itemRequestBtn) _itemRequestBtn.onClick.AddListener(OnClickItemReq);
     }
 
     private void OnClickInventoryUI()
@@ -32,7 +34,14 @@ public class UI_SystemManager : MonoBehaviour
             InventoryManager.Instance.RequestInventory();
         }
     }
+    void OnClickItemReq()
+    {
+        var req = new C_GiveItemRequest();
+        var send = ServerPacketManager.MakeSendBuffer(req);
+        NetworkManager.Instance.Send(send);
+        Debug.Log($"[Player Item Request]");
 
+    }
     void OnClickLogOut()
     {
         WorldFlowState.HasEnteredWorld = false;
