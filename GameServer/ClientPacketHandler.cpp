@@ -537,7 +537,7 @@ bool Handle_C_GiveItemRequest(PacketSessionRef& session, Protocol::C_GiveItemReq
 	if (itemId <= 0 || count <= 0)
 	{
 		replyPkt.set_success(false);
-		replyPkt.set_errormessage("잘못된 아이템 정보입니다.");
+		replyPkt.set_errormessage("Wrong Item Infomation");
 	}
 	else
 	{
@@ -565,13 +565,13 @@ bool Handle_C_GiveItemRequest(PacketSessionRef& session, Protocol::C_GiveItemReq
 			session->Send(updateBuffer);
 
 			GConsoleLogger->WriteStdOut(Color::GREEN,
-				L"[테스트] 플레이어 %d에게 아이템 %d개 %d개 지급 완료\n",
+				L"[Test] To Player %d, Item:%d, Count:%d Give Complete\n",
 				player->playerId, itemId, count);
 		}
 		else
 		{
 			replyPkt.set_success(false);
-			replyPkt.set_errormessage("아이템 지급에 실패했습니다. (인벤토리 부족 등)");
+			replyPkt.set_errormessage("Failed to give item ex) (Inventory Full)..");
 		}
 	}
 
