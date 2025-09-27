@@ -366,6 +366,7 @@ void Room::ProcessChatTick()
         Protocol::PlayerChatInfo* chat = broadcastChatPkt.add_playerchatinfos();
 
         chat->set_playerid(sess->_currentPlayer->playerId);
+        chat->set_playername(sess->_currentPlayer->username);
         chat->set_message(message);
         chat->set_chattype(chatType);
     }
