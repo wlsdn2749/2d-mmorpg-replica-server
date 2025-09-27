@@ -8,6 +8,7 @@ public class ChatMessage
 {
     public int? playerId;        // 서버가 준 playerId (없으면 null)
     public string message;
+    public string playerName;
     public EChatType chatType;   // CHAT_ROOM / CHAT_ALL
     public DateTime timeUtc;
 }
@@ -61,6 +62,7 @@ public class ChatManager : MonoBehaviour
                 playerId = pid,
                 message = p.Message,
                 chatType = p.ChatType,
+                playerName = p.PlayerName,
                 timeUtc = DateTime.UtcNow
             };
 

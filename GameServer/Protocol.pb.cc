@@ -831,7 +831,8 @@ struct PlayerStatInfoDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PlayerStatInfoDefaultTypeInternal _PlayerStatInfo_default_instance_;
 PROTOBUF_CONSTEXPR PlayerChatInfo::PlayerChatInfo(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.message_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+    /*decltype(_impl_.playername_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.message_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.chattype_)*/0
   , /*decltype(_impl_.playerIncluded_)*/{}
   , /*decltype(_impl_._cached_size_)*/{}
@@ -1324,6 +1325,7 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _inlined_string_donated_
   ::_pbi::kInvalidFieldOffsetTag,
   ::_pbi::kInvalidFieldOffsetTag,
+  PROTOBUF_FIELD_OFFSET(::Protocol::PlayerChatInfo, _impl_.playername_),
   PROTOBUF_FIELD_OFFSET(::Protocol::PlayerChatInfo, _impl_.message_),
   PROTOBUF_FIELD_OFFSET(::Protocol::PlayerChatInfo, _impl_.chattype_),
   PROTOBUF_FIELD_OFFSET(::Protocol::PlayerChatInfo, _impl_.playerIncluded_),
@@ -1555,70 +1557,71 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "\010quantity\030\002 \001(\005\022\r\n\005price\030\003 \001(\005\"i\n\016Player"
   "StatInfo\022\r\n\005maxHp\030\001 \001(\005\022\n\n\002hp\030\002 \001(\005\022\016\n\006c"
   "urExp\030\003 \001(\005\022\016\n\006maxExp\030\004 \001(\005\022\r\n\005level\030\005 \001"
-  "(\005\022\r\n\005money\030\006 \001(\005\"\204\001\n\016PlayerChatInfo\022\024\n\n"
-  "NonePlayer\030\001 \001(\010H\000\022\022\n\010playerId\030\002 \001(\005H\000\022\017"
-  "\n\007message\030\003 \001(\t\022%\n\010chatType\030\004 \001(\0162\023.Prot"
-  "ocol.EChatTypeB\020\n\016playerIncluded*\223\n\n\005Msg"
-  "Id\022\027\n\023C_JWT_LOGIN_REQUEST\020\000\022\025\n\021S_JWT_LOG"
-  "IN_REPLY\020\001\022\036\n\032C_CREATE_CHARACTER_REQUEST"
-  "\020\002\022\034\n\030S_CREATE_CHARACTER_REPLY\020\003\022\034\n\030C_CH"
-  "ARACTER_LIST_REQUEST\020\004\022\032\n\026S_CHARACTER_LI"
-  "ST_REPLY\020\005\022\036\n\032C_DELETE_CHARACTER_REQUEST"
-  "\020\006\022\034\n\030S_DELETE_CHARACTER_REPLY\020\007\022\020\n\014C_EN"
-  "TER_GAME\020\010\022\020\n\014S_ENTER_GAME\020\t\022\021\n\rS_PLAYER"
-  "_LIST\020\n\022\034\n\030S_BROADCAST_PLAYER_ENTER\020\013\022\020\n"
-  "\014C_LEAVE_GAME\020\014\022\020\n\014S_LEAVE_GAME\020\r\022\034\n\030S_B"
-  "ROADCAST_PLAYER_LEAVE\020\016\022\031\n\025C_PLAYER_MOVE"
-  "_REQUEST\020\017\022\027\n\023S_PLAYER_MOVE_REPLY\020\020\022\033\n\027S"
-  "_BROADCAST_PLAYER_MOVE\020\021\022\027\n\023S_CHANGE_ROO"
-  "M_BEGIN\020\022\022\027\n\023C_CHANGE_ROOM_READY\020\023\022\030\n\024S_"
-  "CHANGE_ROOM_COMMIT\020\024\022\023\n\017S_SPAWN_MONSTER\020"
-  "\025\022\025\n\021S_DESPAWN_MONSTER\020\026\022\034\n\030S_BROADCAST_"
-  "MONSTER_MOVE\020\027\022\036\n\032S_BROADCAST_MONSTER_AT"
-  "TACK\020\030\022\035\n\031S_BROADCAST_MONSTER_DEATH\020\031\022\033\n"
-  "\027C_PLAYER_ATTACK_REQUEST\020\032\022\035\n\031S_BROADCAS"
-  "T_PLAYER_ATTACK\020\033\022\027\n\023C_INVENTORY_REQUEST"
-  "\020\034\022\025\n\021S_INVENTORY_REPLY\020\035\022\026\n\022C_ITEM_USE_"
-  "REQUEST\020\036\022\024\n\020S_ITEM_USE_REPLY\020\037\022\026\n\022S_INV"
-  "ENTORY_UPDATE\020 \022\024\n\020S_SYSTEM_MESSAGE\020!\022\022\n"
-  "\016S_MONSTER_LIST\020\"\022\032\n\026C_NPC_INTERACT_REQU"
-  "EST\020#\022\030\n\024S_NPC_INTERACT_REPLY\020$\022\023\n\017S_NPC"
-  "_SHOP_OPEN\020%\022\032\n\026C_NPC_SHOP_BUY_REQUEST\020&"
-  "\022\030\n\024S_NPC_SHOP_BUY_REPLY\020\'\022\021\n\rS_PLAYER_S"
-  "TAT\020(\022!\n\035S_BROADCAST_PLAYER_TRY_ATTACK\020)"
-  "\022!\n\035S_BROADCAST_PLAYER_HP_CHANGED\020*\022\034\n\030S"
-  "_BROADCAST_PLAYER_DEATH\020+\022\030\n\024C_PLAYER_DE"
-  "ATH_READY\020,\022\031\n\025S_PLAYER_DEATH_COMMIT\020-\022\021"
-  "\n\rC_PLAYER_CHAT\020.\022\033\n\027S_BROADCAST_PLAYER_"
-  "CHAT\020/\022\027\n\023C_GIVE_ITEM_REQUEST\0200\022\025\n\021S_GIV"
-  "E_ITEM_REPLY\0201*S\n\014ELoginResult\022\013\n\007SUCCES"
-  "S\020\000\022\021\n\rINVALID_TOKEN\020\001\022\021\n\rTOKEN_EXPIRED\020"
-  "\002\022\020\n\014SERVER_ERROR\020\003*>\n\007EGender\022\017\n\013GENDER"
-  "_NONE\020\000\022\017\n\013GENDER_MALE\020\001\022\021\n\rGENDER_FEMAL"
-  "E\020\002*:\n\007ERegion\022\017\n\013REGION_NONE\020\000\022\r\n\tREGIO"
-  "N_GO\020\001\022\017\n\013REGION_BACK\020\002*C\n\nEDirection\022\n\n"
-  "\006DIR_UP\020\000\022\014\n\010DIR_DOWN\020\001\022\014\n\010DIR_LEFT\020\002\022\r\n"
-  "\tDIR_RIGHT\020\003*|\n\014ELeaveReason\022\021\n\rLEAVE_UN"
-  "KNOWN\020\000\022\020\n\014LEAVE_LOGOUT\020\001\022\025\n\021LEAVE_CHANG"
-  "E_ROOM\020\002\022\032\n\026LEAVE_CHANGE_CHARACTER\020\003\022\024\n\020"
-  "LEAVE_DISCONNECT\020\004*_\n\013EMoveResult\022\020\n\014MOV"
-  "E_UNKNOWN\020\000\022\013\n\007MOVE_OK\020\001\022\014\n\010MOVE_DIR\020\002\022\021"
-  "\n\rMOVE_COOLDOWN\020\003\022\020\n\014MOVE_BLOCKED\020\004*I\n\014E"
-  "EnterReason\022\021\n\rENTER_UNKNOWN\020\000\022\017\n\013ENTER_"
-  "LOGIN\020\001\022\025\n\021ENTER_CHANGE_ROOM\020\002*9\n\016EDespa"
-  "wnReason\022\023\n\017DESPAWN_UNKNOWN\020\000\022\022\n\016DESPAWN"
-  "_KILLED\020\001*~\n\tEItemType\022\025\n\021ITEM_TYPE_UNKN"
-  "OWN\020\000\022\030\n\024ITEM_TYPE_CONSUMABLE\020\001\022\027\n\023ITEM_"
-  "TYPE_EQUIPMENT\020\002\022\023\n\017ITEM_TYPE_QUEST\020\003\022\022\n"
-  "\016ITEM_TYPE_MISC\020\004*a\n\014EMessageType\022\020\n\014MES"
-  "SAGE_INFO\020\000\022\023\n\017MESSAGE_WARNING\020\001\022\021\n\rMESS"
-  "AGE_ERROR\020\002\022\027\n\023MESSAGE_DROP_FAILED\020\003*(\n\t"
-  "EChatType\022\r\n\tCHAT_ROOM\020\000\022\014\n\010CHAT_ALL\020\001B\033"
-  "\252\002\030Google.Protobuf.Protocolb\006proto3"
+  "(\005\022\r\n\005money\030\006 \001(\005\"\230\001\n\016PlayerChatInfo\022\024\n\n"
+  "NonePlayer\030\001 \001(\010H\000\022\022\n\010playerId\030\002 \001(\005H\000\022\022"
+  "\n\nplayerName\030\003 \001(\t\022\017\n\007message\030\004 \001(\t\022%\n\010c"
+  "hatType\030\005 \001(\0162\023.Protocol.EChatTypeB\020\n\016pl"
+  "ayerIncluded*\223\n\n\005MsgId\022\027\n\023C_JWT_LOGIN_RE"
+  "QUEST\020\000\022\025\n\021S_JWT_LOGIN_REPLY\020\001\022\036\n\032C_CREA"
+  "TE_CHARACTER_REQUEST\020\002\022\034\n\030S_CREATE_CHARA"
+  "CTER_REPLY\020\003\022\034\n\030C_CHARACTER_LIST_REQUEST"
+  "\020\004\022\032\n\026S_CHARACTER_LIST_REPLY\020\005\022\036\n\032C_DELE"
+  "TE_CHARACTER_REQUEST\020\006\022\034\n\030S_DELETE_CHARA"
+  "CTER_REPLY\020\007\022\020\n\014C_ENTER_GAME\020\010\022\020\n\014S_ENTE"
+  "R_GAME\020\t\022\021\n\rS_PLAYER_LIST\020\n\022\034\n\030S_BROADCA"
+  "ST_PLAYER_ENTER\020\013\022\020\n\014C_LEAVE_GAME\020\014\022\020\n\014S"
+  "_LEAVE_GAME\020\r\022\034\n\030S_BROADCAST_PLAYER_LEAV"
+  "E\020\016\022\031\n\025C_PLAYER_MOVE_REQUEST\020\017\022\027\n\023S_PLAY"
+  "ER_MOVE_REPLY\020\020\022\033\n\027S_BROADCAST_PLAYER_MO"
+  "VE\020\021\022\027\n\023S_CHANGE_ROOM_BEGIN\020\022\022\027\n\023C_CHANG"
+  "E_ROOM_READY\020\023\022\030\n\024S_CHANGE_ROOM_COMMIT\020\024"
+  "\022\023\n\017S_SPAWN_MONSTER\020\025\022\025\n\021S_DESPAWN_MONST"
+  "ER\020\026\022\034\n\030S_BROADCAST_MONSTER_MOVE\020\027\022\036\n\032S_"
+  "BROADCAST_MONSTER_ATTACK\020\030\022\035\n\031S_BROADCAS"
+  "T_MONSTER_DEATH\020\031\022\033\n\027C_PLAYER_ATTACK_REQ"
+  "UEST\020\032\022\035\n\031S_BROADCAST_PLAYER_ATTACK\020\033\022\027\n"
+  "\023C_INVENTORY_REQUEST\020\034\022\025\n\021S_INVENTORY_RE"
+  "PLY\020\035\022\026\n\022C_ITEM_USE_REQUEST\020\036\022\024\n\020S_ITEM_"
+  "USE_REPLY\020\037\022\026\n\022S_INVENTORY_UPDATE\020 \022\024\n\020S"
+  "_SYSTEM_MESSAGE\020!\022\022\n\016S_MONSTER_LIST\020\"\022\032\n"
+  "\026C_NPC_INTERACT_REQUEST\020#\022\030\n\024S_NPC_INTER"
+  "ACT_REPLY\020$\022\023\n\017S_NPC_SHOP_OPEN\020%\022\032\n\026C_NP"
+  "C_SHOP_BUY_REQUEST\020&\022\030\n\024S_NPC_SHOP_BUY_R"
+  "EPLY\020\'\022\021\n\rS_PLAYER_STAT\020(\022!\n\035S_BROADCAST"
+  "_PLAYER_TRY_ATTACK\020)\022!\n\035S_BROADCAST_PLAY"
+  "ER_HP_CHANGED\020*\022\034\n\030S_BROADCAST_PLAYER_DE"
+  "ATH\020+\022\030\n\024C_PLAYER_DEATH_READY\020,\022\031\n\025S_PLA"
+  "YER_DEATH_COMMIT\020-\022\021\n\rC_PLAYER_CHAT\020.\022\033\n"
+  "\027S_BROADCAST_PLAYER_CHAT\020/\022\027\n\023C_GIVE_ITE"
+  "M_REQUEST\0200\022\025\n\021S_GIVE_ITEM_REPLY\0201*S\n\014EL"
+  "oginResult\022\013\n\007SUCCESS\020\000\022\021\n\rINVALID_TOKEN"
+  "\020\001\022\021\n\rTOKEN_EXPIRED\020\002\022\020\n\014SERVER_ERROR\020\003*"
+  ">\n\007EGender\022\017\n\013GENDER_NONE\020\000\022\017\n\013GENDER_MA"
+  "LE\020\001\022\021\n\rGENDER_FEMALE\020\002*:\n\007ERegion\022\017\n\013RE"
+  "GION_NONE\020\000\022\r\n\tREGION_GO\020\001\022\017\n\013REGION_BAC"
+  "K\020\002*C\n\nEDirection\022\n\n\006DIR_UP\020\000\022\014\n\010DIR_DOW"
+  "N\020\001\022\014\n\010DIR_LEFT\020\002\022\r\n\tDIR_RIGHT\020\003*|\n\014ELea"
+  "veReason\022\021\n\rLEAVE_UNKNOWN\020\000\022\020\n\014LEAVE_LOG"
+  "OUT\020\001\022\025\n\021LEAVE_CHANGE_ROOM\020\002\022\032\n\026LEAVE_CH"
+  "ANGE_CHARACTER\020\003\022\024\n\020LEAVE_DISCONNECT\020\004*_"
+  "\n\013EMoveResult\022\020\n\014MOVE_UNKNOWN\020\000\022\013\n\007MOVE_"
+  "OK\020\001\022\014\n\010MOVE_DIR\020\002\022\021\n\rMOVE_COOLDOWN\020\003\022\020\n"
+  "\014MOVE_BLOCKED\020\004*I\n\014EEnterReason\022\021\n\rENTER"
+  "_UNKNOWN\020\000\022\017\n\013ENTER_LOGIN\020\001\022\025\n\021ENTER_CHA"
+  "NGE_ROOM\020\002*9\n\016EDespawnReason\022\023\n\017DESPAWN_"
+  "UNKNOWN\020\000\022\022\n\016DESPAWN_KILLED\020\001*~\n\tEItemTy"
+  "pe\022\025\n\021ITEM_TYPE_UNKNOWN\020\000\022\030\n\024ITEM_TYPE_C"
+  "ONSUMABLE\020\001\022\027\n\023ITEM_TYPE_EQUIPMENT\020\002\022\023\n\017"
+  "ITEM_TYPE_QUEST\020\003\022\022\n\016ITEM_TYPE_MISC\020\004*a\n"
+  "\014EMessageType\022\020\n\014MESSAGE_INFO\020\000\022\023\n\017MESSA"
+  "GE_WARNING\020\001\022\021\n\rMESSAGE_ERROR\020\002\022\027\n\023MESSA"
+  "GE_DROP_FAILED\020\003*(\n\tEChatType\022\r\n\tCHAT_RO"
+  "OM\020\000\022\014\n\010CHAT_ALL\020\001B\033\252\002\030Google.Protobuf.P"
+  "rotocolb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 6475, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 6495, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
     &descriptor_table_Protocol_2eproto_once, nullptr, 0, 59,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
@@ -13852,13 +13855,22 @@ PlayerChatInfo::PlayerChatInfo(const PlayerChatInfo& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   PlayerChatInfo* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.message_){}
+      decltype(_impl_.playername_){}
+    , decltype(_impl_.message_){}
     , decltype(_impl_.chattype_){}
     , decltype(_impl_.playerIncluded_){}
     , /*decltype(_impl_._cached_size_)*/{}
     , /*decltype(_impl_._oneof_case_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.playername_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.playername_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_playername().empty()) {
+    _this->_impl_.playername_.Set(from._internal_playername(), 
+      _this->GetArenaForAllocation());
+  }
   _impl_.message_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
     _impl_.message_.Set("", GetArenaForAllocation());
@@ -13890,12 +13902,17 @@ inline void PlayerChatInfo::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.message_){}
+      decltype(_impl_.playername_){}
+    , decltype(_impl_.message_){}
     , decltype(_impl_.chattype_){0}
     , decltype(_impl_.playerIncluded_){}
     , /*decltype(_impl_._cached_size_)*/{}
     , /*decltype(_impl_._oneof_case_)*/{}
   };
+  _impl_.playername_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.playername_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   _impl_.message_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
     _impl_.message_.Set("", GetArenaForAllocation());
@@ -13914,6 +13931,7 @@ PlayerChatInfo::~PlayerChatInfo() {
 
 inline void PlayerChatInfo::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.playername_.Destroy();
   _impl_.message_.Destroy();
   if (has_playerIncluded()) {
     clear_playerIncluded();
@@ -13949,6 +13967,7 @@ void PlayerChatInfo::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  _impl_.playername_.ClearToEmpty();
   _impl_.message_.ClearToEmpty();
   _impl_.chattype_ = 0;
   clear_playerIncluded();
@@ -13977,9 +13996,19 @@ const char* PlayerChatInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext
         } else
           goto handle_unusual;
         continue;
-      // string message = 3;
+      // string playerName = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+          auto str = _internal_mutable_playername();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "Protocol.PlayerChatInfo.playerName"));
+        } else
+          goto handle_unusual;
+        continue;
+      // string message = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
           auto str = _internal_mutable_message();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
@@ -13987,9 +14016,9 @@ const char* PlayerChatInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext
         } else
           goto handle_unusual;
         continue;
-      // .Protocol.EChatType chatType = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+      // .Protocol.EChatType chatType = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
           uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
           _internal_set_chattype(static_cast<::Protocol::EChatType>(val));
@@ -14037,21 +14066,31 @@ uint8_t* PlayerChatInfo::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_playerid(), target);
   }
 
-  // string message = 3;
+  // string playerName = 3;
+  if (!this->_internal_playername().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_playername().data(), static_cast<int>(this->_internal_playername().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "Protocol.PlayerChatInfo.playerName");
+    target = stream->WriteStringMaybeAliased(
+        3, this->_internal_playername(), target);
+  }
+
+  // string message = 4;
   if (!this->_internal_message().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_message().data(), static_cast<int>(this->_internal_message().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
       "Protocol.PlayerChatInfo.message");
     target = stream->WriteStringMaybeAliased(
-        3, this->_internal_message(), target);
+        4, this->_internal_message(), target);
   }
 
-  // .Protocol.EChatType chatType = 4;
+  // .Protocol.EChatType chatType = 5;
   if (this->_internal_chattype() != 0) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
-      4, this->_internal_chattype(), target);
+      5, this->_internal_chattype(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -14070,14 +14109,21 @@ size_t PlayerChatInfo::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // string message = 3;
+  // string playerName = 3;
+  if (!this->_internal_playername().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_playername());
+  }
+
+  // string message = 4;
   if (!this->_internal_message().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_message());
   }
 
-  // .Protocol.EChatType chatType = 4;
+  // .Protocol.EChatType chatType = 5;
   if (this->_internal_chattype() != 0) {
     total_size += 1 +
       ::_pbi::WireFormatLite::EnumSize(this->_internal_chattype());
@@ -14116,6 +14162,9 @@ void PlayerChatInfo::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const :
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  if (!from._internal_playername().empty()) {
+    _this->_internal_set_playername(from._internal_playername());
+  }
   if (!from._internal_message().empty()) {
     _this->_internal_set_message(from._internal_message());
   }
@@ -14154,6 +14203,10 @@ void PlayerChatInfo::InternalSwap(PlayerChatInfo* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.playername_, lhs_arena,
+      &other->_impl_.playername_, rhs_arena
+  );
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &_impl_.message_, lhs_arena,
       &other->_impl_.message_, rhs_arena

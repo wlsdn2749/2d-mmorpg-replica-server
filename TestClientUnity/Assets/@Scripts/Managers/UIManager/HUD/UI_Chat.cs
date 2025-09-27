@@ -51,7 +51,7 @@ public class UI_Chat : MonoBehaviour
         if (!IsAlive(_content))
         {
             var canvas = GetComponentInParent<Canvas>();
-            if (!canvas) canvas = FindObjectOfType<Canvas>();
+            if (!canvas) canvas = FindFirstObjectByType<Canvas>();
 
             // 너의 계층 이름에 맞춰 경로 수정
             var t = canvas ? canvas.transform.Find("Panel_ChatLog/Scroll View/Viewport/Content") : null;
@@ -179,13 +179,12 @@ public class UI_Chat : MonoBehaviour
         if (!line) { Debug.LogError("[ChatUI] UI_ChatLine missing"); return; }
 
         string typePrefix = m.chatType == EChatType.ChatAll ? "[전체]" : "[지역]";
-
+        
         // ✅ 캐시에서 이름 조회 (씬 오브젝트 접근 금지)
         string who = null;
         if (m.playerId.HasValue)
         {
-            if (!PlayerDirectoryManager.Instance || !PlayerDirectoryManager.Instance.TryGetName(m.playerId.Value, out who))
-                who = m.playerId.Value.ToString(); // 캐시 없으면 ID로 표시
+            who = m.playerName;
         }
 
         line.SetText($"{typePrefix} {who}: {m.message}", m.chatType);
