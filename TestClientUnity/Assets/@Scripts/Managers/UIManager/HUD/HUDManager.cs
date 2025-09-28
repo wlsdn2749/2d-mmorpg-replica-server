@@ -1,6 +1,7 @@
 ﻿using Google.Protobuf.Protocol;
 using Packet;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 
 public class HUDManager : MonoBehaviour
@@ -11,6 +12,7 @@ public class HUDManager : MonoBehaviour
     [SerializeField] private GameObject _playerInfoPanel; // 플레이어 정보 UI 오브젝트
     [SerializeField] private GameObject _inventoryPanel; // 인벤토리 UI 오브젝트    
     [SerializeField] private GameObject _chatPanel; // 채팅창 UI 오브젝트
+    [SerializeField] private GameObject _deathPanel;
     void Awake()
     {
         // 중복 인스턴스 방지
@@ -29,14 +31,31 @@ public class HUDManager : MonoBehaviour
         _systemUIPanel.SetActive(false);
         _playerInfoPanel.SetActive(false);
         _inventoryPanel.SetActive(false);   
+        _deathPanel.SetActive(false);
+        _chatPanel.SetActive(false);
     }
     public void SetPlayerInfo(PlayerStatInfo info)
     {
         _playerInfoPanel.GetComponent<UI_PlayerInfo>().InitInfo(info);
     }
-    public void OnLoadingInventoryUI(bool on)
+    public void ShowChattingPanel()
     {
-        if (on)
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            // 포커스가 다른 UI에 있으면 열지 않음
+            if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject != null)
+                return;
+
+            if (!_chatPanel.activeSelf)
+            {
+                _chatPanel.SetActive(true);
+                _chatPanel.GetComponent<UI_Chat>().OpenChat();
+            }
+        }
+    }
+    public void OnLoadingInventoryUI(bool show)
+    {
+        if (show)
         {
             _inventoryPanel.SetActive(true);
             return;
@@ -64,9 +83,9 @@ public class HUDManager : MonoBehaviour
             }
         }
     }
-    public void OnLoadingOffPlayerInfoUI(bool on)
+    public void OnLoadingOffPlayerInfoUI(bool show)
     {
-        if (on)
+        if (show)
         {
             _playerInfoPanel.SetActive(true);
             return;
@@ -78,9 +97,9 @@ public class HUDManager : MonoBehaviour
         }
     }
 
-    public void OnLoadingOffSystemUI(bool on)
+    public void OnLoadingOffSystemUI(bool show)
     {
-        if (on)
+        if (show)
         {
             _isSystemUIActive = true;
             _systemUIPanel.SetActive(_isSystemUIActive);
@@ -93,10 +112,22 @@ public class HUDManager : MonoBehaviour
             return;
         }
     }
+    public void ShowDeathPanel(bool show)
+    {
+        if (show )
+        {
+            _deathPanel.SetActive(true);
+        }
+        else
+        {
+            _deathPanel.SetActive(false);
+        }
+    }
     public void ShowSystemUI()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            if (_chatPanel.activeSelf) return;
             if (_inventoryPanel.activeSelf)
             {
                 _inventoryPanel.SetActive(false);
@@ -118,7 +149,11 @@ public class HUDManager : MonoBehaviour
     }
     private void Update()
     {
-        ShowSystemUI();
-        ShowInventory_UI();
+        if (!_chatPanel.activeSelf)
+        {
+            ShowSystemUI();
+            ShowInventory_UI();
+        }
+        ShowChattingPanel();
     }
 }

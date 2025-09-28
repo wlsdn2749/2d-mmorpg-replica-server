@@ -1,4 +1,4 @@
-using Google.Protobuf.Protocol;
+ï»¿using Google.Protobuf.Protocol;
 using Packet;
 using System.Collections.Generic;
 using TMPro;
@@ -8,8 +8,8 @@ using UnityEngine.UI;
 public class CharacterList_UI : MonoBehaviour
 {
     public static CharacterList_UI Instance { get; private set; }
-    [SerializeField] private Transform _contentParent;         // ¸®½ºÆ® ºÎ¸ğ(Grid)
-    [SerializeField] private CharacterSlot_UI _slotPrefab;  // Ä³¸¯ÅÍ ½½·Ô ÇÁ¸®ÆÕ
+    [SerializeField] private Transform _contentParent;         // ë¦¬ìŠ¤íŠ¸ ë¶€ëª¨(Grid)
+    [SerializeField] private CharacterSlot_UI _slotPrefab;  // ìºë¦­í„° ìŠ¬ë¡¯ í”„ë¦¬íŒ¹
     [SerializeField] private TMP_Text _emptyListText;
     [SerializeField] private TMP_Text _selectedCharacterName;
     [SerializeField] private Button _createBtn;
@@ -39,7 +39,7 @@ public class CharacterList_UI : MonoBehaviour
         var req = new C_CharacterListRequest();
         var send = ServerPacketManager.MakeSendBuffer(req);
         NetworkManager.Instance.Send(send);
-        UnityEngine.Debug.Log($"[UI] Ä³¸¯ÅÍ ¸®½ºÆ® Àü¼Û ¿äÃ»: playerIndex={0}, len={send.Count}");
+        UnityEngine.Debug.Log($"[UI] ìºë¦­í„° ë¦¬ìŠ¤íŠ¸ ì „ì†¡ ìš”ì²­: playerIndex={0}, len={send.Count}");
     }
     public void SetCharacterList(IList<CharacterSummaryInfo> list)
     {
@@ -57,7 +57,7 @@ public class CharacterList_UI : MonoBehaviour
         _startBtn.interactable = false;
         _characterDeleteBtn.interactable = false;
 
-        _selectedCharacterName.text = $"¼±ÅÃÇÑ Ä³¸¯ÅÍ : ";
+        _selectedCharacterName.text = $"ì„ íƒí•œ ìºë¦­í„° : ";
         for (int i = 0; i < list.Count; i++)
         {
             var slot = Instantiate(_slotPrefab, _contentParent);
@@ -70,7 +70,7 @@ public class CharacterList_UI : MonoBehaviour
         _selectedIndex = index;
         _startBtn.interactable = true;
         _characterDeleteBtn.interactable = true;
-        _selectedCharacterName.text = $"¼±ÅÃÇÑ Ä³¸¯ÅÍ : {name}";
+        _selectedCharacterName.text = $"ì„ íƒí•œ ìºë¦­í„° : {name}";
         UpdateHighlights();
     }
     
@@ -88,8 +88,8 @@ public class CharacterList_UI : MonoBehaviour
         var req = new C_EnterGame { PlayerIndex = _selectedIndex };
         var sendBuffer = ServerPacketManager.MakeSendBuffer(req);
         NetworkManager.Instance.Send(sendBuffer);
-        Debug.Log($"Ä³¸¯ÅÍ Á¢¼Ó ÆĞÅ¶ Àü¼Û \nÄ³¸¯ÅÍ¸í : {_selectedCharacterName}");
-        Debug.Log($"[UI] °ÔÀÓ Á¢¼Ó ¿äÃ» Àü¼Û: playerIndex={0}, len={sendBuffer.Count}");
+        Debug.Log($"ìºë¦­í„° ì ‘ì† íŒ¨í‚· ì „ì†¡ \nìºë¦­í„°ëª… : {_selectedCharacterName}");
+        Debug.Log($"[UI] ê²Œì„ ì ‘ì† ìš”ì²­ ì „ì†¡: playerIndex={0}, len={sendBuffer.Count}");
         AuthNotice_UI.Instance.gameObject.SetActive(true);
         AuthNotice_UI.Instance.ShowNotice(NoticeCode.EnterGame);
         _startBtn.interactable = false;

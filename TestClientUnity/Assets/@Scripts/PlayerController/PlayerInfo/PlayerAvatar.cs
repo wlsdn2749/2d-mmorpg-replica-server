@@ -32,6 +32,10 @@ public class PlayerAvatar : MonoBehaviour
     {
         _animator.SetTrigger("Hurt");
     }
+    public void PlayerDeath()
+    {
+        _animator.SetBool("IsDie",true);
+    }
     public void SetDirection(EDirection dir)
     {
         // Animator 정수 파라미터 "Dir" 사용

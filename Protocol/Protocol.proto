@@ -584,8 +584,9 @@ message PlayerChatInfo
 		bool NonePlayer = 1; // Client -> Server로 보낼떄
 		int32 playerId = 2; // Server -> Client로 보낼때
 	}
-	string message = 3;
-	EChatType chatType = 4; 
+	string playerName = 3;
+	string message = 4;
+	EChatType chatType = 5; 
 }
 
 message PartyMemberInfoStatus

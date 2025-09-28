@@ -11198,12 +11198,27 @@ class PlayerChatInfo final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kMessageFieldNumber = 3,
-    kChatTypeFieldNumber = 4,
+    kPlayerNameFieldNumber = 3,
+    kMessageFieldNumber = 4,
+    kChatTypeFieldNumber = 5,
     kNonePlayerFieldNumber = 1,
     kPlayerIdFieldNumber = 2,
   };
-  // string message = 3;
+  // string playerName = 3;
+  void clear_playername();
+  const std::string& playername() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_playername(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_playername();
+  PROTOBUF_NODISCARD std::string* release_playername();
+  void set_allocated_playername(std::string* playername);
+  private:
+  const std::string& _internal_playername() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_playername(const std::string& value);
+  std::string* _internal_mutable_playername();
+  public:
+
+  // string message = 4;
   void clear_message();
   const std::string& message() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -11217,7 +11232,7 @@ class PlayerChatInfo final :
   std::string* _internal_mutable_message();
   public:
 
-  // .Protocol.EChatType chatType = 4;
+  // .Protocol.EChatType chatType = 5;
   void clear_chattype();
   ::Protocol::EChatType chattype() const;
   void set_chattype(::Protocol::EChatType value);
@@ -11267,6 +11282,7 @@ class PlayerChatInfo final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr playername_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr message_;
     int chattype_;
     union PlayerIncludedUnion {
@@ -15717,7 +15733,57 @@ inline void PlayerChatInfo::set_playerid(int32_t value) {
   // @@protoc_insertion_point(field_set:Protocol.PlayerChatInfo.playerId)
 }
 
-// string message = 3;
+// string playerName = 3;
+inline void PlayerChatInfo::clear_playername() {
+  _impl_.playername_.ClearToEmpty();
+}
+inline const std::string& PlayerChatInfo::playername() const {
+  // @@protoc_insertion_point(field_get:Protocol.PlayerChatInfo.playerName)
+  return _internal_playername();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void PlayerChatInfo::set_playername(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.playername_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Protocol.PlayerChatInfo.playerName)
+}
+inline std::string* PlayerChatInfo::mutable_playername() {
+  std::string* _s = _internal_mutable_playername();
+  // @@protoc_insertion_point(field_mutable:Protocol.PlayerChatInfo.playerName)
+  return _s;
+}
+inline const std::string& PlayerChatInfo::_internal_playername() const {
+  return _impl_.playername_.Get();
+}
+inline void PlayerChatInfo::_internal_set_playername(const std::string& value) {
+  
+  _impl_.playername_.Set(value, GetArenaForAllocation());
+}
+inline std::string* PlayerChatInfo::_internal_mutable_playername() {
+  
+  return _impl_.playername_.Mutable(GetArenaForAllocation());
+}
+inline std::string* PlayerChatInfo::release_playername() {
+  // @@protoc_insertion_point(field_release:Protocol.PlayerChatInfo.playerName)
+  return _impl_.playername_.Release();
+}
+inline void PlayerChatInfo::set_allocated_playername(std::string* playername) {
+  if (playername != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.playername_.SetAllocated(playername, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.playername_.IsDefault()) {
+    _impl_.playername_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:Protocol.PlayerChatInfo.playerName)
+}
+
+// string message = 4;
 inline void PlayerChatInfo::clear_message() {
   _impl_.message_.ClearToEmpty();
 }
@@ -15767,7 +15833,7 @@ inline void PlayerChatInfo::set_allocated_message(std::string* message) {
   // @@protoc_insertion_point(field_set_allocated:Protocol.PlayerChatInfo.message)
 }
 
-// .Protocol.EChatType chatType = 4;
+// .Protocol.EChatType chatType = 5;
 inline void PlayerChatInfo::clear_chattype() {
   _impl_.chattype_ = 0;
 }

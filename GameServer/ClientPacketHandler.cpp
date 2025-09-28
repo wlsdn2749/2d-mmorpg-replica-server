@@ -144,10 +144,10 @@ bool Handle_C_DeleteCharacterRequest(PacketSessionRef& session, Protocol::C_Dele
 	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
 
 	// Room 접속 전에만 삭제 가능하도록 검증
-	if (gameSession->GetState() != GameSession::State::Connected) {
+	if (gameSession->GetState() != GameSession::State::InGame) {
 		Protocol::S_DeleteCharacterReply replyPkt;
 		replyPkt.set_success(false);
-		replyPkt.set_errormessage("게임 진행 중에는 캐릭터를 삭제할 수 없습니다.");
+		replyPkt.set_errormessage("Cannot Delete while state is not State::InGame.");
 		auto sendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
 		session->Send(sendBuffer);
 		return true;
@@ -160,7 +160,7 @@ bool Handle_C_DeleteCharacterRequest(PacketSessionRef& session, Protocol::C_Dele
 	if (characterIndex < 0 || characterIndex >= gameSession->_players.size()) {
 		Protocol::S_DeleteCharacterReply replyPkt;
 		replyPkt.set_success(false);
-		replyPkt.set_errormessage("유효하지 않은 캐릭터입니다.");
+		replyPkt.set_errormessage("Invalid Character ex) Idx is wrong");
 		auto sendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
 		session->Send(sendBuffer);
 		return true;
@@ -537,7 +537,7 @@ bool Handle_C_GiveItemRequest(PacketSessionRef& session, Protocol::C_GiveItemReq
 	if (itemId <= 0 || count <= 0)
 	{
 		replyPkt.set_success(false);
-		replyPkt.set_errormessage("잘못된 아이템 정보입니다.");
+		replyPkt.set_errormessage("Wrong Item Infomation");
 	}
 	else
 	{
@@ -565,13 +565,13 @@ bool Handle_C_GiveItemRequest(PacketSessionRef& session, Protocol::C_GiveItemReq
 			session->Send(updateBuffer);
 
 			GConsoleLogger->WriteStdOut(Color::GREEN,
-				L"[테스트] 플레이어 %d에게 아이템 %d개 %d개 지급 완료\n",
+				L"[Test] To Player %d, Item:%d, Count:%d Give Complete\n",
 				player->playerId, itemId, count);
 		}
 		else
 		{
 			replyPkt.set_success(false);
-			replyPkt.set_errormessage("아이템 지급에 실패했습니다. (인벤토리 부족 등)");
+			replyPkt.set_errormessage("Failed to give item ex) (Inventory Full)..");
 		}
 	}
 
