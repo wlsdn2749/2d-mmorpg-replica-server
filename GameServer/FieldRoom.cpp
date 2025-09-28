@@ -5,7 +5,7 @@
 #include "DropManager.h"
 #include "ItemManager.h"
 #include "MonsterDataParser.h"
-
+#include "PartyService.h"
 #include "SpawnPointDataParser.h"
 #include <random>
 
@@ -77,8 +77,17 @@ bool FieldRoom::ProcessMonsterMoneyInRoom(EntityId typeId, int srcPlayerId)
 bool FieldRoom::ProcessMonsterExpInRoom(EntityId typeId, int srcPlayerId)
 {
 	const int dropExp = 100; /*TODO 나중에 sheet 기반으로 변경*/
-	auto player = FindPlayer(srcPlayerId);
-	player->AddExp(dropExp);
+	auto killerPlayer = FindPlayer(srcPlayerId);
+
+	// 파티 경험치 분배  (PartyService로 위임)
+	if (killerPlayer->IsInParty())
+	{
+		PartyService::Instance().DistributeExp(killerPlayer, dropExp);
+	}
+	else
+	{
+		killerPlayer->AddExp(dropExp);
+	}
 	return true;
 }
 

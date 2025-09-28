@@ -7,6 +7,8 @@
 #include <optional>
 #include "Npc.h"
 
+#include "PartyService.h"
+
 /*------------------------
 		Room (Base)
 ------------------------*/
@@ -179,7 +181,8 @@ public:
 
 	// 파티 상태 동기화 (OnTick에서 주기적 호출)
 	void UpdatePartyStatuses();
-
+private:
+	void ProcessPartyUpdateTick();
 private:
 	// 파티 초대 대기 목록
 	unordered_map<int32, chrono::steady_clock::time_point> _pendingInvites;

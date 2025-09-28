@@ -1,4 +1,9 @@
 ﻿#pragma once
+#include "PartyManager.h"
+#include "Player.h"
+#include "Party.h"
+#include "Room.h"
+
 class PartyService {
 public:
     static PartyService& Instance() {
@@ -14,6 +19,12 @@ public:
 
     // 파티 상태 동기화 (Room에서 주기적 호출)
     void UpdatePartyStatuses(const vector<PlayerRef>& roomPlayers);
+
+    // 파티 상태 업데이트 송신 
+    void SendPartyStatusUpdate(int32 partyId, const vector<PlayerRef>& members);
+
+private:
+    void BroadcastToPartyMembers(PartyRef party, Protocol::S_BroadcastPartyUpdate pkt);
 
 private:
     PartyService() = default;

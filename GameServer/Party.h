@@ -2,6 +2,9 @@
 class Party
 {
 public:
+	bool operator==(const Party& rhs){return this->_partyId == rhs.GetPartyId(); }
+	bool operator!=(const Party& rhs){return this->_partyId != rhs.GetPartyId(); }
+public:
 	static constexpr int32 MAX_MEMBERS = 4;
 
 	explicit Party(int32 partyId, PlayerRef leader);

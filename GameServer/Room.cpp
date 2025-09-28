@@ -377,6 +377,31 @@ void Room::ProcessChatTick()
     _pendingChats.clear();
 }
 
+void Room::UpdatePartyStatuses()
+{
+    vector<PlayerRef> roomPlayers;
+
+    for (auto& [playerId, player] : _players)
+    {
+        if (player->IsInParty())
+        {
+            roomPlayers.push_back(player);
+        }
+    }
+    if (!roomPlayers.empty())
+    {
+        PartyService::Instance().UpdatePartyStatuses(roomPlayers);
+    }
+}
+
+void Room::ProcessPartyUpdateTick()
+{
+    if (_tick % 40 == 0)
+    {
+        UpdatePartyStatuses();
+    }
+}
+
 bool Room::CanEnterTile(int nx, int ny) const
 {
     UNREFERENCED_PARAMETER(nx);
@@ -415,6 +440,7 @@ void Room::OnRoomTick()
 {
     ProcessMovesTick();
     ProcessChatTick();
+    ProcessPartyUpdateTick();
 
     _reserved.clear(); // 예약 버퍼 비움
 }

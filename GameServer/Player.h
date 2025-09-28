@@ -17,6 +17,9 @@ struct PendingRoomChange {
 
 class Player
 {
+public:
+	bool operator==(const Player& rhs) const { return this->playerId == rhs.playerId; }
+	bool operator!=(const Player& rhs) const { return this->playerId != rhs.playerId; }
 /*----------------------------
 	Player State
 ----------------------------*/

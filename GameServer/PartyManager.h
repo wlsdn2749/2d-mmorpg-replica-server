@@ -24,6 +24,12 @@ public:
 	PartyRef FindPlayerParty(PlayerRef player);
 	int32 GetPlayerPartyId(PlayerRef player);
 
+	template <typename T, typename... Ts>
+	bool IsSameParty(const T& first, const Ts&... rest)
+	{
+		return ((first == rest) && ...);
+	}
+
 private:
 	PartyManager() = default;
 	~PartyManager() = default;
@@ -33,7 +39,7 @@ private:
 	atomic<int32> _nextPartyId {1};
 	unordered_map<int32, PartyRef> _parties;
 	unordered_map<PlayerRef, int32> _playerToParty;
-	Mutex _partyLock;
+	USE_LOCK;
 	bool _initialized = false;
 
 };
