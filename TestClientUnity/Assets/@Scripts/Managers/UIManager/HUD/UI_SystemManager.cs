@@ -11,7 +11,8 @@ public class UI_SystemManager : MonoBehaviour
     [SerializeField] private Button _gameLogOutBtn;
     [SerializeField] private Button _goSelectCharacterBtn;
     [SerializeField] private Button _inventoryUIBtn;
-    [SerializeField] private Button _itemRequestBtn;
+    [SerializeField] private Button _lowItemRequestBtn;
+    [SerializeField] private Button _highItemRequestBtn;
     [SerializeField] private GameObject _inventoryPanel;
     private void Awake()
     {
@@ -19,7 +20,8 @@ public class UI_SystemManager : MonoBehaviour
         if (_goSelectCharacterBtn) _goSelectCharacterBtn.onClick.AddListener(OnClickGoSelectCharacter);
         if (_gameExitBtn) _gameExitBtn.onClick.AddListener(OnClickGameExit);
         if (_inventoryUIBtn) _inventoryUIBtn.onClick.AddListener(OnClickInventoryUI);
-        if (_itemRequestBtn) _itemRequestBtn.onClick.AddListener(OnClickItemReq);
+        if (_lowItemRequestBtn) _lowItemRequestBtn.onClick.AddListener(OnClickLowItemReq);
+        if (_highItemRequestBtn) _highItemRequestBtn.onClick.AddListener(OnClickHighItemReq);
     }
 
     private void OnClickInventoryUI()
@@ -34,12 +36,22 @@ public class UI_SystemManager : MonoBehaviour
             InventoryManager.Instance.RequestInventory();
         }
     }
-    void OnClickItemReq()
+    void OnClickLowItemReq()
     {
-        var req = new C_GiveItemRequest();
+        var req = new C_GiveItemRequest { ItemId = 10001,Count = 1};
         var send = ServerPacketManager.MakeSendBuffer(req);
         NetworkManager.Instance.Send(send);
         Debug.Log($"[Player Item Request]");
+    }
+    void OnClickHighItemReq()
+    {
+        var req = new C_GiveItemRequest { ItemId = 10002, Count = 1 };
+        var send = ServerPacketManager.MakeSendBuffer(req);
+        NetworkManager.Instance.Send(send);
+        Debug.Log($"[Player Item Request]");
+    }
+    void ItemRequest()
+    {
 
     }
     void OnClickLogOut()

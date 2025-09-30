@@ -445,11 +445,20 @@ namespace Packet
         }
         internal static void HANDLE_S_ItemUseReply(PacketSession session, S_ItemUseReply useItemApply)
         {
-
+            if (!useItemApply.Success)
+            {
+                Debug.LogWarning($"[Inv] Item use failed: {useItemApply.ErrorMessage}");
+                // 필요 시 UI에 "사용 실패" 표시 (예: 토스트 메시지)
+            }
+            else
+            {
+                Debug.Log("[Inv] 아이템 사용 요청 응답 수신");
+            }
         }
         internal static void HANDLE_S_InventoryUpdate(PacketSession session, S_InventoryUpdate invenUpdate)
         {
-
+            InventoryManager.Instance?.Model.ApplyDelta(invenUpdate.ChangedSlots);
+            Debug.Log($"[Inv] Inventory updated, {invenUpdate.ChangedSlots.Count} slots changed");
         }
         internal static void HANDLE_S_SystemMessage(PacketSession session, S_SystemMessage sysMsg)
         {
@@ -511,12 +520,12 @@ namespace Packet
         }
         public static void HANDLE_S_GiveItemReply(PacketSession session, S_GiveItemReply reply)
         {
-            //if (reply.Success == false)
-            //{
-            //    Debug.Log($"아이템 추가 요청 실패 : {reply.ErrorMessage}");
-            //    return;
-            //}
-            var list = new List<InventorySlot>(reply.AddedSlot.Count);
+            if (reply.Success == false)
+            {
+                Debug.Log($"아이템 추가 요청 실패 : {reply.ErrorMessage}");
+                return;
+            }
+            var list = new List<InventorySlot>();
             list.Add(new InventorySlot()
             {
                 slotIndex = reply.AddedSlot.SlotIndex,

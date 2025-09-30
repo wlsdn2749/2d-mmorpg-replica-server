@@ -135,8 +135,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42ebdf525c057ad49b4579806bd30543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI_InvetorySlot
+  itemDB: {fileID: 11400000, guid: 6b88ec83ef3212746b2867bf83d0cd47, type: 2}
   icon: {fileID: 8083092346780378078}
   countText: {fileID: 9203633336966235780}
+  _useButton: {fileID: 6543134194449705841}
 --- !u!1 &3443811738613788524
 GameObject:
   m_ObjectHideFlags: 0

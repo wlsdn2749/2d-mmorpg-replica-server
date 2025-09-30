@@ -107,10 +107,10 @@
     <Compile Include="Assets\@Scripts\Packet\ServerPacketHandler.cs" />
     <Compile Include="Assets\@Scripts\Network\Connector.cs" />
     <Compile Include="Assets\@Scripts\Utill\TilemapJsonExporter.cs" />
+    <Compile Include="Assets\@Scripts\ItemDB\ItemData.cs" />
     <Compile Include="Assets\@Scripts\Managers\LoadingSceneManager\SceneTransition.cs" />
     <Compile Include="Assets\@Scripts\Managers\MonsterSpawnManager\MonsterSpawner.cs" />
     <Compile Include="Assets\@Scripts\Managers\InventoryManager\InventoryModel.cs" />
-    <Compile Include="Assets\@Scripts\PacketQueue.cs" />
     <Compile Include="Assets\@Scripts\Utill\TMPFontBatchSetter.cs" />
     <Compile Include="Assets\@Scripts\Managers\SoundManager\SFXManager.cs" />
     <Compile Include="Assets\@Scripts\Managers\UIManager\HUD\UI_Inventory.cs" />
@@ -119,11 +119,11 @@
     <Compile Include="Assets\@Scripts\Network\SessionStore.cs" />
     <Compile Include="Assets\@Scripts\Managers\InventoryManager\InventoryManager.cs" />
     <Compile Include="Assets\@Scripts\Managers\ObjectManager\ObjectPoolManager.cs" />
-    <Compile Include="Assets\@Scripts\Protocol\Protocol.cs" />
     <Compile Include="Assets\@Scripts\Managers\UIManager\HUD\UI_Chat.cs" />
     <Compile Include="Assets\@Scripts\Managers\ChattingManager\ChatManager.cs" />
     <Compile Include="Assets\@Scripts\PlayerController\PlayerInfo\PlayerIdentity.cs" />
     <Compile Include="Assets\@Scripts\Managers\LoadingSceneManager\RoomTransitionManager.cs" />
+    <Compile Include="Assets\@Scripts\Packet\PacketQueue.cs" />
     <Compile Include="Assets\@Scripts\Network\SendBuffer.cs" />
     <Compile Include="Assets\@Scripts\Managers\UIManager\Auth_UI\CreateCharacter_UI.cs" />
     <Compile Include="Assets\@Scripts\Managers\UIManager\HUD\UI_SystemManager.cs" />

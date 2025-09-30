@@ -22,4 +22,11 @@ public class InventoryManager : MonoBehaviour
         NetworkManager.Instance.Send(send);
         Debug.Log("[Inv] C_InventoryRequest sent");
     }
+    // --- 요청: 아이템 사용 요청 ---
+    public void RequestUseItem(int slotIndex)
+    {
+        var req = new C_ItemUseRequest { SlotIndex = slotIndex };
+        NetworkManager.Instance.Send(ServerPacketManager.MakeSendBuffer(req));
+        Debug.Log($"[Inv] C_ItemUseRequest sent: slot={slotIndex}");
+    }
 }
