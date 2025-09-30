@@ -7,6 +7,7 @@ Party::Party(int32 partyId, PlayerRef leader)
     : _partyId(partyId), _leader(leader)
 {
     _members.reserve(MAX_MEMBERS);
+    _members.push_back(leader);
 }
 
 bool Party::AddMember(PlayerRef player)
@@ -14,28 +15,35 @@ bool Party::AddMember(PlayerRef player)
     // PlayerRef가 Nullptr인 경우
     if (!player)
     {
-        GConsoleLogger->WriteStdErr(Color::RED, L"PlayerRef is nullptr Check!");
+        GConsoleLogger->WriteStdErr(Color::RED, L"PlayerRef is nullptr Check!\n");
         return false;
     }
 
     // PlayerRef에 파티가 이미 있는경우
     if (player->IsInParty())
     {
-        GConsoleLogger->WriteStdOut(Color::RED, L"Player is already in another party.");
+        GConsoleLogger->WriteStdOut(Color::RED, L"Player is already in another party.\n");
         return false;
     }
 
     // 이미 같은 파티에 있는 경우
     if (player->GetPartyId() == _partyId)
     {
-        GConsoleLogger->WriteStdOut(Color::RED, L"Player is already in same party. partyId = %d", _partyId);
+        GConsoleLogger->WriteStdOut(Color::RED, L"Player is already in same party. partyId = %d\n", _partyId);
         return false;
     }
 
     // 방장이 자기 자신을 넣으려는 경우
     if (IsLeader(player))
     {
-        GConsoleLogger->WriteStdOut(Color::RED, L"Player is the TeamLeader, So don't get in partyId = %d", _partyId);
+        GConsoleLogger->WriteStdOut(Color::RED, L"Player is the TeamLeader, So don't get in partyId = %d\n", _partyId);
+        return false;
+    }
+
+    // 가득 찬경우
+    if (IsFull())
+    {
+        GConsoleLogger->WriteStdOut(Color::RED, L"Party Is Full\n");
         return false;
     }
 

@@ -598,20 +598,31 @@ bool Handle_C_PartyInviteRequest(PacketSessionRef& session, Protocol::C_PartyInv
 	auto party = PartyManager::Instance().CreateParty(player);
 	
 	// 특정 Id를 가진 유저에게, 정보를 띄워주어야함
+	// PlayerRef 찾기
 	auto targetPlayer = RoomManager::Instance().FindPlayerInAllRooms(pkt.targetpid());
-	auto targetRoom = targetPlayer->GetRoom();
-
 	Protocol::S_PartyInviteReply replyPkt;
-	if (!party || !targetPlayer || !targetRoom)
+	if (!targetPlayer)
 	{
 		replyPkt.set_success(false);
-		replyPkt.set_errormessage("Failed to invite somebody to Party");
+		replyPkt.set_errormessage("Player not found");
+		gameSession->Send(ClientPacketHandler::MakeSendBuffer(replyPkt));
+		return false;
 	}
-	else
+
+	// Room 찾기
+	auto targetRoom = targetPlayer->GetRoom();
+	if (!targetRoom)
 	{
-		replyPkt.set_success(true);
-		replyPkt.set_errormessage("");
+		replyPkt.set_success(false);
+		replyPkt.set_errormessage("Player not in room");
+		gameSession->Send(ClientPacketHandler::MakeSendBuffer(replyPkt));
+		return false;
 	}
+
+
+	replyPkt.set_success(true);
+	replyPkt.set_errormessage("");
+
 
 	// 서버 -> 클라 : 파티 초대 요청 결과 전송
 	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
@@ -656,17 +667,34 @@ bool Handle_C_PartyLeave(PacketSessionRef& session, Protocol::C_PartyLeave& pkt)
 	if (!player)
 		return false;
 
-	RoomRef room = nullptr;
+	RoomRef room = player->GetRoom();
+	if (!room)
+		return false;
+
 	if (pkt.has_selfleave())
 	{
-		room = player->GetRoom();
 		room->DoAsync(&Room::HandlePartyLeave, player, true, player->playerId);
 	}
 	else if(pkt.has_targetpid())
 	{
+		int32 partyId = player->GetPartyId();
+		if (partyId == 0)
+		{
+			GConsoleLogger->WriteStdOut(Color::RED, L"[C_PartyLeave] Player not in party");
+			return false;
+		}
+
 		auto targetPlayer = RoomManager::Instance().FindPlayerInAllRooms(pkt.targetpid());
-		room = RoomManager::Instance().FindPlayerInAllRooms(pkt.targetpid())->GetRoom();
-		room->DoAsync(&Room::HandlePartyLeave, targetPlayer, false, pkt.targetpid());
+		if (!targetPlayer)
+		{
+			GConsoleLogger->WriteStdOut(Color::RED, L"[C_PartyLeave] Target player not found: %d", pkt.targetpid());
+			return false;
+		}
+
+		room->DoAsync(&Room::HandlePartyLeave, player, false, pkt.targetpid());
+
+		GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_PartyLeave] Player %d kicked player %d",
+			player->playerId, targetPlayer->playerId);
 	}
 	else
 	{

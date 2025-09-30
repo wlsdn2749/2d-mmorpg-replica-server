@@ -403,8 +403,45 @@ void Room::HandlePartyInviteResponse(PlayerRef player, int32 partyId, bool accep
 
 void Room::HandlePartyLeave(PlayerRef player, bool selfLeave, int32 targetPid)
 { 
-    PartyManager::Instance().LeaveParty(player);
-    return;  
+    if (selfLeave)
+    {
+        // 자발적 탈퇴
+        bool success = PartyManager::Instance().LeaveParty(player);
+        if (!success)
+        {
+            GConsoleLogger->WriteStdOut(Color::RED, L"[HandlePartyLeave] LeaveParty failed for player %d", player->playerId);
+        }
+    }
+    else
+    {
+        // 강퇴
+        int32 partyId = player->GetPartyId();
+        if (partyId == 0)
+        {
+            GConsoleLogger->WriteStdOut(Color::RED, L"[HandlePartyLeave] Kicker not in party");
+            return;
+        }
+
+        // targetPid로 플레이어 찾기
+        PlayerRef targetPlayer = RoomManager::Instance().FindPlayerInAllRooms(targetPid);
+        if (!targetPlayer)
+        {
+            GConsoleLogger->WriteStdOut(Color::RED, L"[HandlePartyLeave] Target player %d not found", targetPid);
+            return;
+        }
+
+        bool success = PartyManager::Instance().kickMember(partyId, player, targetPlayer);
+        if (!success)
+        {
+            GConsoleLogger->WriteStdOut(Color::RED, L"[HandlePartyLeave] Kick failed: player %d tried to kick %d",
+                player->playerId, targetPlayer->playerId);
+        }
+        else
+        {
+            GConsoleLogger->WriteStdOut(Color::GREEN, L"[HandlePartyLeave] Player %d kicked player %d",
+                player->playerId, targetPlayer->playerId);
+        }
+    }
 }
 
 void Room::UpdatePartyStatuses()

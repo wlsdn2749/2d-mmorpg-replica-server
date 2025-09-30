@@ -185,7 +185,7 @@ namespace DummyClientCS
                         Reason = reason
                     };
                     session.Send(ServerPacketManager.MakeSendBuffer(pkt));
-                    Console.WriteLine($"📤 C_LeaveGame 패킷 전송됨 - 사유: {reason}");
+                    Console.WriteLine($"C_LeaveGame 패킷 전송됨 - 사유: {reason}");
                 }
             }
         }
@@ -275,7 +275,7 @@ namespace DummyClientCS
 
             if (slotIndex < 0 || slotIndex > 39)
             {
-                Console.WriteLine("❌ 슬롯 번호는 0~39 사이여야 합니다.");
+                Console.WriteLine("슬롯 번호는 0~39 사이여야 합니다.");
                 return;
             }
 
@@ -300,7 +300,7 @@ namespace DummyClientCS
 
             if (string.IsNullOrWhiteSpace(message))
             {
-                Console.WriteLine("❌ 메시지가 비어있습니다.");
+                Console.WriteLine("메시지가 비어있습니다.");
                 return;
             }
 
@@ -321,7 +321,7 @@ namespace DummyClientCS
                     };
 
                     session.Send(ServerPacketManager.MakeSendBuffer(pkt));
-                    Console.WriteLine($"📢 [룸 채팅] '{message}' 전송했습니다.");
+                    Console.WriteLine($"[룸 채팅] '{message}' 전송했습니다.");
                 }
             }
         }
@@ -333,7 +333,7 @@ namespace DummyClientCS
 
             if (string.IsNullOrWhiteSpace(message))
             {
-                Console.WriteLine("❌ 메시지가 비어있습니다.");
+                Console.WriteLine("메시지가 비어있습니다.");
                 return;
             }
 
@@ -354,7 +354,7 @@ namespace DummyClientCS
                     };
 
                     session.Send(ServerPacketManager.MakeSendBuffer(pkt));
-                    Console.WriteLine($"🌐 [전체 채팅] '{message}' 전송했습니다.");
+                    Console.WriteLine($"[전체 채팅] '{message}' 전송했습니다.");
                 }
             }
         }
@@ -393,7 +393,7 @@ namespace DummyClientCS
                         Count = count
                     };
                     session.Send(ServerPacketManager.MakeSendBuffer(pkt));
-                    Console.WriteLine($"🎁 아이템 지급 요청 전송: ItemID={itemId}, Count={count}");
+                    Console.WriteLine($"아이템 지급 요청 전송: ItemID={itemId}, Count={count}");
                 }
             }
         }
@@ -412,7 +412,94 @@ namespace DummyClientCS
                         // 빈 패킷 - 단순히 리스폰 준비 완료를 알림
                     };
                     session.Send(ServerPacketManager.MakeSendBuffer(pkt));
-                    Console.WriteLine("💀➡️✨ 리스폰 준비 완료 신호를 서버에 전송했습니다.");
+                    Console.WriteLine("리스폰 준비 완료 신호를 서버에 전송했습니다.");
+                }
+            }
+        }
+
+        // ========== 파티 시스템 테스트 ==========
+
+        // 파티 초대 요청
+        public async Task SendPartyInviteRequest(int targetPid)
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_PartyInviteRequest
+                    {
+                        TargetPid = targetPid
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine($"[파티 초대] PlayerId {targetPid}에게 파티 초대를 보냈습니다.");
+                    Console.ResetColor();
+                }
+            }
+        }
+
+        // 파티 초대 응답 (수락/거절)
+        public async Task SendPartyInviteResponse(int partyId, bool accept)
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_PartyInviteResponse
+                    {
+                        PartyId = partyId,
+                        Accept = accept
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.ForegroundColor = accept ? ConsoleColor.Green : ConsoleColor.Red;
+                    Console.WriteLine($"{(accept ? "[파티 수락]" : "[파티 거절]")} 파티ID {partyId}에 대한 응답을 보냈습니다.");
+                    Console.ResetColor();
+                }
+            }
+        }
+
+        // 파티 탈퇴
+        public async Task SendPartyLeave()
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_PartyLeave
+                    {
+                        SelfLeave = true
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("[파티 탈퇴] 파티를 나갑니다.");
+                    Console.ResetColor();
+                }
+            }
+        }
+
+        // 파티원 강퇴
+        public async Task SendPartyKick(int targetPid)
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_PartyLeave
+                    {
+                        TargetPid = targetPid
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"⚠️ [파티 강퇴] PlayerId {targetPid}를 강퇴합니다.");
+                    Console.ResetColor();
                 }
             }
         }
