@@ -399,7 +399,9 @@ void Room::HandlePartyInviteResponse(PlayerRef player, int32 partyId, bool accep
 }
 
 void Room::HandlePartyLeave(PlayerRef player, bool selfLeave, int32 targetPid)
-{
+{ 
+    PartyManager::Instance().LeaveParty(player);
+    return;  
 }
 
 void Room::UpdatePartyStatuses()
