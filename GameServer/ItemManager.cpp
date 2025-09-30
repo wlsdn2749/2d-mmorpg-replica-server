@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "GenProcedures.h"
 
+#include "Room.h"
+
 #include <iostream>
 #include <algorithm>
 #include "PartyManager.h"
@@ -173,6 +175,9 @@ void ItemManager::ApplyHealthPotionEffect(int itemId, int count, PlayerRef playe
     
     GConsoleLogger->WriteStdOut(Color::GREEN, L"Player healed for %d HP (from %d to %d)\n", 
                                healAmount, currentHp, newHp);
+
+    auto room = player->GetRoom();
+    room->DoAsync(&Room::OnPlayerHpChanged, player->playerId);
 }
 
 void ItemManager::ApplyManaPotionEffect(int itemId, int count, PlayerRef player)

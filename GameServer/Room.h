@@ -127,7 +127,7 @@ protected:
 private:
 	void OnTickTimer();
 
-protected:
+public:
 	// 파생 훅
 	virtual void OnEnter(const PlayerRef&) {}
 	virtual void OnLeave(const PlayerRef&) {}
