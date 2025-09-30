@@ -96,3 +96,22 @@ Vector<PlayerRef> Party::GetOnlineMembers()
 
     return onlineMembers;
 }
+
+const Vector<Protocol::PartyMemberInfoStatus> Party::GetMemberInfoStatus() const
+{
+    Vector<Protocol::PartyMemberInfoStatus> memberInfos;
+    memberInfos.reserve(MAX_MEMBERS);
+    
+    for (const auto& member : _members)
+    {
+        Protocol::PartyMemberInfoStatus memberInfo;
+        memberInfo.set_playerid(member->playerId);
+        memberInfo.set_hp(member->Hp());
+        memberInfo.set_maxhp(member->MaxHp());
+        memberInfo.set_level(member->Level());
+        memberInfo.set_isleader(GetLeader() == member);
+        memberInfos.push_back(std::move(memberInfo));
+    }
+
+    return memberInfos;
+}

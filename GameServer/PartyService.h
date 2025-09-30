@@ -18,13 +18,13 @@ public:
     void DistributeExp(PlayerRef killer, int32 baseExp);
 
     // 파티 상태 동기화 (Room에서 주기적 호출)
-    void UpdatePartyStatuses(const vector<PlayerRef>& roomPlayers);
+    void UpdatePartyStatuses(const vector<PlayerRef>& roomPlayers, const Protocol::EPartyUpdateType& updateType = Protocol::EPartyUpdateType::PARTY_UPDATE_STATUS);
 
     // 파티 상태 업데이트 송신 
-    void SendPartyStatusUpdate(int32 partyId, const vector<PlayerRef>& members);
+    void SendPartyStatusUpdate(int32 partyId, const Protocol::EPartyUpdateType& updateType);
 
 private:
-    void BroadcastToPartyMembers(PartyRef party, Protocol::S_BroadcastPartyUpdate pkt);
+    void BroadcastToPartyMembers(PartyRef party, Protocol::S_BroadcastPartyUpdate& pkt);
 
 private:
     PartyService() = default;

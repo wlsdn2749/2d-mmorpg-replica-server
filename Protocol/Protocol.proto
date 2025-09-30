@@ -388,7 +388,8 @@ message C_PartyInviteRequest
 message S_PartyInviteNotify
 {
 	int32 inviterPid = 1;
-	int32 partyId = 2;
+	string inviterName = 2;
+	int32 partyId = 3;
 }
 
 // (52) 서버 -> 클라 : 파티 초대 요청 결과
@@ -398,7 +399,7 @@ message S_PartyInviteReply
 	string errorMessage = 2;
 }
 
-// (53) 클라 -> 서버 : 파티 초대 응답 (수락/거절)
+// (53) 클라 -> 서버 : Invitee 파티 초대 응답 (수락/거절)
 message C_PartyInviteResponse
 {
 	int32 partyId = 1;

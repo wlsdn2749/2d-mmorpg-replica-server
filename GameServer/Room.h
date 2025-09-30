@@ -175,9 +175,9 @@ private:
 --------------------*/
 public:
 	// 파티 관련 비동기 처리 (Async로 실행)
-	void HandlePartyInvite(PlayerRef inviter, int32 targetPid);
+	void HandlePartyInvite(PlayerRef inviter, PlayerRef invitee);
 	void HandlePartyInviteResponse(PlayerRef player, int32 partyId, bool accept);
-	void HandlePartyLeave(PlayerRef, bool selfLeave, int32 targetPid);
+	void HandlePartyLeave(PlayerRef player, bool selfLeave, int32 targetPid);
 
 	// 파티 상태 동기화 (OnTick에서 주기적 호출)
 	void UpdatePartyStatuses();

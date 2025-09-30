@@ -29,7 +29,7 @@ void PartyService::DistributeExp(PlayerRef killer, int32 baseExp)
 	}
 }
 
-void PartyService::UpdatePartyStatuses(const vector<PlayerRef>& roomPlayers)
+void PartyService::UpdatePartyStatuses(const vector<PlayerRef>& roomPlayers, const Protocol::EPartyUpdateType& updateType)
 {
 	unordered_map<int32, vector<PlayerRef>> partiesInRoom;
 
@@ -42,18 +42,17 @@ void PartyService::UpdatePartyStatuses(const vector<PlayerRef>& roomPlayers)
 
 	for (auto& [partyId, members] : partiesInRoom)
 	{
-		SendPartyStatusUpdate(partyId, members);
-		// TODO: 상태 업데이트 전송
+		SendPartyStatusUpdate(partyId, updateType);
 	}
 }
 
-void PartyService::SendPartyStatusUpdate(int32 partyId, const vector<PlayerRef>& members) {
+void PartyService::SendPartyStatusUpdate(int32 partyId, const Protocol::EPartyUpdateType& updateType) {
 	auto party = PartyManager::Instance().FindParty(partyId);
 	if (!party) return;
 
 	// S_BroadcastPartyUpdate 패킷 생성
 	Protocol::S_BroadcastPartyUpdate pkt;
-	pkt.set_updatetype(Protocol::PARTY_UPDATE_STATUS);
+	pkt.set_updatetype(updateType);
 
 	// 파티 전체 멤버의 상태 정보 수집
 	for (auto& member : party->GetOnlineMembers()) {
@@ -70,7 +69,7 @@ void PartyService::SendPartyStatusUpdate(int32 partyId, const vector<PlayerRef>&
 }
 
 
-void PartyService::BroadcastToPartyMembers(PartyRef party, Protocol::S_BroadcastPartyUpdate pkt)
+void PartyService::BroadcastToPartyMembers(PartyRef party, Protocol::S_BroadcastPartyUpdate& pkt)
 {
 	for (const auto& player : party->GetOnlineMembers())
 	{

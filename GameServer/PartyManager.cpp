@@ -2,9 +2,13 @@
 #include "PartyManager.h"
 #include "Player.h"
 #include "Party.h"
+#include "GameSession.h"
 
+#include "PartyService.h"
 PartyRef PartyManager::CreateParty(PlayerRef leader)
 {
+    if(leader->IsInParty()) return FindPlayerParty(leader);
+
     int32 partyId = _nextPartyId.fetch_add(1);
 
     PartyRef partyRef = MakeShared<Party>(partyId, leader);
@@ -12,7 +16,8 @@ PartyRef PartyManager::CreateParty(PlayerRef leader)
     _parties[partyId] = partyRef;
     _playerToParty[leader] = partyId;
 
-    // 여기에도 파티연산 + Broadcast?
+
+    PartyService::Instance().SendPartyStatusUpdate(partyId, Protocol::EPartyUpdateType::PARTY_UPDATE_MEMBER_JOIN);
     return partyRef;
 }
 
@@ -34,8 +39,8 @@ bool PartyManager::DisbandParty(int32 partyId)
     }
 
     _parties.erase(partyId);
-
-    // TODO Party 연산 + Broadcast
+   
+    PartyService::Instance().SendPartyStatusUpdate(partyId, Protocol::EPartyUpdateType::PARTY_UPDATE_DISBANDED);
     return true;
     
 }
@@ -46,15 +51,16 @@ bool PartyManager::JoinParty(int32 partyId, PlayerRef player)
     if(player->IsInParty()) return false; // 이미 파티에 있는경우
 
     _playerToParty[player] = partyId; // 입장 
-    
-    // TODO send Broadcast?
+    player->SetPartyId(partyId);
 
-    // TODO Party에 대한 연산
+    PartyService::Instance().SendPartyStatusUpdate(partyId, Protocol::EPartyUpdateType::PARTY_UPDATE_MEMBER_JOIN);
 }
 
 bool PartyManager::LeaveParty(PlayerRef player)
 {
     if(!player->IsInParty()) return false; // 파티가 없는 경우
+
+    auto partyId = player->GetPartyId();
 
     if (FindPlayerParty(player)->GetLeader() == player) // 리더인 경우
     {
@@ -63,10 +69,9 @@ bool PartyManager::LeaveParty(PlayerRef player)
 
     // 일반 사람인 경우
     _playerToParty.erase(player);
+    player->SetPartyId(0);
 
-    // 여기서도 TODO send?
-
-    // TODO Party에 대한 연산
+    PartyService::Instance().SendPartyStatusUpdate(partyId, Protocol::EPartyUpdateType::PARTY_UPDATE_MEMBER_LEAVE);
 }
 
 bool PartyManager::kickMember(int32 partyId, PlayerRef kicker, PlayerRef target)
@@ -78,9 +83,9 @@ bool PartyManager::kickMember(int32 partyId, PlayerRef kicker, PlayerRef target)
     if (!IsSameParty(kicker, target)) return false; // 같은 파티가 아닐경우 못함
 
     _playerToParty.erase(target);
+    target->SetPartyId(0);
 
-    // TODO Party에 대한 연산 + broadcast?
-
+    PartyService::Instance().SendPartyStatusUpdate(partyId, Protocol::EPartyUpdateType::PARTY_UPDATE_MEMBER_LEAVE);
     return true;
 }
 

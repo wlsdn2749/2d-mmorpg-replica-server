@@ -717,7 +717,8 @@ struct C_PartyInviteRequestDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 C_PartyInviteRequestDefaultTypeInternal _C_PartyInviteRequest_default_instance_;
 PROTOBUF_CONSTEXPR S_PartyInviteNotify::S_PartyInviteNotify(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.inviterpid_)*/0
+    /*decltype(_impl_.invitername_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.inviterpid_)*/0
   , /*decltype(_impl_.partyid_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct S_PartyInviteNotifyDefaultTypeInternal {
@@ -1352,6 +1353,7 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_PartyInviteNotify, _impl_.inviterpid_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_PartyInviteNotify, _impl_.invitername_),
   PROTOBUF_FIELD_OFFSET(::Protocol::S_PartyInviteNotify, _impl_.partyid_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_PartyInviteReply, _internal_metadata_),
@@ -1542,20 +1544,20 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 377, -1, -1, sizeof(::Protocol::S_GiveItemReply)},
   { 386, -1, -1, sizeof(::Protocol::C_PartyInviteRequest)},
   { 393, -1, -1, sizeof(::Protocol::S_PartyInviteNotify)},
-  { 401, -1, -1, sizeof(::Protocol::S_PartyInviteReply)},
-  { 409, -1, -1, sizeof(::Protocol::C_PartyInviteResponse)},
-  { 417, -1, -1, sizeof(::Protocol::C_PartyLeave)},
-  { 426, -1, -1, sizeof(::Protocol::S_BroadcastPartyUpdate)},
-  { 434, -1, -1, sizeof(::Protocol::Vector2Info)},
-  { 442, -1, -1, sizeof(::Protocol::PlayerMoveInfo)},
-  { 452, -1, -1, sizeof(::Protocol::CharacterSummaryInfo)},
-  { 462, -1, -1, sizeof(::Protocol::PlayerInfo)},
-  { 472, -1, -1, sizeof(::Protocol::InventorySlotInfo)},
-  { 482, -1, -1, sizeof(::Protocol::MonsterInfo)},
-  { 492, -1, -1, sizeof(::Protocol::ShopItemInfo)},
-  { 501, -1, -1, sizeof(::Protocol::PlayerStatInfo)},
-  { 513, -1, -1, sizeof(::Protocol::PlayerChatInfo)},
-  { 525, -1, -1, sizeof(::Protocol::PartyMemberInfoStatus)},
+  { 402, -1, -1, sizeof(::Protocol::S_PartyInviteReply)},
+  { 410, -1, -1, sizeof(::Protocol::C_PartyInviteResponse)},
+  { 418, -1, -1, sizeof(::Protocol::C_PartyLeave)},
+  { 427, -1, -1, sizeof(::Protocol::S_BroadcastPartyUpdate)},
+  { 435, -1, -1, sizeof(::Protocol::Vector2Info)},
+  { 443, -1, -1, sizeof(::Protocol::PlayerMoveInfo)},
+  { 453, -1, -1, sizeof(::Protocol::CharacterSummaryInfo)},
+  { 463, -1, -1, sizeof(::Protocol::PlayerInfo)},
+  { 473, -1, -1, sizeof(::Protocol::InventorySlotInfo)},
+  { 483, -1, -1, sizeof(::Protocol::MonsterInfo)},
+  { 493, -1, -1, sizeof(::Protocol::ShopItemInfo)},
+  { 502, -1, -1, sizeof(::Protocol::PlayerStatInfo)},
+  { 514, -1, -1, sizeof(::Protocol::PlayerChatInfo)},
+  { 526, -1, -1, sizeof(::Protocol::PartyMemberInfoStatus)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -1710,111 +1712,112 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "eItemReply\022\017\n\007success\030\001 \001(\010\022\024\n\014errorMess"
   "age\030\002 \001(\t\022.\n\taddedSlot\030\003 \001(\0132\033.Protocol."
   "InventorySlotInfo\")\n\024C_PartyInviteReques"
-  "t\022\021\n\ttargetPid\030\001 \001(\005\":\n\023S_PartyInviteNot"
-  "ify\022\022\n\ninviterPid\030\001 \001(\005\022\017\n\007partyId\030\002 \001(\005"
-  "\";\n\022S_PartyInviteReply\022\017\n\007success\030\001 \001(\010\022"
-  "\024\n\014errorMessage\030\002 \001(\t\"8\n\025C_PartyInviteRe"
-  "sponse\022\017\n\007partyId\030\001 \001(\005\022\016\n\006accept\030\002 \001(\010\""
-  "B\n\014C_PartyLeave\022\023\n\tselfLeave\030\001 \001(\010H\000\022\023\n\t"
-  "targetPid\030\002 \001(\005H\000B\010\n\006action\"z\n\026S_Broadca"
-  "stPartyUpdate\022.\n\nupdateType\030\001 \001(\0162\032.Prot"
-  "ocol.EPartyUpdateType\0220\n\007members\030\002 \003(\0132\037"
-  ".Protocol.PartyMemberInfoStatus\"#\n\013Vecto"
-  "r2Info\022\t\n\001x\030\001 \001(\005\022\t\n\001y\030\002 \001(\005\"\231\001\n\016PlayerM"
-  "oveInfo\022\020\n\010playerId\030\001 \001(\005\022\'\n\tdirection\030\002"
-  " \001(\0162\024.Protocol.EDirection\022%\n\006newPos\030\003 \001"
-  "(\0132\025.Protocol.Vector2Info\022%\n\006result\030\004 \001("
-  "\0162\025.Protocol.EMoveResult\"}\n\024CharacterSum"
-  "maryInfo\022\020\n\010username\030\001 \001(\t\022\r\n\005level\030\002 \001("
-  "\005\022!\n\006gender\030\003 \001(\0162\021.Protocol.EGender\022!\n\006"
-  "region\030\004 \001(\0162\021.Protocol.ERegion\"w\n\nPlaye"
-  "rInfo\022\n\n\002id\030\001 \001(\005\022\020\n\010username\030\002 \001(\t\022\"\n\003p"
-  "os\030\003 \001(\0132\025.Protocol.Vector2Info\022\'\n\tdirec"
-  "tion\030\004 \001(\0162\024.Protocol.EDirection\"Z\n\021Inve"
-  "ntorySlotInfo\022\021\n\tslotIndex\030\001 \001(\005\022\016\n\006item"
-  "Id\030\002 \001(\005\022\r\n\005count\030\003 \001(\005\022\023\n\013isQuickslot\030\004"
-  " \001(\010\"\204\001\n\013MonsterInfo\022\021\n\tmonsterId\030\001 \001(\005\022"
-  "\025\n\rmonsterTypeId\030\002 \001(\005\022\"\n\003pos\030\003 \001(\0132\025.Pr"
-  "otocol.Vector2Info\022\'\n\tdirection\030\004 \001(\0162\024."
-  "Protocol.EDirection\"\?\n\014ShopItemInfo\022\016\n\006i"
-  "temId\030\001 \001(\005\022\020\n\010quantity\030\002 \001(\005\022\r\n\005price\030\003"
-  " \001(\005\"i\n\016PlayerStatInfo\022\r\n\005maxHp\030\001 \001(\005\022\n\n"
-  "\002hp\030\002 \001(\005\022\016\n\006curExp\030\003 \001(\005\022\016\n\006maxExp\030\004 \001("
-  "\005\022\r\n\005level\030\005 \001(\005\022\r\n\005money\030\006 \001(\005\"\230\001\n\016Play"
-  "erChatInfo\022\024\n\nNonePlayer\030\001 \001(\010H\000\022\022\n\010play"
-  "erId\030\002 \001(\005H\000\022\022\n\nplayerName\030\003 \001(\t\022\017\n\007mess"
-  "age\030\004 \001(\t\022%\n\010chatType\030\005 \001(\0162\023.Protocol.E"
-  "ChatTypeB\020\n\016playerIncluded\"e\n\025PartyMembe"
-  "rInfoStatus\022\020\n\010playerId\030\001 \001(\005\022\n\n\002hp\030\002 \001("
-  "\005\022\r\n\005maxHp\030\003 \001(\005\022\r\n\005level\030\004 \001(\005\022\020\n\010isLea"
-  "der\030\005 \001(\010*\262\013\n\005MsgId\022\027\n\023C_JWT_LOGIN_REQUE"
-  "ST\020\000\022\025\n\021S_JWT_LOGIN_REPLY\020\001\022\036\n\032C_CREATE_"
-  "CHARACTER_REQUEST\020\002\022\034\n\030S_CREATE_CHARACTE"
-  "R_REPLY\020\003\022\034\n\030C_CHARACTER_LIST_REQUEST\020\004\022"
-  "\032\n\026S_CHARACTER_LIST_REPLY\020\005\022\036\n\032C_DELETE_"
-  "CHARACTER_REQUEST\020\006\022\034\n\030S_DELETE_CHARACTE"
-  "R_REPLY\020\007\022\020\n\014C_ENTER_GAME\020\010\022\020\n\014S_ENTER_G"
-  "AME\020\t\022\021\n\rS_PLAYER_LIST\020\n\022\034\n\030S_BROADCAST_"
-  "PLAYER_ENTER\020\013\022\020\n\014C_LEAVE_GAME\020\014\022\020\n\014S_LE"
-  "AVE_GAME\020\r\022\034\n\030S_BROADCAST_PLAYER_LEAVE\020\016"
-  "\022\031\n\025C_PLAYER_MOVE_REQUEST\020\017\022\027\n\023S_PLAYER_"
-  "MOVE_REPLY\020\020\022\033\n\027S_BROADCAST_PLAYER_MOVE\020"
-  "\021\022\027\n\023S_CHANGE_ROOM_BEGIN\020\022\022\027\n\023C_CHANGE_R"
-  "OOM_READY\020\023\022\030\n\024S_CHANGE_ROOM_COMMIT\020\024\022\023\n"
-  "\017S_SPAWN_MONSTER\020\025\022\025\n\021S_DESPAWN_MONSTER\020"
-  "\026\022\034\n\030S_BROADCAST_MONSTER_MOVE\020\027\022\036\n\032S_BRO"
-  "ADCAST_MONSTER_ATTACK\020\030\022\035\n\031S_BROADCAST_M"
-  "ONSTER_DEATH\020\031\022\033\n\027C_PLAYER_ATTACK_REQUES"
-  "T\020\032\022\035\n\031S_BROADCAST_PLAYER_ATTACK\020\033\022\027\n\023C_"
-  "INVENTORY_REQUEST\020\034\022\025\n\021S_INVENTORY_REPLY"
-  "\020\035\022\026\n\022C_ITEM_USE_REQUEST\020\036\022\024\n\020S_ITEM_USE"
-  "_REPLY\020\037\022\026\n\022S_INVENTORY_UPDATE\020 \022\024\n\020S_SY"
-  "STEM_MESSAGE\020!\022\022\n\016S_MONSTER_LIST\020\"\022\032\n\026C_"
-  "NPC_INTERACT_REQUEST\020#\022\030\n\024S_NPC_INTERACT"
-  "_REPLY\020$\022\023\n\017S_NPC_SHOP_OPEN\020%\022\032\n\026C_NPC_S"
-  "HOP_BUY_REQUEST\020&\022\030\n\024S_NPC_SHOP_BUY_REPL"
-  "Y\020\'\022\021\n\rS_PLAYER_STAT\020(\022!\n\035S_BROADCAST_PL"
-  "AYER_TRY_ATTACK\020)\022!\n\035S_BROADCAST_PLAYER_"
-  "HP_CHANGED\020*\022\034\n\030S_BROADCAST_PLAYER_DEATH"
-  "\020+\022\030\n\024C_PLAYER_DEATH_READY\020,\022\031\n\025S_PLAYER"
-  "_DEATH_COMMIT\020-\022\021\n\rC_PLAYER_CHAT\020.\022\033\n\027S_"
-  "BROADCAST_PLAYER_CHAT\020/\022\027\n\023C_GIVE_ITEM_R"
-  "EQUEST\0200\022\025\n\021S_GIVE_ITEM_REPLY\0201\022\032\n\026C_PAR"
-  "TY_INVITE_REQUEST\0202\022\031\n\025S_PARTY_INVITE_NO"
-  "TIFY\0203\022\030\n\024S_PARTY_INVITE_REPLY\0204\022\033\n\027C_PA"
-  "RTY_INVITE_RESPONSE\0205\022\021\n\rC_PARTY_LEAVE\0206"
-  "\022\034\n\030S_BROADCAST_PARTY_UPDATE\0207*S\n\014ELogin"
-  "Result\022\013\n\007SUCCESS\020\000\022\021\n\rINVALID_TOKEN\020\001\022\021"
-  "\n\rTOKEN_EXPIRED\020\002\022\020\n\014SERVER_ERROR\020\003*>\n\007E"
-  "Gender\022\017\n\013GENDER_NONE\020\000\022\017\n\013GENDER_MALE\020\001"
-  "\022\021\n\rGENDER_FEMALE\020\002*:\n\007ERegion\022\017\n\013REGION"
-  "_NONE\020\000\022\r\n\tREGION_GO\020\001\022\017\n\013REGION_BACK\020\002*"
-  "C\n\nEDirection\022\n\n\006DIR_UP\020\000\022\014\n\010DIR_DOWN\020\001\022"
-  "\014\n\010DIR_LEFT\020\002\022\r\n\tDIR_RIGHT\020\003*|\n\014ELeaveRe"
-  "ason\022\021\n\rLEAVE_UNKNOWN\020\000\022\020\n\014LEAVE_LOGOUT\020"
-  "\001\022\025\n\021LEAVE_CHANGE_ROOM\020\002\022\032\n\026LEAVE_CHANGE"
-  "_CHARACTER\020\003\022\024\n\020LEAVE_DISCONNECT\020\004*_\n\013EM"
-  "oveResult\022\020\n\014MOVE_UNKNOWN\020\000\022\013\n\007MOVE_OK\020\001"
-  "\022\014\n\010MOVE_DIR\020\002\022\021\n\rMOVE_COOLDOWN\020\003\022\020\n\014MOV"
-  "E_BLOCKED\020\004*I\n\014EEnterReason\022\021\n\rENTER_UNK"
-  "NOWN\020\000\022\017\n\013ENTER_LOGIN\020\001\022\025\n\021ENTER_CHANGE_"
-  "ROOM\020\002*9\n\016EDespawnReason\022\023\n\017DESPAWN_UNKN"
-  "OWN\020\000\022\022\n\016DESPAWN_KILLED\020\001*~\n\tEItemType\022\025"
-  "\n\021ITEM_TYPE_UNKNOWN\020\000\022\030\n\024ITEM_TYPE_CONSU"
-  "MABLE\020\001\022\027\n\023ITEM_TYPE_EQUIPMENT\020\002\022\023\n\017ITEM"
-  "_TYPE_QUEST\020\003\022\022\n\016ITEM_TYPE_MISC\020\004*a\n\014EMe"
-  "ssageType\022\020\n\014MESSAGE_INFO\020\000\022\023\n\017MESSAGE_W"
-  "ARNING\020\001\022\021\n\rMESSAGE_ERROR\020\002\022\027\n\023MESSAGE_D"
-  "ROP_FAILED\020\003*(\n\tEChatType\022\r\n\tCHAT_ROOM\020\000"
-  "\022\014\n\010CHAT_ALL\020\001*\204\001\n\020EPartyUpdateType\022\034\n\030P"
-  "ARTY_UPDATE_MEMBER_JOIN\020\000\022\035\n\031PARTY_UPDAT"
-  "E_MEMBER_LEAVE\020\001\022\027\n\023PARTY_UPDATE_STATUS\020"
-  "\002\022\032\n\026PARTY_UPDATE_DISBANDED\020\003B\033\252\002\030Google"
-  ".Protobuf.Protocolb\006proto3"
+  "t\022\021\n\ttargetPid\030\001 \001(\005\"O\n\023S_PartyInviteNot"
+  "ify\022\022\n\ninviterPid\030\001 \001(\005\022\023\n\013inviterName\030\002"
+  " \001(\t\022\017\n\007partyId\030\003 \001(\005\";\n\022S_PartyInviteRe"
+  "ply\022\017\n\007success\030\001 \001(\010\022\024\n\014errorMessage\030\002 \001"
+  "(\t\"8\n\025C_PartyInviteResponse\022\017\n\007partyId\030\001"
+  " \001(\005\022\016\n\006accept\030\002 \001(\010\"B\n\014C_PartyLeave\022\023\n\t"
+  "selfLeave\030\001 \001(\010H\000\022\023\n\ttargetPid\030\002 \001(\005H\000B\010"
+  "\n\006action\"z\n\026S_BroadcastPartyUpdate\022.\n\nup"
+  "dateType\030\001 \001(\0162\032.Protocol.EPartyUpdateTy"
+  "pe\0220\n\007members\030\002 \003(\0132\037.Protocol.PartyMemb"
+  "erInfoStatus\"#\n\013Vector2Info\022\t\n\001x\030\001 \001(\005\022\t"
+  "\n\001y\030\002 \001(\005\"\231\001\n\016PlayerMoveInfo\022\020\n\010playerId"
+  "\030\001 \001(\005\022\'\n\tdirection\030\002 \001(\0162\024.Protocol.EDi"
+  "rection\022%\n\006newPos\030\003 \001(\0132\025.Protocol.Vecto"
+  "r2Info\022%\n\006result\030\004 \001(\0162\025.Protocol.EMoveR"
+  "esult\"}\n\024CharacterSummaryInfo\022\020\n\010usernam"
+  "e\030\001 \001(\t\022\r\n\005level\030\002 \001(\005\022!\n\006gender\030\003 \001(\0162\021"
+  ".Protocol.EGender\022!\n\006region\030\004 \001(\0162\021.Prot"
+  "ocol.ERegion\"w\n\nPlayerInfo\022\n\n\002id\030\001 \001(\005\022\020"
+  "\n\010username\030\002 \001(\t\022\"\n\003pos\030\003 \001(\0132\025.Protocol"
+  ".Vector2Info\022\'\n\tdirection\030\004 \001(\0162\024.Protoc"
+  "ol.EDirection\"Z\n\021InventorySlotInfo\022\021\n\tsl"
+  "otIndex\030\001 \001(\005\022\016\n\006itemId\030\002 \001(\005\022\r\n\005count\030\003"
+  " \001(\005\022\023\n\013isQuickslot\030\004 \001(\010\"\204\001\n\013MonsterInf"
+  "o\022\021\n\tmonsterId\030\001 \001(\005\022\025\n\rmonsterTypeId\030\002 "
+  "\001(\005\022\"\n\003pos\030\003 \001(\0132\025.Protocol.Vector2Info\022"
+  "\'\n\tdirection\030\004 \001(\0162\024.Protocol.EDirection"
+  "\"\?\n\014ShopItemInfo\022\016\n\006itemId\030\001 \001(\005\022\020\n\010quan"
+  "tity\030\002 \001(\005\022\r\n\005price\030\003 \001(\005\"i\n\016PlayerStatI"
+  "nfo\022\r\n\005maxHp\030\001 \001(\005\022\n\n\002hp\030\002 \001(\005\022\016\n\006curExp"
+  "\030\003 \001(\005\022\016\n\006maxExp\030\004 \001(\005\022\r\n\005level\030\005 \001(\005\022\r\n"
+  "\005money\030\006 \001(\005\"\230\001\n\016PlayerChatInfo\022\024\n\nNoneP"
+  "layer\030\001 \001(\010H\000\022\022\n\010playerId\030\002 \001(\005H\000\022\022\n\npla"
+  "yerName\030\003 \001(\t\022\017\n\007message\030\004 \001(\t\022%\n\010chatTy"
+  "pe\030\005 \001(\0162\023.Protocol.EChatTypeB\020\n\016playerI"
+  "ncluded\"e\n\025PartyMemberInfoStatus\022\020\n\010play"
+  "erId\030\001 \001(\005\022\n\n\002hp\030\002 \001(\005\022\r\n\005maxHp\030\003 \001(\005\022\r\n"
+  "\005level\030\004 \001(\005\022\020\n\010isLeader\030\005 \001(\010*\262\013\n\005MsgId"
+  "\022\027\n\023C_JWT_LOGIN_REQUEST\020\000\022\025\n\021S_JWT_LOGIN"
+  "_REPLY\020\001\022\036\n\032C_CREATE_CHARACTER_REQUEST\020\002"
+  "\022\034\n\030S_CREATE_CHARACTER_REPLY\020\003\022\034\n\030C_CHAR"
+  "ACTER_LIST_REQUEST\020\004\022\032\n\026S_CHARACTER_LIST"
+  "_REPLY\020\005\022\036\n\032C_DELETE_CHARACTER_REQUEST\020\006"
+  "\022\034\n\030S_DELETE_CHARACTER_REPLY\020\007\022\020\n\014C_ENTE"
+  "R_GAME\020\010\022\020\n\014S_ENTER_GAME\020\t\022\021\n\rS_PLAYER_L"
+  "IST\020\n\022\034\n\030S_BROADCAST_PLAYER_ENTER\020\013\022\020\n\014C"
+  "_LEAVE_GAME\020\014\022\020\n\014S_LEAVE_GAME\020\r\022\034\n\030S_BRO"
+  "ADCAST_PLAYER_LEAVE\020\016\022\031\n\025C_PLAYER_MOVE_R"
+  "EQUEST\020\017\022\027\n\023S_PLAYER_MOVE_REPLY\020\020\022\033\n\027S_B"
+  "ROADCAST_PLAYER_MOVE\020\021\022\027\n\023S_CHANGE_ROOM_"
+  "BEGIN\020\022\022\027\n\023C_CHANGE_ROOM_READY\020\023\022\030\n\024S_CH"
+  "ANGE_ROOM_COMMIT\020\024\022\023\n\017S_SPAWN_MONSTER\020\025\022"
+  "\025\n\021S_DESPAWN_MONSTER\020\026\022\034\n\030S_BROADCAST_MO"
+  "NSTER_MOVE\020\027\022\036\n\032S_BROADCAST_MONSTER_ATTA"
+  "CK\020\030\022\035\n\031S_BROADCAST_MONSTER_DEATH\020\031\022\033\n\027C"
+  "_PLAYER_ATTACK_REQUEST\020\032\022\035\n\031S_BROADCAST_"
+  "PLAYER_ATTACK\020\033\022\027\n\023C_INVENTORY_REQUEST\020\034"
+  "\022\025\n\021S_INVENTORY_REPLY\020\035\022\026\n\022C_ITEM_USE_RE"
+  "QUEST\020\036\022\024\n\020S_ITEM_USE_REPLY\020\037\022\026\n\022S_INVEN"
+  "TORY_UPDATE\020 \022\024\n\020S_SYSTEM_MESSAGE\020!\022\022\n\016S"
+  "_MONSTER_LIST\020\"\022\032\n\026C_NPC_INTERACT_REQUES"
+  "T\020#\022\030\n\024S_NPC_INTERACT_REPLY\020$\022\023\n\017S_NPC_S"
+  "HOP_OPEN\020%\022\032\n\026C_NPC_SHOP_BUY_REQUEST\020&\022\030"
+  "\n\024S_NPC_SHOP_BUY_REPLY\020\'\022\021\n\rS_PLAYER_STA"
+  "T\020(\022!\n\035S_BROADCAST_PLAYER_TRY_ATTACK\020)\022!"
+  "\n\035S_BROADCAST_PLAYER_HP_CHANGED\020*\022\034\n\030S_B"
+  "ROADCAST_PLAYER_DEATH\020+\022\030\n\024C_PLAYER_DEAT"
+  "H_READY\020,\022\031\n\025S_PLAYER_DEATH_COMMIT\020-\022\021\n\r"
+  "C_PLAYER_CHAT\020.\022\033\n\027S_BROADCAST_PLAYER_CH"
+  "AT\020/\022\027\n\023C_GIVE_ITEM_REQUEST\0200\022\025\n\021S_GIVE_"
+  "ITEM_REPLY\0201\022\032\n\026C_PARTY_INVITE_REQUEST\0202"
+  "\022\031\n\025S_PARTY_INVITE_NOTIFY\0203\022\030\n\024S_PARTY_I"
+  "NVITE_REPLY\0204\022\033\n\027C_PARTY_INVITE_RESPONSE"
+  "\0205\022\021\n\rC_PARTY_LEAVE\0206\022\034\n\030S_BROADCAST_PAR"
+  "TY_UPDATE\0207*S\n\014ELoginResult\022\013\n\007SUCCESS\020\000"
+  "\022\021\n\rINVALID_TOKEN\020\001\022\021\n\rTOKEN_EXPIRED\020\002\022\020"
+  "\n\014SERVER_ERROR\020\003*>\n\007EGender\022\017\n\013GENDER_NO"
+  "NE\020\000\022\017\n\013GENDER_MALE\020\001\022\021\n\rGENDER_FEMALE\020\002"
+  "*:\n\007ERegion\022\017\n\013REGION_NONE\020\000\022\r\n\tREGION_G"
+  "O\020\001\022\017\n\013REGION_BACK\020\002*C\n\nEDirection\022\n\n\006DI"
+  "R_UP\020\000\022\014\n\010DIR_DOWN\020\001\022\014\n\010DIR_LEFT\020\002\022\r\n\tDI"
+  "R_RIGHT\020\003*|\n\014ELeaveReason\022\021\n\rLEAVE_UNKNO"
+  "WN\020\000\022\020\n\014LEAVE_LOGOUT\020\001\022\025\n\021LEAVE_CHANGE_R"
+  "OOM\020\002\022\032\n\026LEAVE_CHANGE_CHARACTER\020\003\022\024\n\020LEA"
+  "VE_DISCONNECT\020\004*_\n\013EMoveResult\022\020\n\014MOVE_U"
+  "NKNOWN\020\000\022\013\n\007MOVE_OK\020\001\022\014\n\010MOVE_DIR\020\002\022\021\n\rM"
+  "OVE_COOLDOWN\020\003\022\020\n\014MOVE_BLOCKED\020\004*I\n\014EEnt"
+  "erReason\022\021\n\rENTER_UNKNOWN\020\000\022\017\n\013ENTER_LOG"
+  "IN\020\001\022\025\n\021ENTER_CHANGE_ROOM\020\002*9\n\016EDespawnR"
+  "eason\022\023\n\017DESPAWN_UNKNOWN\020\000\022\022\n\016DESPAWN_KI"
+  "LLED\020\001*~\n\tEItemType\022\025\n\021ITEM_TYPE_UNKNOWN"
+  "\020\000\022\030\n\024ITEM_TYPE_CONSUMABLE\020\001\022\027\n\023ITEM_TYP"
+  "E_EQUIPMENT\020\002\022\023\n\017ITEM_TYPE_QUEST\020\003\022\022\n\016IT"
+  "EM_TYPE_MISC\020\004*a\n\014EMessageType\022\020\n\014MESSAG"
+  "E_INFO\020\000\022\023\n\017MESSAGE_WARNING\020\001\022\021\n\rMESSAGE"
+  "_ERROR\020\002\022\027\n\023MESSAGE_DROP_FAILED\020\003*(\n\tECh"
+  "atType\022\r\n\tCHAT_ROOM\020\000\022\014\n\010CHAT_ALL\020\001*\204\001\n\020"
+  "EPartyUpdateType\022\034\n\030PARTY_UPDATE_MEMBER_"
+  "JOIN\020\000\022\035\n\031PARTY_UPDATE_MEMBER_LEAVE\020\001\022\027\n"
+  "\023PARTY_UPDATE_STATUS\020\002\022\032\n\026PARTY_UPDATE_D"
+  "ISBANDED\020\003B\033\252\002\030Google.Protobuf.Protocolb"
+  "\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 7306, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 7327, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
     &descriptor_table_Protocol_2eproto_once, nullptr, 0, 66,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
@@ -12075,11 +12078,20 @@ S_PartyInviteNotify::S_PartyInviteNotify(const S_PartyInviteNotify& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   S_PartyInviteNotify* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.inviterpid_){}
+      decltype(_impl_.invitername_){}
+    , decltype(_impl_.inviterpid_){}
     , decltype(_impl_.partyid_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.invitername_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.invitername_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_invitername().empty()) {
+    _this->_impl_.invitername_.Set(from._internal_invitername(), 
+      _this->GetArenaForAllocation());
+  }
   ::memcpy(&_impl_.inviterpid_, &from._impl_.inviterpid_,
     static_cast<size_t>(reinterpret_cast<char*>(&_impl_.partyid_) -
     reinterpret_cast<char*>(&_impl_.inviterpid_)) + sizeof(_impl_.partyid_));
@@ -12091,10 +12103,15 @@ inline void S_PartyInviteNotify::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.inviterpid_){0}
+      decltype(_impl_.invitername_){}
+    , decltype(_impl_.inviterpid_){0}
     , decltype(_impl_.partyid_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
+  _impl_.invitername_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.invitername_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 S_PartyInviteNotify::~S_PartyInviteNotify() {
@@ -12108,6 +12125,7 @@ S_PartyInviteNotify::~S_PartyInviteNotify() {
 
 inline void S_PartyInviteNotify::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.invitername_.Destroy();
 }
 
 void S_PartyInviteNotify::SetCachedSize(int size) const {
@@ -12120,6 +12138,7 @@ void S_PartyInviteNotify::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  _impl_.invitername_.ClearToEmpty();
   ::memset(&_impl_.inviterpid_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&_impl_.partyid_) -
       reinterpret_cast<char*>(&_impl_.inviterpid_)) + sizeof(_impl_.partyid_));
@@ -12140,9 +12159,19 @@ const char* S_PartyInviteNotify::_InternalParse(const char* ptr, ::_pbi::ParseCo
         } else
           goto handle_unusual;
         continue;
-      // int32 partyId = 2;
+      // string inviterName = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_invitername();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "Protocol.S_PartyInviteNotify.inviterName"));
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 partyId = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
           _impl_.partyid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
@@ -12183,10 +12212,20 @@ uint8_t* S_PartyInviteNotify::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_inviterpid(), target);
   }
 
-  // int32 partyId = 2;
+  // string inviterName = 2;
+  if (!this->_internal_invitername().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_invitername().data(), static_cast<int>(this->_internal_invitername().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "Protocol.S_PartyInviteNotify.inviterName");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_invitername(), target);
+  }
+
+  // int32 partyId = 3;
   if (this->_internal_partyid() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_partyid(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(3, this->_internal_partyid(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -12205,12 +12244,19 @@ size_t S_PartyInviteNotify::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  // string inviterName = 2;
+  if (!this->_internal_invitername().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_invitername());
+  }
+
   // int32 inviterPid = 1;
   if (this->_internal_inviterpid() != 0) {
     total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_inviterpid());
   }
 
-  // int32 partyId = 2;
+  // int32 partyId = 3;
   if (this->_internal_partyid() != 0) {
     total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_partyid());
   }
@@ -12233,6 +12279,9 @@ void S_PartyInviteNotify::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, co
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  if (!from._internal_invitername().empty()) {
+    _this->_internal_set_invitername(from._internal_invitername());
+  }
   if (from._internal_inviterpid() != 0) {
     _this->_internal_set_inviterpid(from._internal_inviterpid());
   }
@@ -12255,7 +12304,13 @@ bool S_PartyInviteNotify::IsInitialized() const {
 
 void S_PartyInviteNotify::InternalSwap(S_PartyInviteNotify* other) {
   using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.invitername_, lhs_arena,
+      &other->_impl_.invitername_, rhs_arena
+  );
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(S_PartyInviteNotify, _impl_.partyid_)
       + sizeof(S_PartyInviteNotify::_impl_.partyid_)

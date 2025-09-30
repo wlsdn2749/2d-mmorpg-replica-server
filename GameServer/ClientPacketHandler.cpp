@@ -592,18 +592,87 @@ bool Handle_C_PartyInviteRequest(PacketSessionRef& session, Protocol::C_PartyInv
 	if (!player)
 		return false;
 
-	// Room을 순회해서 
+	// 초대한 유저가 이미 
+	// 파티가 있는 경우: 그 파티
+	// 없는 경우:		 새로 만든 파티
+	auto party = PartyManager::Instance().CreateParty(player);
 	
-	
+	// 특정 Id를 가진 유저에게, 정보를 띄워주어야함
+	auto targetPlayer = RoomManager::Instance().FindPlayerInAllRooms(pkt.targetpid());
+	auto targetRoom = targetPlayer->GetRoom();
 
+	Protocol::S_PartyInviteReply replyPkt;
+	if (!party || !targetPlayer || !targetRoom)
+	{
+		replyPkt.set_success(false);
+		replyPkt.set_errormessage("Failed to invite somebody to Party");
+	}
+	else
+	{
+		replyPkt.set_success(true);
+		replyPkt.set_errormessage("");
+	}
+
+	// 서버 -> 클라 : 파티 초대 요청 결과 전송
+	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
+	gameSession->Send(sendBuffer);
+	
+	// invitee에게 알림 전달
+	targetRoom->DoAsync(&Room::HandlePartyInvite, player, targetPlayer);
+
+	return true;
 }
 
 bool Handle_C_PartyInviteResponse(PacketSessionRef& session, Protocol::C_PartyInviteResponse& pkt)
 {
-	return false;
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef invitee = gameSession->_currentPlayer;
+	if (!invitee)
+		return false;
+
+	auto accept = pkt.accept();
+	if (!accept)
+		return false;
+
+	RoomRef room = invitee->GetRoom();
+	
+	room->DoAsync(&Room::HandlePartyInviteResponse, invitee, pkt.partyid(), pkt.accept());
+	return true;
+
 }
 
 bool Handle_C_PartyLeave(PacketSessionRef& session, Protocol::C_PartyLeave& pkt)
 {
-	return false;
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+	if (!player)
+		return false;
+
+	RoomRef room = nullptr;
+	if (pkt.has_selfleave())
+	{
+		room = player->GetRoom();
+		room->DoAsync(&Room::HandlePartyLeave, player, true, player->playerId);
+	}
+	else if(pkt.has_targetpid())
+	{
+		auto targetPlayer = RoomManager::Instance().FindPlayerInAllRooms(pkt.targetpid());
+		room = RoomManager::Instance().FindPlayerInAllRooms(pkt.targetpid())->GetRoom();
+		room->DoAsync(&Room::HandlePartyLeave, targetPlayer, false, pkt.targetpid());
+	}
+	else
+	{
+		CRASH(); // 둘 중 하나는 반드시 있어야함
+	}
+	
+	return true;
+
 }

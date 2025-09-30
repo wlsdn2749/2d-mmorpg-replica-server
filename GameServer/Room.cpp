@@ -377,6 +377,31 @@ void Room::ProcessChatTick()
     _pendingChats.clear();
 }
 
+void Room::HandlePartyInvite(PlayerRef inviter, PlayerRef invitee)
+{
+    Protocol::S_PartyInviteNotify notifyPkt;
+    
+    notifyPkt.set_inviterpid(inviter->playerId);
+    notifyPkt.set_invitername(inviter->username);
+    notifyPkt.set_partyid(inviter->GetPartyId());
+    
+    auto sendBuffer = ClientPacketHandler::MakeSendBuffer(notifyPkt);
+    if (auto s = invitee->ownerSession.lock())
+        s->Send(sendBuffer);
+
+}
+
+void Room::HandlePartyInviteResponse(PlayerRef player, int32 partyId, bool accept)
+{
+    if(!accept) return;
+
+    PartyManager::Instance().JoinParty(partyId, player);
+}
+
+void Room::HandlePartyLeave(PlayerRef player, bool selfLeave, int32 targetPid)
+{
+}
+
 void Room::UpdatePartyStatuses()
 {
     vector<PlayerRef> roomPlayers;

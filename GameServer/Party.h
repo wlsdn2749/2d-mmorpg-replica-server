@@ -20,7 +20,7 @@ public:
 	PlayerRef GetLeader() const;
 	const Vector<PlayerRef>& GetMembers() const;
 	Vector<PlayerRef> GetOnlineMembers();
-
+	const Vector<Protocol::PartyMemberInfoStatus> GetMemberInfoStatus() const;
 private:
 	int32 _partyId;
 	PlayerRef _leader;

@@ -8882,9 +8882,24 @@ class S_PartyInviteNotify final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kInviterNameFieldNumber = 2,
     kInviterPidFieldNumber = 1,
-    kPartyIdFieldNumber = 2,
+    kPartyIdFieldNumber = 3,
   };
+  // string inviterName = 2;
+  void clear_invitername();
+  const std::string& invitername() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_invitername(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_invitername();
+  PROTOBUF_NODISCARD std::string* release_invitername();
+  void set_allocated_invitername(std::string* invitername);
+  private:
+  const std::string& _internal_invitername() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_invitername(const std::string& value);
+  std::string* _internal_mutable_invitername();
+  public:
+
   // int32 inviterPid = 1;
   void clear_inviterpid();
   int32_t inviterpid() const;
@@ -8894,7 +8909,7 @@ class S_PartyInviteNotify final :
   void _internal_set_inviterpid(int32_t value);
   public:
 
-  // int32 partyId = 2;
+  // int32 partyId = 3;
   void clear_partyid();
   int32_t partyid() const;
   void set_partyid(int32_t value);
@@ -8911,6 +8926,7 @@ class S_PartyInviteNotify final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr invitername_;
     int32_t inviterpid_;
     int32_t partyid_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -14440,7 +14456,57 @@ inline void S_PartyInviteNotify::set_inviterpid(int32_t value) {
   // @@protoc_insertion_point(field_set:Protocol.S_PartyInviteNotify.inviterPid)
 }
 
-// int32 partyId = 2;
+// string inviterName = 2;
+inline void S_PartyInviteNotify::clear_invitername() {
+  _impl_.invitername_.ClearToEmpty();
+}
+inline const std::string& S_PartyInviteNotify::invitername() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_PartyInviteNotify.inviterName)
+  return _internal_invitername();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void S_PartyInviteNotify::set_invitername(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.invitername_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Protocol.S_PartyInviteNotify.inviterName)
+}
+inline std::string* S_PartyInviteNotify::mutable_invitername() {
+  std::string* _s = _internal_mutable_invitername();
+  // @@protoc_insertion_point(field_mutable:Protocol.S_PartyInviteNotify.inviterName)
+  return _s;
+}
+inline const std::string& S_PartyInviteNotify::_internal_invitername() const {
+  return _impl_.invitername_.Get();
+}
+inline void S_PartyInviteNotify::_internal_set_invitername(const std::string& value) {
+  
+  _impl_.invitername_.Set(value, GetArenaForAllocation());
+}
+inline std::string* S_PartyInviteNotify::_internal_mutable_invitername() {
+  
+  return _impl_.invitername_.Mutable(GetArenaForAllocation());
+}
+inline std::string* S_PartyInviteNotify::release_invitername() {
+  // @@protoc_insertion_point(field_release:Protocol.S_PartyInviteNotify.inviterName)
+  return _impl_.invitername_.Release();
+}
+inline void S_PartyInviteNotify::set_allocated_invitername(std::string* invitername) {
+  if (invitername != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.invitername_.SetAllocated(invitername, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.invitername_.IsDefault()) {
+    _impl_.invitername_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:Protocol.S_PartyInviteNotify.inviterName)
+}
+
+// int32 partyId = 3;
 inline void S_PartyInviteNotify::clear_partyid() {
   _impl_.partyid_ = 0;
 }
