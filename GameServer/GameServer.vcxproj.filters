@@ -73,6 +73,9 @@
     <Filter Include="GameContents\LevelSystem">
       <UniqueIdentifier>{71dec1aa-1ca6-4951-b472-9b449f335448}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameContents\Party">
+      <UniqueIdentifier>{61cce524-388f-4ac4-86e8-ddef7370c472}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameServer.cpp">
@@ -222,7 +225,18 @@
     <ClCompile Include="SpawnPointDataParser.cpp">
       <Filter>DataParser</Filter>
     </ClCompile>
-    <ClCompile Include="ItemDataParser.cpp" />
+    <ClCompile Include="Party.cpp">
+      <Filter>GameContents\Party</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemDataParser.cpp">
+      <Filter>DataParser</Filter>
+    </ClCompile>
+    <ClCompile Include="PartyManager.cpp">
+      <Filter>GameContents\Party</Filter>
+    </ClCompile>
+    <ClCompile Include="PartyService.cpp">
+      <Filter>GameContents\Party</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -396,7 +410,18 @@
     <ClInclude Include="SpawnPointDataParser.h">
       <Filter>DataParser</Filter>
     </ClInclude>
-    <ClInclude Include="ItemDataParser.h" />
+    <ClInclude Include="Party.h">
+      <Filter>GameContents\Party</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemDataParser.h">
+      <Filter>DataParser</Filter>
+    </ClInclude>
+    <ClInclude Include="PartyManager.h">
+      <Filter>GameContents\Party</Filter>
+    </ClInclude>
+    <ClInclude Include="PartyService.h">
+      <Filter>GameContents\Party</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="appsettings.json">

@@ -58,6 +58,12 @@ namespace Packet
 	    PKT_S_BroadcastPlayerChat = 47,
 	    PKT_C_GiveItemRequest = 48,
 	    PKT_S_GiveItemReply = 49,
+	    PKT_C_PartyInviteRequest = 50,
+	    PKT_S_PartyInviteNotify = 51,
+	    PKT_S_PartyInviteReply = 52,
+	    PKT_C_PartyInviteResponse = 53,
+	    PKT_C_PartyLeave = 54,
+	    PKT_S_BroadcastPartyUpdate = 55,
     }
     public class ServerPacketManager
     {
@@ -99,6 +105,9 @@ namespace Packet
         public static ArraySegment<byte> MakeSendBuffer(C_PlayerDeathReady pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PlayerDeathReady);
         public static ArraySegment<byte> MakeSendBuffer(C_PlayerChat pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PlayerChat);
         public static ArraySegment<byte> MakeSendBuffer(C_GiveItemRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_GiveItemRequest);
+        public static ArraySegment<byte> MakeSendBuffer(C_PartyInviteRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PartyInviteRequest);
+        public static ArraySegment<byte> MakeSendBuffer(C_PartyInviteResponse pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PartyInviteResponse);
+        public static ArraySegment<byte> MakeSendBuffer(C_PartyLeave pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PartyLeave);
 
         void Register()
         {
@@ -140,6 +149,9 @@ namespace Packet
             RegisterHandler((ushort)PacketID.PKT_S_PlayerDeathCommit, ServerPacketHandler.HANDLE_S_PlayerDeathCommit, S_PlayerDeathCommit.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_BroadcastPlayerChat, ServerPacketHandler.HANDLE_S_BroadcastPlayerChat, S_BroadcastPlayerChat.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_GiveItemReply, ServerPacketHandler.HANDLE_S_GiveItemReply, S_GiveItemReply.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_PartyInviteNotify, ServerPacketHandler.HANDLE_S_PartyInviteNotify, S_PartyInviteNotify.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_PartyInviteReply, ServerPacketHandler.HANDLE_S_PartyInviteReply, S_PartyInviteReply.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_BroadcastPartyUpdate, ServerPacketHandler.HANDLE_S_BroadcastPartyUpdate, S_BroadcastPartyUpdate.Parser);
             
                   
         }

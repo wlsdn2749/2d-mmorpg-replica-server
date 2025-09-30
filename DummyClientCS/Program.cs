@@ -57,6 +57,12 @@ class Program
             Console.WriteLine("[y] 전체 채팅 (모든 룸의 플레이어들에게)");
             Console.WriteLine("\n===== Death 시스템 테스트 =====");
             Console.WriteLine("[p] 리스폰 요청 (사망 후 부활하기)");
+            Console.WriteLine("\n===== 파티 시스템 테스트 =====");
+            Console.WriteLine("[a] 파티 초대 (PlayerId 입력)");
+            Console.WriteLine("[s] 파티 초대 수락");
+            Console.WriteLine("[f] 파티 초대 거절");
+            Console.WriteLine("[q] 파티 탈퇴");
+            Console.WriteLine("[w] 파티원 강퇴 (PlayerId 입력)");
             Console.WriteLine("\n===== 종료 로직 테스트 =====");
             Console.WriteLine("[x] 룸에서 나가기 (캐릭터 변경)");
             Console.WriteLine("[l] 로그아웃 테스트 (JWT 인증 상태로 복귀)");
@@ -392,10 +398,10 @@ class Program
 
                     Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.WriteLine("========================================");
-                    Console.WriteLine("💀➡️✨ [Death 시스템 테스트] 리스폰 요청");
+                    Console.WriteLine("[Death 시스템 테스트] 리스폰 요청");
                     Console.WriteLine("========================================");
-                    Console.WriteLine("⚠️  주의: 이 기능은 사망 상태에서만 작동합니다.");
-                    Console.WriteLine("📝 사용법:");
+                    Console.WriteLine("주의: 이 기능은 사망 상태에서만 작동합니다.");
+                    Console.WriteLine("사용법:");
                     Console.WriteLine("   1. 몬스터에게 공격받아 사망하세요");
                     Console.WriteLine("   2. S_BroadcastPlayerDeath 메시지가 나타나면");
                     Console.WriteLine("   3. 'p' 키를 눌러 리스폰을 요청하세요");
@@ -405,6 +411,103 @@ class Program
                     Console.ResetColor();
 
                     await SessionManager.Instance.SendPlayerDeathReady();
+                    break;
+                case "a":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
+                        break;
+                    }
+                    Console.Write("초대할 플레이어 ID 입력: ");
+                    string? inviteTargetInput = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(inviteTargetInput))
+                    {
+                        Console.WriteLine("플레이어 ID를 입력해주세요!");
+                        break;
+                    }
+                    if (!Int32.TryParse(inviteTargetInput, out int targetPid))
+                    {
+                        Console.WriteLine("플레이어 ID는 숫자여야 합니다!");
+                        break;
+                    }
+
+                    await SessionManager.Instance.SendPartyInviteRequest(targetPid);
+                    break;
+                case "s":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
+                        break;
+                    }
+                    Console.Write("수락할 파티 ID 입력: ");
+                    string? acceptPartyIdInput = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(acceptPartyIdInput))
+                    {
+                        Console.WriteLine("파티 ID를 입력해주세요!");
+                        break;
+                    }
+                    if (!Int32.TryParse(acceptPartyIdInput, out int acceptPartyId))
+                    {
+                        Console.WriteLine("파티 ID는 숫자여야 합니다!");
+                        break;
+                    }
+
+                    await SessionManager.Instance.SendPartyInviteResponse(acceptPartyId, true);
+                    break;
+                case "f":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
+                        break;
+                    }
+                    Console.Write("거절할 파티 ID 입력: ");
+                    string? rejectPartyIdInput = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(rejectPartyIdInput))
+                    {
+                        Console.WriteLine("파티 ID를 입력해주세요!");
+                        break;
+                    }
+                    if (!Int32.TryParse(rejectPartyIdInput, out int rejectPartyId))
+                    {
+                        Console.WriteLine("파티 ID는 숫자여야 합니다!");
+                        break;
+                    }
+
+                    await SessionManager.Instance.SendPartyInviteResponse(rejectPartyId, false);
+                    break;
+                case "q":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
+                        break;
+                    }
+
+                    await SessionManager.Instance.SendPartyLeave();
+                    break;
+                case "w":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
+                        break;
+                    }
+                    Console.Write("강퇴할 플레이어 ID 입력: ");
+                    string? kickTargetInput = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(kickTargetInput))
+                    {
+                        Console.WriteLine("플레이어 ID를 입력해주세요!");
+                        break;
+                    }
+                    if (!Int32.TryParse(kickTargetInput, out int kickTargetPid))
+                    {
+                        Console.WriteLine("플레이어 ID는 숫자여야 합니다!");
+                        break;
+                    }
+
+                    await SessionManager.Instance.SendPartyKick(kickTargetPid);
                     break;
                 case "x":
                     if (!_isInGame)

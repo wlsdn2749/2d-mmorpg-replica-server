@@ -580,3 +580,127 @@ bool Handle_C_GiveItemRequest(PacketSessionRef& session, Protocol::C_GiveItemReq
 
 	return true;
 }
+
+bool Handle_C_PartyInviteRequest(PacketSessionRef& session, Protocol::C_PartyInviteRequest& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+	if (!player)
+		return false;
+
+	// 초대한 유저가 이미 
+	// 파티가 있는 경우: 그 파티
+	// 없는 경우:		 새로 만든 파티
+	auto party = PartyManager::Instance().CreateParty(player);
+	
+	// 특정 Id를 가진 유저에게, 정보를 띄워주어야함
+	// PlayerRef 찾기
+	auto targetPlayer = RoomManager::Instance().FindPlayerInAllRooms(pkt.targetpid());
+	Protocol::S_PartyInviteReply replyPkt;
+	if (!targetPlayer)
+	{
+		replyPkt.set_success(false);
+		replyPkt.set_errormessage("Player not found");
+		gameSession->Send(ClientPacketHandler::MakeSendBuffer(replyPkt));
+		return false;
+	}
+
+	// Room 찾기
+	auto targetRoom = targetPlayer->GetRoom();
+	if (!targetRoom)
+	{
+		replyPkt.set_success(false);
+		replyPkt.set_errormessage("Player not in room");
+		gameSession->Send(ClientPacketHandler::MakeSendBuffer(replyPkt));
+		return false;
+	}
+
+
+	replyPkt.set_success(true);
+	replyPkt.set_errormessage("");
+
+
+	// 서버 -> 클라 : 파티 초대 요청 결과 전송
+	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
+	gameSession->Send(sendBuffer);
+	
+	// invitee에게 알림 전달
+	targetRoom->DoAsync(&Room::HandlePartyInvite, player, targetPlayer);
+
+	return true;
+}
+
+bool Handle_C_PartyInviteResponse(PacketSessionRef& session, Protocol::C_PartyInviteResponse& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef invitee = gameSession->_currentPlayer;
+	if (!invitee)
+		return false;
+
+	auto accept = pkt.accept();
+	if (!accept)
+		return false;
+
+	RoomRef room = invitee->GetRoom();
+	
+	room->DoAsync(&Room::HandlePartyInviteResponse, invitee, pkt.partyid(), pkt.accept());
+	return true;
+
+}
+
+bool Handle_C_PartyLeave(PacketSessionRef& session, Protocol::C_PartyLeave& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+	if (!player)
+		return false;
+
+	RoomRef room = player->GetRoom();
+	if (!room)
+		return false;
+
+	if (pkt.has_selfleave())
+	{
+		room->DoAsync(&Room::HandlePartyLeave, player, true, player->playerId);
+	}
+	else if(pkt.has_targetpid())
+	{
+		int32 partyId = player->GetPartyId();
+		if (partyId == 0)
+		{
+			GConsoleLogger->WriteStdOut(Color::RED, L"[C_PartyLeave] Player not in party");
+			return false;
+		}
+
+		auto targetPlayer = RoomManager::Instance().FindPlayerInAllRooms(pkt.targetpid());
+		if (!targetPlayer)
+		{
+			GConsoleLogger->WriteStdOut(Color::RED, L"[C_PartyLeave] Target player not found: %d", pkt.targetpid());
+			return false;
+		}
+
+		room->DoAsync(&Room::HandlePartyLeave, player, false, pkt.targetpid());
+
+		GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_PartyLeave] Player %d kicked player %d",
+			player->playerId, targetPlayer->playerId);
+	}
+	else
+	{
+		CRASH(); // 둘 중 하나는 반드시 있어야함
+	}
+	
+	return true;
+
+}

@@ -55,6 +55,12 @@ enum MsgId
 	S_BROADCAST_PLAYER_CHAT = 47;
 	C_GIVE_ITEM_REQUEST = 48;
 	S_GIVE_ITEM_REPLY = 49;
+	C_PARTY_INVITE_REQUEST = 50;
+	S_PARTY_INVITE_NOTIFY = 51;
+	S_PARTY_INVITE_REPLY = 52;
+	C_PARTY_INVITE_RESPONSE = 53;
+	C_PARTY_LEAVE = 54;
+	S_BROADCAST_PARTY_UPDATE = 55;
 }
 
 // 클라 -> 게임 서버 jwt 로그인 인증 (0)
@@ -372,6 +378,50 @@ message S_GiveItemReply
 	InventorySlotInfo addedSlot = 3;
 }
 
+// (50) 클라 -> 서버 : 파티 초대 요청
+message C_PartyInviteRequest
+{
+	int32 targetPid = 1;
+}
+
+// (51) 서버 -> 클라 : 파티 초대 알림
+message S_PartyInviteNotify
+{
+	int32 inviterPid = 1;
+	string inviterName = 2;
+	int32 partyId = 3;
+}
+
+// (52) 서버 -> 클라 : 파티 초대 요청 결과
+message S_PartyInviteReply
+{
+	bool success = 1;
+	string errorMessage = 2;
+}
+
+// (53) 클라 -> 서버 : Invitee 파티 초대 응답 (수락/거절)
+message C_PartyInviteResponse
+{
+	int32 partyId = 1;
+	bool accept = 2;
+}
+
+// (54) 클라 -> 서버 : 파티 탈퇴 / 강퇴 요청
+message C_PartyLeave 
+{
+	oneof action {
+		bool selfLeave = 1;
+		int32 targetPid = 2;
+	}
+}
+
+// (55) 서버 -> 클라 : 파티 상태 업데이트 (통합)
+message S_BroadcastPartyUpdate
+{
+	EPartyUpdateType updateType = 1;
+	repeated PartyMemberInfoStatus members = 2;
+}
+
 enum ELoginResult
 {
     SUCCESS = 0;
@@ -455,6 +505,16 @@ enum EChatType
 	CHAT_ROOM = 0;
 	CHAT_ALL = 1;
 }
+
+enum EPartyUpdateType
+{
+	PARTY_UPDATE_MEMBER_JOIN = 0;
+	PARTY_UPDATE_MEMBER_LEAVE = 1;
+	PARTY_UPDATE_STATUS = 2;
+	PARTY_UPDATE_DISBANDED = 3;
+}
+
+
 message Vector2Info
 {
 	int32 x = 1;
@@ -528,4 +588,13 @@ message PlayerChatInfo
 	string playerName = 3;
 	string message = 4;
 	EChatType chatType = 5; 
+}
+
+message PartyMemberInfoStatus
+{
+	int32 playerId = 1;
+	int32 hp = 2;
+	int32 maxHp = 3;
+	int32 level = 4;
+	bool isLeader = 5;
 }

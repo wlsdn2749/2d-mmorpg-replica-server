@@ -57,6 +57,12 @@ enum : uint16
 	PKT_S_BroadcastPlayerChat = 47,
 	PKT_C_GiveItemRequest = 48,
 	PKT_S_GiveItemReply = 49,
+	PKT_C_PartyInviteRequest = 50,
+	PKT_S_PartyInviteNotify = 51,
+	PKT_S_PartyInviteReply = 52,
+	PKT_C_PartyInviteResponse = 53,
+	PKT_C_PartyLeave = 54,
+	PKT_S_BroadcastPartyUpdate = 55,
 
 };
 
@@ -79,6 +85,9 @@ bool Handle_C_NpcShopBuyRequest(PacketSessionRef& session, Protocol::C_NpcShopBu
 bool Handle_C_PlayerDeathReady(PacketSessionRef& session, Protocol::C_PlayerDeathReady& pkt);
 bool Handle_C_PlayerChat(PacketSessionRef& session, Protocol::C_PlayerChat& pkt);
 bool Handle_C_GiveItemRequest(PacketSessionRef& session, Protocol::C_GiveItemRequest& pkt);
+bool Handle_C_PartyInviteRequest(PacketSessionRef& session, Protocol::C_PartyInviteRequest& pkt);
+bool Handle_C_PartyInviteResponse(PacketSessionRef& session, Protocol::C_PartyInviteResponse& pkt);
+bool Handle_C_PartyLeave(PacketSessionRef& session, Protocol::C_PartyLeave& pkt);
 
 class ClientPacketHandler
 {
@@ -106,6 +115,9 @@ public:
 		GPacketHandler[PKT_C_PlayerDeathReady] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PlayerDeathReady>(Handle_C_PlayerDeathReady, session, buffer, len); };
 		GPacketHandler[PKT_C_PlayerChat] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PlayerChat>(Handle_C_PlayerChat, session, buffer, len); };
 		GPacketHandler[PKT_C_GiveItemRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_GiveItemRequest>(Handle_C_GiveItemRequest, session, buffer, len); };
+		GPacketHandler[PKT_C_PartyInviteRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PartyInviteRequest>(Handle_C_PartyInviteRequest, session, buffer, len); };
+		GPacketHandler[PKT_C_PartyInviteResponse] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PartyInviteResponse>(Handle_C_PartyInviteResponse, session, buffer, len); };
+		GPacketHandler[PKT_C_PartyLeave] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PartyLeave>(Handle_C_PartyLeave, session, buffer, len); };
 		
 	}
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
@@ -147,6 +159,9 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::S_PlayerDeathCommit& pkt) { return MakeSendBuffer(pkt, PKT_S_PlayerDeathCommit); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerChat& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerChat); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_GiveItemReply& pkt) { return MakeSendBuffer(pkt, PKT_S_GiveItemReply); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_PartyInviteNotify& pkt) { return MakeSendBuffer(pkt, PKT_S_PartyInviteNotify); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_PartyInviteReply& pkt) { return MakeSendBuffer(pkt, PKT_S_PartyInviteReply); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPartyUpdate& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPartyUpdate); };
 
 private:
 	template<typename PacketType, typename ProcessFunc>

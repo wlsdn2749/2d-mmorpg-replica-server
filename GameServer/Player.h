@@ -17,6 +17,9 @@ struct PendingRoomChange {
 
 class Player
 {
+public:
+	bool operator==(const Player& rhs) const { return this->playerId == rhs.playerId; }
+	bool operator!=(const Player& rhs) const { return this->playerId != rhs.playerId; }
 /*----------------------------
 	Player State
 ----------------------------*/
@@ -256,6 +259,17 @@ public:
 public:
 	void SetRoom(const shared_ptr<Room>& r) {room = r;}
 	shared_ptr<Room> GetRoom() const		{return room.lock(); }
+
+/*-----------------------
+	Party Data
+-----------------------*/
+public:
+	inline int32 GetPartyId() const { return _partyId; }
+	inline void SetPartyId(int32 partyId) {_partyId = partyId;}
+	inline bool IsInParty() const {return _partyId != 0;}
+
+private:
+	int32 _partyId = 0; // 파티 ID (0 = 파티 없음)
 
 };
 

@@ -377,21 +377,21 @@ namespace Packet
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("========================================");
-            Console.WriteLine("💀 [S_BroadcastPlayerDeath] 플레이어 사망!");
+            Console.WriteLine("[S_BroadcastPlayerDeath] 플레이어 사망!");
             Console.WriteLine("========================================");
 
             string playerInfo = death.PlayerId == NetDebug.MyPlayerId && NetDebug.MyPlayerId >= 0 ?
                 $"플레이어 {death.PlayerId} (나)" : $"플레이어 {death.PlayerId}";
 
-            Console.WriteLine($"🎯 사망한 플레이어: {playerInfo}");
-            Console.WriteLine($"⚔️  킬러 몬스터 ID: {death.KillerMonsterId}");
-            Console.WriteLine($"🗺️  리스폰 목적지 맵: {GetSceneNameByMapId(death.MapId)} (MapID: {death.MapId})");
+            Console.WriteLine($"사망한 플레이어: {playerInfo}");
+            Console.WriteLine($"킬러 몬스터 ID: {death.KillerMonsterId}");
+            Console.WriteLine($"리스폰 목적지 맵: {GetSceneNameByMapId(death.MapId)} (MapID: {death.MapId})");
 
             // 내가 죽었다면 리스폰 준비 신호를 보낼 수 있음을 알림
             if (death.PlayerId == NetDebug.MyPlayerId && NetDebug.MyPlayerId >= 0)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("💡 당신이 사망했습니다! 'p' 키를 눌러 리스폰하세요.");
+                Console.WriteLine("당신이 사망했습니다! 'p' 키를 눌러 리스폰하세요.");
             }
 
             Console.WriteLine("========================================");
@@ -419,32 +419,32 @@ namespace Packet
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("════════════════════════════════════════════════════════════════════════");
-            Console.WriteLine("🎁 [S_GiveItemReply] 아이템 지급 결과");
+            Console.WriteLine("[S_GiveItemReply] 아이템 지급 결과");
             Console.WriteLine("════════════════════════════════════════════════════════════════════════");
 
             if (reply.Success)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("✅ 아이템 지급 성공!");
+                Console.WriteLine("아이템 지급 성공!");
 
                 if (reply.AddedSlot != null)
                 {
-                    Console.WriteLine($"📦 추가된 슬롯 정보:");
+                    Console.WriteLine($"추가된 슬롯 정보:");
                     Console.WriteLine($"   슬롯 인덱스: {reply.AddedSlot.SlotIndex}");
                     Console.WriteLine($"   아이템 ID: {reply.AddedSlot.ItemId}");
                     Console.WriteLine($"   수량: {reply.AddedSlot.Count}");
                     Console.WriteLine($"   퀵슬롯 여부: {(reply.AddedSlot.IsQuickslot ? "예" : "아니오")}");
                 }
 
-                Console.WriteLine("💡 인벤토리 조회('i' 키)로 전체 인벤토리를 확인해보세요!");
+                Console.WriteLine("인벤토리 조회('i' 키)로 전체 인벤토리를 확인해보세요!");
             }
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("❌ 아이템 지급 실패!");
+                Console.WriteLine("아이템 지급 실패!");
                 if (!string.IsNullOrEmpty(reply.ErrorMessage))
                 {
-                    Console.WriteLine($"🚫 오류 메시지: {reply.ErrorMessage}");
+                    Console.WriteLine($"오류 메시지: {reply.ErrorMessage}");
                 }
             }
 
@@ -456,15 +456,97 @@ namespace Packet
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("========================================");
-            Console.WriteLine("✨ [S_PlayerDeathCommit] 리스폰 승인!");
+            Console.WriteLine("[S_PlayerDeathCommit] 리스폰 승인!");
             Console.WriteLine("========================================");
 
             string destinationMap = GetSceneNameByMapId(commit.MapId);
-            Console.WriteLine($"🎯 리스폰 목적지: {destinationMap} (MapID: {commit.MapId})");
-            Console.WriteLine($"💫 리스폰 처리가 시작됩니다...");
-            Console.WriteLine($"🔄 룸 이동이 곧 완료됩니다.");
+            Console.WriteLine($"리스폰 목적지: {destinationMap} (MapID: {commit.MapId})");
+            Console.WriteLine($"리스폰 처리가 시작됩니다...");
+            Console.WriteLine($"룸 이동이 곧 완료됩니다.");
 
             Console.WriteLine("========================================");
+            Console.ResetColor();
+        }
+
+        internal static void HANDLE_S_PartyInviteNotify(PacketSession session, S_PartyInviteNotify notify)
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+            Console.WriteLine("[S_PartyInviteNotify] 파티 초대 알림!");
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+            Console.WriteLine($"초대자: {notify.InviterName} (PlayerId: {notify.InviterPid})");
+            Console.WriteLine($"파티 ID: {notify.PartyId}");
+            Console.WriteLine($"");
+            Console.WriteLine($"파티에 참가하시겠습니까?");
+            Console.WriteLine($"   수락하려면 's' 키를 누르고 파티 ID {notify.PartyId} 입력");
+            Console.WriteLine($"   거절하려면 'f' 키를 누르고 파티 ID {notify.PartyId} 입력");
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+            Console.ResetColor();
+        }
+
+        internal static void HANDLE_S_PartyInviteReply(PacketSession session, S_PartyInviteReply reply)
+        {
+            Console.ForegroundColor = reply.Success ? ConsoleColor.Green : ConsoleColor.Red;
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+            Console.WriteLine($"{(reply.Success ? "[성공]" : "[실패]")} [S_PartyInviteReply] 파티 초대 요청 결과");
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+
+            if (reply.Success)
+            {
+                Console.WriteLine("파티 초대를 성공적으로 보냈습니다!");
+                Console.WriteLine("상대방의 응답을 기다리는 중...");
+            }
+            else
+            {
+                Console.WriteLine("파티 초대 실패!");
+                if (!string.IsNullOrEmpty(reply.ErrorMessage))
+                {
+                    Console.WriteLine($"오류: {reply.ErrorMessage}");
+                }
+            }
+
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+            Console.ResetColor();
+        }
+
+        internal static void HANDLE_S_BroadcastPartyUpdate(PacketSession session, S_BroadcastPartyUpdate update)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\n════════════════════════════════════════════════════════════════════════");
+            Console.WriteLine("[S_BroadcastPartyUpdate] 파티 상태 업데이트");
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+
+            string updateTypeStr = update.UpdateType switch
+            {
+                EPartyUpdateType.PartyUpdateMemberJoin => "멤버 가입",
+                EPartyUpdateType.PartyUpdateMemberLeave => "멤버 탈퇴",
+                EPartyUpdateType.PartyUpdateStatus => "상태 업데이트",
+                EPartyUpdateType.PartyUpdateDisbanded => "파티 해체",
+                _ => "알 수 없음"
+            };
+
+            Console.WriteLine($"업데이트 타입: {updateTypeStr}");
+            Console.WriteLine($"현재 파티 인원: {update.Members.Count}명");
+            Console.WriteLine("");
+
+            if (update.Members.Count > 0)
+            {
+                Console.WriteLine("파티원 목록:");
+                foreach (var member in update.Members)
+                {
+                    string leaderTag = member.IsLeader ? " [리더]" : "";
+                    string meTag = (member.PlayerId == NetDebug.MyPlayerId && NetDebug.MyPlayerId >= 0) ? " (나)" : "";
+
+                    Console.WriteLine($"  - PlayerId: {member.PlayerId}{meTag}{leaderTag}");
+                    Console.WriteLine($"    HP: {member.Hp}/{member.MaxHp} | Level: {member.Level}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("파티원이 없습니다. (파티가 해체되었을 수 있습니다)");
+            }
+
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
             Console.ResetColor();
         }
     }

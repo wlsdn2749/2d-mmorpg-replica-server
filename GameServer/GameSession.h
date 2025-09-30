@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "Session.h"
 #include "GameSessionContainer.h"
@@ -45,8 +45,10 @@ public:
 		Disconnected // Room::OnDisConnected
 	};
 
-	State	GetState() const {return _state.load(std::memory_order_acquire); }
-	void	SetState(State s) {_state.store(s, std::memory_order_release); }
+	State			GetState() const {return _state.load(std::memory_order_acquire); }
+	void			SetState(State s) {_state.store(s, std::memory_order_release); }
+
+	inline  bool	IsInGame() const {return _state == State::InRoom;}
 
 private:
 	Atomic<State> _state { State::None };

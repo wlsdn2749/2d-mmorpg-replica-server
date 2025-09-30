@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 // 여기에 미리 컴파일하려는 헤더 추가
 #define WIN32_LEAN_AND_MEAN
@@ -31,6 +31,7 @@
 using GameSessionRef	= shared_ptr<class GameSession>;
 using PlayerRef			= shared_ptr<class Player>;
 using AccountRef		= shared_ptr<Account>;
+using PartyRef			= shared_ptr<class Party>;
 
 using GameSessionContainerRef = shared_ptr<class GameSessionContainer>;
 using GameSessionAccessorRef = shared_ptr<class GameSessionAccessor>;

@@ -7,6 +7,8 @@
 #include <optional>
 #include "Npc.h"
 
+#include "PartyService.h"
+
 /*------------------------
 		Room (Base)
 ------------------------*/
@@ -167,5 +169,23 @@ private:
 private:
 	using chatPair = pair<GameSessionRef, Protocol::C_PlayerChat>;
 	Vector<chatPair> _pendingChats;
+
+/*--------------------
+	Party System
+--------------------*/
+public:
+	// 파티 관련 비동기 처리 (Async로 실행)
+	void HandlePartyInvite(PlayerRef inviter, PlayerRef invitee);
+	void HandlePartyInviteResponse(PlayerRef player, int32 partyId, bool accept);
+	void HandlePartyLeave(PlayerRef player, bool selfLeave, int32 targetPid);
+
+	// 파티 상태 동기화 (OnTick에서 주기적 호출)
+	void UpdatePartyStatuses();
+private:
+	void ProcessPartyUpdateTick();
+private:
+	// 파티 초대 대기 목록
+	unordered_map<int32, chrono::steady_clock::time_point> _pendingInvites;
+	
 };
 

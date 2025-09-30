@@ -380,6 +380,95 @@ void Room::ProcessChatTick()
     _pendingChats.clear();
 }
 
+void Room::HandlePartyInvite(PlayerRef inviter, PlayerRef invitee)
+{
+    Protocol::S_PartyInviteNotify notifyPkt;
+    
+    notifyPkt.set_inviterpid(inviter->playerId);
+    notifyPkt.set_invitername(inviter->username);
+    notifyPkt.set_partyid(inviter->GetPartyId());
+    
+    auto sendBuffer = ClientPacketHandler::MakeSendBuffer(notifyPkt);
+    if (auto s = invitee->ownerSession.lock())
+        s->Send(sendBuffer);
+
+}
+
+void Room::HandlePartyInviteResponse(PlayerRef player, int32 partyId, bool accept)
+{
+    if(!accept) return;
+
+    PartyManager::Instance().JoinParty(partyId, player);
+}
+
+void Room::HandlePartyLeave(PlayerRef player, bool selfLeave, int32 targetPid)
+{ 
+    if (selfLeave)
+    {
+        // 자발적 탈퇴
+        bool success = PartyManager::Instance().LeaveParty(player);
+        if (!success)
+        {
+            GConsoleLogger->WriteStdOut(Color::RED, L"[HandlePartyLeave] LeaveParty failed for player %d", player->playerId);
+        }
+    }
+    else
+    {
+        // 강퇴
+        int32 partyId = player->GetPartyId();
+        if (partyId == 0)
+        {
+            GConsoleLogger->WriteStdOut(Color::RED, L"[HandlePartyLeave] Kicker not in party");
+            return;
+        }
+
+        // targetPid로 플레이어 찾기
+        PlayerRef targetPlayer = RoomManager::Instance().FindPlayerInAllRooms(targetPid);
+        if (!targetPlayer)
+        {
+            GConsoleLogger->WriteStdOut(Color::RED, L"[HandlePartyLeave] Target player %d not found", targetPid);
+            return;
+        }
+
+        bool success = PartyManager::Instance().kickMember(partyId, player, targetPlayer);
+        if (!success)
+        {
+            GConsoleLogger->WriteStdOut(Color::RED, L"[HandlePartyLeave] Kick failed: player %d tried to kick %d",
+                player->playerId, targetPlayer->playerId);
+        }
+        else
+        {
+            GConsoleLogger->WriteStdOut(Color::GREEN, L"[HandlePartyLeave] Player %d kicked player %d",
+                player->playerId, targetPlayer->playerId);
+        }
+    }
+}
+
+void Room::UpdatePartyStatuses()
+{
+    vector<PlayerRef> roomPlayers;
+
+    for (auto& [playerId, player] : _players)
+    {
+        if (player->IsInParty())
+        {
+            roomPlayers.push_back(player);
+        }
+    }
+    if (!roomPlayers.empty())
+    {
+        PartyService::Instance().UpdatePartyStatuses(roomPlayers);
+    }
+}
+
+void Room::ProcessPartyUpdateTick()
+{
+    if (_tick % 40 == 0)
+    {
+        UpdatePartyStatuses();
+    }
+}
+
 bool Room::CanEnterTile(int nx, int ny) const
 {
     UNREFERENCED_PARAMETER(nx);
@@ -418,6 +507,7 @@ void Room::OnRoomTick()
 {
     ProcessMovesTick();
     ProcessChatTick();
+    ProcessPartyUpdateTick();
 
     _reserved.clear(); // 예약 버퍼 비움
 }

@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include "PartyManager.h"
 
 ItemManager& ItemManager::Instance()
 {
@@ -49,6 +50,8 @@ void ItemManager::Shutdown()
     
     GConsoleLogger->WriteStdOut(Color::GREEN, L"ItemManager: Shutdown complete.\n");
 }
+
+
 
 const ItemData* ItemManager::GetItemData(int itemId) const
 {
