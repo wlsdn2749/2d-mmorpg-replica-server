@@ -245,6 +245,9 @@ void Room::OnPlayerHpChanged(int playerId)
     pkt.set_maxhp(maxHp);
 
     Broadcast(ClientPacketHandler::MakeSendBuffer(pkt));
+
+    // DB에 저장
+    player->SaveCharacterToDB();
 }
 
 void Room::OnPlayerDeath(int playerId, int killerMonsterId)
