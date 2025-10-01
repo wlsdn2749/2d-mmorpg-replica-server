@@ -61,6 +61,16 @@ enum MsgId
 	C_PARTY_INVITE_RESPONSE = 53;
 	C_PARTY_LEAVE = 54;
 	S_BROADCAST_PARTY_UPDATE = 55;
+	C_PARTY_CREATE_REQUEST = 56;
+	S_PARTY_CREATE_REPLY = 57;
+	C_PARTY_JOIN_REQUEST = 58;
+	S_PARTY_JOIN_REPLY = 59;
+	S_PARTY_JOIN_NOTIFY = 60;
+	C_PARTY_JOIN_RESPONSE = 61;
+	C_PARTY_LIST = 62;
+	S_PARTY_LIST = 63;
+	C_PARTY_JOIN_REQUEST_LIST = 64;
+	S_PARTY_JOIN_REQUEST_LIST = 65;
 }
 
 // 클라 -> 게임 서버 jwt 로그인 인증 (0)
@@ -419,7 +429,74 @@ message C_PartyLeave
 message S_BroadcastPartyUpdate
 {
 	EPartyUpdateType updateType = 1;
-	repeated PartyMemberInfoStatus members = 2;
+	repeated PartyMemberStatusInfo members = 2;
+}
+
+// (56) 클라 -> 서버 : 파티 생성 요청
+message C_PartyCreateRequest
+{
+	string partyName = 1;
+}
+
+// (57) 서버 -> 클라 : 파티 생성 요청 결과 (성공 여부)
+message S_PartyCreateReply
+{
+	bool success = 1;
+	string message = 2;
+}
+
+// (58) 클라 -> 서버 : 파티 가입 요청
+message C_PartyJoinRequest
+{
+	int32 partyId = 1;
+}
+
+// (59) 서버 -> 클라 : 파티 가입 요청 결과 (성공 여부)
+message S_PartyJoinReply
+{
+	bool success = 1;
+	string message = 2;
+}
+
+// (60) 서버 -> 클라 : 다른 사람이 파티 가입 요청 -> 리더에게 전달
+message S_PartyJoinNotify 
+{
+	int32 joinPlayerId = 1;
+	int32 PartyId = 2;
+	int32 leaderId = 3;
+}
+
+// (61) 클라 -> 서버 : 파티 가입 요청 수락 or 거절 (리더)
+message C_PartyJoinResponse
+{
+	int32 partyId = 1; 
+	int32 requesterPid = 2; 
+	bool accept = 3; // 가입 여부
+}
+
+// (62) 클라 -> 서버 : 전체 파티 리스트 요청
+message C_PartyList
+{
+	
+}
+
+// (63) 서버 -> 클라 : 전체 파티 리스트 
+message S_PartyList
+{
+	repeated PartyInfo partyInfos = 1;
+}
+
+// (64) 클라 -> 서버 : 파티 가입 요청 리스트 조회
+message C_PartyJoinRequestList
+{
+    int32 partyId = 1;
+}
+
+// (65) 서버 -> 클라 : 파티 가입 요청 리스트 응답
+message S_PartyJoinRequestList
+{
+    int32 partyId = 1;
+    repeated PartyJoinRequesterInfo requesters = 2;
 }
 
 enum ELoginResult
@@ -590,11 +667,29 @@ message PlayerChatInfo
 	EChatType chatType = 5; 
 }
 
-message PartyMemberInfoStatus
+message PartyMemberStatusInfo
 {
 	int32 playerId = 1;
-	int32 hp = 2;
-	int32 maxHp = 3;
-	int32 level = 4;
-	bool isLeader = 5;
+	string playerName = 2;
+	int32 hp = 3;
+	int32 maxHp = 4;
+	int32 level = 5;
+	bool isLeader = 6;
+}
+
+message PartyInfo
+{
+	int32 partyId = 1;
+	string partyName = 2;
+	repeated PartyMemberStatusInfo members = 3;
+	int32 curMemberCount = 4;
+	int32 maxMemberCount = 5;
+	int32 partyLeaderId = 6;
+}
+
+message PartyJoinRequesterInfo
+{
+    int32 playerId = 1;
+    string playerName = 2;
+    int32 level = 3;
 }

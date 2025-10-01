@@ -63,6 +63,13 @@ class Program
             Console.WriteLine("[f] 파티 초대 거절");
             Console.WriteLine("[q] 파티 탈퇴");
             Console.WriteLine("[w] 파티원 강퇴 (PlayerId 입력)");
+            Console.WriteLine("\n===== 공개 파티 시스템 (56-63번) =====");
+            Console.WriteLine("[v] 공개 파티 생성 (파티명 입력)");
+            Console.WriteLine("[b] 전체 파티 목록 조회");
+            Console.WriteLine("[n] 파티 가입 요청 (PartyId 입력)");
+            Console.WriteLine("[j] 리더: 가입 요청 리스트 조회");
+            Console.WriteLine("[m] 리더: 가입 요청 수락");
+            Console.WriteLine("[k] 리더: 가입 요청 거절");
             Console.WriteLine("\n===== 종료 로직 테스트 =====");
             Console.WriteLine("[x] 룸에서 나가기 (캐릭터 변경)");
             Console.WriteLine("[l] 로그아웃 테스트 (JWT 인증 상태로 복귀)");
@@ -508,6 +515,128 @@ class Program
                     }
 
                     await SessionManager.Instance.SendPartyKick(kickTargetPid);
+                    break;
+                case "v":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
+                        break;
+                    }
+                    Console.Write("생성할 파티명 입력: ");
+                    string? partyName = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(partyName))
+                    {
+                        Console.WriteLine("파티명을 입력해주세요!");
+                        break;
+                    }
+
+                    await SessionManager.Instance.SendPartyCreateRequest(partyName);
+                    break;
+                case "b":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
+                        break;
+                    }
+
+                    await SessionManager.Instance.SendPartyListRequest();
+                    break;
+                case "n":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
+                        break;
+                    }
+                    Console.Write("가입할 파티 ID 입력: ");
+                    string? joinPartyIdInput = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(joinPartyIdInput))
+                    {
+                        Console.WriteLine("파티 ID를 입력해주세요!");
+                        break;
+                    }
+                    if (!Int32.TryParse(joinPartyIdInput, out int joinPartyId))
+                    {
+                        Console.WriteLine("파티 ID는 숫자여야 합니다!");
+                        break;
+                    }
+
+                    await SessionManager.Instance.SendPartyJoinRequest(joinPartyId);
+                    break;
+                case "j":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
+                        break;
+                    }
+                    Console.Write("[리더] 조회할 파티 ID 입력: ");
+                    string? queryPartyIdInput = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(queryPartyIdInput))
+                    {
+                        Console.WriteLine("파티 ID를 입력해주세요!");
+                        break;
+                    }
+                    if (!Int32.TryParse(queryPartyIdInput, out int queryPartyId))
+                    {
+                        Console.WriteLine("파티 ID는 숫자여야 합니다!");
+                        break;
+                    }
+
+                    await SessionManager.Instance.SendPartyJoinRequestListQuery(queryPartyId);
+                    break;
+                case "m":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
+                        break;
+                    }
+                    Console.Write("[리더] 파티 ID 입력: ");
+                    string? acceptResponsePartyIdInput = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(acceptResponsePartyIdInput) || !Int32.TryParse(acceptResponsePartyIdInput, out int acceptResponsePartyId))
+                    {
+                        Console.WriteLine("올바른 파티 ID를 입력해주세요!");
+                        break;
+                    }
+
+                    Console.Write("[리더] 수락할 요청자 PlayerId 입력: ");
+                    string? acceptRequesterInput = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(acceptRequesterInput) || !Int32.TryParse(acceptRequesterInput, out int acceptRequesterPid))
+                    {
+                        Console.WriteLine("올바른 PlayerId를 입력해주세요!");
+                        break;
+                    }
+
+                    await SessionManager.Instance.SendPartyJoinResponseWithPid(acceptResponsePartyId, acceptRequesterPid, true);
+                    break;
+                case "k":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
+                        break;
+                    }
+                    Console.Write("[리더] 파티 ID 입력: ");
+                    string? rejectResponsePartyIdInput = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(rejectResponsePartyIdInput) || !Int32.TryParse(rejectResponsePartyIdInput, out int rejectResponsePartyId))
+                    {
+                        Console.WriteLine("올바른 파티 ID를 입력해주세요!");
+                        break;
+                    }
+
+                    Console.Write("[리더] 거절할 요청자 PlayerId 입력: ");
+                    string? rejectRequesterInput = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(rejectRequesterInput) || !Int32.TryParse(rejectRequesterInput, out int rejectRequesterPid))
+                    {
+                        Console.WriteLine("올바른 PlayerId를 입력해주세요!");
+                        break;
+                    }
+
+                    await SessionManager.Instance.SendPartyJoinResponseWithPid(rejectResponsePartyId, rejectRequesterPid, false);
                     break;
                 case "x":
                     if (!_isInGame)

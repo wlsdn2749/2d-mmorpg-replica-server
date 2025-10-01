@@ -511,11 +511,6 @@ namespace Packet
 
         internal static void HANDLE_S_BroadcastPartyUpdate(PacketSession session, S_BroadcastPartyUpdate update)
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("\n════════════════════════════════════════════════════════════════════════");
-            Console.WriteLine("[S_BroadcastPartyUpdate] 파티 상태 업데이트");
-            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
-
             string updateTypeStr = update.UpdateType switch
             {
                 EPartyUpdateType.PartyUpdateMemberJoin => "멤버 가입",
@@ -525,28 +520,127 @@ namespace Packet
                 _ => "알 수 없음"
             };
 
-            Console.WriteLine($"업데이트 타입: {updateTypeStr}");
-            Console.WriteLine($"현재 파티 인원: {update.Members.Count}명");
-            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"[S_BroadcastPartyUpdate] {updateTypeStr} | 파티원: {update.Members.Count}명");
+            Console.ResetColor();
+        }
 
-            if (update.Members.Count > 0)
+        internal static void HANDLE_S_PartyCreateReply(PacketSession session, S_PartyCreateReply reply)
+        {
+            Console.ForegroundColor = reply.Success ? ConsoleColor.Green : ConsoleColor.Red;
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+            Console.WriteLine($"[S_PartyCreateReply] {(reply.Success ? "파티 생성 성공!" : "파티 생성 실패!")}");
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+
+            if (reply.Success)
             {
-                Console.WriteLine("파티원 목록:");
-                foreach (var member in update.Members)
-                {
-                    string leaderTag = member.IsLeader ? " [리더]" : "";
-                    string meTag = (member.PlayerId == NetDebug.MyPlayerId && NetDebug.MyPlayerId >= 0) ? " (나)" : "";
-
-                    Console.WriteLine($"  - PlayerId: {member.PlayerId}{meTag}{leaderTag}");
-                    Console.WriteLine($"    HP: {member.Hp}/{member.MaxHp} | Level: {member.Level}");
-                }
+                Console.WriteLine("파티가 성공적으로 생성되었습니다!");
+                Console.WriteLine("다른 플레이어들이 파티 리스트에서 확인할 수 있습니다.");
             }
             else
             {
-                Console.WriteLine("파티원이 없습니다. (파티가 해체되었을 수 있습니다)");
+                Console.WriteLine($"오류: {reply.Message}");
             }
 
             Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+            Console.ResetColor();
+        }
+
+        internal static void HANDLE_S_PartyJoinReply(PacketSession session, S_PartyJoinReply reply)
+        {
+            Console.ForegroundColor = reply.Success ? ConsoleColor.Green : ConsoleColor.Red;
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+            Console.WriteLine($"[S_PartyJoinReply] {(reply.Success ? "파티 가입 성공!" : "파티 가입 실패!")}");
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+
+            if (reply.Success)
+            {
+                Console.WriteLine("파티에 성공적으로 가입했습니다!");
+                Console.WriteLine("S_BroadcastPartyUpdate로 파티원 정보를 확인할 수 있습니다.");
+            }
+            else
+            {
+                Console.WriteLine($"메시지: {reply.Message}");
+            }
+
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+            Console.ResetColor();
+        }
+
+        internal static void HANDLE_S_PartyList(PacketSession session, S_PartyList list)
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("\n════════════════════════════════════════════════════════════════════════");
+            Console.WriteLine("[S_PartyList] 전체 파티 목록");
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+
+            if (list.PartyInfos.Count == 0)
+            {
+                Console.WriteLine("현재 생성된 파티가 없습니다.");
+            }
+            else
+            {
+                Console.WriteLine($"총 {list.PartyInfos.Count}개의 파티가 있습니다.\n");
+
+                foreach (var party in list.PartyInfos)
+                {
+                    Console.WriteLine($"────────────────────────────────────────");
+                    Console.WriteLine($"파티 ID: {party.PartyId}");
+                    Console.WriteLine($"파티명: {party.PartyName}");
+                    Console.WriteLine($"인원: {party.CurMemberCount}/{party.MaxMemberCount}");
+                    Console.WriteLine($"리더 ID: {party.PartyLeaderId}");
+
+                    if (party.Members.Count > 0)
+                    {
+                        Console.WriteLine($"멤버 목록:");
+                        foreach (var member in party.Members)
+                        {
+                            string leaderTag = member.IsLeader ? " [리더]" : "";
+                            string meTag = (member.PlayerId == NetDebug.MyPlayerId && NetDebug.MyPlayerId >= 0) ? " (나)" : "";
+                            Console.WriteLine($"  - PlayerId: {member.PlayerId}{meTag}{leaderTag} | Lv.{member.Level} | HP:{member.Hp}/{member.MaxHp}");
+                        }
+                    }
+                }
+            }
+
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+            Console.ResetColor();
+        }
+
+        internal static void HANDLE_S_PartyJoinNotify(PacketSession session, S_PartyJoinNotify notify)
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+            Console.WriteLine("[S_PartyJoinNotify] 파티 가입 요청 알림 (리더 전용)");
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+            Console.WriteLine($"요청자 PlayerId: {notify.JoinPlayerId}");
+            Console.WriteLine($"파티 ID: {notify.PartyId}");
+            Console.WriteLine($"리더 ID: {notify.LeaderId}");
+            Console.WriteLine("");
+            Console.WriteLine($"가입 요청을 수락/거절하려면:");
+            Console.WriteLine($"  Program.cs에서 공개 파티 응답 기능을 사용하세요");
+            Console.WriteLine($"  (메뉴에서 리더 응답 기능 추가 필요)");
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+            Console.ResetColor();
+        }
+
+        internal static void HANDLE_S_PartyJoinRequestList(PacketSession session, S_PartyJoinRequestList list)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"\n[S_PartyJoinRequestList] 파티ID {list.PartyId} 가입 요청: {list.Requesters.Count}건");
+
+            if (list.Requesters.Count == 0)
+            {
+                Console.WriteLine("  → 대기 중인 요청이 없습니다.");
+            }
+            else
+            {
+                foreach (var requester in list.Requesters)
+                {
+                    Console.WriteLine($"  → [{requester.PlayerId}] {requester.PlayerName} (Lv.{requester.Level})");
+                }
+            }
+
             Console.ResetColor();
         }
     }
