@@ -24,7 +24,7 @@ namespace Packet
         public static string PosToStr(Vector2Info pos)
             => pos is null ? "(?,?)" : $"({pos.X},{pos.Y})";
     }
-    public class ServerPacketHandler 
+    public class ServerPacketHandler
     {
         internal static void HANDLE_Invalid(PacketSession session, IMessage message)
         {
@@ -37,7 +37,7 @@ namespace Packet
                 case ELoginResult.Success: // 또는 LoginResult.Success
 
                     //Console.WriteLine($"[JWT VALIDATION OK]");
-                   
+
                     UnityEngine.Debug.Log($"[LOGIN OK] accountId={reply.Result}");
                     AuthNotice_UI.Instance.gameObject.SetActive(true);
                     AuthNotice_UI.Instance.ShowNotice(NoticeCode.LoginSuccess);
@@ -73,13 +73,13 @@ namespace Packet
             AuthNotice_UI.Instance.ShowNotice(NoticeCode.CreateCharacterSuccess);
             UnityEngine.Debug.Log($"[CreateCharacterReply] 결과: {result.Success}.");
             UnityEngine.Debug.Log($"[CreateCharacterReply] 결과: {result.Detail}.");
-            
-        }  
+
+        }
 
         internal static void HANDLE_S_CharacterListReply(PacketSession session, S_CharacterListReply reply)
         {
             UnityEngine.Debug.Log($"[S_CharacterListReply] 전송받음");
-            AuthNotice_UI.Instance.gameObject.SetActive(true); 
+            AuthNotice_UI.Instance.gameObject.SetActive(true);
             AuthNotice_UI.Instance.ShowNotice(NoticeCode.RecvCharacterListSuccess);
             if (reply.Characters == null)
             {
@@ -100,7 +100,7 @@ namespace Packet
             {
                 Debug.Log(delete.ErrorMessage);
             }
-            
+
         }
         internal static void HANDLE_S_EnterGame(PacketSession session, S_EnterGame enter)
         {
@@ -202,7 +202,7 @@ namespace Packet
         }
         internal static void HANDLE_S_BroadcastPlayerEnter(PacketSession session, S_BroadcastPlayerEnter broadEnter)
         {
-            Debug.Log("[S_BroadcastPlayerEnter] 누군가 접속해서 그 정보를 받아옴"); 
+            Debug.Log("[S_BroadcastPlayerEnter] 누군가 접속해서 그 정보를 받아옴");
             RoomTransitionManager.Instance.EnqueueOrRun(() =>
             {
                 PlayerSpawner.SafeSpawn(broadEnter.Player, isLocal: false);
@@ -328,7 +328,7 @@ namespace Packet
         internal static void HANDLE_S_ChangeRoomCommit(PacketSession session, S_ChangeRoomCommit commit)
         {
             Console.WriteLine($"[S_ChangeRoomCommit] Room Has Change into ...");
-            
+
             RoomTransitionManager.Instance.OnChangeRoomCommit(commit);
             Debug.Log($"[S_ChangeRoomCommit] Room Has Change into ...");
         }
@@ -336,8 +336,8 @@ namespace Packet
         internal static void HANDLE_S_LeaveGame(PacketSession session, S_LeaveGame game)
         {
             Console.WriteLine($"[S_LeaveGame] Game Has left.");
-            
-            if (game.Success !=true)
+
+            if (game.Success != true)
             {
                 return;
             }
@@ -434,12 +434,11 @@ namespace Packet
                     itemId = p.ItemId,
                     count = p.Count,
                     isQuickslot = p.IsQuickslot,
-                    
+
                 });
                 Debug.Log($"[Inv] Slot {p.SlotIndex}: itemId={p.ItemId}, count={p.Count}, quickslot={p.IsQuickslot}");
             }
-            var model = InventoryManager.Instance.Model;
-            model.ApplySnapshot(list);
+            InventoryManager.Instance.Model.ApplySnapshot(list);
             HUDManager.Instance.ShowInventory_UI(); // 인벤 UI 켜기 
             Debug.Log($"[Inv] S_InventoryReply applied: {list.Count} slots");
         }
@@ -457,13 +456,13 @@ namespace Packet
         }
         internal static void HANDLE_S_InventoryUpdate(PacketSession session, S_InventoryUpdate invenUpdate)
         {
-            InventoryManager.Instance?.Model.ApplyDelta(invenUpdate.ChangedSlots);
+            InventoryManager.Instance.Model.ApplyDelta(invenUpdate.ChangedSlots);
             Debug.Log($"[Inv] Inventory updated, {invenUpdate.ChangedSlots.Count} slots changed");
         }
         internal static void HANDLE_S_SystemMessage(PacketSession session, S_SystemMessage sysMsg)
         {
             Debug.Log($"[SystemMessage] {sysMsg.Message}");
-            
+
         }
         internal static void HANDLE_S_NpcInteractReply(PacketSession session, S_NpcInteractReply npcInter)
         {
@@ -487,11 +486,11 @@ namespace Packet
             Debug.Log($"돈 : {playerInfo.StatInfo.Money}");
             PlayerStatus.Instance.SetPlayerStatus(playerInfo.StatInfo);
         }
-        public static void HANDLE_S_BroadcastPlayerHpChanged(PacketSession arg1, S_BroadcastPlayerHpChanged hpChanged)
+        internal static void HANDLE_S_BroadcastPlayerHpChanged(PacketSession arg1, S_BroadcastPlayerHpChanged hpChanged)
         {
             PlayerStatus.Instance.UpdateHp(hpChanged);
         }
-        public static void HANDLE_S_BroadcastPlayerDeath(PacketSession arg1, S_BroadcastPlayerDeath playerDie)
+        internal static void HANDLE_S_BroadcastPlayerDeath(PacketSession arg1, S_BroadcastPlayerDeath playerDie)
         {
             Debug.Log($"플레이어 죽음{playerDie.PlayerId} / {playerDie.KillerMonsterId}");
             var go = PlayerSpawner.Get(playerDie.PlayerId);
@@ -501,24 +500,24 @@ namespace Packet
                 return;
             }
             var av = go.GetComponent<PlayerAvatar>();
-            if (av == null) 
-            { 
-                Debug.Log("[PlayerDeath] Check PlayerAvatar but this Component is lost!!]"); 
-                return; 
+            if (av == null)
+            {
+                Debug.Log("[PlayerDeath] Check PlayerAvatar but this Component is lost!!]");
+                return;
             }
             av.PlayerDeath();
             HUDManager.Instance.ShowDeathPanel(true);
         }
-        public static void HANDLE_S_PlayerDeathCommit(PacketSession session, S_PlayerDeathCommit commit)
+        internal static void HANDLE_S_PlayerDeathCommit(PacketSession session, S_PlayerDeathCommit commit)
         {
             RoomTransitionManager.Instance.OnPlayerDeathCommit(commit);
         }
-        public static void HANDLE_S_BroadcastPlayerChat(PacketSession session, S_BroadcastPlayerChat chat)
+        internal static void HANDLE_S_BroadcastPlayerChat(PacketSession session, S_BroadcastPlayerChat chat)
         {
             Debug.Log("[PlayerChat] 수신완료");
             ChatManager.Instance?.HandleBroadcast(chat);
         }
-        public static void HANDLE_S_GiveItemReply(PacketSession session, S_GiveItemReply reply)
+        internal static void HANDLE_S_GiveItemReply(PacketSession session, S_GiveItemReply reply)
         {
             if (reply.Success == false)
             {
@@ -538,6 +537,38 @@ namespace Packet
             model.ApplySnapshot(list);
             HUDManager.Instance.ShowInventory_UI(); // 인벤 UI 켜기 
             Debug.Log($"[Inv] S_InventoryReply applied: {list.Count} slots");
+        }
+        internal static void HANDLE_S_PartyInviteNotify(PacketSession session, S_PartyInviteNotify pkt)
+        {
+            PartyState.Instance.HandleInviteNotify(pkt);
+        }
+        internal static void HANDLE_S_PartyInviteReply(PacketSession session, S_PartyInviteReply pkt)
+        {
+            PartyState.Instance.HandleInviteReply(pkt);
+        }
+        internal static void HANDLE_S_PartyList(PacketSession session, S_PartyList pkt)
+        {
+            PartyState.Instance.HandlePartyList(pkt);
+        }
+        internal static void HANDLE_S_BroadcastPartyUpdate(PacketSession session, S_BroadcastPartyUpdate pkt)
+        {
+            PartyState.Instance.ApplyBroadcast(pkt);
+        }
+        internal static void HANDLE_S_PartyCreateReply(PacketSession session, S_PartyCreateReply pkt)
+        {
+            PartyState.Instance.HandleCreateReply(pkt);
+        }
+        internal static void HANDLE_S_PartyJoinReply(PacketSession session, S_PartyJoinReply pkt)
+        {
+            PartyState.Instance.HandleJoinReply(pkt, PartyNet.ConsumeLastRequestedJoinPartyId());
+        }
+        internal static void HANDLE_S_PartyJoinNotify(PacketSession session, S_PartyJoinNotify pkt)
+        {
+            PartyState.Instance.HandleJoinNotifyToLeader(pkt);
+        }
+        internal static void HANDLE_S_PartyJoinRequestList(PacketSession session, S_PartyJoinRequestList pkt)
+        {
+            PartyState.Instance.HandleJoinRequestList(pkt);
         }
     }
 }

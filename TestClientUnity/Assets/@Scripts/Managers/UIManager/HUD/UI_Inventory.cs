@@ -1,51 +1,53 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections.Generic;
 
-public class UI_Inventory : MonoBehaviour
+public class InventoryUI : MonoBehaviour
 {
-    [SerializeField] private Transform gridParent;    // GridLayoutGroup 달린 오브젝트
     [SerializeField] private UI_InvetorySlot slotPrefab;
-    [SerializeField] private int minSlots = 20;       // 서버가 빈 슬롯은 안보내도 되니, 최소 표시 개수
+    [SerializeField] private Transform gridParent;
 
-    private readonly Dictionary<int, UI_InvetorySlot> _views = new();
+    private readonly Dictionary<int, UI_InvetorySlot> _uiSlots = new();
 
     void OnEnable()
     {
-        var m = InventoryManager.Instance.Model;
-        m.OnBulkRefresh += Rebuild;
-        m.OnSlotChanged += UpdateSlot;
-        Rebuild();
+        InventoryManager.Instance.Model.OnBulkRefresh += RebuildAll;
+        InventoryManager.Instance.Model.OnSlotChanged += UpdateSlot;
     }
 
     void OnDisable()
     {
-        var m = InventoryManager.Instance.Model;
-        m.OnBulkRefresh -= Rebuild;
-        m.OnSlotChanged -= UpdateSlot;
+        InventoryManager.Instance.Model.OnBulkRefresh -= RebuildAll;
+        InventoryManager.Instance.Model.OnSlotChanged -= UpdateSlot;
     }
 
-    private void Rebuild()
+    private void RebuildAll()
     {
-        foreach (Transform c in gridParent) Destroy(c.gameObject);
-        _views.Clear();
+        foreach (Transform child in gridParent)
+            Destroy(child.gameObject);
+        _uiSlots.Clear();
 
         var model = InventoryManager.Instance.Model;
-        int cap = Mathf.Max(minSlots, model.GetMaxIndex() + 1);
-
-        for (int i = 0; i < cap; i++)
+        int maxIndex = model.GetMaxIndex();
+        for (int i = 0; i <= maxIndex; i++)
         {
-            var v = Instantiate(slotPrefab, gridParent);
-            v.BindIndex(i);
-            _views[i] = v;
+            var slot = Instantiate(slotPrefab, gridParent);
+            slot.BindIndex(i);
+            _uiSlots[i] = slot;
 
-            if (model.TryGet(i, out var s)) UpdateSlot(i, s);
-            else v.Clear(); // 비어있음
+            if (model.TryGet(i, out var data))
+                slot.SetData(data);
+            else
+                slot.Clear();
         }
     }
 
     private void UpdateSlot(int index, InventorySlot slot)
     {
-        if (_views.TryGetValue(index, out var v))
-            v.SetData(slot);
+        if (!_uiSlots.TryGetValue(index, out var ui)) return;
+
+        if (slot == null || slot.IsEmpty)
+            ui.Clear();
+        else
+            ui.SetData(slot);
     }
 }
