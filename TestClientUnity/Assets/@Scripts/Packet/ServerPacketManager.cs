@@ -64,6 +64,16 @@ namespace Packet
 	    PKT_C_PartyInviteResponse = 53,
 	    PKT_C_PartyLeave = 54,
 	    PKT_S_BroadcastPartyUpdate = 55,
+	    PKT_C_PartyCreateRequest = 56,
+	    PKT_S_PartyCreateReply = 57,
+	    PKT_C_PartyJoinRequest = 58,
+	    PKT_S_PartyJoinReply = 59,
+	    PKT_S_PartyJoinNotify = 60,
+	    PKT_C_PartyJoinResponse = 61,
+	    PKT_C_PartyList = 62,
+	    PKT_S_PartyList = 63,
+	    PKT_C_PartyJoinRequestList = 64,
+	    PKT_S_PartyJoinRequestList = 65,
     }
     public class ServerPacketManager
     {
@@ -108,6 +118,11 @@ namespace Packet
         public static ArraySegment<byte> MakeSendBuffer(C_PartyInviteRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PartyInviteRequest);
         public static ArraySegment<byte> MakeSendBuffer(C_PartyInviteResponse pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PartyInviteResponse);
         public static ArraySegment<byte> MakeSendBuffer(C_PartyLeave pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PartyLeave);
+        public static ArraySegment<byte> MakeSendBuffer(C_PartyCreateRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PartyCreateRequest);
+        public static ArraySegment<byte> MakeSendBuffer(C_PartyJoinRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PartyJoinRequest);
+        public static ArraySegment<byte> MakeSendBuffer(C_PartyJoinResponse pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PartyJoinResponse);
+        public static ArraySegment<byte> MakeSendBuffer(C_PartyList pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PartyList);
+        public static ArraySegment<byte> MakeSendBuffer(C_PartyJoinRequestList pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PartyJoinRequestList);
 
         void Register()
         {
@@ -152,6 +167,11 @@ namespace Packet
             RegisterHandler((ushort)PacketID.PKT_S_PartyInviteNotify, ServerPacketHandler.HANDLE_S_PartyInviteNotify, S_PartyInviteNotify.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_PartyInviteReply, ServerPacketHandler.HANDLE_S_PartyInviteReply, S_PartyInviteReply.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_BroadcastPartyUpdate, ServerPacketHandler.HANDLE_S_BroadcastPartyUpdate, S_BroadcastPartyUpdate.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_PartyCreateReply, ServerPacketHandler.HANDLE_S_PartyCreateReply, S_PartyCreateReply.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_PartyJoinReply, ServerPacketHandler.HANDLE_S_PartyJoinReply, S_PartyJoinReply.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_PartyJoinNotify, ServerPacketHandler.HANDLE_S_PartyJoinNotify, S_PartyJoinNotify.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_PartyList, ServerPacketHandler.HANDLE_S_PartyList, S_PartyList.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_PartyJoinRequestList, ServerPacketHandler.HANDLE_S_PartyJoinRequestList, S_PartyJoinRequestList.Parser);
             
                   
         }

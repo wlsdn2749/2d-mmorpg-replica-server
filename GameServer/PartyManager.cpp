@@ -13,7 +13,26 @@ PartyRef PartyManager::CreateParty(PlayerRef leader)
 
     int32 partyId = _nextPartyId.fetch_add(1);
 
-    PartyRef partyRef = MakeShared<Party>(partyId, leader);
+    PartyRef partyRef = MakeShared<Party>(partyId, "", leader);
+
+    _parties[partyId] = partyRef;
+    _playerToParty[leader] = partyId;
+
+    leader->SetPartyId(partyId);
+
+    PartyService::Instance().SendPartyStatusUpdate(partyId, Protocol::EPartyUpdateType::PARTY_UPDATE_MEMBER_JOIN);
+    return partyRef;
+}
+
+PartyRef PartyManager::CreatePartyWithName(PlayerRef leader, const string& partyName)
+{
+    WRITE_LOCK;
+
+    if (leader->IsInParty()) return FindPlayerParty(leader);
+
+    int32 partyId = _nextPartyId.fetch_add(1);
+
+    PartyRef partyRef = MakeShared<Party>(partyId, partyName, leader);
 
     _parties[partyId] = partyRef;
     _playerToParty[leader] = partyId;
@@ -135,4 +154,122 @@ int32 PartyManager::GetPlayerPartyId(PlayerRef player)
 {
     READ_LOCK;
     return player->GetPartyId();
+}
+
+Vector<Protocol::PartyInfo> PartyManager::GetAllPublicParties()
+{
+    READ_LOCK;
+
+    Vector<Protocol::PartyInfo> partyInfos;
+    partyInfos.reserve(_parties.size());
+
+    for (const auto& [partyId, party] : _parties)
+    {
+        if (!party) continue;
+
+        partyInfos.push_back(party->GetPartyInfo());
+
+        // 파티명이 있는 공개 파티만 조회 (파티명 없으면 초대전용 파티)
+        /*if (!party->GetPartyName().empty())
+        {
+            partyInfos.push_back(party->GetPartyInfo());
+        }*/
+    }
+
+    return partyInfos;
+}
+
+bool PartyManager::AddJoinRequest(int32 partyId, PlayerRef requester)
+{
+    WRITE_LOCK;
+
+    if (!requester) return false;
+
+    auto& requestQueue = _partyJoinRequests[partyId];
+
+    // 이미 요청이 있는지 확인
+    auto it = std::find(requestQueue.begin(), requestQueue.end(), requester);
+    if (it != requestQueue.end())
+    {
+        return false; // 중복 요청
+    }
+
+    requestQueue.push_back(requester);
+    return true;
+}
+
+bool PartyManager::HasPendingRequest(int32 partyId, PlayerRef requester)
+{
+    READ_LOCK;
+
+    auto it = _partyJoinRequests.find(partyId);
+    if (it == _partyJoinRequests.end()) return false;
+
+    const auto& requestQueue = it->second;
+    return std::find(requestQueue.begin(), requestQueue.end(), requester) != requestQueue.end();
+}
+
+bool PartyManager::RemoveJoinRequest(int32 partyId, PlayerRef requester)
+{
+    WRITE_LOCK;
+
+    auto it = _partyJoinRequests.find(partyId);
+    if (it == _partyJoinRequests.end() || it->second.empty())
+    {
+        return false;
+    }
+
+    // 특정 requester 찾아서 제거
+    auto& requestQueue = it->second;
+    auto reqIt = std::find(requestQueue.begin(), requestQueue.end(), requester);
+
+    if (reqIt == requestQueue.end())
+    {
+        return false; // 해당 requester 없음
+    }
+
+    requestQueue.erase(reqIt);
+
+    // 큐가 비었으면 맵에서도 제거
+    if (requestQueue.empty())
+    {
+        _partyJoinRequests.erase(it);
+    }
+
+    return true;
+}
+
+PlayerRef PartyManager::FindRequesterById(int32 partyId, int32 requesterPid)
+{
+    READ_LOCK;
+
+    auto it = _partyJoinRequests.find(partyId);
+    if (it == _partyJoinRequests.end())
+    {
+        return nullptr;
+    }
+
+    const auto& requesters = it->second;
+    for (const auto& requester : requesters)
+    {
+        if (requester->playerId == requesterPid)
+        {
+            return requester;
+        }
+    }
+
+    return nullptr;
+}
+
+Vector<PlayerRef> PartyManager::GetJoinRequesters(int32 partyId)
+{
+    READ_LOCK;
+
+    auto it = _partyJoinRequests.find(partyId);
+    if (it == _partyJoinRequests.end())
+    {
+        return Vector<PlayerRef>(); // 빈 벡터 반환
+    }
+
+    return it->second; // 전체 요청자 리스트 반환
 }

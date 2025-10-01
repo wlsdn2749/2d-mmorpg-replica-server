@@ -63,6 +63,16 @@ enum : uint16
 	PKT_C_PartyInviteResponse = 53,
 	PKT_C_PartyLeave = 54,
 	PKT_S_BroadcastPartyUpdate = 55,
+	PKT_C_PartyCreateRequest = 56,
+	PKT_S_PartyCreateReply = 57,
+	PKT_C_PartyJoinRequest = 58,
+	PKT_S_PartyJoinReply = 59,
+	PKT_S_PartyJoinNotify = 60,
+	PKT_C_PartyJoinResponse = 61,
+	PKT_C_PartyList = 62,
+	PKT_S_PartyList = 63,
+	PKT_C_PartyJoinRequestList = 64,
+	PKT_S_PartyJoinRequestList = 65,
 
 };
 
@@ -88,6 +98,11 @@ bool Handle_C_GiveItemRequest(PacketSessionRef& session, Protocol::C_GiveItemReq
 bool Handle_C_PartyInviteRequest(PacketSessionRef& session, Protocol::C_PartyInviteRequest& pkt);
 bool Handle_C_PartyInviteResponse(PacketSessionRef& session, Protocol::C_PartyInviteResponse& pkt);
 bool Handle_C_PartyLeave(PacketSessionRef& session, Protocol::C_PartyLeave& pkt);
+bool Handle_C_PartyCreateRequest(PacketSessionRef& session, Protocol::C_PartyCreateRequest& pkt);
+bool Handle_C_PartyJoinRequest(PacketSessionRef& session, Protocol::C_PartyJoinRequest& pkt);
+bool Handle_C_PartyJoinResponse(PacketSessionRef& session, Protocol::C_PartyJoinResponse& pkt);
+bool Handle_C_PartyList(PacketSessionRef& session, Protocol::C_PartyList& pkt);
+bool Handle_C_PartyJoinRequestList(PacketSessionRef& session, Protocol::C_PartyJoinRequestList& pkt);
 
 class ClientPacketHandler
 {
@@ -118,6 +133,11 @@ public:
 		GPacketHandler[PKT_C_PartyInviteRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PartyInviteRequest>(Handle_C_PartyInviteRequest, session, buffer, len); };
 		GPacketHandler[PKT_C_PartyInviteResponse] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PartyInviteResponse>(Handle_C_PartyInviteResponse, session, buffer, len); };
 		GPacketHandler[PKT_C_PartyLeave] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PartyLeave>(Handle_C_PartyLeave, session, buffer, len); };
+		GPacketHandler[PKT_C_PartyCreateRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PartyCreateRequest>(Handle_C_PartyCreateRequest, session, buffer, len); };
+		GPacketHandler[PKT_C_PartyJoinRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PartyJoinRequest>(Handle_C_PartyJoinRequest, session, buffer, len); };
+		GPacketHandler[PKT_C_PartyJoinResponse] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PartyJoinResponse>(Handle_C_PartyJoinResponse, session, buffer, len); };
+		GPacketHandler[PKT_C_PartyList] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PartyList>(Handle_C_PartyList, session, buffer, len); };
+		GPacketHandler[PKT_C_PartyJoinRequestList] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PartyJoinRequestList>(Handle_C_PartyJoinRequestList, session, buffer, len); };
 		
 	}
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
@@ -162,6 +182,11 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::S_PartyInviteNotify& pkt) { return MakeSendBuffer(pkt, PKT_S_PartyInviteNotify); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_PartyInviteReply& pkt) { return MakeSendBuffer(pkt, PKT_S_PartyInviteReply); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPartyUpdate& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPartyUpdate); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_PartyCreateReply& pkt) { return MakeSendBuffer(pkt, PKT_S_PartyCreateReply); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_PartyJoinReply& pkt) { return MakeSendBuffer(pkt, PKT_S_PartyJoinReply); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_PartyJoinNotify& pkt) { return MakeSendBuffer(pkt, PKT_S_PartyJoinNotify); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_PartyList& pkt) { return MakeSendBuffer(pkt, PKT_S_PartyList); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_PartyJoinRequestList& pkt) { return MakeSendBuffer(pkt, PKT_S_PartyJoinRequestList); };
 
 private:
 	template<typename PacketType, typename ProcessFunc>

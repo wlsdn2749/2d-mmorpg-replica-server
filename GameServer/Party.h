@@ -7,7 +7,10 @@ public:
 public:
 	static constexpr int32 MAX_MEMBERS = 4;
 
-	explicit Party(int32 partyId, PlayerRef leader);
+	explicit Party(int32 partyId, const string& partyName, PlayerRef leader);
+
+	// 파티 관리
+	void SetPartyName(const string& name);
 
 	// 멤버 관리
 	bool AddMember(PlayerRef player);
@@ -20,10 +23,14 @@ public:
 	PlayerRef GetLeader() const;
 	const Vector<PlayerRef>& GetMembers() const;
 	Vector<PlayerRef> GetOnlineMembers();
-	const Vector<Protocol::PartyMemberInfoStatus> GetMemberInfoStatus() const;
+	const Vector<Protocol::PartyMemberStatusInfo> GetMemberStatusInfo() const;
+	string GetPartyName() const;
+	int32 GetCurrentMemberCount() const;
+	Protocol::PartyInfo GetPartyInfo() const;
 private:
 	int32 _partyId;
 	PlayerRef _leader;
+	string _partyName;
 	Vector<PlayerRef> _members;
 };
 

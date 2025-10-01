@@ -498,7 +498,137 @@ namespace DummyClientCS
                     };
                     session.Send(ServerPacketManager.MakeSendBuffer(pkt));
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"⚠️ [파티 강퇴] PlayerId {targetPid}를 강퇴합니다.");
+                    Console.WriteLine($"[파티 강퇴] PlayerId {targetPid}를 파티에서 강퇴했습니다.");
+                    Console.ResetColor();
+                }
+            }
+        }
+
+        // ========== 공개 파티 시스템 (56-63번 프로토콜) ==========
+
+        // 파티 생성 (파티명 지정)
+        public async Task SendPartyCreateRequest(string partyName)
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_PartyCreateRequest
+                    {
+                        PartyName = partyName
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine($"[파티 생성] 파티명 '{partyName}'으로 파티 생성 요청을 보냈습니다.");
+                    Console.ResetColor();
+                }
+            }
+        }
+
+        // 전체 파티 리스트 조회
+        public async Task SendPartyListRequest()
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_PartyList
+                    {
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine("[파티 리스트] 전체 파티 목록 조회 요청을 보냈습니다.");
+                    Console.ResetColor();
+                }
+            }
+        }
+
+        // 파티 가입 요청
+        public async Task SendPartyJoinRequest(int partyId)
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_PartyJoinRequest
+                    {
+                        PartyId = partyId
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine($"[파티 가입 요청] 파티ID {partyId}에 가입 요청을 보냈습니다.");
+                    Console.ResetColor();
+                }
+            }
+        }
+
+        // 파티 가입 요청 응답 (리더 전용 - 수락/거절)
+        public async Task SendPartyJoinResponse(int partyId, bool accept)
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_PartyJoinResponse
+                    {
+                        PartyId = partyId,
+                        Accept = accept
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.ForegroundColor = accept ? ConsoleColor.Green : ConsoleColor.Red;
+                    Console.WriteLine($"[리더 응답] 파티ID {partyId}의 가입 요청을 {(accept ? "수락" : "거절")}했습니다.");
+                    Console.ResetColor();
+                }
+            }
+        }
+
+        // 파티 가입 요청 리스트 조회 (리더 전용)
+        public async Task SendPartyJoinRequestListQuery(int partyId)
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_PartyJoinRequestList
+                    {
+                        PartyId = partyId
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine($"[요청 리스트 조회] 파티ID {partyId}의 가입 요청 목록을 조회합니다.");
+                    Console.ResetColor();
+                }
+            }
+        }
+
+        // 파티 가입 요청 응답 (리더 전용 - requesterPid 지정)
+        public async Task SendPartyJoinResponseWithPid(int partyId, int requesterPid, bool accept)
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_PartyJoinResponse
+                    {
+                        PartyId = partyId,
+                        RequesterPid = requesterPid,
+                        Accept = accept
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.ForegroundColor = accept ? ConsoleColor.Green : ConsoleColor.Red;
+                    Console.WriteLine($"[리더 응답] PlayerId {requesterPid}의 가입 요청을 {(accept ? "수락" : "거절")}했습니다.");
                     Console.ResetColor();
                 }
             }

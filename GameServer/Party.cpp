@@ -3,11 +3,16 @@
 #include "Player.h"
 #include "GameSession.h"
 
-Party::Party(int32 partyId, PlayerRef leader)
-    : _partyId(partyId), _leader(leader)
+Party::Party(int32 partyId, const string& partyName, PlayerRef leader)
+    : _partyId(partyId), _partyName(partyName), _leader(leader)
 {
     _members.reserve(MAX_MEMBERS);
     _members.push_back(leader);
+}
+
+void Party::SetPartyName(const string& name)
+{
+    _partyName = name;
 }
 
 bool Party::AddMember(PlayerRef player)
@@ -105,14 +110,14 @@ Vector<PlayerRef> Party::GetOnlineMembers()
     return onlineMembers;
 }
 
-const Vector<Protocol::PartyMemberInfoStatus> Party::GetMemberInfoStatus() const
+const Vector<Protocol::PartyMemberStatusInfo> Party::GetMemberStatusInfo() const
 {
-    Vector<Protocol::PartyMemberInfoStatus> memberInfos;
+    Vector<Protocol::PartyMemberStatusInfo> memberInfos;
     memberInfos.reserve(MAX_MEMBERS);
     
     for (const auto& member : _members)
     {
-        Protocol::PartyMemberInfoStatus memberInfo;
+        Protocol::PartyMemberStatusInfo memberInfo;
         memberInfo.set_playerid(member->playerId);
         memberInfo.set_hp(member->Hp());
         memberInfo.set_maxhp(member->MaxHp());
@@ -122,4 +127,33 @@ const Vector<Protocol::PartyMemberInfoStatus> Party::GetMemberInfoStatus() const
     }
 
     return memberInfos;
+}
+
+string Party::GetPartyName() const
+{
+    return _partyName;
+}
+
+int32 Party::GetCurrentMemberCount() const
+{
+    return _members.size();
+}
+
+Protocol::PartyInfo Party::GetPartyInfo() const
+{
+    Protocol::PartyInfo info;
+    info.set_partyid(_partyId);
+    info.set_partyname(_partyName);
+    
+    auto memberInfos = GetMemberStatusInfo();
+    for (auto& member : memberInfos)
+    {
+        *info.add_members() = member;
+    }
+
+    info.set_curmembercount(GetCurrentMemberCount());
+    info.set_maxmembercount(MAX_MEMBERS);
+    info.set_partyleaderid(GetLeader()->playerId);
+
+    return info;
 }

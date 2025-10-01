@@ -704,3 +704,211 @@ bool Handle_C_PartyLeave(PacketSessionRef& session, Protocol::C_PartyLeave& pkt)
 	return true;
 
 }
+
+bool Handle_C_PartyCreateRequest(PacketSessionRef& session, Protocol::C_PartyCreateRequest& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+	if (!player)
+		return false;
+
+	RoomRef room = player->GetRoom();
+	if (!room)
+		return false;
+
+	if (!player || player->IsInParty())
+	{
+		Protocol::S_PartyCreateReply replyPkt;
+		replyPkt.set_success(false);
+		replyPkt.set_message("Already in party");
+
+		auto SendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
+		session->Send(SendBuffer);
+		return false;
+	}
+
+	PartyRef party = PartyManager::Instance().CreatePartyWithName(player, pkt.partyname());
+
+	Protocol::S_PartyCreateReply replyPkt;
+	replyPkt.set_success(party != nullptr);
+	replyPkt.set_message(party ? "Party created" : "Failed to create party");
+
+	auto SendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
+	session->Send(SendBuffer);
+
+	return true;
+}
+
+bool Handle_C_PartyJoinRequest(PacketSessionRef& session, Protocol::C_PartyJoinRequest& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+	if (!player)
+		return false;
+
+	RoomRef room = player->GetRoom();
+	if (!room)
+		return false;
+
+	PartyRef party = PartyManager::Instance().FindParty(pkt.partyid());
+
+	if (!party)
+	{
+		// 파티가 존재하지 않음
+		Protocol::S_PartyJoinReply replyPkt;
+		replyPkt.set_success(false);
+		replyPkt.set_message("Party not found");
+		auto SendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
+		session->Send(SendBuffer);
+		return false;
+	}
+
+	if (party->IsFull())
+	{
+		Protocol::S_PartyJoinReply replyPkt;
+		replyPkt.set_success(false);
+		replyPkt.set_message("Party is full");
+		auto SendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
+		session->Send(SendBuffer);
+		return false;
+	}
+
+	bool added = PartyManager::Instance().AddJoinRequest(pkt.partyid(), player);
+
+	Protocol::S_PartyJoinReply replyPkt;
+	replyPkt.set_success(added);
+	replyPkt.set_message(added ? "Request sent to leader" : "Request already pending");
+	auto SendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
+	session->Send(SendBuffer);
+
+	// 리더에게 알림 전송
+	if (added)
+	{
+		PlayerRef leader = party->GetLeader();
+
+		if (auto leaderSession = leader->ownerSession.lock())
+		{
+			Protocol::S_PartyJoinNotify notifyPkt;
+			notifyPkt.set_joinplayerid(player->playerId);
+			notifyPkt.set_partyid(pkt.partyid());
+			notifyPkt.set_leaderid(leader->playerId);
+
+			auto SendBuffer = ClientPacketHandler::MakeSendBuffer(notifyPkt);
+			leaderSession->Send(SendBuffer);
+		}
+	}
+
+	return true;
+}
+
+bool Handle_C_PartyJoinResponse(PacketSessionRef& session, Protocol::C_PartyJoinResponse& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+	if (!player)
+		return false;
+
+	RoomRef room = player->GetRoom();
+	if (!room)
+		return false;
+
+	PartyRef party = PartyManager::Instance().FindParty(pkt.partyid());
+
+	if (!party || party->GetLeader() != player)
+	{
+		return false; // 리더가 아니거나 파티가 없음
+	}
+
+	// 변경: requesterPid로 특정 요청자 찾기
+	PlayerRef requester = PartyManager::Instance().FindRequesterById(pkt.partyid(), pkt.requesterpid());
+	
+	// 요청자가 없으면 종료
+	if (!requester)
+		return true;
+
+	if (pkt.accept())
+	{
+		// 수락: 파티에 가입시킴
+		bool success = PartyManager::Instance().JoinParty(pkt.partyid(), requester);
+
+		// Option 요청자에게 결과 전송
+		if (success)
+		{
+			PartyManager::Instance().RemoveJoinRequest(pkt.partyid(), requester);
+		}
+	}
+	else
+	{
+		// 거절: 요청 제거
+		PartyManager::Instance().RemoveJoinRequest(pkt.partyid(), requester);
+	}
+
+	return true;
+}
+
+bool Handle_C_PartyList(PacketSessionRef& session, Protocol::C_PartyList& pkt)
+{
+	Vector<Protocol::PartyInfo> parties = PartyManager::Instance().GetAllPublicParties();
+
+	Protocol::S_PartyList replyPkt;
+	for (auto& partyInfo : parties)
+	{
+		*replyPkt.add_partyinfos() = partyInfo;
+	}
+
+	auto SendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
+	session->Send(SendBuffer);
+	return true;
+}
+
+bool Handle_C_PartyJoinRequestList(PacketSessionRef& session, Protocol::C_PartyJoinRequestList& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+	if (!player)
+		return false;
+
+	PartyRef party = PartyManager::Instance().FindParty(pkt.partyid());
+
+	if (!party || party->GetLeader() != player)
+	{
+		return false; // 리더가 아니면 조회 불가
+	}
+
+	// 요청자 리스트 가져오기
+	Vector<PlayerRef> requesters = PartyManager::Instance().GetJoinRequesters(pkt.partyid());
+
+	Protocol::S_PartyJoinRequestList replyPkt;
+	replyPkt.set_partyid(pkt.partyid());
+
+	for (const auto& requester : requesters)
+	{
+		if (!requester) continue;
+
+		auto* info = replyPkt.add_requesters();
+		info->set_playerid(requester->playerId);
+		info->set_playername(requester->username);
+		info->set_level(requester->Level());
+	}
+
+	auto SendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
+	session->Send(SendBuffer);
+
+	return true;
+}
