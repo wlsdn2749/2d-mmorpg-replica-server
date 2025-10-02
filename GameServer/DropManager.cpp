@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "DropManager.h"
 
 #include "DropTableRepository.h"
@@ -6,13 +6,26 @@
 
 #include "RandomUtils.h"
 
+#include "DropDataParser.h"
+
+bool DropManager::Initialize()
+{
+	if (_initialized)
+		return true;
+
+	GConsoleLogger->WriteStdOut(Color::YELLOW, L"DropManager: Initializing...\n");
+
+	// DropTableData Load From Json
+	LoadAllDropTableData();
+
+	return true;
+}
+
 void DropManager::LoadAllDropTableData()
 {
-	auto fut = DropTableRepository::GetMonsterItemsAsync();
+	auto dropItemInfos = DropDataParser::LoadDropItemData();
 
-	auto dropItemInfos = fut.get();
-
-	for (auto& dropItemInfo : dropItemInfos)
+	for (auto& [id, dropItemInfo] :dropItemInfos)
 	{
 		auto result = AddDropItemData(std::move(dropItemInfo));
 		if (result == false)
@@ -78,7 +91,14 @@ bool DropManager::AddDropItemData(DropItemInfo&& dropItemInfo)
 	if (!isEnabled)
 		return false;
 
-	_dropDataMap[monsterId]->monsterId = monsterId;
+	// MonsterDropTable이 없으면 생성
+	auto it = _dropDataMap.find(monsterId);
+	if (it == _dropDataMap.end())
+	{
+		_dropDataMap[monsterId] = std::make_unique<MonsterDropTable>();
+		_dropDataMap[monsterId]->monsterId = monsterId;
+	}
+
 	_dropDataMap[monsterId]->dropItemInfo.push_back(std::move(dropItemInfo));
 	
 	GConsoleLogger->WriteStdOut(Color::YELLOW,

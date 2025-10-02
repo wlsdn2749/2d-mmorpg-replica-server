@@ -1,0 +1,11 @@
+[
+  {
+    "id": "1",
+    "monsterId": "1001",
+    "itemId": "90001",
+    "dropRate": "80",
+    "minCount": "1",
+    "maxCount": "1",
+    "isEnabled": "TRUE"
+  }
+]

@@ -237,6 +237,9 @@
     <ClCompile Include="PartyService.cpp">
       <Filter>GameContents\Party</Filter>
     </ClCompile>
+    <ClCompile Include="DropDataParser.cpp">
+      <Filter>DataParser</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -422,6 +425,9 @@
     <ClInclude Include="PartyService.h">
       <Filter>GameContents\Party</Filter>
     </ClInclude>
+    <ClInclude Include="DropDataParser.h">
+      <Filter>DataParser</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="appsettings.json">
@@ -446,6 +452,15 @@
       <Filter>Resources\Maps</Filter>
     </None>
     <None Include="Resources\Data\Monster_data.json">
+      <Filter>Resources\Data</Filter>
+    </None>
+    <None Include="Resources\Data\Drop_data.json">
+      <Filter>Resources\Data</Filter>
+    </None>
+    <None Include="Resources\Data\Item_data.json">
+      <Filter>Resources\Data</Filter>
+    </None>
+    <None Include="Resources\Data\SpawnPoint_data.json">
       <Filter>Resources\Data</Filter>
     </None>
   </ItemGroup>

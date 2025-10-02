@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 struct DropItemInfo;
 
@@ -6,7 +6,6 @@ struct MonsterDropTable
 {
 	int monsterId;
 	std::vector<DropItemInfo> dropItemInfo;
-
 };
 
 struct DropItemInfo
@@ -38,6 +37,8 @@ public:
 		return dropManager;
 	}
 
+	bool Initialize();
+
 	// 드랍 테이블 로딩 함수
 	void LoadAllDropTableData();
 
@@ -62,6 +63,7 @@ private:
 
 private:
 	std::unordered_map<int, std::unique_ptr<MonsterDropTable>> _dropDataMap;
+	bool _initialized = false;
 	
 };
 
