@@ -14,5 +14,13 @@
     "isStackable": "TRUE",
     "maxStack": "99",
     "itemType": "CONSUMABLE"
+  },
+  {
+    "itemId": "90001",
+    "name": "토끼의 가죽",
+    "description": "토끼의 가죽입니다.",
+    "isStackable": "TRUE",
+    "maxStack": "99",
+    "itemType": "MISC"
   }
 ]

@@ -183,6 +183,7 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClCompile Include="AppConfig.cpp" />
     <ClCompile Include="CharacterRepository.cpp" />
     <ClCompile Include="ClientPacketHandler.cpp" />
+    <ClCompile Include="DropDataParser.cpp" />
     <ClCompile Include="DropManager.cpp" />
     <ClCompile Include="DropTableRepository.cpp" />
     <ClCompile Include="InventoryRepository.cpp" />
@@ -249,6 +250,7 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClInclude Include="AppConfig.h" />
     <ClInclude Include="CharacterRepository.h" />
     <ClInclude Include="ClientPacketHandler.h" />
+    <ClInclude Include="DropDataParser.h" />
     <ClInclude Include="DropManager.h" />
     <ClInclude Include="DropTableRepository.h" />
     <ClInclude Include="InventoryCore.h" />
@@ -311,7 +313,10 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <None Include="..\Doc\Plan\inventory-test-data.sql" />
     <None Include="..\Protocol\Protocol.proto" />
     <None Include="appsettings.json" />
+    <None Include="Resources\Data\Drop_data.json" />
+    <None Include="Resources\Data\Item_data.json" />
     <None Include="Resources\Data\Monster_data.json" />
+    <None Include="Resources\Data\SpawnPoint_data.json" />
     <None Include="Resources\Maps\Baekje_Tilemap_Info.json" />
     <None Include="Resources\Maps\Goguryeo_Tilemap_Info.json" />
     <None Include="Resources\Maps\HuntingField_Tilemap_Info.json" />

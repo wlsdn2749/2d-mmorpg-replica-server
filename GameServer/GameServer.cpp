@@ -38,6 +38,8 @@
 #include "ShardBoot.h"
 #include "ItemManager.h"
 
+#include "DropManager.h"
+
 enum
 {
 	WORKER_TICK = 64
@@ -76,6 +78,7 @@ int main()
 
 	// ItemManager 초기화 (DB 로딩 포함)
 	ItemManager::Instance().Initialize();
+	DropManager::Instance().Initialize();
 
 	// 샤드 기반 워커 로직
 	const int totalRooms = 3;

@@ -470,7 +470,7 @@ bool FieldRoom::PlayerMonsterLinkerImpl::ApplyDamageToMonster(int monsterId, int
 		_r.ProcessMonsterExpInRoom(mv.typeId, srcPlayerId);
 		// TODO 돈 지급 - Cfg
 		_r.ProcessMonsterMoneyInRoom(mv.typeId, srcPlayerId);
-		//_r.ProcessMonsterDropInRoom(mv.typeId, srcPlayerId); // 플레이어에게 드랍
+		_r.ProcessMonsterDropInRoom(mv.typeId, srcPlayerId); // 플레이어에게 드랍
 
 		auto player = _r.FindPlayer(srcPlayerId);
 		_r.OnPlayerStatChanged(player);
