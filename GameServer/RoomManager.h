@@ -6,13 +6,23 @@ using RoomRef = shared_ptr<Room>;
 
 class RoomManager
 {
+#pragma region Meyers Singleton
 public:
 	static RoomManager& Instance()
 	{
-		static RoomManager roomManager; 
+		static RoomManager roomManager;
 		return roomManager;
 	}
 
+	RoomManager(const RoomManager&) = delete;
+	RoomManager& operator=(const RoomManager&) = delete;
+private:
+	RoomManager() = default;
+	~RoomManager() = default;
+
+#pragma endregion
+
+public:
 	void Add(RoomRef r) 
 	{
 		_mapNameToIds[r->RoomName()] = r->RoomId();

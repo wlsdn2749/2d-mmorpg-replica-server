@@ -9,43 +9,45 @@
 
 class ItemManager
 {
+#pragma region Meyers Singleton
 public:
-    // 싱글톤 패턴
     static ItemManager& Instance();
-    
+
+    ItemManager(const ItemManager&) = delete;
+    ItemManager& operator=(const ItemManager&) = delete;
+private:
+    ItemManager() = default;
+    ~ItemManager() = default;
+
+#pragma endregion
+
+public:
     // 초기화 및 정리
     bool Initialize();
     void Shutdown();
-    
+
     // 아이템 데이터 조회
     const ItemData* GetItemData(int itemId) const;
     bool IsValidItem(int itemId) const;
     bool IsStackableItem(int itemId) const;
     int GetMaxStackSize(int itemId) const;
     Protocol::EItemType GetItemType(int itemId) const;
-    
+
     // 아이템 효과 처리
     bool CanUseItem(int itemId) const;
     void ApplyItemEffect(int itemId, int count, PlayerRef player);
-    
-    // 디버그 및 관리 
+
+    // 디버그 및 관리
     void AddItemData(const ItemData& itemData);
     void RemoveItemData(int itemId);
     void PrintAllItems() const;
     size_t GetItemCount() const;
-    
+
 private:
-    ItemManager() = default;
-    ~ItemManager() = default;
-    
-    // 복사 방지
-    ItemManager(const ItemManager&) = delete;
-    ItemManager& operator=(const ItemManager&) = delete;
-    
     // 아이템 효과 적용 헬퍼
     void ApplyHealthPotionEffect(int itemId, int count, PlayerRef player);
     void ApplyManaPotionEffect(int itemId, int count, PlayerRef player);
-    
+
 private:
     std::unordered_map<int, std::unique_ptr<ItemData>> _itemDataMap;
     bool _initialized = false;
