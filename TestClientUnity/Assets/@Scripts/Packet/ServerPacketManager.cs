@@ -1,4 +1,4 @@
-﻿using ServerCore;
+using ServerCore;
 using System;
 using System.Collections.Generic;
 using Google.Protobuf;

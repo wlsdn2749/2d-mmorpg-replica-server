@@ -240,6 +240,7 @@
     <ClCompile Include="DropDataParser.cpp">
       <Filter>DataParser</Filter>
     </ClCompile>
+    <ClCompile Include="EquipmentRepositiory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -428,6 +429,7 @@
     <ClInclude Include="DropDataParser.h">
       <Filter>DataParser</Filter>
     </ClInclude>
+    <ClInclude Include="EquipmentRepositiory.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="appsettings.json">

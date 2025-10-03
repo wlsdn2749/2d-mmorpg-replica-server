@@ -22,5 +22,13 @@
     "isStackable": "TRUE",
     "maxStack": "99",
     "itemType": "MISC"
+  },
+  {
+    "itemId": "90002",
+    "name": "고양이의 가죽",
+    "description": "고양이의 가죽입니다",
+    "isStackable": "TRUE",
+    "maxStack": "99",
+    "itemType": "MISC"
   }
 ]

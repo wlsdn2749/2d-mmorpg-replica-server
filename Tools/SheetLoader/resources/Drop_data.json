@@ -3,9 +3,27 @@
     "id": "1",
     "monsterId": "1001",
     "itemId": "90001",
-    "dropRate": "80",
+    "dropRate": "100",
     "minCount": "1",
     "maxCount": "1",
+    "isEnabled": "TRUE"
+  },
+  {
+    "id": "2",
+    "monsterId": "2001",
+    "itemId": "90002",
+    "dropRate": "100",
+    "minCount": "1",
+    "maxCount": "1",
+    "isEnabled": "TRUE"
+  },
+  {
+    "id": "3",
+    "monsterId": "2001",
+    "itemId": "90002",
+    "dropRate": "20",
+    "minCount": "1",
+    "maxCount": "2",
     "isEnabled": "TRUE"
   }
 ]

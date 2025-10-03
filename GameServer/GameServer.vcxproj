@@ -186,6 +186,7 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClCompile Include="DropDataParser.cpp" />
     <ClCompile Include="DropManager.cpp" />
     <ClCompile Include="DropTableRepository.cpp" />
+    <ClCompile Include="EquipmentRepositiory.cpp" />
     <ClCompile Include="InventoryRepository.cpp" />
     <ClCompile Include="InventorySystem.cpp" />
     <ClCompile Include="ItemDataParser.cpp" />
@@ -253,6 +254,7 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClInclude Include="DropDataParser.h" />
     <ClInclude Include="DropManager.h" />
     <ClInclude Include="DropTableRepository.h" />
+    <ClInclude Include="EquipmentRepositiory.h" />
     <ClInclude Include="InventoryCore.h" />
     <ClInclude Include="InventoryRepository.h" />
     <ClInclude Include="InventorySystem.h" />
