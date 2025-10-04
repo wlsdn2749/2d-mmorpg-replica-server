@@ -591,6 +591,13 @@ enum EPartyUpdateType
 	PARTY_UPDATE_DISBANDED = 3;
 }
 
+enum EEquipmentSlotType
+{
+	EQUIPMENT_WEAPON = 0;
+	EQUIPMENT_HELMET = 1;
+	EQUIPMENT_ARMOR = 2;
+	EQUIPMENT_PANTS = 3;
+}
 
 message Vector2Info
 {

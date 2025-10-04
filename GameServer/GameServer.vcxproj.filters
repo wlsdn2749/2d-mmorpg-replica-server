@@ -241,6 +241,7 @@
       <Filter>DataParser</Filter>
     </ClCompile>
     <ClCompile Include="EquipmentRepositiory.cpp" />
+    <ClCompile Include="EquipmentSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -430,6 +431,10 @@
       <Filter>DataParser</Filter>
     </ClInclude>
     <ClInclude Include="EquipmentRepositiory.h" />
+    <ClInclude Include="EquipmentSystem.h" />
+    <ClInclude Include="EquipmentCore.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="appsettings.json">
