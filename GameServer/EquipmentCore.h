@@ -3,17 +3,19 @@
 #include "Protocol.pb.h"
 #include <chrono>
 
-using time_point		= std::chrono::system_clock::time_point;
 using EquipmentSlotType	= Protocol::EEquipmentSlotType;
+
+constexpr int EQUIPMENT_TOTAL_SLOTS = 4; // 0~3
+
 // 장비 데이터 Sheet
 struct EquipmentData
 {
-	int itemId {};
-	EquipmentSlotType slotType {};
-	int minLevel {};
-	int atk {};
-	int def {};
-	int maxHp {};
+	int					itemId {};
+	EquipmentSlotType	slotType {};
+	int					minLevel {};
+	int					atk {};
+	int					def {};
+	int					maxHp {};
 
 	EquipmentData() = default;
 	EquipmentData(int itemId, EquipmentSlotType slotType, int minLevel, int atk, int def, int maxHp)
@@ -27,11 +29,38 @@ struct EquipmentInstance
 	int			equipmentInstanceId {};
 	int			itemId {};
 	int			enhancementLevel {};
-	time_point	acquiredAt {};
+	std::chrono::system_clock::time_point	acquiredAt {};
 
 	EquipmentInstance() = default;
-	EquipmentInstance(int equipmentInstanceId, int itemId, int enhancementLevel, time_point acquiredAt)
+	EquipmentInstance(int equipmentInstanceId, int itemId, int enhancementLevel, std::chrono::system_clock::time_point acquiredAt)
 		: equipmentInstanceId(equipmentInstanceId), itemId(itemId),
 		  enhancementLevel(enhancementLevel), acquiredAt(acquiredAt)
 	{}
+};
+
+struct EquipmentSlot
+{
+	EquipmentSlotType	slotType {};
+	int					equipmentInstanceId {}; // 0이면 비어있음
+	
+	EquipmentSlot() = default;
+	EquipmentSlot(EquipmentSlotType type, int instanceId = 0)
+		: slotType(type), equipmentInstanceId(instanceId)
+	{
+	}
+
+	// 비어있는 슬롯인지 확인
+	bool IsEmpty() const { return equipmentInstanceId == 0; }
+
+	// 슬롯 초기화
+	void Clear()
+	{
+		equipmentInstanceId = 0;
+	}
+};
+
+
+enum class EEquipItemResult {
+	Success,
+	AlreadyEquipped,
 };

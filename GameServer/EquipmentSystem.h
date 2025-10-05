@@ -1,8 +1,10 @@
 #pragma once
+#include "EquipmentCore.h"
+
 class EquipmentSystem
 {
 public:
-	EquipmentSystem() = default;
+	EquipmentSystem();
 	~EquipmentSystem() = default;
 
 	// 장비 시스템 초기화
@@ -17,5 +19,7 @@ public:
 	bool IsSlotEmpty(Protocol::EEquipmentSlotType slotType) const;
 
 
+private:
+	Array<EquipmentSlot, EQUIPMENT_TOTAL_SLOTS> _slots;
 };
 

@@ -7,7 +7,7 @@ constexpr int INVENTORY_TOTAL_SLOTS = 40;
 constexpr int INVENTORY_NORMAL_SLOTS = 30;
 constexpr int INVENTORY_QUICK_SLOTS = 10;
 
-// 아이템 메타데이터 (DB ItemData 테이블에서 로드)
+// 아이템 메타데이터 (Sheet Item 테이블에서 로드)
 struct ItemData {
     int itemId = 0;
     std::string name;
