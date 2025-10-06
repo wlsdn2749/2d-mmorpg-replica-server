@@ -1,0 +1,34 @@
+[
+  {
+    "itemId": "20001",
+    "slotType": "WEAPON",
+    "minLevel": "1",
+    "atk": "10",
+    "def": "0",
+    "maxHp": "0"
+  },
+  {
+    "itemId": "21001",
+    "slotType": "HELMET",
+    "minLevel": "1",
+    "atk": "0",
+    "def": "5",
+    "maxHp": "50"
+  },
+  {
+    "itemId": "22001",
+    "slotType": "ARMOR",
+    "minLevel": "1",
+    "atk": "0",
+    "def": "10",
+    "maxHp": "100"
+  },
+  {
+    "itemId": "23001",
+    "slotType": "PANTS",
+    "minLevel": "1",
+    "atk": "0",
+    "def": "7",
+    "maxHp": "70"
+  }
+]

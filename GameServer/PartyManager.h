@@ -1,14 +1,23 @@
 ﻿#pragma once
 class PartyManager
 {
+#pragma region Meyers Singleton
 public:
-
 	static PartyManager& Instance()
 	{
 		static PartyManager instance;
 		return instance;
 	}
 
+	PartyManager(const PartyManager&) = delete;
+	PartyManager& operator=(const PartyManager&) = delete;
+private:
+	PartyManager() = default;
+	~PartyManager() = default;
+
+#pragma endregion
+
+public:
 	bool Initialize();
 	void Shutdown();
 
@@ -40,13 +49,7 @@ public:
 	Vector<PlayerRef> GetJoinRequesters(int32 partyId); // 전체 요청자 리스트
 	PlayerRef FindRequesterById(int32 partyId, int32 requesterPid); // 특정 요청자
 
-
 private:
-	PartyManager() = default;
-	~PartyManager() = default;
-	PartyManager(const PartyManager&) = delete;
-	PartyManager& operator=(const PartyManager&) = delete;
-
 	atomic<int32> _nextPartyId {1};
 	unordered_map<int32, PartyRef> _parties;
 	unordered_map<PlayerRef, int32> _playerToParty;

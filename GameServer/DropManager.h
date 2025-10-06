@@ -30,6 +30,7 @@ struct DroppedItem
 
 class DropManager
 {
+#pragma region Meyers Singleton
 public:
 	static DropManager& Instance()
 	{
@@ -37,6 +38,15 @@ public:
 		return dropManager;
 	}
 
+	DropManager(const DropManager&) = delete;
+	DropManager& operator=(const DropManager&) = delete;
+private:
+	DropManager() = default;
+	~DropManager() = default;
+
+#pragma endregion
+
+public:
 	bool Initialize();
 
 	// 드랍 테이블 로딩 함수
@@ -54,16 +64,8 @@ public:
 	int GetRandomDropCount(const DropItemInfo& dropInfo) const;
 
 private:
-	DropManager() = default;
-	~DropManager() = default;
-
-	// 복사 방지
-	DropManager(const DropManager&) = delete;
-	DropManager& operator=(const DropManager&) = delete;
-
-private:
 	std::unordered_map<int, std::unique_ptr<MonsterDropTable>> _dropDataMap;
 	bool _initialized = false;
-	
+
 };
 

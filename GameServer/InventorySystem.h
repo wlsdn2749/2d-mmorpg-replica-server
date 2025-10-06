@@ -16,7 +16,7 @@ public:
     void Clear();
 
     // 아이템 추가/제거
-    EAddItemResult AddItem(int itemId, int count);
+    EAddItemResult AddItem(int itemId, int count, int equipmentInstanceId = 0);
     ERemoveItemResult RemoveItem(int slotIndex, int count);
     ERemoveItemResult RemoveItemById(int itemId, int count);
 
@@ -53,7 +53,7 @@ public:
 private:
     // 내부 헬퍼 함수들
     EAddItemResult TryAddToExistingSlot(int itemId, int count);
-    EAddItemResult TryAddToNewSlot(int itemId, int count);
+    EAddItemResult TryAddToNewSlot(int itemId, int count, int equipmentInstanceId);
     bool CanStackItem(int itemId, int slotIndex, int additionalCount) const;
     int GetMaxStackSize(int itemId) const;
 

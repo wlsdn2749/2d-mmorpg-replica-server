@@ -1,18 +1,22 @@
 # Visual Studio가 C++ 설정을 사용하여 .editorconfig 파일을 생성했습니다.
 root = true
 
-[*.{c++,cc,cpp,cppm,cxx,h,h++,hh,hpp,hxx,inl,ipp,ixx,tlh,tli}]
-charset = utf-8-nobom
+[*]
+charset = utf-8
+indent_style = tab
+indent_size = 4q
+tab_width= 4
 
+[*.xml]
+indent_style = space
+indent_size = 2
 # Visual C++ 코드 스타일 설정
 
 cpp_generate_documentation_comments = xml
 
 # Visual C++ 서식 설정
 
-indent_style = tab
-indent_size = 4
-tab_width= 4
+
 cpp_indent_braces = false
 cpp_indent_multi_line_relative_to = innermost_parenthesis
 cpp_indent_within_parentheses = indent

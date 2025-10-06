@@ -163,6 +163,109 @@ namespace SP
     private:
     };
 
+    class GetEquipmentInstance : public DBBind<1,4>
+    {
+    public:
+    	GetEquipmentInstance(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spGetEquipmentInstance(?)}") { }
+    	void ParamIn_EquipmentInstanceId(int32& v) { BindParam(0, v); };
+    	void ParamIn_EquipmentInstanceId(int32&& v) { _equipmentInstanceId = std::move(v); BindParam(0, _equipmentInstanceId); };
+    	void ColumnOut_EquipmentInstanceId(OUT int32& v) { BindCol(0, v); };
+    	void ColumnOut_ItemId(OUT int32& v) { BindCol(1, v); };
+    	void ColumnOut_EnhancementLevel(OUT int32& v) { BindCol(2, v); };
+    	void ColumnOut_AcquiredAt(OUT TIMESTAMP_STRUCT& v) { BindCol(3, v); };
+
+    private:
+    	int32 _equipmentInstanceId = {};
+    };
+
+    class InsertEquipmentInstance : public DBBind<3,0>
+    {
+    public:
+    	InsertEquipmentInstance(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spInsertEquipmentInstance(?,?,?)}") { }
+    	void ParamIn_ItemId(int32& v) { BindParam(0, v); };
+    	void ParamIn_ItemId(int32&& v) { _itemId = std::move(v); BindParam(0, _itemId); };
+    	void ParamIn_EnhancementLevel(int32& v) { BindParam(1, v); };
+    	void ParamIn_EnhancementLevel(int32&& v) { _enhancementLevel = std::move(v); BindParam(1, _enhancementLevel); };
+    	void ParamOut_NewEquipmentInstanceId(OUT int32& v) { BindParam(2, v, SQL_PARAM_OUTPUT); };
+
+    private:
+    	int32 _itemId = {};
+    	int32 _enhancementLevel = {};
+    	int32 _newEquipmentInstanceId = {};
+    };
+
+    class UpdateEquipmentInstance : public DBBind<2,0>
+    {
+    public:
+    	UpdateEquipmentInstance(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spUpdateEquipmentInstance(?,?)}") { }
+    	void ParamIn_EquipmentInstanceId(int32& v) { BindParam(0, v); };
+    	void ParamIn_EquipmentInstanceId(int32&& v) { _equipmentInstanceId = std::move(v); BindParam(0, _equipmentInstanceId); };
+    	void ParamIn_EnhancementLevel(int32& v) { BindParam(1, v); };
+    	void ParamIn_EnhancementLevel(int32&& v) { _enhancementLevel = std::move(v); BindParam(1, _enhancementLevel); };
+
+    private:
+    	int32 _equipmentInstanceId = {};
+    	int32 _enhancementLevel = {};
+    };
+
+    class DeleteEquipmentInstance : public DBBind<1,0>
+    {
+    public:
+    	DeleteEquipmentInstance(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spDeleteEquipmentInstance(?)}") { }
+    	void ParamIn_EquipmentInstanceId(int32& v) { BindParam(0, v); };
+    	void ParamIn_EquipmentInstanceId(int32&& v) { _equipmentInstanceId = std::move(v); BindParam(0, _equipmentInstanceId); };
+
+    private:
+    	int32 _equipmentInstanceId = {};
+    };
+
+    class GetCharacterEquipment : public DBBind<1,5>
+    {
+    public:
+    	GetCharacterEquipment(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spGetCharacterEquipment(?)}") { }
+    	void ParamIn_CharacterId(int32& v) { BindParam(0, v); };
+    	void ParamIn_CharacterId(int32&& v) { _characterId = std::move(v); BindParam(0, _characterId); };
+    	void ColumnOut_CharacterId(OUT int32& v) { BindCol(0, v); };
+    	void ColumnOut_SlotType(OUT int32& v) { BindCol(1, v); };
+    	void ColumnOut_EquipmentInstanceId(OUT int32& v) { BindCol(2, v); };
+    	void ColumnOut_ItemId(OUT int32& v) { BindCol(3, v); };
+    	void ColumnOut_EnhancementLevel(OUT int32& v) { BindCol(4, v); };
+
+    private:
+    	int32 _characterId = {};
+    };
+
+    class UpsertCharacterEquipment : public DBBind<3,0>
+    {
+    public:
+    	UpsertCharacterEquipment(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spUpsertCharacterEquipment(?,?,?)}") { }
+    	void ParamIn_CharacterId(int32& v) { BindParam(0, v); };
+    	void ParamIn_CharacterId(int32&& v) { _characterId = std::move(v); BindParam(0, _characterId); };
+    	void ParamIn_SlotType(int32& v) { BindParam(1, v); };
+    	void ParamIn_SlotType(int32&& v) { _slotType = std::move(v); BindParam(1, _slotType); };
+    	void ParamIn_EquipmentInstanceId(int32& v) { BindParam(2, v); };
+    	void ParamIn_EquipmentInstanceId(int32&& v) { _equipmentInstanceId = std::move(v); BindParam(2, _equipmentInstanceId); };
+
+    private:
+    	int32 _characterId = {};
+    	int32 _slotType = {};
+    	int32 _equipmentInstanceId = {};
+    };
+
+    class DeleteCharacterEquipment : public DBBind<2,0>
+    {
+    public:
+    	DeleteCharacterEquipment(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spDeleteCharacterEquipment(?,?)}") { }
+    	void ParamIn_CharacterId(int32& v) { BindParam(0, v); };
+    	void ParamIn_CharacterId(int32&& v) { _characterId = std::move(v); BindParam(0, _characterId); };
+    	void ParamIn_SlotType(int32& v) { BindParam(1, v); };
+    	void ParamIn_SlotType(int32&& v) { _slotType = std::move(v); BindParam(1, _slotType); };
+
+    private:
+    	int32 _characterId = {};
+    	int32 _slotType = {};
+    };
+
     class InsertGold : public DBBind<3,0>
     {
     public:
@@ -196,7 +299,7 @@ namespace SP
     	int32 _gold = {};
     };
 
-    class GetCharacterInventory : public DBBind<1,4>
+    class GetCharacterInventory : public DBBind<1,5>
     {
     public:
     	GetCharacterInventory(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spGetCharacterInventory(?)}") { }
@@ -206,15 +309,16 @@ namespace SP
     	void ColumnOut_ItemId(OUT int32& v) { BindCol(1, v); };
     	void ColumnOut_Count(OUT int32& v) { BindCol(2, v); };
     	void ColumnOut_IsQuickslot(OUT int32& v) { BindCol(3, v); };
+    	void ColumnOut_EquipmentInstanceId(OUT int32& v) { BindCol(4, v); };
 
     private:
     	int32 _characterId = {};
     };
 
-    class SaveInventorySlot : public DBBind<5,0>
+    class SaveInventorySlot : public DBBind<6,0>
     {
     public:
-    	SaveInventorySlot(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spSaveInventorySlot(?,?,?,?,?)}") { }
+    	SaveInventorySlot(DBConnection& conn) : DBBind(conn, L"{CALL dbo.spSaveInventorySlot(?,?,?,?,?,?)}") { }
     	void ParamIn_CharacterId(int32& v) { BindParam(0, v); };
     	void ParamIn_CharacterId(int32&& v) { _characterId = std::move(v); BindParam(0, _characterId); };
     	void ParamIn_SlotIndex(int32& v) { BindParam(1, v); };
@@ -225,6 +329,8 @@ namespace SP
     	void ParamIn_Count(int32&& v) { _count = std::move(v); BindParam(3, _count); };
     	void ParamIn_IsQuickslot(int32& v) { BindParam(4, v); };
     	void ParamIn_IsQuickslot(int32&& v) { _isQuickslot = std::move(v); BindParam(4, _isQuickslot); };
+    	void ParamIn_EquipmentInstanceId(int32& v) { BindParam(5, v); };
+    	void ParamIn_EquipmentInstanceId(int32&& v) { _equipmentInstanceId = std::move(v); BindParam(5, _equipmentInstanceId); };
 
     private:
     	int32 _characterId = {};
@@ -232,6 +338,7 @@ namespace SP
     	int32 _itemId = {};
     	int32 _count = {};
     	int32 _isQuickslot = {};
+    	int32 _equipmentInstanceId = {};
     };
 
     class DeleteInventorySlot : public DBBind<2,0>

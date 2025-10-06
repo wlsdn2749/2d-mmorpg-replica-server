@@ -74,6 +74,13 @@ namespace Packet
 	    PKT_S_PartyList = 63,
 	    PKT_C_PartyJoinRequestList = 64,
 	    PKT_S_PartyJoinRequestList = 65,
+	    PKT_C_EquipItemRequest = 66,
+	    PKT_S_EquipItemReply = 67,
+	    PKT_C_UnequipItemRequest = 68,
+	    PKT_S_UnequipItemReply = 69,
+	    PKT_C_EquipmentInfoRequest = 70,
+	    PKT_S_EquipmentInfoReply = 71,
+	    PKT_S_BroadcastPlayerEquipment = 72,
     }
     public class ServerPacketManager
     {
@@ -123,6 +130,9 @@ namespace Packet
         public static ArraySegment<byte> MakeSendBuffer(C_PartyJoinResponse pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PartyJoinResponse);
         public static ArraySegment<byte> MakeSendBuffer(C_PartyList pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PartyList);
         public static ArraySegment<byte> MakeSendBuffer(C_PartyJoinRequestList pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PartyJoinRequestList);
+        public static ArraySegment<byte> MakeSendBuffer(C_EquipItemRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_EquipItemRequest);
+        public static ArraySegment<byte> MakeSendBuffer(C_UnequipItemRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_UnequipItemRequest);
+        public static ArraySegment<byte> MakeSendBuffer(C_EquipmentInfoRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_EquipmentInfoRequest);
 
         void Register()
         {
@@ -172,6 +182,10 @@ namespace Packet
             RegisterHandler((ushort)PacketID.PKT_S_PartyJoinNotify, ServerPacketHandler.HANDLE_S_PartyJoinNotify, S_PartyJoinNotify.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_PartyList, ServerPacketHandler.HANDLE_S_PartyList, S_PartyList.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_PartyJoinRequestList, ServerPacketHandler.HANDLE_S_PartyJoinRequestList, S_PartyJoinRequestList.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_EquipItemReply, ServerPacketHandler.HANDLE_S_EquipItemReply, S_EquipItemReply.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_UnequipItemReply, ServerPacketHandler.HANDLE_S_UnequipItemReply, S_UnequipItemReply.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_EquipmentInfoReply, ServerPacketHandler.HANDLE_S_EquipmentInfoReply, S_EquipmentInfoReply.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_BroadcastPlayerEquipment, ServerPacketHandler.HANDLE_S_BroadcastPlayerEquipment, S_BroadcastPlayerEquipment.Parser);
             
                   
         }

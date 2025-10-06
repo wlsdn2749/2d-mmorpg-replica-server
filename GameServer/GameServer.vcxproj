@@ -186,6 +186,10 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClCompile Include="DropDataParser.cpp" />
     <ClCompile Include="DropManager.cpp" />
     <ClCompile Include="DropTableRepository.cpp" />
+    <ClCompile Include="EquipmentDataParser.cpp" />
+    <ClCompile Include="EquipmentManager.cpp" />
+    <ClCompile Include="EquipmentRepository.cpp" />
+    <ClCompile Include="EquipmentSystem.cpp" />
     <ClCompile Include="InventoryRepository.cpp" />
     <ClCompile Include="InventorySystem.cpp" />
     <ClCompile Include="ItemDataParser.cpp" />
@@ -253,6 +257,11 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClInclude Include="DropDataParser.h" />
     <ClInclude Include="DropManager.h" />
     <ClInclude Include="DropTableRepository.h" />
+    <ClInclude Include="EquipmentCore.h" />
+    <ClInclude Include="EquipmentDataParser.h" />
+    <ClInclude Include="EquipmentManager.h" />
+    <ClInclude Include="EquipmentRepository.h" />
+    <ClInclude Include="EquipmentSystem.h" />
     <ClInclude Include="InventoryCore.h" />
     <ClInclude Include="InventoryRepository.h" />
     <ClInclude Include="InventorySystem.h" />
@@ -314,6 +323,7 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <None Include="..\Protocol\Protocol.proto" />
     <None Include="appsettings.json" />
     <None Include="Resources\Data\Drop_data.json" />
+    <None Include="Resources\Data\Equipment_data.json" />
     <None Include="Resources\Data\Item_data.json" />
     <None Include="Resources\Data\Monster_data.json" />
     <None Include="Resources\Data\SpawnPoint_data.json" />

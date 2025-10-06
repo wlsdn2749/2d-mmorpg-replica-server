@@ -4,21 +4,23 @@
 std::vector<ItemSlot> InventoryRepository::GetCharacterInventory_DB(DBConnection& conn, int characterId)
 {
     std::vector<ItemSlot> slots;
-    
+
     int slotIndex;
     int itemId;
     int count;
     int isQuickslot;
-    
+    int equipmentInstanceId;
+
     SP::GetCharacterInventory sp(conn);
     sp.ParamIn_CharacterId(characterId);
     sp.ColumnOut_SlotIndex(OUT slotIndex);
     sp.ColumnOut_ItemId(OUT itemId);
     sp.ColumnOut_Count(OUT count);
     sp.ColumnOut_IsQuickslot(OUT isQuickslot);
-    
+    sp.ColumnOut_EquipmentInstanceId(OUT equipmentInstanceId);
+
     sp.Execute();
-    
+
     while (sp.Fetch())
     {
         ItemSlot slot;
@@ -26,14 +28,15 @@ std::vector<ItemSlot> InventoryRepository::GetCharacterInventory_DB(DBConnection
         slot.itemId = itemId;
         slot.count = count;
         slot.isQuickSlot = (isQuickslot != 0);
-        
+        slot.equipmentInstanceId = equipmentInstanceId;
+
         slots.push_back(slot);
-        
+
         GConsoleLogger->WriteStdOut(Color::GREEN,
-            L"Loaded inventory slot - CharID[%d] Slot[%d] ItemID[%d] Count[%d] QuickSlot[%s]\n", 
-            characterId, slotIndex, itemId, count, slot.isQuickSlot ? L"Yes" : L"No");
+            L"Loaded inventory slot - CharID[%d] Slot[%d] ItemID[%d] Count[%d] QuickSlot[%s] EquipInstID[%d]\n",
+            characterId, slotIndex, itemId, count, slot.isQuickSlot ? L"Yes" : L"No", equipmentInstanceId);
     }
-    
+
     return slots;
 }
 
@@ -47,22 +50,23 @@ std::future<std::vector<ItemSlot>> InventoryRepository::GetCharacterInventoryAsy
 void InventoryRepository::SaveInventorySlot_DB(DBConnection& conn, int characterId, const ItemSlot& slot)
 {
     SP::SaveInventorySlot sp(conn);
-    
+
     // const_cast 사용: BindParam은 읽기 전용이므로 안전
     sp.ParamIn_CharacterId(const_cast<int32&>(characterId));
     sp.ParamIn_SlotIndex(const_cast<int32&>(slot.slotIndex));
     sp.ParamIn_ItemId(const_cast<int32&>(slot.itemId));
     sp.ParamIn_Count(const_cast<int32&>(slot.count));
-    
+
     // bool을 int로 변환
     int isQuickslot = slot.isQuickSlot ? 1 : 0;
     sp.ParamIn_IsQuickslot(isQuickslot);
-    
+    sp.ParamIn_EquipmentInstanceId(const_cast<int32&>(slot.equipmentInstanceId));
+
     sp.Execute();
-    
-    GConsoleLogger->WriteStdOut(Color::BLUE,
-        L"Saved inventory slot - CharID[%d] Slot[%d] ItemID[%d] Count[%d] QuickSlot[%s]\n", 
-        characterId, slot.slotIndex, slot.itemId, slot.count, slot.isQuickSlot ? L"Yes" : L"No");
+
+    GConsoleLogger->WriteStdOut(Color::WHITE,
+        L"Saved inventory slot - CharID[%d] Slot[%d] ItemID[%d] Count[%d] QuickSlot[%s] EquipInstID[%d]\n",
+        characterId, slot.slotIndex, slot.itemId, slot.count, slot.isQuickSlot ? L"Yes" : L"No", slot.equipmentInstanceId);
 }
 
 std::future<void> InventoryRepository::SaveInventorySlotAsync(int characterId, const ItemSlot& slot)

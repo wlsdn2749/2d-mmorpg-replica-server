@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "ClientPacketHandler.h"
 #include "GameSession.h"
 
@@ -9,6 +9,8 @@
 
 #include "RoomManager.h"
 #include "ItemManager.h"
+
+#include "EquipmentManager.h"
 
 PacketHandlerFunc GPacketHandler[UINT16_MAX];
 
@@ -227,8 +229,9 @@ bool Handle_C_EnterGame(PacketSessionRef& session, Protocol::C_EnterGame& pkt)
 
 	room->DoAsync(&Room::Enter, player); // 룸 입장 성공
 	player->LoadInventoryFromDB(); // DB에서 인벤토리 로딩 (접속 시)
+	player->LoadEquipmentFromDB(); // DB에서 장비 로딩 (접속 시)
 
-	
+
 	gameSession->SetState(GameSession::State::InRoom);
 
 	Protocol::S_EnterGame enterGamePkt;
@@ -905,6 +908,328 @@ bool Handle_C_PartyJoinRequestList(PacketSessionRef& session, Protocol::C_PartyJ
 		info->set_playerid(requester->playerId);
 		info->set_playername(requester->username);
 		info->set_level(requester->Level());
+	}
+
+	auto SendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
+	session->Send(SendBuffer);
+
+	return true;
+}
+
+bool Handle_C_EquipItemRequest(PacketSessionRef& session, Protocol::C_EquipItemRequest& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+	if (!player)
+		return false;
+
+	int inventorySlotIndex = pkt.inventoryslotindex();
+
+	GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_EquipItemRequest]: Player requests to equip item from slot[%d]\n", inventorySlotIndex);
+
+	// 1. 인벤토리에서 장비 아이템 및 인스턴스 ID 확인
+	const ItemSlot& invSlot = player->GetInventory().GetSlot(inventorySlotIndex);
+	int itemId = invSlot.itemId;
+	int equipmentInstanceId = invSlot.equipmentInstanceId;
+
+	if (itemId == 0)
+	{
+		Protocol::S_EquipItemReply replyPkt;
+		replyPkt.set_success(false);
+		replyPkt.set_errormessage("Empty inventory slot");
+		session->Send(ClientPacketHandler::MakeSendBuffer(replyPkt));
+		return true;
+	}
+
+	// 2. 장비 타입 확인
+	Protocol::EItemType itemType = ItemManager::Instance().GetItemType(itemId);
+	if (itemType != Protocol::EItemType::ITEM_TYPE_EQUIPMENT)
+	{
+		Protocol::S_EquipItemReply replyPkt;
+		replyPkt.set_success(false);
+		replyPkt.set_errormessage("Item is not equipment");
+		session->Send(ClientPacketHandler::MakeSendBuffer(replyPkt));
+		return true;
+	}
+
+	// 3. 슬롯 타입 확인
+	Protocol::EEquipmentSlotType slotType = EquipmentManager::Instance().GetSlotType(itemId);
+
+	// 4. 레벨 체크
+	if (!EquipmentManager::Instance().CanEquip(itemId, player->Level()))
+	{
+		Protocol::S_EquipItemReply replyPkt;
+		replyPkt.set_success(false);
+		replyPkt.set_errormessage("Level requirement not met");
+		session->Send(ClientPacketHandler::MakeSendBuffer(replyPkt));
+		return true;
+	}
+
+	// 5. 기존 장비 확인 및 인벤토리 반환
+	int returnedSlotIndex = -1;
+	bool hasOldEquipment = false;
+	int oldItemId = 0;
+	int oldEquipmentInstanceId = 0;
+	int oldEnhancementLevel = 0;
+
+	if (!player->GetEquipment().IsSlotEmpty(slotType))
+	{
+		oldItemId = player->GetEquipmentItemIdFromSlot(slotType);
+		oldEquipmentInstanceId = player->GetEquipmentInstanceIdFromSlot(slotType);
+		oldEnhancementLevel = player->GetEquipment().GetEquipmentSlot(slotType).enhancementLevel;
+
+		// 기존 장비를 인벤토리에 반환 (equipmentInstanceId 보존)
+		EAddItemResult addResult = player->AddItem(oldItemId, 1, oldEquipmentInstanceId);
+		if (addResult != EAddItemResult::Success)
+		{
+			Protocol::S_EquipItemReply replyPkt;
+			replyPkt.set_success(false);
+			replyPkt.set_errormessage("Inventory is full");
+			session->Send(ClientPacketHandler::MakeSendBuffer(replyPkt));
+			return true;
+		}
+
+		// 반환된 슬롯 찾기
+		for (int i = 0; i < INVENTORY_TOTAL_SLOTS; ++i)
+		{
+			const ItemSlot& slot = player->GetInventory().GetSlot(i);
+			if (slot.equipmentInstanceId == oldEquipmentInstanceId)
+			{
+				returnedSlotIndex = i;
+				break;
+			}
+		}
+
+		hasOldEquipment = true;
+	}
+
+	// 6. 인벤토리에서 제거 (장착하기 전에 먼저 제거)
+	ERemoveItemResult removeResult = player->RemoveItem(inventorySlotIndex, 1, false); // Instance 보존
+	if (removeResult != ERemoveItemResult::Success)
+	{
+		// 롤백: 기존 장비를 인벤토리에서 제거하고 다시 장착
+		if (hasOldEquipment)
+		{
+			player->RemoveItem(returnedSlotIndex, 1, false); // Instance 보존
+			player->EquipItem(slotType, oldItemId, oldEquipmentInstanceId, oldEnhancementLevel);
+		}
+		Protocol::S_EquipItemReply replyPkt;
+		replyPkt.set_success(false);
+		replyPkt.set_errormessage("Failed to remove from inventory");
+		session->Send(ClientPacketHandler::MakeSendBuffer(replyPkt));
+		return true;
+	}
+
+	// 7. 장비 장착 (올바른 equipmentInstanceId 전달)
+	int enhancementLevel = 0; // TODO: DB에서 조회 필요
+	EEquipItemResult equipResult = player->EquipItem(slotType, itemId, equipmentInstanceId, enhancementLevel);
+	if (equipResult != EEquipItemResult::Success)
+	{
+		// 롤백: 새 장비를 인벤토리에 복구, 기존 장비를 다시 장착
+		player->AddItem(itemId, 1, equipmentInstanceId); // 인벤토리에 다시 추가
+		if (hasOldEquipment)
+		{
+			player->RemoveItem(returnedSlotIndex, 1, false); // Instance 보존
+			player->EquipItem(slotType, oldItemId, oldEquipmentInstanceId, oldEnhancementLevel);
+		}
+		Protocol::S_EquipItemReply replyPkt;
+		replyPkt.set_success(false);
+		replyPkt.set_errormessage("Failed to equip item");
+		session->Send(ClientPacketHandler::MakeSendBuffer(replyPkt));
+		return true;
+	}
+
+	// 8. 응답
+	Protocol::S_EquipItemReply replyPkt;
+	replyPkt.set_success(true);
+	replyPkt.set_errormessage("");
+	replyPkt.set_slottype(slotType);
+
+	// changedSlotInfo (인벤토리에서 제거된 슬롯)
+	auto* changedSlot = replyPkt.mutable_changedslotinfo();
+	const ItemSlot& currentSlot = player->GetInventory().GetSlot(inventorySlotIndex);
+	changedSlot->set_slotindex(inventorySlotIndex);
+	changedSlot->set_itemid(currentSlot.itemId);
+	changedSlot->set_count(currentSlot.count);
+	changedSlot->set_isquickslot(currentSlot.isQuickSlot);
+	changedSlot->set_equipmentinstanceid(currentSlot.equipmentInstanceId);
+
+	// returnedEquipmentSlot (기존 장비가 인벤토리로 돌아온 경우)
+	if (hasOldEquipment && returnedSlotIndex >= 0)
+	{
+		auto* returnedSlot = replyPkt.mutable_returnedequipmentslot();
+		const ItemSlot& retSlot = player->GetInventory().GetSlot(returnedSlotIndex);
+		returnedSlot->set_slotindex(returnedSlotIndex);
+		returnedSlot->set_itemid(retSlot.itemId);
+		returnedSlot->set_count(retSlot.count);
+		returnedSlot->set_isquickslot(retSlot.isQuickSlot);
+		returnedSlot->set_equipmentinstanceid(retSlot.equipmentInstanceId);
+	}
+
+	session->Send(ClientPacketHandler::MakeSendBuffer(replyPkt));
+
+	// 9. 룸 내 다른 플레이어에게 장비 변경 브로드캐스트
+	RoomRef room = player->GetRoom();
+	if (room)
+	{
+		room->DoAsync([room, player, slotType, itemId]()
+		{
+			Protocol::S_BroadcastPlayerEquipment broadcastPkt;
+			broadcastPkt.set_playerid(player->playerId);
+			broadcastPkt.set_slottype(slotType);
+			broadcastPkt.set_itemid(itemId);
+
+			auto sendBuffer = ClientPacketHandler::MakeSendBuffer(broadcastPkt);
+			room->Broadcast(sendBuffer);
+		});
+	}
+
+	GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_EquipItemRequest]: Success - ItemId[%d] InstanceId[%d] equipped to SlotType[%d]\n",
+		itemId, equipmentInstanceId, static_cast<int>(slotType));
+
+	return true;
+}
+
+bool Handle_C_UnequipItemRequest(PacketSessionRef& session, Protocol::C_UnequipItemRequest& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+	if (!player)
+		return false;
+
+	Protocol::EEquipmentSlotType slotType = pkt.slottype();
+
+	GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_UnequipItemRequest]: Player request to unequip item from slot[%d] \n", static_cast<int>(slotType));
+
+	Protocol::S_UnequipItemReply replyPkt;
+
+	// 1. Validate equipment slot is not empty
+	if (player->GetEquipment().IsSlotEmpty(slotType))
+	{
+		replyPkt.set_success(false);
+		replyPkt.set_errormessage("Equipment slot is empty");
+		auto SendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
+		session->Send(SendBuffer);
+		return true;
+	}
+
+	// 2. Get equipped item info (itemId + equipmentInstanceId)
+	const EquipmentSlot& equipSlot = player->GetEquipment().GetEquipmentSlot(slotType);
+	int itemId = equipSlot.itemId;
+	int equipmentInstanceId = equipSlot.equipmentInstanceId;
+
+	if (itemId == 0)
+	{
+		replyPkt.set_success(false);
+		replyPkt.set_errormessage("Invalid equipped item");
+		auto SendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
+		session->Send(SendBuffer);
+		return true;
+	}
+
+	// 3. Unequip item first (before adding to inventory)
+	player->UnequipItem(slotType);
+
+	// 4. Add equipment to inventory (with equipmentInstanceId)
+	EAddItemResult addResult = player->AddItem(itemId, 1, equipmentInstanceId);
+	if (addResult != EAddItemResult::Success)
+	{
+		// Rollback: re-equip the item
+		player->EquipItem(slotType, itemId, equipmentInstanceId, equipSlot.enhancementLevel);
+
+		replyPkt.set_success(false);
+		replyPkt.set_errormessage("Inventory is full");
+		auto SendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
+		session->Send(SendBuffer);
+		return true;
+	}
+
+	// 5. Send success reply
+	replyPkt.set_success(true);
+	replyPkt.set_errormessage("");
+	replyPkt.set_slottype(slotType);
+
+	// Find the inventory slot where the item was added (by equipmentInstanceId)
+	const InventorySystem& inventory = player->GetInventory();
+	for (int i = 0; i < INVENTORY_TOTAL_SLOTS; ++i)
+	{
+		const ItemSlot& slot = inventory.GetSlot(i);
+		if (slot.equipmentInstanceId == equipmentInstanceId && slot.itemId == itemId)
+		{
+			auto* changedSlot = replyPkt.mutable_returnedequipmentslot();
+			changedSlot->set_slotindex(i);
+			changedSlot->set_itemid(slot.itemId);
+			changedSlot->set_count(slot.count);
+			changedSlot->set_isquickslot(slot.isQuickSlot);
+			changedSlot->set_equipmentinstanceid(slot.equipmentInstanceId);
+			break;
+		}
+	}
+
+	auto SendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
+	session->Send(SendBuffer);
+
+	// 6. 룸 내 다른 플레이어에게 장비 해제 브로드캐스트
+	RoomRef room = player->GetRoom();
+	if (room)
+	{
+		room->DoAsync([room, player, slotType]()
+		{
+			Protocol::S_BroadcastPlayerEquipment broadcastPkt;
+			broadcastPkt.set_playerid(player->playerId);
+			broadcastPkt.set_slottype(slotType);
+			broadcastPkt.set_itemid(0); // 0 = 장비 해제
+
+			auto sendBuffer = ClientPacketHandler::MakeSendBuffer(broadcastPkt);
+			room->Broadcast(sendBuffer);
+		});
+	}
+
+	GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_UnequipItemRequest]: Success - ItemId[%d] InstanceId[%d] unequipped from SlotType[%d]\n",
+		itemId, equipmentInstanceId, static_cast<int>(slotType));
+
+	return true;
+}
+
+bool Handle_C_EquipmentInfoRequest(PacketSessionRef& session, Protocol::C_EquipmentInfoRequest& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+	if (!player)
+		return false;
+
+	GConsoleLogger->WriteStdOut(Color::GREEN, L"[C_EquipmentInfoRequest]: Player가 장비 정보 조회 요청함 \n");
+
+	// 플레이어의 장비 정보를 가져와서 응답 패킷 생성
+	const EquipmentSystem& equipment = player->GetEquipment();
+
+	Protocol::S_EquipmentInfoReply replyPkt;
+
+	for (int i = 0; i < EQUIPMENT_TOTAL_SLOTS; ++i)
+	{
+		Protocol::EEquipmentSlotType slotType = static_cast<Protocol::EEquipmentSlotType>(i);
+		const EquipmentSlot& slot = equipment.GetEquipmentSlot(slotType);
+
+		if (!slot.IsEmpty())
+		{
+			auto* equipSlotInfo = replyPkt.add_equipments();
+			equipSlotInfo->set_slottype(slotType);
+			equipSlotInfo->set_equipmentinstanceid(slot.equipmentInstanceId);
+			equipSlotInfo->set_itemid(slot.itemId);
+			equipSlotInfo->set_enhancementlevel(slot.enhancementLevel);
+		}
 	}
 
 	auto SendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);

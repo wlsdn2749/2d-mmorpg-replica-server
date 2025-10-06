@@ -633,5 +633,69 @@ namespace DummyClientCS
                 }
             }
         }
+
+        // ========== 장비 시스템 테스트 ==========
+
+        // 장비 장착 요청
+        public async Task SendEquipItemRequest(int inventorySlotIndex)
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_EquipItemRequest
+                    {
+                        InventorySlotIndex = inventorySlotIndex
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine($"[장비 장착 요청] 인벤토리 슬롯 {inventorySlotIndex}의 아이템 장착 요청을 보냈습니다.");
+                    Console.ResetColor();
+                }
+            }
+        }
+
+        // 장비 해제 요청
+        public async Task SendUnequipItemRequest(int slotTypeValue)
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_UnequipItemRequest
+                    {
+                        SlotType = (Google.Protobuf.Protocol.EEquipmentSlotType)slotTypeValue
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine($"[장비 해제 요청] 슬롯 타입 {slotTypeValue}의 장비 해제 요청을 보냈습니다.");
+                    Console.ResetColor();
+                }
+            }
+        }
+
+        // 장비 정보 조회 요청
+        public async Task SendEquipmentInfoRequest()
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_EquipmentInfoRequest
+                    {
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine("[장비 정보 조회] 현재 장착 중인 장비 정보를 요청했습니다.");
+                    Console.ResetColor();
+                }
+            }
+        }
     }
 }

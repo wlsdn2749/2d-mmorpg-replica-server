@@ -176,6 +176,7 @@
     <Column name="characterId" type="int" notnull="true"/>
     <Column name="slotIndex" type="int" notnull="true"/>
     <Column name="itemId" type="int" notnull="true"/>
+    <Column name="equipmentInstanceId" type="int" notnull="false"/>
     <Column name="count" type="int" notnull="true" default="1"/>
     <Column name="isQuickslot" type="int" notnull="true" default="0"/>
     <Index type="clustered">
@@ -218,7 +219,153 @@
       ]]>
     </Body>
   </Procedure>
-  <!-- 아래 Procedures는 예시임 -->
+  <!-- ===== 장비 시스템 관련 DB ===== -->
+  <Table name="EquipmentInstance">
+    <Column name="equipmentInstanceId" type="int" notnull="true" identity="1,1"/>
+    <Column name="itemId" type="int" notnull="true"/>
+    <Column name="enhancementLevel" type="int" notnull="true"/>
+    <Column name="acquiredAt" type="datetime" notnull="true" default="SYSUTCDATETIME()"/>
+    <Index type="clustered">
+      <PrimaryKey/>
+      <Column name="equipmentInstanceId"/>
+    </Index>
+  </Table>
+  <Procedure name="spGetEquipmentInstance">
+    <Param name="@equipmentInstanceId" type="int"/>
+    <Body>
+      <![CDATA[
+        SET NOCOUNT ON;
+
+        SELECT
+            equipmentInstanceId, itemId, enhancementLevel, acquiredAt
+        FROM [dbo].[EquipmentInstance]
+        WHERE [equipmentInstanceId] = @equipmentInstanceId
+      ]]>
+    </Body>
+  </Procedure>
+  <Procedure name="spInsertEquipmentInstance">
+    <Param name="@itemId" type="int"/>
+    <Param name="@enhancementLevel" type="int"/>
+    <Param name="@newEquipmentInstanceId" type="int" dir="out"/>
+    <Body>
+      <![CDATA[
+       SET NOCOUNT ON;
+       SET XACT_ABORT ON;
+
+       INSERT INTO [dbo].[EquipmentInstance] ([itemId], [enhancementLevel])
+       VALUES (@itemId, @enhancementLevel);
+
+       SET @newEquipmentInstanceId = SCOPE_IDENTITY();
+      ]]>
+    </Body>
+  </Procedure>
+  <Procedure name="spUpdateEquipmentInstance">
+    <Param name="@equipmentInstanceId" type="int"/>
+    <Param name="@enhancementLevel" type="int"/>
+    <Body>
+      <![CDATA[
+       SET NOCOUNT ON;
+       SET XACT_ABORT ON;
+
+       UPDATE [dbo].[EquipmentInstance]
+       SET enhancementLevel = @enhancementLevel
+       WHERE equipmentInstanceId = @equipmentInstanceId;
+      ]]>
+    </Body>
+  </Procedure>
+  <Procedure name="spDeleteEquipmentInstance">
+    <Param name="@equipmentInstanceId" type="int"/>
+    <Body>
+      <![CDATA[
+       SET NOCOUNT ON;
+       SET XACT_ABORT ON;
+
+       DELETE FROM [dbo].[EquipmentInstance]
+       WHERE equipmentInstanceId = @equipmentInstanceId;
+      ]]>
+    </Body>
+  </Procedure>
+  
+  <Table name="CharacterEquipment">
+    <Column name="characterId" type="int" notnull="true"/>
+    <Column name="slotType" type="int" notnull="true"/>
+    <Column name="equipmentInstanceId" type="int" notnull="true"/>
+    <Index type="clustered">
+      <PrimaryKey/>
+      <Column name="characterId"/>
+      <Column name="slotType"/>
+    </Index>
+    <ForeignKey name="FK_CharacterEquipment_characterId_Character_characterId"
+        refTable="Characters"
+        onDelete="CASCADE"
+        onUpdate="NO_ACTION">
+      <Column local="characterId" ref="characterId"/>
+    </ForeignKey>
+    <ForeignKey name="FK_CharacterEquipment_equipmentInstanceId_EquipmentInstance_equipmentInstanceId"
+            refTable="EquipmentInstance"
+            onDelete="NO_ACTION"
+            onUpdate="NO_ACTION">
+      <Column local="equipmentInstanceId" ref="equipmentInstanceId"/>
+    </ForeignKey>
+  </Table>
+  <Procedure name="spGetCharacterEquipment">
+    <Param name="@characterId" type="int"/>
+    <Body>
+      <![CDATA[
+       SET NOCOUNT ON;
+
+       SELECT
+           ce.characterId,
+           ce.slotType,
+           ce.equipmentInstanceId,
+           ei.itemId,
+           ei.enhancementLevel
+       FROM [dbo].[CharacterEquipment] ce
+       INNER JOIN [dbo].[EquipmentInstance] ei
+           ON ce.equipmentInstanceId = ei.equipmentInstanceId
+       WHERE ce.characterId = @characterId
+       ORDER BY ce.slotType;
+      ]]>
+    </Body>
+  </Procedure>
+  <Procedure name="spUpsertCharacterEquipment">
+    <Param name="@characterId" type="int"/>
+    <Param name="@slotType" type="int"/>
+    <Param name="@equipmentInstanceId" type="int"/>
+    <Body>
+      <![CDATA[
+       SET NOCOUNT ON;
+       SET XACT_ABORT ON;
+
+       MERGE [dbo].[CharacterEquipment] AS target
+       USING (SELECT @characterId, @slotType, @equipmentInstanceId) AS source(characterId, slotType, equipmentInstanceId)
+       ON target.characterId = source.characterId AND target.slotType = source.slotType
+       WHEN MATCHED THEN
+           UPDATE SET
+               equipmentInstanceId = source.equipmentInstanceId
+       WHEN NOT MATCHED THEN
+           INSERT (characterId, slotType, equipmentInstanceId)
+           VALUES (source.characterId, source.slotType, source.equipmentInstanceId);
+      ]]>
+    </Body>
+  </Procedure>
+  <Procedure name="spDeleteCharacterEquipment">
+    <Param name="@characterId" type="int"/>
+    <Param name="@slotType" type="int"/>
+    <Body>
+      <![CDATA[
+       SET NOCOUNT ON;
+       SET XACT_ABORT ON;
+
+       DELETE FROM [dbo].[CharacterEquipment]
+       WHERE characterId = @characterId AND slotType = @slotType;
+      ]]>
+    </Body>
+  </Procedure>
+
+  
+
+  <!-- =아래 Procedures는 예시임=== -->
   <Table name="Gold">
     <Column name="id" type="int" notnull="true" identity="1,1"/>
     <Column name="gold" type="int" notnull="false"/>
@@ -254,12 +401,13 @@
     <Body>
       <![CDATA[
         SET NOCOUNT ON;
-        
-        SELECT 
+
+        SELECT
             slotIndex,
             itemId,
             count,
-            isQuickslot
+            isQuickslot,
+            equipmentInstanceId
         FROM [dbo].[CharacterInventory]
         WHERE characterId = @characterId
         ORDER BY slotIndex;
@@ -272,22 +420,24 @@
     <Param name="@itemId" type="int"/>
     <Param name="@count" type="int"/>
     <Param name="@isQuickslot" type="int"/>
+    <Param name="@equipmentInstanceId" type="int"/>
     <Body>
       <![CDATA[
         SET NOCOUNT ON;
         SET XACT_ABORT ON;
-        
+
         MERGE [dbo].[CharacterInventory] AS target
-        USING (SELECT @characterId, @slotIndex, @itemId, @count, @isQuickslot) AS source(characterId, slotIndex, itemId, count, isQuickslot)
+        USING (SELECT @characterId, @slotIndex, @itemId, @count, @isQuickslot, @equipmentInstanceId) AS source(characterId, slotIndex, itemId, count, isQuickslot, equipmentInstanceId)
         ON target.characterId = source.characterId AND target.slotIndex = source.slotIndex
         WHEN MATCHED THEN
-            UPDATE SET 
+            UPDATE SET
                 itemId = source.itemId,
                 count = source.count,
-                isQuickslot = source.isQuickslot
+                isQuickslot = source.isQuickslot,
+                equipmentInstanceId = source.equipmentInstanceId
         WHEN NOT MATCHED THEN
-            INSERT (characterId, slotIndex, itemId, count, isQuickslot)
-            VALUES (source.characterId, source.slotIndex, source.itemId, source.count, source.isQuickslot);
+            INSERT (characterId, slotIndex, itemId, count, isQuickslot, equipmentInstanceId)
+            VALUES (source.characterId, source.slotIndex, source.itemId, source.count, source.isQuickslot, source.equipmentInstanceId);
       ]]>
     </Body>
   </Procedure>

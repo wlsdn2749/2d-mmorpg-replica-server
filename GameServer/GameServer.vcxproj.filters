@@ -240,6 +240,18 @@
     <ClCompile Include="DropDataParser.cpp">
       <Filter>DataParser</Filter>
     </ClCompile>
+    <ClCompile Include="EquipmentSystem.cpp">
+      <Filter>GameContents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="EquipmentRepository.cpp">
+      <Filter>Repository</Filter>
+    </ClCompile>
+    <ClCompile Include="EquipmentManager.cpp">
+      <Filter>GameContents\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="EquipmentDataParser.cpp">
+      <Filter>DataParser</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -428,6 +440,21 @@
     <ClInclude Include="DropDataParser.h">
       <Filter>DataParser</Filter>
     </ClInclude>
+    <ClInclude Include="EquipmentCore.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="EquipmentSystem.h">
+      <Filter>GameContents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="EquipmentRepository.h">
+      <Filter>Repository</Filter>
+    </ClInclude>
+    <ClInclude Include="EquipmentManager.h">
+      <Filter>GameContents\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="EquipmentDataParser.h">
+      <Filter>DataParser</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="appsettings.json">
@@ -461,6 +488,9 @@
       <Filter>Resources\Data</Filter>
     </None>
     <None Include="Resources\Data\SpawnPoint_data.json">
+      <Filter>Resources\Data</Filter>
+    </None>
+    <None Include="Resources\Data\Equipment_data.json">
       <Filter>Resources\Data</Filter>
     </None>
   </ItemGroup>

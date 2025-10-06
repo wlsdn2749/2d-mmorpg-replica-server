@@ -71,6 +71,13 @@ enum MsgId
 	S_PARTY_LIST = 63;
 	C_PARTY_JOIN_REQUEST_LIST = 64;
 	S_PARTY_JOIN_REQUEST_LIST = 65;
+	C_EQUIP_ITEM_REQUEST = 66;
+	S_EQUIP_ITEM_REPLY = 67;
+	C_UNEQUIP_ITEM_REQUEST = 68;
+	S_UNEQUIP_ITEM_REPLY = 69;
+	C_EQUIPMENT_INFO_REQUEST = 70;
+	S_EQUIPMENT_INFO_REPLY = 71;
+	S_BROADCAST_PLAYER_EQUIPMENT = 72;
 }
 
 // 클라 -> 게임 서버 jwt 로그인 인증 (0)
@@ -499,6 +506,57 @@ message S_PartyJoinRequestList
     repeated PartyJoinRequesterInfo requesters = 2;
 }
 
+// (66) 클라 -> 서버 : 장비 장착 요청
+message C_EquipItemRequest
+{
+	int32 inventorySlotIndex = 1; // 인벤토리의 아이템 위치 
+}
+
+// (67) 서버 -> 클라 : 장비 장착 응답
+message S_EquipItemReply
+{
+	bool success = 1;
+	string errorMessage = 2;
+	EEquipmentSlotType slotType = 3; // 어느 부위에 장착됬는지
+	InventorySlotInfo changedSlotInfo = 4; // 인벤토리 변경 사항
+	InventorySlotInfo returnedEquipmentSlot = 5; // 기존 장비가 인벤토리로 돌아온 경우
+}
+
+// (68) 클라 -> 서버 : 장비 해제 요청
+message C_UnequipItemRequest
+{
+	EEquipmentSlotType slotType = 1; // 장착 부위
+}
+
+// (69) 서버 -> 클라 : 장비 해제 응답
+message S_UnequipItemReply
+{
+	bool success = 1;
+	string errorMessage = 2;
+	InventorySlotInfo returnedEquipmentSlot = 3; // 해제된 장비가 인벤토리로
+	EEquipmentSlotType slotType = 4;
+}
+
+// (70) 클라 -> 서버 : 장비 정보 요청
+message C_EquipmentInfoRequest
+{
+	// 필요없음
+}
+
+// (71) 서버 -> 클라 : 장비 정보 응답
+message S_EquipmentInfoReply
+{
+	repeated EquipmentSlotInfo equipments = 1;
+}
+
+// (72) 서버 -> 클라 : 장비 상태 브로드캐스트
+message S_BroadcastPlayerEquipment
+{
+	int32 playerId = 1;
+	EEquipmentSlotType slotType = 2;
+	int32 itemId = 3; // 0이면 해제 아니면 장착
+}
+
 enum ELoginResult
 {
     SUCCESS = 0;
@@ -591,6 +649,13 @@ enum EPartyUpdateType
 	PARTY_UPDATE_DISBANDED = 3;
 }
 
+enum EEquipmentSlotType
+{
+	EQUIPMENT_WEAPON = 0;
+	EQUIPMENT_HELMET = 1;
+	EQUIPMENT_ARMOR = 2;
+	EQUIPMENT_PANTS = 3;
+}
 
 message Vector2Info
 {
@@ -629,6 +694,7 @@ message InventorySlotInfo
 	int32 itemId = 2;
 	int32 count = 3;
 	bool isQuickslot = 4;
+	int32 equipmentInstanceId = 5;
 }
 
 message MonsterInfo
@@ -692,4 +758,12 @@ message PartyJoinRequesterInfo
     int32 playerId = 1;
     string playerName = 2;
     int32 level = 3;
+}
+
+message EquipmentSlotInfo
+{
+	EEquipmentSlotType slotType = 1;
+    int32 itemId = 2;  // 0이면 빈 슬롯
+    int32 equipmentInstanceId = 3;
+    int32 enhancementLevel = 4;
 }
