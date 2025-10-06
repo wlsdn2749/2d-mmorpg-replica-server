@@ -29,20 +29,22 @@ struct ItemSlot {
     int itemId = 0;
     int count = 0;
     bool isQuickSlot = false;
+    int equipmentInstanceId = 0; // For equipment items only
 
     ItemSlot() = default;
-    ItemSlot(int slot, int id, int cnt, bool quick = false)
-        : slotIndex(slot), itemId(id), count(cnt), isQuickSlot(quick) {}
+    ItemSlot(int slot, int id, int cnt, bool quick = false, int equipInstId = 0)
+        : slotIndex(slot), itemId(id), count(cnt), isQuickSlot(quick), equipmentInstanceId(equipInstId) {}
 
     // 비어있는 슬롯인지 확인
     bool IsEmpty() const { return itemId == 0 || count <= 0; }
-    
+
     // 슬롯 초기화
-    void Clear() { 
-        slotIndex = -1; 
-        itemId = 0; 
-        count = 0; 
-        isQuickSlot = false; 
+    void Clear() {
+        slotIndex = -1;
+        itemId = 0;
+        count = 0;
+        isQuickSlot = false;
+        equipmentInstanceId = 0;
     }
 
     // 프로토콜 메시지로 변환
@@ -52,12 +54,13 @@ struct ItemSlot {
         slotInfo.set_itemid(itemId);
         slotInfo.set_count(count);
         slotInfo.set_isquickslot(isQuickSlot);
+        slotInfo.set_equipmentinstanceid(equipmentInstanceId);
         return slotInfo;
     }
 
     // 프로토콜 메시지에서 변환
     static ItemSlot FromProtocolSlotInfo(const Protocol::InventorySlotInfo& info) {
-        return ItemSlot(info.slotindex(), info.itemid(), info.count(), info.isquickslot());
+        return ItemSlot(info.slotindex(), info.itemid(), info.count(), info.isquickslot(), info.equipmentinstanceid());
     }
 };
 

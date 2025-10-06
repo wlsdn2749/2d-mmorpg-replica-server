@@ -42,20 +42,24 @@ struct EquipmentSlot
 {
 	EquipmentSlotType	slotType {};
 	int					equipmentInstanceId {}; // 0이면 비어있음
-	
+	int					itemId {}; // 장착된 아이템 ID (빠른 접근용)
+	int					enhancementLevel {}; // 강화 레벨 (캐시)
+
 	EquipmentSlot() = default;
-	EquipmentSlot(EquipmentSlotType type, int instanceId = 0)
-		: slotType(type), equipmentInstanceId(instanceId)
+	EquipmentSlot(EquipmentSlotType type, int instanceId = 0, int itemId = 0, int enhancementLevel = 0)
+		: slotType(type), equipmentInstanceId(instanceId), itemId(itemId), enhancementLevel(enhancementLevel)
 	{
 	}
 
 	// 비어있는 슬롯인지 확인
-	bool IsEmpty() const { return equipmentInstanceId == 0; }
+	bool IsEmpty() const { return itemId == 0; }
 
 	// 슬롯 초기화
 	void Clear()
 	{
 		equipmentInstanceId = 0;
+		itemId = 0;
+		enhancementLevel = 0;
 	}
 };
 

@@ -19,7 +19,7 @@ void EquipmentSystem::Clear()
 	}
 }
 
-EEquipItemResult EquipmentSystem::EquipItem(Protocol::EEquipmentSlotType slotType, int equipmentInstanceId)
+EEquipItemResult EquipmentSystem::EquipItem(Protocol::EEquipmentSlotType slotType, int itemId, int equipmentInstanceId, int enhancementLevel)
 {
 	int slotIndex = static_cast<int>(slotType);
 
@@ -31,10 +31,12 @@ EEquipItemResult EquipmentSystem::EquipItem(Protocol::EEquipmentSlotType slotTyp
 
 	// 새 장비 장착
 	_slots[slotIndex].slotType = slotType;
+	_slots[slotIndex].itemId = itemId;
 	_slots[slotIndex].equipmentInstanceId = equipmentInstanceId;
+	_slots[slotIndex].enhancementLevel = enhancementLevel;
 
 	return EEquipItemResult::Success;
- }
+}
 
 void EquipmentSystem::UnequipItem(Protocol::EEquipmentSlotType slotType)
 {

@@ -643,5 +643,157 @@ namespace Packet
 
             Console.ResetColor();
         }
+
+        internal static void HANDLE_S_EquipItemReply(PacketSession session, S_EquipItemReply reply)
+        {
+            Console.ForegroundColor = reply.Success ? ConsoleColor.Green : ConsoleColor.Red;
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+            Console.WriteLine($"[S_EquipItemReply] {(reply.Success ? "장비 장착 성공!" : "장비 장착 실패!")}");
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+
+            if (reply.Success)
+            {
+                string slotTypeName = reply.SlotType switch
+                {
+                    EEquipmentSlotType.EquipmentWeapon => "무기",
+                    EEquipmentSlotType.EquipmentHelmet => "투구",
+                    EEquipmentSlotType.EquipmentArmor => "갑옷",
+                    EEquipmentSlotType.EquipmentPants => "바지",
+                    _ => "알 수 없음"
+                };
+
+                Console.WriteLine($"장착 부위: {slotTypeName} (슬롯 타입: {(int)reply.SlotType})");
+
+                if (reply.ChangedSlotInfo != null)
+                {
+                    Console.WriteLine($"\n인벤토리 변경 사항:");
+                    Console.WriteLine($"  슬롯 인덱스: {reply.ChangedSlotInfo.SlotIndex}");
+                    Console.WriteLine($"  아이템 ID: {reply.ChangedSlotInfo.ItemId}");
+                    Console.WriteLine($"  수량: {reply.ChangedSlotInfo.Count}");
+                }
+
+                if (reply.ReturnedEquipmentSlot != null && reply.ReturnedEquipmentSlot.ItemId > 0)
+                {
+                    Console.WriteLine($"\n기존 장비가 인벤토리로 복귀:");
+                    Console.WriteLine($"  슬롯 인덱스: {reply.ReturnedEquipmentSlot.SlotIndex}");
+                    Console.WriteLine($"  아이템 ID: {reply.ReturnedEquipmentSlot.ItemId}");
+                }
+
+                Console.WriteLine($"\n장비 정보 조회('e' 키)로 전체 장비를 확인해보세요!");
+            }
+            else
+            {
+                Console.WriteLine($"오류: {reply.ErrorMessage}");
+            }
+
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+            Console.ResetColor();
+        }
+
+        internal static void HANDLE_S_UnequipItemReply(PacketSession session, S_UnequipItemReply reply)
+        {
+            Console.ForegroundColor = reply.Success ? ConsoleColor.Green : ConsoleColor.Red;
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+            Console.WriteLine($"[S_UnequipItemReply] {(reply.Success ? "장비 해제 성공!" : "장비 해제 실패!")}");
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+
+            if (reply.Success)
+            {
+                string slotTypeName = reply.SlotType switch
+                {
+                    EEquipmentSlotType.EquipmentWeapon => "무기",
+                    EEquipmentSlotType.EquipmentHelmet => "투구",
+                    EEquipmentSlotType.EquipmentArmor => "갑옷",
+                    EEquipmentSlotType.EquipmentPants => "바지",
+                    _ => "알 수 없음"
+                };
+
+                Console.WriteLine($"해제된 부위: {slotTypeName} (슬롯 타입: {(int)reply.SlotType})");
+
+                if (reply.ReturnedEquipmentSlot != null)
+                {
+                    Console.WriteLine($"\n장비가 인벤토리로 복귀:");
+                    Console.WriteLine($"  슬롯 인덱스: {reply.ReturnedEquipmentSlot.SlotIndex}");
+                    Console.WriteLine($"  아이템 ID: {reply.ReturnedEquipmentSlot.ItemId}");
+                    Console.WriteLine($"  수량: {reply.ReturnedEquipmentSlot.Count}");
+                }
+
+                Console.WriteLine($"\n인벤토리 조회('i' 키)로 인벤토리를 확인해보세요!");
+            }
+            else
+            {
+                Console.WriteLine($"오류: {reply.ErrorMessage}");
+            }
+
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+            Console.ResetColor();
+        }
+
+        internal static void HANDLE_S_EquipmentInfoReply(PacketSession session, S_EquipmentInfoReply reply)
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("\n════════════════════════════════════════════════════════════════════════");
+            Console.WriteLine("[S_EquipmentInfoReply] 장비 정보");
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+
+            if (reply.Equipments.Count == 0)
+            {
+                Console.WriteLine("현재 착용 중인 장비가 없습니다.");
+            }
+            else
+            {
+                foreach (var equipment in reply.Equipments)
+                {
+                    string slotTypeName = equipment.SlotType switch
+                    {
+                        EEquipmentSlotType.EquipmentWeapon => "무기",
+                        EEquipmentSlotType.EquipmentHelmet => "투구",
+                        EEquipmentSlotType.EquipmentArmor => "갑옷",
+                        EEquipmentSlotType.EquipmentPants => "바지",
+                        _ => "알 수 없음"
+                    };
+
+                    if (equipment.ItemId > 0)
+                    {
+                        Console.WriteLine($"\n{slotTypeName} 슬롯:");
+                        Console.WriteLine($"  아이템 ID: {equipment.ItemId}");
+                        Console.WriteLine($"  장비 인스턴스 ID: {equipment.EquipmentInstanceId}");
+                        Console.WriteLine($"  강화 레벨: +{equipment.EnhancementLevel}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"\n{slotTypeName} 슬롯: [비어있음]");
+                    }
+                }
+            }
+
+            Console.WriteLine("════════════════════════════════════════════════════════════════════════");
+            Console.ResetColor();
+        }
+
+        internal static void HANDLE_S_BroadcastPlayerEquipment(PacketSession session, S_BroadcastPlayerEquipment equipment)
+        {
+            string slotTypeName = equipment.SlotType switch
+            {
+                EEquipmentSlotType.EquipmentWeapon => "무기",
+                EEquipmentSlotType.EquipmentHelmet => "투구",
+                EEquipmentSlotType.EquipmentArmor => "갑옷",
+                EEquipmentSlotType.EquipmentPants => "바지",
+                _ => "알 수 없음"
+            };
+
+            string meTag = (equipment.PlayerId == NetDebug.MyPlayerId && NetDebug.MyPlayerId >= 0) ? " (나)" : "";
+            string action = equipment.ItemId > 0 ? $"장착 (아이템 ID: {equipment.ItemId})" : "해제";
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"[S_BroadcastPlayerEquipment] 플레이어 {equipment.PlayerId}{meTag}가 {slotTypeName}을(를) {action}");
+            Console.ResetColor();
+        }
+
+        internal static void HANDLE_S_UnEquipItemReply(PacketSession session, S_UnequipItemReply reply)
+        {
+            // Duplicate handler - redirects to HANDLE_S_UnequipItemReply
+            HANDLE_S_UnequipItemReply(session, reply);
+        }
     }
 }

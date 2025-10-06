@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "TypeCore.h"       // EntityId, EntityKind
 #include "GeometryCore.h"   // Pos2, Dir
 #include "EntityCore.h"     // EntityCore
@@ -6,6 +6,9 @@
 #include "InventorySystem.h"
 #include "InventoryRepository.h"
 #include "ItemManager.h"
+
+#include "EquipmentSystem.h"
+#include "EquipmentRepository.h"
 class Room; // 전방 선언
 
 struct PendingRoomChange {
@@ -20,9 +23,9 @@ class Player
 public:
 	bool operator==(const Player& rhs) const { return this->playerId == rhs.playerId; }
 	bool operator!=(const Player& rhs) const { return this->playerId != rhs.playerId; }
-/*----------------------------
-	Player State
-----------------------------*/
+	/*----------------------------
+		Player State
+	----------------------------*/
 public:
 	enum class PlayerState : uint8
 	{
@@ -33,25 +36,25 @@ public:
 	PlayerState	GetPlayerState() const { return _playerState.load(std::memory_order_acquire); }
 	void		SetPlayerState(PlayerState s) { _playerState.store(s, std::memory_order_release); }
 
-	bool		IsDead() const {return _playerState == Player::PlayerState::Dead;}
+	bool		IsDead() const { return _playerState == Player::PlayerState::Dead; }
 
 private:
 	Atomic<PlayerState> _playerState{ PlayerState::Alive };
 
 
-/*----------------------------
-	Player Fixed Data
-----------------------------*/
+	/*----------------------------
+		Player Fixed Data
+	----------------------------*/
 
 public:
-	EntityId			playerId { 0 }; // DB에서 CharacterId임
+	EntityId			playerId{ 0 }; // DB에서 CharacterId임
 	string				username;
 	Protocol::EGender	gender{ 0 }; // gender
 	Protocol::ERegion	region{ 0 }; // region
 
-/*------------------------------------------
-	Player Move Data (Core) / (위치, 방향)
-------------------------------------------*/
+	/*------------------------------------------
+		Player Move Data (Core) / (위치, 방향)
+	------------------------------------------*/
 public:
 	EntityCore core{
 		/*id   */ 0,
@@ -60,49 +63,53 @@ public:
 		/*dir  */ Protocol::EDirection::DIR_DOWN
 	};
 
-	inline int PosX() const {return core.pos.x;}
-	inline int PosY() const {return core.pos.y;}
-	inline Protocol::EDirection Dir() const {return core.dir; }
+	inline int PosX() const { return core.pos.x; }
+	inline int PosY() const { return core.pos.y; }
+	inline Protocol::EDirection Dir() const { return core.dir; }
 	inline Pos2 GetPos() const { return { core.pos.x, core.pos.y }; }
 	inline void SetPos(int x, int y) { core.pos = { x,y }; }
 	inline void SetDir(Protocol::EDirection d) { core.dir = d; }
-	inline void ResetPos() { core.pos.x = 0, core.pos.y = 0;}
-/*----------------------------------------
-	Player Room 데이터 
-----------------------------------------*/
+	inline void ResetPos() { core.pos.x = 0, core.pos.y = 0; }
+	/*----------------------------------------
+		Player Room 데이터
+	----------------------------------------*/
 
 public:
 	inline void SetLastRoomId(int lastRoomId) { _lastRoomId = lastRoomId; }
-	inline int LastRoomId() const {return _lastRoomId; } 
+	inline int LastRoomId() const { return _lastRoomId; }
 
 private:
-	int _lastRoomId { 0 };
+	int _lastRoomId{ 0 };
 
-/*-------------------------------
-	HP 등 전투 수치 + 레벨
--------------------------------*/
+	/*-------------------------------
+		HP 등 전투 수치 + 레벨
+	-------------------------------*/
 public:
-	inline int MaxHp() const {return _maxHp;}
+	inline int MaxHp() const { return _maxHp; }
 	inline int Hp() const { return _hp; }
 	inline int Atk() const { return _atk; }
-	inline int Def() const {return _def; }
-	inline int Level() const {return _level; }
-	inline int Exp() const {return _curExp; }
-	inline int MaxExp() const {return _maxExp;}
-	inline int Money() const {return _money; };
+	inline int Def() const { return _def; }
+	inline int Level() const { return _level; }
+	inline int Exp() const { return _curExp; }
+	inline int MaxExp() const { return _maxExp; }
+	inline int Money() const { return _money; };
 
-	inline void SetMaxHp(int maxHp) {_maxHp = maxHp;}
-	inline void SetHp(int hp) {_hp = hp; }
-	inline void SetAtk(int atk) {_atk = atk;}
-	inline void SetDef(int def) {_def = def;}
-	inline void SetLevel(int level) {_level = level;}
-	inline void SetExp(int exp) {_curExp = exp;}
-	inline void SetMoney(int money) {_money = money;}
-	inline void SetMaxExp(int maxExp) {_maxExp = maxExp;}
+	inline void SetMaxHp(int maxHp) { _maxHp = maxHp; }
+	inline void SetHp(int hp) { _hp = hp; }
+	inline void SetAtk(int atk) { _atk = atk; }
+	inline void SetDef(int def) { _def = def; }
+	inline void SetLevel(int level) { _level = level; }
+	inline void SetExp(int exp) { _curExp = exp; }
+	inline void SetMoney(int money) { _money = money; }
+	inline void SetMaxExp(int maxExp) { _maxExp = maxExp; }
 
-	inline void AddMoney(int money) {_money += money; }
-	inline void AddLevel(int level = 1) {_level += level; }
-	inline void AddExp(int exp) 
+	inline void SetBaseMaxHp(int baseMaxHp) { _baseMaxHp = baseMaxHp; }
+	inline void SetBaseAtk(int baseAtk) { _baseAtk = baseAtk; }
+	inline void SetBaseDef(int baseDef) { _baseDef = baseDef; }
+
+	inline void AddMoney(int money) { _money += money; }
+	inline void AddLevel(int level = 1) { _level += level; }
+	inline void AddExp(int exp)
 	{
 		// 나중에 경험치 시스템으로 분할
 		_curExp += exp;
@@ -126,53 +133,86 @@ public:
 	}
 
 	std::unique_ptr<Protocol::PlayerStatInfo> GetPlayerStatInfo() const;
-	
+
+	// 장비 스탯 재계산
+	void RecalculateStats();
 
 public: // TODO 나중에 private로 수정 필
-	int _hp { 30 };
-	int _maxHp { 30 };
-	int _atk { 10 };
-	int _def { 5 };
-	int _level { 1 };
-	int _curExp { 0 };
-	int _maxExp { 500 };
-	int _money { 0 };
+	// 기본 스탯 (레벨업 등으로 얻는 순수 스탯)
+	int _baseMaxHp{ 30 };
+	int _baseAtk{ 10 };
+	int _baseDef{ 5 };
 
-/*--------------------------
-	Level System Component
---------------------------*/
+	// 최종 스탯 (기본 + 장비 보너스)
+	int _hp{ 30 };
+	int _maxHp{ 30 };
+	int _atk{ 10 };
+	int _def{ 5 };
+
+	int _level{ 1 };
+	int _curExp{ 0 };
+	int _maxExp{ 500 };
+	int _money{ 0 };
+
+	/*--------------------------
+		Level System Component
+	--------------------------*/
 public:
 
 
-/*---------------------------------
-	Inventory System
-----------------------------------*/
+	/*---------------------------------
+		Inventory System
+	----------------------------------*/
 public:
 	// 인벤토리 접근자
 	InventorySystem& GetInventory() { return _inventory; }
 	const InventorySystem& GetInventory() const { return _inventory; }
-	
+
 	// 인벤토리 DB 연동
 	std::future<void> LoadInventoryFromDB();
 	std::future<void> SaveInventoryToDB();
 
 	// 인벤토리 편의 메서드
-	EAddItemResult AddItem(int itemId, int count) {
-		auto result = _inventory.AddItem(itemId, count);
+	EAddItemResult AddItem(int itemId, int count, int equipmentInstanceId = 0) {
+		// 1. ItemManager에서 아이템 타입 확인
+		const ItemData* itemData = ItemManager::Instance().GetItemData(itemId);
+		if (!itemData) return EAddItemResult::InvalidItem;
+
+		int finalEquipmentInstanceId = equipmentInstanceId;
+
+		// 2. 장비 타입이고 equipmentInstanceId == 0이면 새로 생성
+		if (itemData->itemType == Protocol::EItemType::ITEM_TYPE_EQUIPMENT && equipmentInstanceId == 0)
+		{
+			// DB에 EquipmentInstance 생성
+			auto future = EquipmentRepository::CreateEquipmentInstanceAsync(itemId, 0); // enhancementLevel = 0
+			finalEquipmentInstanceId = future.get(); // 생성된 ID 받기
+		}
+
+		// 3. 인벤토리에 추가 (equipmentInstanceId 포함)
+		auto result = _inventory.AddItem(itemId, count, finalEquipmentInstanceId);
 		if (result == EAddItemResult::Success) {
 			SaveChangedSlotsToDB();
 		}
 		return result;
 	}
 
-	ERemoveItemResult RemoveItem(int slotIndex, int count) {
+	ERemoveItemResult RemoveItem(int slotIndex, int count, bool deleteEquipmentInstance = true) {
+		// 제거 전에 장비 인스턴스 ID 확인
+		const ItemSlot& slot = _inventory.GetSlot(slotIndex);
+		int equipmentInstanceId = slot.equipmentInstanceId;
+		int remainingCount = slot.count - count;
+
 		auto result = _inventory.RemoveItem(slotIndex, count);
 		if (result == ERemoveItemResult::Success) {
+			// 슬롯이 완전히 비워졌고 장비 인스턴스가 있었다면 DB에서 삭제
+			if (deleteEquipmentInstance && remainingCount <= 0 && equipmentInstanceId > 0) {
+				EquipmentRepository::DeleteEquipmentInstanceAsync(equipmentInstanceId);
+			}
 			SaveSlotToDB(slotIndex);
 		}
 		return result;
 	}
-	
+
 	EUseItemResult UseItem(int slotIndex) {
 		auto result = _inventory.UseItem(slotIndex);
 		if (result == EUseItemResult::Success) {
@@ -191,16 +231,17 @@ private:
 	void SaveSlotToDB(int slotIndex) {
 		int characterId = static_cast<int>(playerId);
 		const ItemSlot& slot = _inventory.GetSlot(slotIndex);
-		
+
 		if (slot.IsEmpty()) {
 			// 빈 슬롯이면 DB에서 삭제
 			InventoryRepository::DeleteInventorySlotAsync(characterId, slotIndex);
-		} else {
+		}
+		else {
 			// 슬롯에 아이템이 있으면 저장
 			InventoryRepository::SaveInventorySlotAsync(characterId, slot);
 		}
 	}
-	
+
 	// AddItem은 여러 슬롯에 영향을 줄 수 있으므로 변경된 슬롯들만 저장
 	void SaveChangedSlotsToDB() {
 		// AddItem 구현이 복잡하므로 현재는 전체 저장
@@ -212,17 +253,17 @@ private:
 	InventorySystem _inventory;
 
 
-/*---------------------------------
-	DB Packer
-----------------------------------*/
+	/*---------------------------------
+		DB Packer
+	----------------------------------*/
 public:
 	void GetCharacterStat(CharacterRepository::CharacterStat& outStat) const;
 	void LoadCharacterStat(const CharacterRepository::CharacterStat& stat);
 	std::future<void> SaveCharacterToDB();
 
-/*---------------------------------
-	Player Room Transitioning Data
----------------------------------*/
+	/*---------------------------------
+		Player Room Transitioning Data
+	---------------------------------*/
 public:
 	int NextTransitionId() { return ++_lastTransitionId; }
 
@@ -246,9 +287,9 @@ private:
 	bool _transferring = false;
 	PendingRoomChange _pending;
 
-/*----------------------------
-	Player Runtime Links
-----------------------------*/
+	/*----------------------------
+		Player Runtime Links
+	----------------------------*/
 public:
 	// Room은 Player보다 오래 살아 있을 수 있으므로 weak_ptr
 	std::weak_ptr<Room> room;
@@ -257,19 +298,76 @@ public:
 	std::weak_ptr<GameSession> ownerSession;
 
 public:
-	void SetRoom(const shared_ptr<Room>& r) {room = r;}
-	shared_ptr<Room> GetRoom() const		{return room.lock(); }
+	void SetRoom(const shared_ptr<Room>& r) { room = r; }
+	shared_ptr<Room> GetRoom() const { return room.lock(); }
 
-/*-----------------------
-	Party Data
------------------------*/
+	/*-----------------------
+		Party Data
+	-----------------------*/
 public:
 	inline int32 GetPartyId() const { return _partyId; }
-	inline void SetPartyId(int32 partyId) {_partyId = partyId;}
-	inline bool IsInParty() const {return _partyId != 0;}
+	inline void SetPartyId(int32 partyId) { _partyId = partyId; }
+	inline bool IsInParty() const { return _partyId != 0; }
 
 private:
 	int32 _partyId = 0; // 파티 ID (0 = 파티 없음)
+
+	/*-----------------------
+		Equipment Data
+	-----------------------*/
+public:
+	// 장비 접근자
+	EquipmentSystem& GetEquipment() { return _equipment; }
+	const EquipmentSystem& GetEquipment() const { return _equipment; }
+
+	// 장비 DB 연동
+	std::future<void> LoadEquipmentFromDB();
+	std::future<void> SaveEquipmentToDB();
+
+	// 장비 편의 메서드
+	EEquipItemResult EquipItem(Protocol::EEquipmentSlotType slotType, int itemId, int equipmentInstanceId = 0, int enhancementLevel = 0) {
+		auto result = _equipment.EquipItem(slotType, itemId, equipmentInstanceId, enhancementLevel);
+		if (result == EEquipItemResult::Success) {
+			RecalculateStats();
+			SaveEquipmentSlotToDB(slotType);
+		}
+		return result;
+	}
+
+	void UnequipItem(Protocol::EEquipmentSlotType slotType) {
+		_equipment.UnequipItem(slotType);
+		RecalculateStats();
+		SaveEquipmentSlotToDB(slotType);
+	}
+
+	// 장착된 아이템 정보를 반환
+	int GetEquipmentInstanceIdFromSlot(Protocol::EEquipmentSlotType slotType) const {
+		const EquipmentSlot& slot = _equipment.GetEquipmentSlot(slotType);
+		return slot.IsEmpty() ? 0 : slot.equipmentInstanceId;
+	}
+
+	int GetEquipmentItemIdFromSlot(Protocol::EEquipmentSlotType slotType) const {
+		const EquipmentSlot& slot = _equipment.GetEquipmentSlot(slotType);
+		return slot.IsEmpty() ? 0 : slot.itemId;
+	}
+
+private:
+	void SaveEquipmentSlotToDB(Protocol::EEquipmentSlotType slotType) {
+		EntityId characterId = playerId;
+		const EquipmentSlot& slot = _equipment.GetEquipmentSlot(slotType);
+
+		if (slot.IsEmpty()) {
+			// 빈 슬롯이면 DB에서 삭제
+			EquipmentRepository::DeleteCharacterEquipmentAsync(characterId, slotType);
+		}
+		else {
+			// 슬롯에 장비가 있으면 저장
+			EquipmentRepository::UpsertCharacterEquipmentAsync(characterId, slotType, slot.equipmentInstanceId);
+		}
+	}
+
+private:
+	EquipmentSystem _equipment;
 
 };
 

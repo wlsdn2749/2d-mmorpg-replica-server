@@ -37,6 +37,7 @@
 
 #include "ShardBoot.h"
 #include "ItemManager.h"
+#include "EquipmentManager.h"
 
 #include "DropManager.h"
 
@@ -78,6 +79,7 @@ int main()
 
 	// ItemManager 초기화 (DB 로딩 포함)
 	ItemManager::Instance().Initialize();
+	EquipmentManager::Instance().Initialize();
 	DropManager::Instance().Initialize();
 
 	// 샤드 기반 워커 로직

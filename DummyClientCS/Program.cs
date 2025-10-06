@@ -70,6 +70,9 @@ class Program
             Console.WriteLine("[j] 리더: 가입 요청 리스트 조회");
             Console.WriteLine("[m] 리더: 가입 요청 수락");
             Console.WriteLine("[k] 리더: 가입 요청 거절");
+            Console.WriteLine("\n===== 장비 시스템 테스트 =====");
+            Console.WriteLine("[e] 장비 정보 조회");
+            Console.WriteLine("[h] 장비 관리 (장착/해제)");
             Console.WriteLine("\n===== 종료 로직 테스트 =====");
             Console.WriteLine("[x] 룸에서 나가기 (캐릭터 변경)");
             Console.WriteLine("[l] 로그아웃 테스트 (JWT 인증 상태로 복귀)");
@@ -637,6 +640,76 @@ class Program
                     }
 
                     await SessionManager.Instance.SendPartyJoinResponseWithPid(rejectResponsePartyId, rejectRequesterPid, false);
+                    break;
+                case "e":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
+                        break;
+                    }
+
+                    await SessionManager.Instance.SendEquipmentInfoRequest();
+                    break;
+                case "h":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
+                        break;
+                    }
+
+                    Console.WriteLine("\n===== 장비 관리 =====");
+                    Console.WriteLine("[1] 장비 장착 (인벤토리 슬롯 입력)");
+                    Console.WriteLine("[2] 장비 해제 (슬롯 타입 입력)");
+                    Console.Write("선택: ");
+                    string? equipChoice = Console.ReadLine();
+
+                    if (equipChoice == "1")
+                    {
+                        Console.Write("장착할 인벤토리 슬롯 번호 (0~29): ");
+                        string? equipSlotInput = Console.ReadLine();
+
+                        if (string.IsNullOrWhiteSpace(equipSlotInput) || !Int32.TryParse(equipSlotInput, out int equipSlot))
+                        {
+                            Console.WriteLine("올바른 슬롯 번호를 입력해주세요!");
+                            break;
+                        }
+
+                        if (equipSlot < 0 || equipSlot > 29)
+                        {
+                            Console.WriteLine("슬롯 번호는 0~29 사이여야 합니다!");
+                            break;
+                        }
+
+                        await SessionManager.Instance.SendEquipItemRequest(equipSlot);
+                    }
+                    else if (equipChoice == "2")
+                    {
+                        Console.WriteLine("슬롯 타입 선택:");
+                        Console.WriteLine("  [0] 무기");
+                        Console.WriteLine("  [1] 투구");
+                        Console.WriteLine("  [2] 갑옷");
+                        Console.WriteLine("  [3] 바지");
+                        Console.Write("선택: ");
+                        string? slotTypeInput = Console.ReadLine();
+
+                        if (string.IsNullOrWhiteSpace(slotTypeInput) || !Int32.TryParse(slotTypeInput, out int slotType))
+                        {
+                            Console.WriteLine("올바른 슬롯 타입을 입력해주세요!");
+                            break;
+                        }
+
+                        if (slotType < 0 || slotType > 3)
+                        {
+                            Console.WriteLine("슬롯 타입은 0~3 사이여야 합니다!");
+                            break;
+                        }
+
+                        await SessionManager.Instance.SendUnequipItemRequest(slotType);
+                    }
+                    else
+                    {
+                        Console.WriteLine("잘못된 선택입니다.");
+                    }
                     break;
                 case "x":
                     if (!_isInGame)

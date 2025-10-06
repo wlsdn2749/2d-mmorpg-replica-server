@@ -73,6 +73,13 @@ enum : uint16
 	PKT_S_PartyList = 63,
 	PKT_C_PartyJoinRequestList = 64,
 	PKT_S_PartyJoinRequestList = 65,
+	PKT_C_EquipItemRequest = 66,
+	PKT_S_EquipItemReply = 67,
+	PKT_C_UnequipItemRequest = 68,
+	PKT_S_UnequipItemReply = 69,
+	PKT_C_EquipmentInfoRequest = 70,
+	PKT_S_EquipmentInfoReply = 71,
+	PKT_S_BroadcastPlayerEquipment = 72,
 
 };
 
@@ -103,6 +110,9 @@ bool Handle_C_PartyJoinRequest(PacketSessionRef& session, Protocol::C_PartyJoinR
 bool Handle_C_PartyJoinResponse(PacketSessionRef& session, Protocol::C_PartyJoinResponse& pkt);
 bool Handle_C_PartyList(PacketSessionRef& session, Protocol::C_PartyList& pkt);
 bool Handle_C_PartyJoinRequestList(PacketSessionRef& session, Protocol::C_PartyJoinRequestList& pkt);
+bool Handle_C_EquipItemRequest(PacketSessionRef& session, Protocol::C_EquipItemRequest& pkt);
+bool Handle_C_UnequipItemRequest(PacketSessionRef& session, Protocol::C_UnequipItemRequest& pkt);
+bool Handle_C_EquipmentInfoRequest(PacketSessionRef& session, Protocol::C_EquipmentInfoRequest& pkt);
 
 class ClientPacketHandler
 {
@@ -138,6 +148,9 @@ public:
 		GPacketHandler[PKT_C_PartyJoinResponse] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PartyJoinResponse>(Handle_C_PartyJoinResponse, session, buffer, len); };
 		GPacketHandler[PKT_C_PartyList] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PartyList>(Handle_C_PartyList, session, buffer, len); };
 		GPacketHandler[PKT_C_PartyJoinRequestList] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PartyJoinRequestList>(Handle_C_PartyJoinRequestList, session, buffer, len); };
+		GPacketHandler[PKT_C_EquipItemRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_EquipItemRequest>(Handle_C_EquipItemRequest, session, buffer, len); };
+		GPacketHandler[PKT_C_UnequipItemRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_UnequipItemRequest>(Handle_C_UnequipItemRequest, session, buffer, len); };
+		GPacketHandler[PKT_C_EquipmentInfoRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_EquipmentInfoRequest>(Handle_C_EquipmentInfoRequest, session, buffer, len); };
 		
 	}
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
@@ -187,6 +200,10 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::S_PartyJoinNotify& pkt) { return MakeSendBuffer(pkt, PKT_S_PartyJoinNotify); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_PartyList& pkt) { return MakeSendBuffer(pkt, PKT_S_PartyList); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_PartyJoinRequestList& pkt) { return MakeSendBuffer(pkt, PKT_S_PartyJoinRequestList); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_EquipItemReply& pkt) { return MakeSendBuffer(pkt, PKT_S_EquipItemReply); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_UnequipItemReply& pkt) { return MakeSendBuffer(pkt, PKT_S_UnequipItemReply); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_EquipmentInfoReply& pkt) { return MakeSendBuffer(pkt, PKT_S_EquipmentInfoReply); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerEquipment& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerEquipment); };
 
 private:
 	template<typename PacketType, typename ProcessFunc>

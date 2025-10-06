@@ -11,6 +11,7 @@
     <OutputPath>.</OutputPath>
     <Name>ProcedureGenerator</Name>
     <RootNamespace>ProcedureGenerator</RootNamespace>
+    <InterpreterId>MSBuild|env|C:\Users\wlsdn\workspace\2d-mmorpg-replica\Tools\PacketGenerator\PacketGenerator.pyproj</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +31,9 @@
   <ItemGroup>
     <Content Include="Templates\GenProcedures.h" />
     <Content Include="Templates\Procedure.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="MSBuild|env|C:\Users\wlsdn\workspace\2d-mmorpg-replica\Tools\PacketGenerator\PacketGenerator.pyproj" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

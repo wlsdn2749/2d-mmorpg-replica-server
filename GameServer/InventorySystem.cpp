@@ -30,14 +30,14 @@ void InventorySystem::Clear()
     Initialize();
 }
 
-EAddItemResult InventorySystem::AddItem(int itemId, int count)
+EAddItemResult InventorySystem::AddItem(int itemId, int count, int equipmentInstanceId)
 {
     if (itemId <= 0 || count <= 0)
         return EAddItemResult::InvalidItem;
 
     // ItemManager에서 아이템 데이터 확인
     const ItemData* itemData = ItemManager::Instance().GetItemData(itemId);
-    if (!itemData) 
+    if (!itemData)
         return EAddItemResult::InvalidItem;
 
     // 기존 슬롯에 스택 가능한지 확인
@@ -46,7 +46,7 @@ EAddItemResult InventorySystem::AddItem(int itemId, int count)
         return EAddItemResult::Success;
 
     // 새로운 슬롯에 추가
-    return TryAddToNewSlot(itemId, count);
+    return TryAddToNewSlot(itemId, count, equipmentInstanceId);
 }
 
 ERemoveItemResult InventorySystem::RemoveItem(int slotIndex, int count)
@@ -301,7 +301,7 @@ EAddItemResult InventorySystem::TryAddToExistingSlot(int itemId, int count)
     return (count > 0) ? EAddItemResult::InventoryFull : EAddItemResult::Success;
 }
 
-EAddItemResult InventorySystem::TryAddToNewSlot(int itemId, int count)
+EAddItemResult InventorySystem::TryAddToNewSlot(int itemId, int count, int equipmentInstanceId)
 {
     int emptySlotIndex = FindEmptySlot();
     if (emptySlotIndex == -1)
@@ -312,6 +312,7 @@ EAddItemResult InventorySystem::TryAddToNewSlot(int itemId, int count)
     slot.count = count;
     slot.slotIndex = emptySlotIndex;
     slot.isQuickSlot = (emptySlotIndex >= INVENTORY_NORMAL_SLOTS);
+    slot.equipmentInstanceId = equipmentInstanceId;
 
     return EAddItemResult::Success;
 }

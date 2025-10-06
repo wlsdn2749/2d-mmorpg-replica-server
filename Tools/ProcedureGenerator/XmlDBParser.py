@@ -58,13 +58,56 @@ def ParseColumns(node, tables):
     select_idx = max(query.rfind('SELECT'), query.rfind('select'))
     from_idx = max(query.rfind('FROM'), query.rfind('from'))
     if select_idx > 0 and from_idx > 0 and from_idx > select_idx:
-        table_name = query[from_idx+len('FROM') : -1].strip().split()[0]
-        table_name = table_name.replace('[', '').replace(']', '').replace('dbo.', '')
-        table = tables.get(table_name)
-        words = query[select_idx+len('SELECT') : from_idx].strip().split(",")
+        # Extract FROM clause
+        from_clause = query[from_idx+len('FROM'):]
+        where_idx = max(from_clause.find('WHERE'), from_clause.find('where'))
+        order_idx = max(from_clause.find('ORDER'), from_clause.find('order'))
+        group_idx = max(from_clause.find('GROUP'), from_clause.find('group'))
+
+        # Find end of FROM clause
+        end_idx = len(from_clause)
+        for idx in [where_idx, order_idx, group_idx]:
+            if idx > 0 and idx < end_idx:
+                end_idx = idx
+
+        from_clause = from_clause[:end_idx].strip()
+
+        # Extract all table names (support JOIN)
+        used_tables = []
+        tokens = from_clause.replace('[', '').replace(']', '').replace('dbo.', '').split()
+
+        i = 0
+        while i < len(tokens):
+            token = tokens[i]
+            # Skip JOIN keywords
+            if token.upper() in ['INNER', 'LEFT', 'RIGHT', 'OUTER', 'FULL', 'CROSS', 'JOIN', 'ON', 'AND', 'OR', '=']:
+                i += 1
+                continue
+
+            # Check if this is a table name
+            if token in tables:
+                used_tables.append(tables[token])
+            i += 1
+
+        # Parse SELECT clause columns
+        select_clause = query[select_idx+len('SELECT'):from_idx].strip()
+        words = select_clause.split(",")
+
         for word in words:
+            # Remove alias from column name (e.g., "ce.characterId" -> "characterId")
             column_name = word.strip().split()[0]
-            columns.append(Column(column_name, table.columns[column_name]))
+            if '.' in column_name:
+                column_name = column_name.split('.')[1]
+
+            # Find column type from all used tables
+            column_type = None
+            for table in used_tables:
+                if column_name in table.columns:
+                    column_type = table.columns[column_name]
+                    break
+
+            if column_type:
+                columns.append(Column(column_name, column_type))
     elif select_idx > 0:
         word = query[select_idx+len('SELECT') : -1].strip().split()[0]
         if word.startswith('@@ROWCOUNT') or word.startswith('@@rowcount'):

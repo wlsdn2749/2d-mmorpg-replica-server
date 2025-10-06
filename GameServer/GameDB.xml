@@ -190,12 +190,6 @@
             onUpdate="NO_ACTION">
       <Column local="characterId" ref="characterId"/>
     </ForeignKey>
-    <ForeignKey name="FK_CharacterInventory_equipmentInstanceId_EquipmentInstance_equipmentInstanceId"
-            refTable="EquipmentInstance"
-            onDelete="NO_ACTION"
-            onUpdate="NO_ACTION">
-      <Column local="equipmentInstanceId" ref="equipmentInstanceId"/>
-    </ForeignKey>
   </Table>
   <!-- ===== 드랍 시스템 관련 DB===== -->
   <Table name="MonsterDropItem">
@@ -321,12 +315,16 @@
        SET NOCOUNT ON;
 
        SELECT
-           characterId,
-           slotType,
-           equipmentInstanceId
-       FROM [dbo].[CharacterEquipment]
-       WHERE characterId = @characterId
-       ORDER BY slotType;
+           ce.characterId,
+           ce.slotType,
+           ce.equipmentInstanceId,
+           ei.itemId,
+           ei.enhancementLevel
+       FROM [dbo].[CharacterEquipment] ce
+       INNER JOIN [dbo].[EquipmentInstance] ei
+           ON ce.equipmentInstanceId = ei.equipmentInstanceId
+       WHERE ce.characterId = @characterId
+       ORDER BY ce.slotType;
       ]]>
     </Body>
   </Procedure>
@@ -340,8 +338,7 @@
        SET XACT_ABORT ON;
 
        MERGE [dbo].[CharacterEquipment] AS target
-       USING (SELECT @characterId, @slotType, @equipmentInstanceId) AS source(characterId, slotType,
-  equipmentInstanceId)
+       USING (SELECT @characterId, @slotType, @equipmentInstanceId) AS source(characterId, slotType, equipmentInstanceId)
        ON target.characterId = source.characterId AND target.slotType = source.slotType
        WHEN MATCHED THEN
            UPDATE SET
@@ -404,12 +401,13 @@
     <Body>
       <![CDATA[
         SET NOCOUNT ON;
-        
-        SELECT 
+
+        SELECT
             slotIndex,
             itemId,
             count,
-            isQuickslot
+            isQuickslot,
+            equipmentInstanceId
         FROM [dbo].[CharacterInventory]
         WHERE characterId = @characterId
         ORDER BY slotIndex;
@@ -422,22 +420,24 @@
     <Param name="@itemId" type="int"/>
     <Param name="@count" type="int"/>
     <Param name="@isQuickslot" type="int"/>
+    <Param name="@equipmentInstanceId" type="int"/>
     <Body>
       <![CDATA[
         SET NOCOUNT ON;
         SET XACT_ABORT ON;
-        
+
         MERGE [dbo].[CharacterInventory] AS target
-        USING (SELECT @characterId, @slotIndex, @itemId, @count, @isQuickslot) AS source(characterId, slotIndex, itemId, count, isQuickslot)
+        USING (SELECT @characterId, @slotIndex, @itemId, @count, @isQuickslot, @equipmentInstanceId) AS source(characterId, slotIndex, itemId, count, isQuickslot, equipmentInstanceId)
         ON target.characterId = source.characterId AND target.slotIndex = source.slotIndex
         WHEN MATCHED THEN
-            UPDATE SET 
+            UPDATE SET
                 itemId = source.itemId,
                 count = source.count,
-                isQuickslot = source.isQuickslot
+                isQuickslot = source.isQuickslot,
+                equipmentInstanceId = source.equipmentInstanceId
         WHEN NOT MATCHED THEN
-            INSERT (characterId, slotIndex, itemId, count, isQuickslot)
-            VALUES (source.characterId, source.slotIndex, source.itemId, source.count, source.isQuickslot);
+            INSERT (characterId, slotIndex, itemId, count, isQuickslot, equipmentInstanceId)
+            VALUES (source.characterId, source.slotIndex, source.itemId, source.count, source.isQuickslot, source.equipmentInstanceId);
       ]]>
     </Body>
   </Procedure>
