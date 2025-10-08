@@ -1,6 +1,7 @@
 #pragma once
 #include "JsonDataParser.h"
 #include "EquipmentCore.h"
+#include <memory>
 
 /*--------------------------
 	equipment_data.json을 파싱하는 특화 클래스
@@ -10,8 +11,8 @@ class EquipmentDataParser
 {
 public:
 	// equipment_data.json 파일에서 모든 데이터를 로드
-	// ItemId를 Key로하는 EquipmentDataMap 반환
-	static std::unordered_map<int, EquipmentData> LoadEquipmentData();
+	// ItemId를 Key로하는 EquipmentDataMap 반환 (unique_ptr)
+	static std::unordered_map<int, std::unique_ptr<EquipmentData>> LoadEquipmentData();
 
 	// Json Value에서 EquipmentData로 변환
 	// LoadEquipmentData는 이 함수를 호출함

@@ -1,4 +1,5 @@
 #pragma once
+
 struct EntityCore
 {
 	EntityId	id{};

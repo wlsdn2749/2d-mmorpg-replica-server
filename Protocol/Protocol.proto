@@ -657,6 +657,13 @@ enum EEquipmentSlotType
 	EQUIPMENT_PANTS = 3;
 }
 
+enum EShopType
+{
+	SHOP_GENERAL = 0;
+	SHOP_WEAPON = 1;
+	SHOP_ARMOR = 2;
+}
+
 message Vector2Info
 {
 	int32 x = 1;

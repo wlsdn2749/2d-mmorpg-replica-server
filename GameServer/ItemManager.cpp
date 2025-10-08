@@ -21,20 +21,15 @@ bool ItemManager::Initialize()
         return true;
 
     GConsoleLogger->WriteStdOut(Color::YELLOW, L"ItemManager: Initializing...\n");
-    
-    // 아이템 Load From Json
-    auto itemDataMap = ItemDataParser::LoadItemData();
 
-    for (const auto& [itemId, itemData] : itemDataMap)
-    {
-        AddItemData(itemData);
-    }
-    
+    // 아이템 Load From Json (move)
+    _itemDataMap = ItemDataParser::LoadItemData();
+
     _initialized = true;
-    
-    GConsoleLogger->WriteStdOut(Color::GREEN, L"ItemManager: 초기화 완료. 총 %d개 아이템 로드됨.\n", 
+
+    GConsoleLogger->WriteStdOut(Color::GREEN, L"ItemManager: 초기화 완료. 총 %d개 아이템 로드됨.\n",
                                static_cast<int>(_itemDataMap.size()));
-    
+
     return true;
 }
 
@@ -115,9 +110,10 @@ void ItemManager::ApplyItemEffect(int itemId, int count, PlayerRef player)
     }
 }
 
-void ItemManager::AddItemData(const ItemData& itemData)
+void ItemManager::AddItemData(ItemData&& itemData)
 {
-    _itemDataMap[itemData.itemId] = std::make_unique<ItemData>(itemData);
+    int itemId = itemData.itemId;
+    _itemDataMap[itemId] = std::make_unique<ItemData>(std::move(itemData));
 }
 
 void ItemManager::RemoveItemData(int itemId)

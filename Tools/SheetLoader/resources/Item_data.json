@@ -5,7 +5,8 @@
     "description": "HP를 30 회복 시킵니다.",
     "isStackable": "TRUE",
     "maxStack": "99",
-    "itemType": "CONSUMABLE"
+    "itemType": "CONSUMABLE",
+    "sellPrice": "1"
   },
   {
     "itemId": "10002",
@@ -13,7 +14,8 @@
     "description": "HP를 50 회복 시킵니다.",
     "isStackable": "TRUE",
     "maxStack": "99",
-    "itemType": "CONSUMABLE"
+    "itemType": "CONSUMABLE",
+    "sellPrice": "1"
   },
   {
     "itemId": "90001",
@@ -21,7 +23,8 @@
     "description": "토끼의 가죽입니다.",
     "isStackable": "TRUE",
     "maxStack": "99",
-    "itemType": "MISC"
+    "itemType": "MISC",
+    "sellPrice": "1"
   },
   {
     "itemId": "90002",
@@ -29,7 +32,8 @@
     "description": "고양이의 가죽입니다",
     "isStackable": "TRUE",
     "maxStack": "99",
-    "itemType": "MISC"
+    "itemType": "MISC",
+    "sellPrice": "1"
   },
   {
     "itemId": "20001",
@@ -37,7 +41,8 @@
     "description": "초보자용 검입니다",
     "isStackable": "FALSE",
     "maxStack": "1",
-    "itemType": "EQUIPMENT"
+    "itemType": "EQUIPMENT",
+    "sellPrice": "1"
   },
   {
     "itemId": "21001",
@@ -45,7 +50,8 @@
     "description": "가죽으로 만든 투구입니다",
     "isStackable": "FALSE",
     "maxStack": "1",
-    "itemType": "EQUIPMENT"
+    "itemType": "EQUIPMENT",
+    "sellPrice": "1"
   },
   {
     "itemId": "22001",
@@ -53,7 +59,8 @@
     "description": "가죽으로 만든 갑옷입니다",
     "isStackable": "FALSE",
     "maxStack": "1",
-    "itemType": "EQUIPMENT"
+    "itemType": "EQUIPMENT",
+    "sellPrice": "1"
   },
   {
     "itemId": "23001",
@@ -61,6 +68,7 @@
     "description": "가죽으로 만든 바지입니다",
     "isStackable": "FALSE",
     "maxStack": "1",
-    "itemType": "EQUIPMENT"
+    "itemType": "EQUIPMENT",
+    "sellPrice": "1"
   }
 ]

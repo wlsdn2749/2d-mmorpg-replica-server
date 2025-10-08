@@ -1,36 +1,43 @@
 #include "pch.h"
 #include "EquipmentDataParser.h"
 
-std::unordered_map<int, EquipmentData> EquipmentDataParser::LoadEquipmentData()
+std::unordered_map<int, std::unique_ptr<EquipmentData>> EquipmentDataParser::LoadEquipmentData()
 {
 	try
 	{
 		GConsoleLogger->WriteStdOut(Color::GREEN, L"Equipment data loading started: equipment_data.json\n");
 
-		auto equipmentDatas = JsonDataParser::ParseMapData<EquipmentData>(
+		auto equipmentDataArray = JsonDataParser::ParseArrayData<EquipmentData>(
 			"Equipment_data.json",
-			[](const rapidjson::Value& json) { return JsonToEquipmentData(json); },
-			[](const rapidjson::Value& json) { return ExtractItemId(json); }
+			[](const rapidjson::Value& json) { return JsonToEquipmentData(json); }
 		);
 
+		std::unordered_map<int, std::unique_ptr<EquipmentData>> result;
+
+		for (auto& equipmentData : equipmentDataArray)
+		{
+			int itemId = equipmentData.itemId;
+			result[itemId] = std::make_unique<EquipmentData>(std::move(equipmentData));
+		}
+
 		GConsoleLogger->WriteStdOut(Color::GREEN, L"Equipment data loading completed: %d equipments loaded\n",
-			static_cast<int>(equipmentDatas.size()));
+			static_cast<int>(result.size()));
 
 		// 로드된 장비 정보 출력
-		for (const auto& [itemId, data] : equipmentDatas)
+		for (const auto& [itemId, dataPtr] : result)
 		{
 			GConsoleLogger->WriteStdOut(Color::WHITE,
 				L"  - Equipment[%d]: SlotType=%d, MinLevel=%d, Atk=%d, Def=%d, MaxHp=%d\n",
-				data.itemId,
-				static_cast<int>(data.slotType),
-				data.minLevel,
-				data.atk,
-				data.def,
-				data.maxHp
+				dataPtr->itemId,
+				static_cast<int>(dataPtr->slotType),
+				dataPtr->minLevel,
+				dataPtr->atk,
+				dataPtr->def,
+				dataPtr->maxHp
 			);
 		}
 
-		return equipmentDatas;
+		return result;
 	}
 	catch (const std::exception& e)
 	{

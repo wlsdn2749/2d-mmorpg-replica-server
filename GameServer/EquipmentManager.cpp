@@ -16,13 +16,8 @@ bool EquipmentManager::Initialize()
 
 	GConsoleLogger->WriteStdOut(Color::YELLOW, L"EquipmentManager: Initializing...\n");
 
-	// JSON에서 장비 데이터 로드
-	auto equipmentMap = EquipmentDataParser::LoadEquipmentData();
-
-	for (const auto& [itemId, equipmentData] : equipmentMap)
-	{
-		AddEquipmentData(equipmentData);
-	}
+	// JSON에서 장비 데이터 로드 (move)
+	_equipmentDataMap = EquipmentDataParser::LoadEquipmentData();
 
 	if (_equipmentDataMap.size() == 0)
 	{
@@ -101,9 +96,10 @@ bool EquipmentManager::CanEquip(int itemId, int playerLevel) const
 	return playerLevel >= data->minLevel;
 }
 
-void EquipmentManager::AddEquipmentData(const EquipmentData& equipmentData)
+void EquipmentManager::AddEquipmentData(EquipmentData&& equipmentData)
 {
-	_equipmentDataMap[equipmentData.itemId] = std::make_unique<EquipmentData>(equipmentData);
+	int itemId = equipmentData.itemId;
+	_equipmentDataMap[itemId] = std::make_unique<EquipmentData>(std::move(equipmentData));
 }
 
 void EquipmentManager::RemoveEquipmentData(int itemId)

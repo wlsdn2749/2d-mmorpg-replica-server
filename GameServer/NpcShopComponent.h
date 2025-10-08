@@ -1,5 +1,5 @@
-﻿#pragma once
-#include "NpcShopDataManager.h"
+#pragma once
+
 /// <summary>
 /// 상점에 대한 기능을 하는 부분.
 /// 데이터는 initialize함수의 NpcShopData를 통해 load한다.
@@ -15,7 +15,7 @@ public:
 
 private:
 	int _shopId;
-	vector<ShopItem> _items;
+	//vector<ShopItem> _items;
 
 private:
 };

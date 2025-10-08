@@ -213,9 +213,6 @@
     <ClCompile Include="NpcShopComponent.cpp">
       <Filter>GameContents\Npc</Filter>
     </ClCompile>
-    <ClCompile Include="NpcShopDataManager.cpp">
-      <Filter>GameContents\Npc</Filter>
-    </ClCompile>
     <ClCompile Include="JsonDataParser.cpp">
       <Filter>DataParser</Filter>
     </ClCompile>
@@ -251,6 +248,12 @@
     </ClCompile>
     <ClCompile Include="EquipmentDataParser.cpp">
       <Filter>DataParser</Filter>
+    </ClCompile>
+    <ClCompile Include="ShopDataParser.cpp">
+      <Filter>DataParser</Filter>
+    </ClCompile>
+    <ClCompile Include="ShopManager.cpp">
+      <Filter>GameContents\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -413,9 +416,6 @@
     <ClInclude Include="NpcShopComponent.h">
       <Filter>GameContents\Npc</Filter>
     </ClInclude>
-    <ClInclude Include="NpcShopDataManager.h">
-      <Filter>GameContents\Npc</Filter>
-    </ClInclude>
     <ClInclude Include="MonsterDataParser.h">
       <Filter>DataParser</Filter>
     </ClInclude>
@@ -454,6 +454,15 @@
     </ClInclude>
     <ClInclude Include="EquipmentDataParser.h">
       <Filter>DataParser</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopCore.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopDataParser.h">
+      <Filter>DataParser</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopManager.h">
+      <Filter>GameContents\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

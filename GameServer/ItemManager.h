@@ -38,7 +38,7 @@ public:
     void ApplyItemEffect(int itemId, int count, PlayerRef player);
 
     // 디버그 및 관리
-    void AddItemData(const ItemData& itemData);
+    void AddItemData(ItemData&& itemData);
     void RemoveItemData(int itemId);
     void PrintAllItems() const;
     size_t GetItemCount() const;

@@ -1,35 +1,42 @@
 ﻿#include "pch.h"
 #include "ItemDataParser.h"
 
-std::unordered_map<int, ItemData> ItemDataParser::LoadItemData()
+std::unordered_map<int, std::unique_ptr<ItemData>> ItemDataParser::LoadItemData()
 {
     try
     {
         GConsoleLogger->WriteStdOut(Color::GREEN, L"아이템 데이터 로딩 시작: Item_data.json\n");
 
-        auto itemDatas = JsonDataParser::ParseMapData<ItemData>(
+        auto itemDataArray = JsonDataParser::ParseArrayData<ItemData>(
             "Item_data.json",
-            [](const rapidjson::Value& json) { return JsonToItemData(json); },
-            [](const rapidjson::Value& json) { return ExtractItemId(json); }
+            [](const rapidjson::Value& json) { return JsonToItemData(json); }
         );
 
-        GConsoleLogger->WriteStdOut(Color::GREEN, L"아이템 데이터 로딩 완료: %d개의 아이템 개수\n", static_cast<int>(itemDatas.size()));
+        std::unordered_map<int, std::unique_ptr<ItemData>> result;
+
+        for (auto& itemData : itemDataArray)
+        {
+            int itemId = itemData.itemId;
+            result[itemId] = std::make_unique<ItemData>(std::move(itemData));
+        }
+
+        GConsoleLogger->WriteStdOut(Color::GREEN, L"아이템 데이터 로딩 완료: %d개의 아이템 개수\n", static_cast<int>(result.size()));
 
         // 로드된 아이템 정보 출력
-        for (const auto& [itemId, data] : itemDatas)
+        for (const auto& [itemId, dataPtr] : result)
         {
             GConsoleLogger->WriteStdOut(Color::WHITE,
                 L"  - Item[%d] %s: Description=%s, IsStackable=%s, MaxStack=%d, EItemType=%d\n",
-                data.itemId,
-                StrToWstr(data.name).c_str(),
-                StrToWstr(data.description).c_str(),
-                data.isStackable ? L"True" : L"False",
-                data.maxStack,
-                static_cast<int>(data.itemType) // int
+                dataPtr->itemId,
+                StrToWstr(dataPtr->name).c_str(),
+                StrToWstr(dataPtr->description).c_str(),
+                dataPtr->isStackable ? L"True" : L"False",
+                dataPtr->maxStack,
+                static_cast<int>(dataPtr->itemType)
             );
         }
 
-        return itemDatas;
+        return result;
     }
     catch (const std::exception& e)
     {

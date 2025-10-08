@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "JsonDataParser.h"
 #include "InventoryCore.h"
+#include <memory>
 
 /*--------------------------
 	Item_data.json을 파싱하는 특화 클래스
@@ -10,8 +11,8 @@ class ItemDataParser
 {
 public:
 	// Item_data.json파일에서 모든 데이터를 로드
-	// ItemId를 Key로하는 ItemDataMap 반환
-	static std::unordered_map<int, ItemData> LoadItemData();
+	// ItemId를 Key로하는 ItemDataMap 반환 (unique_ptr)
+	static std::unordered_map<int, std::unique_ptr<ItemData>> LoadItemData();
 
 
 	// Json Value에서 ItemData로 변환
