@@ -19,3 +19,9 @@ MonoBehaviour:
   - id: 10002
     icon: {fileID: 21300000, guid: 8d043409679386640adbb8660c0a8a5a, type: 3}
     displayName: "\uACE0\uAE09 \uCCB4\uB825 \uD3EC\uC158"
+  - id: 90001
+    icon: {fileID: 21300000, guid: f68a067bb52b3dd4ebf93e8311a0d841, type: 3}
+    displayName: "\uD1A0\uB07C\uC758 \uAC00\uC8FD"
+  - id: 90002
+    icon: {fileID: 21300000, guid: 45c7cb7330cd2d74280443de4d42ac9d, type: 3}
+    displayName: "\uACE0\uC591\uC774\uC758 \uAC00\uC8FD"
