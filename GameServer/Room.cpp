@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "Room.h"
 #include "ClientPacketHandler.h"
 #include "MapData.h"
@@ -311,7 +311,7 @@ void Room::HandleNpcInteract(PlayerRef player, int interactionType)
 
     // 3. NPC 컴포넌트별 처리 위임
     if (interactionType == 1) { // Shop
-        npc->GetShopComponent()->ShowShop(player->playerId);
+        npc->GetShopComponent()->ShowShop(player);
     }
 }
 

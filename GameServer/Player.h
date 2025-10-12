@@ -9,6 +9,10 @@
 
 #include "EquipmentSystem.h"
 #include "EquipmentRepository.h"
+
+#include "GameSession.h"
+#include "ClientPacketHandler.h"
+
 class Room; // 전방 선언
 
 struct PendingRoomChange {
@@ -164,6 +168,7 @@ public:
 		Inventory System
 	----------------------------------*/
 public:
+
 	// 인벤토리 접근자
 	InventorySystem& GetInventory() { return _inventory; }
 	const InventorySystem& GetInventory() const { return _inventory; }
@@ -192,6 +197,7 @@ public:
 		auto result = _inventory.AddItem(itemId, count, finalEquipmentInstanceId);
 		if (result == EAddItemResult::Success) {
 			SaveChangedSlotsToDB();
+			SendUpdateInventoryPkt(/*ItemId*/ itemId, /*slotIndex*/ -1);
 		}
 		return result;
 	}
@@ -209,6 +215,7 @@ public:
 				EquipmentRepository::DeleteEquipmentInstanceAsync(equipmentInstanceId);
 			}
 			SaveSlotToDB(slotIndex);
+			SendUpdateInventoryPkt(/*ItemId*/ -1, /*slotIndex*/ slotIndex);
 		}
 		return result;
 	}
@@ -217,6 +224,7 @@ public:
 		auto result = _inventory.UseItem(slotIndex);
 		if (result == EUseItemResult::Success) {
 			SaveSlotToDB(slotIndex);
+			SendUpdateInventoryPkt(/*ItemId*/ -1, /*slotIndex*/ slotIndex);
 		}
 		return result;
 	}
@@ -228,8 +236,10 @@ public:
 	}
 
 private:
-	void SaveSlotToDB(int slotIndex) {
+	void SaveSlotToDB(int slotIndex) 
+	{
 		int characterId = static_cast<int>(playerId);
+		
 		const ItemSlot& slot = _inventory.GetSlot(slotIndex);
 
 		if (slot.IsEmpty()) {
@@ -248,7 +258,55 @@ private:
 		// TODO: 나중에 변경된 슬롯만 추적하도록 개선
 		SaveInventoryToDB();
 	}
+	void SendUpdateInventoryPkt(int itemId = -1, int slotIndex = -1)
+	{
+		if(itemId == -1 && slotIndex == -1) return;
 
+		if (itemId != -1)
+		{
+			return SendUpdateInventoryPktitemId(itemId);
+		}
+		else if (slotIndex != -1)
+		{
+			return SendUpdateInventoryPktSlotIndex(slotIndex);
+		}
+	}
+
+	void SendUpdateInventoryPktitemId(int itemId)
+	{
+		// 인벤토리 업데이트 전송
+		Protocol::S_InventoryUpdate updatePkt;
+		auto slots = GetInventory().ToProtocolSlots();
+		for (const auto& slot : slots)
+		{
+			if (slot.itemid() == static_cast<int>(itemId))
+			{
+				*updatePkt.add_changedslots() = slot;
+				break;
+			}
+		}
+
+		auto updateBuffer = ClientPacketHandler::MakeSendBuffer(updatePkt);
+
+		if (auto session = ownerSession.lock())
+			session->Send(updateBuffer);
+
+		return;
+	}
+
+	void SendUpdateInventoryPktSlotIndex(int slotIndex)
+	{
+		Protocol::S_InventoryUpdate updatePkt;
+		auto slots = GetInventory().ToProtocolSlots();
+		*updatePkt.add_changedslots() = slots[slotIndex];
+				
+		auto updateBuffer = ClientPacketHandler::MakeSendBuffer(updatePkt);
+
+		if (auto session = ownerSession.lock())
+			session->Send(updateBuffer);
+
+		return;
+	}
 private:
 	InventorySystem _inventory;
 

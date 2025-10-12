@@ -78,6 +78,7 @@ enum MsgId
 	C_EQUIPMENT_INFO_REQUEST = 70;
 	S_EQUIPMENT_INFO_REPLY = 71;
 	S_BROADCAST_PLAYER_EQUIPMENT = 72;
+	S_NPC_LIST = 73;
 }
 
 // 클라 -> 게임 서버 jwt 로그인 인증 (0)
@@ -308,14 +309,17 @@ message C_NpcInteractRequest {
 
 // (36) 서버 -> 클라 : Npc 정보 응답
 message S_NpcInteractReply { 
-	repeated string dialogs = 1;
-	int32 interactionType = 2; // 0=Talk, 1=Shop, 2=Quest
+	int32 npcId = 1;
+	string npcName = 2;
+	repeated string dialogs = 3;
+	int32 interactionType = 4; // 0=Talk, 1=Shop, 2=Quest
 }
 
 // (37) 서버 -> 클라 : 상점 정보 전달
 message S_NpcShopOpen {
 	int32 npcId = 1;
-	repeated ShopItemInfo items = 2;
+	int32 shopId = 2;
+	repeated ShopItemInfo items = 3;
 }
 
 // (38) 클라 -> 서버 : 상점 아이템 구매 요청
@@ -557,6 +561,13 @@ message S_BroadcastPlayerEquipment
 	int32 itemId = 3; // 0이면 해제 아니면 장착
 }
 
+// (73) 서버 -> 클라 : Npc 리스트 전달
+message S_NpcList
+{
+	int32 mapId = 1;
+	repeated NpcInfo npcs = 2;
+}
+
 enum ELoginResult
 {
     SUCCESS = 0;
@@ -773,4 +784,12 @@ message EquipmentSlotInfo
     int32 itemId = 2;  // 0이면 빈 슬롯
     int32 equipmentInstanceId = 3;
     int32 enhancementLevel = 4;
+}
+
+message NpcInfo
+{
+	int32 npcId = 1;
+	string npcName = 2;
+	Vector2Info pos = 3;
+	int32 npcType = 4; // TODO 나중에 Protocol로 변경 0=Dialog, 1=Shop, 2=Quest
 }

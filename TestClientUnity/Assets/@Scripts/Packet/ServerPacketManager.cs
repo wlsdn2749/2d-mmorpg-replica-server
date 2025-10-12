@@ -81,6 +81,7 @@ namespace Packet
 	    PKT_C_EquipmentInfoRequest = 70,
 	    PKT_S_EquipmentInfoReply = 71,
 	    PKT_S_BroadcastPlayerEquipment = 72,
+	    PKT_S_NpcList = 73,
     }
     public class ServerPacketManager
     {
@@ -186,6 +187,7 @@ namespace Packet
             RegisterHandler((ushort)PacketID.PKT_S_UnequipItemReply, ServerPacketHandler.HANDLE_S_UnequipItemReply, S_UnequipItemReply.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_EquipmentInfoReply, ServerPacketHandler.HANDLE_S_EquipmentInfoReply, S_EquipmentInfoReply.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_BroadcastPlayerEquipment, ServerPacketHandler.HANDLE_S_BroadcastPlayerEquipment, S_BroadcastPlayerEquipment.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_NpcList, ServerPacketHandler.HANDLE_S_NpcList, S_NpcList.Parser);
             
                   
         }

@@ -551,21 +551,15 @@ bool Handle_C_GiveItemRequest(PacketSessionRef& session, Protocol::C_GiveItemReq
 			replyPkt.set_success(true);
 			replyPkt.set_errormessage("");
 
-			// 인벤토리 업데이트 브로드캐스트
-			Protocol::S_InventoryUpdate updatePkt;
 			auto slots = player->GetInventory().ToProtocolSlots();
 			for (const auto& slot : slots)
 			{
 				if (slot.itemid() == itemId)
 				{
-					*updatePkt.add_changedslots() = slot;
 					*replyPkt.mutable_addedslot() = slot;
 					break;
 				}
 			}
-
-			auto updateBuffer = ClientPacketHandler::MakeSendBuffer(updatePkt);
-			session->Send(updateBuffer);
 
 			GConsoleLogger->WriteStdOut(Color::GREEN,
 				L"[Test] To Player %d, Item:%d, Count:%d Give Complete\n",

@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "Npc.h"
 
 void Npc::Initialize(const NpcConfig& cfg)

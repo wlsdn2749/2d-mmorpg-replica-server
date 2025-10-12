@@ -80,6 +80,7 @@ enum : uint16
 	PKT_C_EquipmentInfoRequest = 70,
 	PKT_S_EquipmentInfoReply = 71,
 	PKT_S_BroadcastPlayerEquipment = 72,
+	PKT_S_NpcList = 73,
 
 };
 
@@ -204,6 +205,7 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::S_UnequipItemReply& pkt) { return MakeSendBuffer(pkt, PKT_S_UnequipItemReply); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_EquipmentInfoReply& pkt) { return MakeSendBuffer(pkt, PKT_S_EquipmentInfoReply); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerEquipment& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerEquipment); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_NpcList& pkt) { return MakeSendBuffer(pkt, PKT_S_NpcList); };
 
 private:
 	template<typename PacketType, typename ProcessFunc>
