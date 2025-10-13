@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "FieldRoom.h"
 #include "ClientPacketHandler.h"
 #include "RoomManager.h"
@@ -124,7 +124,6 @@ void FieldRoom::SendSystemMessageToPlayer(int playerId, const std::string& messa
 void FieldRoom::SendMonstersToPlayer(PlayerRef p)
 {
 	auto pkt = _monsters->BuildMonsterSnapShot(RoomId());
-	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
 	if (auto s = p->ownerSession.lock())
 	{
 		auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
@@ -134,6 +133,8 @@ void FieldRoom::SendMonstersToPlayer(PlayerRef p)
 
 void FieldRoom::InitRoomSystems()
 {
+	Room::InitRoomSystems();
+
 	_lastMonsterTickMs = _clock.NowMs(); // 첫 기준 시각
 	InitMonsters();
 	InitPCombat();
@@ -144,19 +145,7 @@ void FieldRoom::OnEnter(const PlayerRef& p)
 {
 	GConsoleLogger->WriteStdOut(Color::WHITE, L"[%d]: [%s] Has Join the [%s].\n", p->playerId, StrToWstr(p->username).c_str(), StrToWstr(RoomName()).c_str());
 
-	// 플레이어 전송
-	{ 
-		// 플레이어 스냅샷을 -> 접속한 플레이어에게 전달
-		auto pkt = BuildPlayerListSnapshot(p);
-		if (auto s = p->ownerSession.lock())
-		{
-			auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
-			s->Send(sendBuffer);
-		}
-		
-		// 플레이어가 입장함을 -> 다른 플레이어에게 전달
-		BroadcastEnter(p);
-	}
+	Room::OnEnter(p);
 
 	// 맵에 있는 몬스터 전송 -> 접속한 플레이어에게 전달 - 나중에 이부분은 합칠 예정
 	SendMonstersToPlayer(p);

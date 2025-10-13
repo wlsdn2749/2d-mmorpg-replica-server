@@ -43,7 +43,7 @@ void CreateRooms()
 {
     const int roomsPerQueue = 2;
 
-    // 마을(0)
+    // 마을(1)
     {
         auto town0Map = MapData::LoadMapFromJsonFile("./Resources/Maps/Goguryeo_Tilemap_Info.json");
         auto town0 = std::make_shared<TownRoom>(Room::Cfg{ 1, "Goguryeo", 50, 200 }, town0Map);
@@ -52,7 +52,7 @@ void CreateRooms()
         RoomManager::Instance().Add(town0);
     }
 
-    // 마을(1)
+    // 마을(2)
     {
         auto town1Map = MapData::LoadMapFromJsonFile("./Resources/Maps/Baekje_Tilemap_Info.json");
         auto town1 = std::make_shared<TownRoom>(Room::Cfg{ 2, "Baekje", 50, 200 }, town1Map);
@@ -61,7 +61,7 @@ void CreateRooms()
         RoomManager::Instance().Add(town1);
     }
 
-    //사냥터(0)
+    //사냥터(3)
     {
         auto field0Map = MapData::LoadMapFromJsonFile("./Resources/Maps/HuntingField_Tilemap_Info.json");
         auto field0 = std::make_shared<FieldRoom>(Room::Cfg{ 3, "Field", 50, 200 }, field0Map);

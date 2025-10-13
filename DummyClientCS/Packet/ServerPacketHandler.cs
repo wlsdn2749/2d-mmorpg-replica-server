@@ -795,5 +795,10 @@ namespace Packet
             // Duplicate handler - redirects to HANDLE_S_UnequipItemReply
             HANDLE_S_UnequipItemReply(session, reply);
         }
+
+        internal static void HANDLE_S_NpcList(PacketSession session, S_NpcList list)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

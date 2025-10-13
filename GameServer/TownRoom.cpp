@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "TownRoom.h"
 #include "ClientPacketHandler.h"
 
@@ -20,17 +20,9 @@ void TownRoom::OnEnter(const PlayerRef& p)
 {
 	GConsoleLogger->WriteStdOut(Color::WHITE, L"[%d]: [%s] Has Join the [%s].\n", p->playerId, StrToWstr(p->username).c_str(), StrToWstr(RoomName()).c_str());
 
-	// 1. 내 클라에 현재 월드 스냅샷 (기존 유저들) 전송
-	auto pkt = BuildPlayerListSnapshot(p);
-	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
-	if (auto s = p->ownerSession.lock())
-	{
-		auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
-		s->Send(sendBuffer);
-	}
-	
-	// 2. 기존 유저들에게 나 등장 브로드캐스트
-	BroadcastEnter(p);
+	Room::OnEnter(p);
+
+
 }
 
 void TownRoom::OnLeave(const PlayerRef& p)

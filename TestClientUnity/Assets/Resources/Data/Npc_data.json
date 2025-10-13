@@ -1,0 +1,13 @@
+[
+  {
+    "npcId": "1",
+    "name": "상인",
+    "role": "SHOP",
+    "mapId": "1",
+    "x": "15",
+    "y": "25",
+    "dialogId": "-1",
+    "shopId": "1",
+    "questIds": "-1"
+  }
+]

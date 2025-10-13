@@ -214,6 +214,7 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClCompile Include="MonsterMovementSystem.cpp" />
     <ClCompile Include="MonsterService.cpp" />
     <ClCompile Include="Npc.cpp" />
+    <ClCompile Include="NpcDataParser.cpp" />
     <ClCompile Include="NpcDialogComponent.cpp" />
     <ClCompile Include="NpcDialogManager.cpp" />
     <ClCompile Include="NpcManager.cpp" />
@@ -291,6 +292,7 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClInclude Include="MonsterTypes.h" />
     <ClInclude Include="MonsterMovementSystem.h" />
     <ClInclude Include="Npc.h" />
+    <ClInclude Include="NpcDataParser.h" />
     <ClInclude Include="NpcDialogComponent.h" />
     <ClInclude Include="NpcDialogManager.h" />
     <ClInclude Include="NpcManager.h" />
@@ -316,6 +318,7 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClInclude Include="ShopManager.h" />
     <ClInclude Include="SpawnPointDataParser.h" />
     <ClInclude Include="StringConvert.h" />
+    <ClInclude Include="StringUtils.h" />
     <ClInclude Include="TimeUtils.h" />
     <ClInclude Include="TownRoom.h" />
     <ClInclude Include="TypeCore.h" />

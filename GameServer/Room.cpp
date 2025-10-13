@@ -231,6 +231,27 @@ void Room::OnTickTimer()
 }
 
 // Room.cpp
+void Room::OnEnter(const PlayerRef& p)
+{
+	// 플레이어 전송
+	{
+		// 플레이어 스냅샷을 -> 접속한 플레이어에게 전달
+		auto pkt = BuildPlayerListSnapshot(p);
+		if (auto s = p->ownerSession.lock())
+		{
+			auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
+			s->Send(sendBuffer);
+		}
+
+		// 플레이어가 입장함을 -> 다른 플레이어에게 전달
+		BroadcastEnter(p);
+	}
+
+	// NPC 전송 (있는 경우)
+	SendNpcsToPlayer(p);
+
+	
+}
 void Room::OnPlayerHpChanged(int playerId)
 {
     auto player = FindPlayer(playerId);
@@ -296,7 +317,25 @@ void Room::PlayerDeathReady(const PlayerRef& player)
 
 void Room::LoadNpcs()
 {
-    // TODO
+    // Npc 정보를 얻어와야함.
+	auto npcConfigs = NpcManager::Instance().GetNpcConfigsByMapId(RoomId());
+
+	for (const auto& npcConfig : npcConfigs)
+	{
+		auto npcId = npcConfig.npcId;
+
+		// npcId -> Npc
+		Npc npc {};
+		npc.Initialize(npcConfig);
+
+		_npcs[npcId] = std::move(npc);
+
+		// Pos2 -> npcId
+		Pos2 pos {npcConfig.x, npcConfig.y};
+		_npcPositions[pos] = npcId;
+	}
+	
+
 }
 
 void Room::HandleNpcInteract(PlayerRef player, int interactionType)
@@ -329,7 +368,43 @@ Npc* Room::FindNpcByPosition(const Pos2& pos)
 
 Npc* Room::FindNpcById(int npcId)
 {
-    return nullptr;
+    return &_npcs[npcId];
+}
+
+void Room::SendNpcsToPlayer(const PlayerRef& p)
+{
+	auto pkt = BuildNpcListSnapshot();
+	if (auto s = p->ownerSession.lock())
+	{
+		auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
+		s->Send(sendBuffer);
+	}
+}
+
+Protocol::NpcInfo Room::GetNpcInfo(int npcId)
+{
+	Protocol::NpcInfo info;
+	const auto* npc = FindNpcById(npcId);
+	info.set_npcid(npc->NpcId());
+	info.set_npcname(npc->Name());
+
+	Protocol::Vector2Info pos2Info = Pos2ToVector2Info(npc->Position());
+	info.set_allocated_pos(&pos2Info);
+
+	return info;
+}
+
+Protocol::S_NpcList Room::BuildNpcListSnapshot()
+{
+	Protocol::S_NpcList pkt;
+
+	pkt.set_mapid(RoomId());
+	for (const auto& [mapId, npc] : _npcs)
+	{
+		*pkt.add_npcs() = GetNpcInfo(npc.NpcId());
+	}
+
+	return pkt;
 }
 
 void Room::SendNpcInfo(PlayerRef player)
@@ -501,7 +576,10 @@ void Room::OnPlayerMoved(const PlayerRef& p, int ox, int oy)
     // 파생 룸에서 포탈/트리거 처리
 }
 
-void Room::InitRoomSystems(){}
+void Room::InitRoomSystems()
+{
+	LoadNpcs();
+}
 
 void Room::OnRoomTick()
 {

@@ -204,9 +204,6 @@
     <ClCompile Include="NpcDialogManager.cpp">
       <Filter>GameContents\Npc</Filter>
     </ClCompile>
-    <ClCompile Include="NpcManager.cpp">
-      <Filter>GameContents\Npc</Filter>
-    </ClCompile>
     <ClCompile Include="NpcQuestComponent.cpp">
       <Filter>GameContents\Npc</Filter>
     </ClCompile>
@@ -253,6 +250,12 @@
       <Filter>DataParser</Filter>
     </ClCompile>
     <ClCompile Include="ShopManager.cpp">
+      <Filter>GameContents\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="NpcDataParser.cpp">
+      <Filter>DataParser</Filter>
+    </ClCompile>
+    <ClCompile Include="NpcManager.cpp">
       <Filter>GameContents\Manager</Filter>
     </ClCompile>
   </ItemGroup>
@@ -407,9 +410,6 @@
     <ClInclude Include="NpcDialogManager.h">
       <Filter>GameContents\Npc</Filter>
     </ClInclude>
-    <ClInclude Include="NpcManager.h">
-      <Filter>GameContents\Npc</Filter>
-    </ClInclude>
     <ClInclude Include="NpcQuestComponent.h">
       <Filter>GameContents\Npc</Filter>
     </ClInclude>
@@ -462,6 +462,15 @@
       <Filter>DataParser</Filter>
     </ClInclude>
     <ClInclude Include="ShopManager.h">
+      <Filter>GameContents\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="NpcDataParser.h">
+      <Filter>DataParser</Filter>
+    </ClInclude>
+    <ClInclude Include="StringUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="NpcManager.h">
       <Filter>GameContents\Manager</Filter>
     </ClInclude>
   </ItemGroup>

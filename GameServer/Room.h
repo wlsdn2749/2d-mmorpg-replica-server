@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "JobQueue.h"
 #include "Player.h"
@@ -8,6 +8,8 @@
 #include "Npc.h"
 
 #include "PartyService.h"
+#include "ShopManager.h"
+#include "NpcManager.h"
 
 /*------------------------
 		Room (Base)
@@ -129,7 +131,7 @@ private:
 
 public:
 	// 파생 훅
-	virtual void OnEnter(const PlayerRef&) {}
+	virtual void OnEnter(const PlayerRef&);
 	virtual void OnLeave(const PlayerRef&) {}
 	virtual void OnPlayerHpChanged(int playerId);
 	virtual void OnPlayerDeath(int playerId, int killerMonsterId);
@@ -143,8 +145,8 @@ private:
 	NPC Extension
 --------------------*/
 private:
-	std::unordered_map<int, Npc> _npcs;
-	std::unordered_map<Pos2, int> _npcPositions; 
+	std::unordered_map<int, Npc> _npcs; // npcId -> Npc
+	std::unordered_map<Pos2, int> _npcPositions; // Pos2 -> npcId
 
 public:
 	void LoadNpcs(); // 맵 로딩 시 호출
@@ -152,6 +154,12 @@ public:
 	Npc* FindNpcByPosition(int x, int y);
 	Npc* FindNpcByPosition(const Pos2& pos);
 	Npc* FindNpcById(int npcId);
+	
+public:
+	void SendNpcsToPlayer(const PlayerRef& p);
+public:
+	Protocol::NpcInfo GetNpcInfo(int npcId);
+	Protocol::S_NpcList BuildNpcListSnapshot();
 
 // NPC 외부 진입점
 public:

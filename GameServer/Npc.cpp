@@ -7,9 +7,12 @@ void Npc::Initialize(const NpcConfig& cfg)
 	role		= cfg.role;
 	name		= cfg.name;
 	core.pos	= {cfg.x, cfg.y};
-	// dialogId -> unique_ptr<?>
-	// shopId
-	// questIds
+	
+	if(cfg.shopId != 0)
+		_shop		= std::make_unique<NpcShopComponent>(cfg.shopId);
+
+	//_dialog = std::make_unique<NpcDialogComponent>(cfg.dialogId);
+	//_quest = std::make_unique<NpcQuestComponent>(cfg.questIds);
 }
 
 const ENpcInteractionType Npc::GetAvailableType() const
