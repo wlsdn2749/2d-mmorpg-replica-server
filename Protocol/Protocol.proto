@@ -79,6 +79,8 @@ enum MsgId
 	S_EQUIPMENT_INFO_REPLY = 71;
 	S_BROADCAST_PLAYER_EQUIPMENT = 72;
 	S_NPC_LIST = 73;
+	C_NPC_SHOP_SELL_REQUEST = 74;
+	S_NPC_SHOP_SELL_REPLY = 75;
 }
 
 // 클라 -> 게임 서버 jwt 로그인 인증 (0)
@@ -304,7 +306,7 @@ message S_MonsterList
 
 // (35) 클라 -> 서버 : Npc 정보 요청
 message C_NpcInteractRequest {
-	
+	int32 interactionType = 1; // 0=Talk, 1=Shop, 2=Quest
 }
 
 // (36) 서버 -> 클라 : Npc 정보 응답
@@ -566,6 +568,19 @@ message S_NpcList
 {
 	int32 mapId = 1;
 	repeated NpcInfo npcs = 2;
+}
+
+// (74) 클라 -> 서버 : 아이템 판매 요청
+message C_NpcShopSellRequest {
+	int32 npcId = 1;
+	int32 itemId = 2;
+	int32 quantity = 3;
+}
+
+// (75) 서버 -> 클라 : 아이템 판매 요청 응답
+message S_NpcShopSellReply {
+	bool success = 1;
+	string detail = 2;
 }
 
 enum ELoginResult

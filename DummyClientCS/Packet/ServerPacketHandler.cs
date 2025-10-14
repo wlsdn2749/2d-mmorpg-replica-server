@@ -800,5 +800,10 @@ namespace Packet
         {
             throw new NotImplementedException();
         }
+
+        internal static void HANDLE_S_NpcShopSellReply(PacketSession session, S_NpcShopSellReply reply)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

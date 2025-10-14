@@ -194,6 +194,15 @@ private:
 private:
 	// 파티 초대 대기 목록
 	unordered_map<int32, chrono::steady_clock::time_point> _pendingInvites;
-	
+
+
+/*----------------------
+	Shop System
+----------------------*/
+public:
+	void HandleShopBuy(PlayerRef player, int npcId, int itemId, int quantity);
+	void HandleShopSell(PlayerRef player, int npcId, int itemId, int quantity);
+
 };
+
 

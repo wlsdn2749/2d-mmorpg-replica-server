@@ -202,6 +202,16 @@ public:
 		return result;
 	}
 
+	ERemoveItemResult RemoveItemById(int itemId, int count)
+	{
+		auto result = _inventory.RemoveItemById(itemId, count);
+		if (result == ERemoveItemResult::Success)
+		{
+			SaveChangedSlotsToDB();
+		}
+		return result;
+	}
+
 	ERemoveItemResult RemoveItem(int slotIndex, int count, bool deleteEquipmentInstance = true) {
 		// 제거 전에 장비 인스턴스 ID 확인
 		const ItemSlot& slot = _inventory.GetSlot(slotIndex);
@@ -304,6 +314,26 @@ private:
 
 		if (auto session = ownerSession.lock())
 			session->Send(updateBuffer);
+
+		return;
+	}
+
+	void SendInventory()
+	{
+		// 플레이어의 인벤토리 정보를 가져와서 응답 패킷 생성
+		const InventorySystem& inventory = GetInventory();
+		auto slots = inventory.ToProtocolSlots();
+
+		Protocol::S_InventoryReply replyPkt;
+		for (const auto& slotInfo : slots)
+		{
+			*replyPkt.add_slots() = slotInfo;
+		}
+
+		auto sendBuffer = ClientPacketHandler::MakeSendBuffer(replyPkt);
+
+		if (auto session = ownerSession.lock())
+			session->Send(sendBuffer);
 
 		return;
 	}

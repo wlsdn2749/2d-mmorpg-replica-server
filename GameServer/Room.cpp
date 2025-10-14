@@ -348,6 +348,7 @@ void Room::HandleNpcInteract(PlayerRef player, int interactionType)
     // 2. 거리 체크 (IsNearby)
     if(!npc->IsNearby(player->GetPos()), 1) return; // Npc Interaction은 1칸 이내 이여야함. 
 
+	
     // 3. NPC 컴포넌트별 처리 위임
     if (interactionType == 1) { // Shop
         npc->GetShopComponent()->ShowShop(player);
@@ -542,6 +543,48 @@ void Room::ProcessPartyUpdateTick()
     {
         UpdatePartyStatuses();
     }
+}
+
+void Room::HandleShopBuy(PlayerRef player, int npcId, int itemId, int quantity)
+{
+	// 어떤 NPC에게서?
+	Npc* npc = FindNpcById(npcId);
+	if(!npc) return; 
+
+	auto result = npc->GetShopComponent()->ProcessPurchase(player, itemId, quantity);
+
+	Protocol::S_NpcShopBuyReply replyPkt;
+	if (result)
+	{
+		replyPkt.set_success(true);
+		replyPkt.set_detail("");
+	}
+	else
+	{
+		replyPkt.set_success(false);
+		replyPkt.set_detail("Something went wrong! while buying something" + npcId);
+	}
+}
+
+void Room::HandleShopSell(PlayerRef player, int npcId, int itemId, int quantity)
+{
+	// 어떤 NPC에게서?
+	Npc* npc = FindNpcById(npcId);
+	if (!npc) return;
+
+	auto result = npc->GetShopComponent()->ProcessSell(player, itemId, quantity);
+
+	Protocol::S_NpcShopSellReply replyPkt;
+	if (result)
+	{
+		replyPkt.set_success(true);
+		replyPkt.set_detail("");
+	}
+	else
+	{
+		replyPkt.set_success(false);
+		replyPkt.set_detail("Something went wrong! while selling something" + npcId);
+	}
 }
 
 bool Room::CanEnterTile(int nx, int ny) const

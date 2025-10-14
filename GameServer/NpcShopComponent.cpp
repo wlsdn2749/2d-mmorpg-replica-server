@@ -74,9 +74,19 @@ bool NpcShopComponent::ProcessSell(PlayerRef player, int itemId, int quantity)
 {
 	// TODO 
 	// 1. 플레이어 확인
-	// 2. 팔고자하는 아이템 확인
+	auto playerId  = player->playerId;
+	// 2. 팔고자하는 아이템 확인 (인벤토리 존재 유무)
+	// itemId의 아이템을 quantity만큼 가지고 있는가?
+	if(player->GetInventory().FindItemCount(itemId) < quantity)
+		return false;
+
 	// 3. 팔고자하는 가격 확인
+	auto sellPrice = ItemManager::Instance().GetSellPrice(itemId);
+	auto totalSellPRice = sellPrice * quantity;
+
 	// 4. 인벤토리에서 아이템 제거 및 가격 추가
+	player->RemoveItemById(itemId, quantity);
+	
 	return false;
 }
 

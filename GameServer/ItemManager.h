@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "InventoryCore.h"
 #include "DBDisPatcher.h"
 
@@ -32,6 +32,7 @@ public:
     bool IsStackableItem(int itemId) const;
     int GetMaxStackSize(int itemId) const;
     Protocol::EItemType GetItemType(int itemId) const;
+	int GetSellPrice(int itemId) const;
 
     // 아이템 효과 처리
     bool CanUseItem(int itemId) const;

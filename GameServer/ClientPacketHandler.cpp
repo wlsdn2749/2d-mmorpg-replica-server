@@ -462,12 +462,22 @@ bool Handle_C_NpcInteractRequest(PacketSessionRef& session, Protocol::C_NpcInter
 
 	RoomRef room = player->GetRoom();
 
-	// TODO
+	// InteractionType에 맞게 Room에 실행 넘기기
+	room->DoAsync(&Room::HandleNpcInteract, player, pkt.interactiontype());
+	
 }
 bool Handle_C_NpcShopBuyRequest(PacketSessionRef& session, Protocol::C_NpcShopBuyRequest& pkt)
 {
 
 	// TODO
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+
+	RoomRef room = player->GetRoom();
 
 	return false;
 }
@@ -1230,4 +1240,9 @@ bool Handle_C_EquipmentInfoRequest(PacketSessionRef& session, Protocol::C_Equipm
 	session->Send(SendBuffer);
 
 	return true;
+}
+
+bool Handle_C_NpcShopSellRequest(PacketSessionRef& session, Protocol::C_NpcShopSellRequest& pkt)
+{
+	return false;
 }

@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "ItemDataParser.h"
 
 std::unordered_map<int, std::unique_ptr<ItemData>> ItemDataParser::LoadItemData()
@@ -56,6 +56,7 @@ ItemData ItemDataParser::JsonToItemData(const rapidjson::Value& json)
     itemData.isStackable    = JsonDataParser::SafeGetBool(json, "isStackable");
     itemData.maxStack       = JsonDataParser::SafeGetInt(json, "maxStack");
     itemData.itemType       = ItemDataParser::SafeGetItemType(json, "itemType");
+	itemData.sellPrice		= JsonDataParser::SafeGetInt(json, "sellPrice");
        
     return itemData;
 }

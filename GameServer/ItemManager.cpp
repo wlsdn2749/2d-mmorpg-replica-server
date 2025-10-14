@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "ItemManager.h"
 #include "Player.h"
 #include "GenProcedures.h"
@@ -75,6 +75,12 @@ Protocol::EItemType ItemManager::GetItemType(int itemId) const
 {
     const ItemData* data = GetItemData(itemId);
     return data ? data->itemType : Protocol::EItemType::ITEM_TYPE_UNKNOWN;
+}
+
+int ItemManager::GetSellPrice(int itemId) const
+{
+    const ItemData* data = GetItemData(itemId);
+	return data ? data->sellPrice : 1;
 }
 
 bool ItemManager::CanUseItem(int itemId) const

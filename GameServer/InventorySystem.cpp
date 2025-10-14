@@ -151,6 +151,19 @@ bool InventorySystem::IsSlotEmpty(int slotIndex) const
     return _slots[slotIndex].IsEmpty();
 }
 
+Vector<ItemSlot*> InventorySystem::GetSlotsById(int itemId)
+{
+	Vector<ItemSlot*> itemSlots { };
+
+	for (int i = 0; i < INVENTORY_TOTAL_SLOTS; ++i)
+	{
+		if (_slots[i].itemId == itemId)
+			itemSlots.push_back(&_slots[i]);
+	}
+
+	return itemSlots;
+}
+
 bool InventorySystem::SetQuickSlot(int slotIndex, bool isQuickSlot)
 {
     if (!IsValidSlotIndex(slotIndex))
@@ -173,6 +186,19 @@ std::vector<int> InventorySystem::GetQuickSlotIndices() const
             quickSlots.push_back(i);
     }
     return quickSlots;
+}
+
+int InventorySystem::FindItemCount(int itemId) const
+{
+	int count = 0;
+    
+	for (int i = 0; i < INVENTORY_TOTAL_SLOTS; ++i)
+	{
+		if(_slots[i].itemId == itemId)
+			count += _slots[i].count;
+	}
+
+	return count;
 }
 
 int InventorySystem::FindItemSlot(int itemId) const
