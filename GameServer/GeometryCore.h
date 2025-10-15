@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 class GeometryCore
 {
@@ -28,6 +28,16 @@ struct std::hash<Pos2>
 		return x ^ (y << 1); // or use boost::hash_combine
 	}
 };
+
+static inline const Protocol::Vector2Info Pos2ToVector2Info(const Pos2& pos) noexcept
+{
+	Protocol::Vector2Info info;
+
+	info.set_x(pos.x);
+	info.set_y(pos.y);
+
+	return info;
+}
 
 static inline int32 Manhattan(const Pos2& a, const Pos2& b) {
 	return std::abs(a.x - b.x) + std::abs(a.y - b.y);

@@ -697,5 +697,79 @@ namespace DummyClientCS
                 }
             }
         }
+
+        // NPC 상호작용 요청
+        public async Task SendNpcInteractRequest(int interactionType)
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_NpcInteractRequest
+                    {
+                        InteractionType = interactionType
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    string interactionName = interactionType switch
+                    {
+                        0 => "Talk",
+                        1 => "Shop",
+                        2 => "Quest",
+                        _ => "Unknown"
+                    };
+                    Console.WriteLine($"[NPC Interact] Interaction type: {interactionName} ({interactionType})");
+                    Console.ResetColor();
+                }
+            }
+        }
+
+        // NPC 상점 구매 요청
+        public async Task SendNpcShopBuyRequest(int npcId, int itemId, int quantity)
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_NpcShopBuyRequest
+                    {
+                        NpcId = npcId,
+                        ItemId = itemId,
+                        Quantity = quantity
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"[NPC Shop Buy] NpcId: {npcId}, ItemId: {itemId}, Quantity: {quantity}");
+                    Console.ResetColor();
+                }
+            }
+        }
+
+        // NPC 상점 판매 요청
+        public async Task SendNpcShopSellRequest(int npcId, int itemId, int quantity)
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_NpcShopSellRequest
+                    {
+                        NpcId = npcId,
+                        ItemId = itemId,
+                        Quantity = quantity
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"[NPC Shop Sell] NpcId: {npcId}, ItemId: {itemId}, Quantity: {quantity}");
+                    Console.ResetColor();
+                }
+            }
+        }
     }
 }

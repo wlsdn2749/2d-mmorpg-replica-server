@@ -15,7 +15,7 @@ namespace SimpleGoogleSheetsExample
         // 여기에 실제 스프레드시트 ID 입력
         static SheetManager? _sheetManager;
         static List<string> sheetNameList = new List<string>{
-            "Monster", "SpawnPoint", "Item", "Drop", "Equipment"
+            "Monster", "SpawnPoint", "Item", "Drop", "Equipment", "Npc", "Shop", "ShopItem"
         };
 
         static void Main(string[] args)

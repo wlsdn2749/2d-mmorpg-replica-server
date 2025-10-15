@@ -15,12 +15,13 @@ struct ItemData {
     bool isStackable = false;
     int maxStack = 1;
     Protocol::EItemType itemType = Protocol::EItemType::ITEM_TYPE_UNKNOWN;
+	int sellPrice {};
 
     ItemData() = default;
     ItemData(int id, const std::string& n, const std::string& desc, 
-             bool stackable, int maxStk, Protocol::EItemType type)
+             bool stackable, int maxStk, Protocol::EItemType type, int sellPrice)
         : itemId(id), name(n), description(desc), 
-          isStackable(stackable), maxStack(maxStk), itemType(type) {}
+          isStackable(stackable), maxStack(maxStk), itemType(type), sellPrice(sellPrice) {}
 };
 
 // 인벤토리 슬롯 정보
@@ -91,7 +92,8 @@ enum class ERemoveItemResult {
     Success,
     ItemNotFound,
     InsufficientQuantity,
-    InvalidSlot
+    InvalidSlot,
+	InvalidItem
 };
 
 // 아이템 사용 결과

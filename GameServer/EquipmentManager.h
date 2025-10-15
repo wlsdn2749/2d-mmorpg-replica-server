@@ -35,7 +35,7 @@ public:
 	bool CanEquip(int itemId, int playerLevel) const;
 
 	// 디버그 및 관리
-	void AddEquipmentData(const EquipmentData& equipmentData);
+	void AddEquipmentData(EquipmentData&& equipmentData);
 	void RemoveEquipmentData(int itemId);
 	void PrintAllEquipments() const;
 	size_t GetEquipmentCount() const;

@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include <iostream>
 
 /*------------------------
@@ -36,10 +36,16 @@
 #include "RoomManager.h"
 
 #include "ShardBoot.h"
+
+/*----------------------
+	각종 매니저 들
+----------------------*/
 #include "ItemManager.h"
 #include "EquipmentManager.h"
-
 #include "DropManager.h"
+
+#include "ShopManager.h"
+#include "NpcManager.h"
 
 enum
 {
@@ -77,10 +83,12 @@ int main()
 	ClientPacketHandler::init(); // 핸들러와 Wrapper 매핑 필수
 	JwtAuth::Init(s.jwtSecret);
 
-	// ItemManager 초기화 (DB 로딩 포함)
+	// ItemManager 초기화 (DB, Sheet 로딩 포함)
 	ItemManager::Instance().Initialize();
 	EquipmentManager::Instance().Initialize();
 	DropManager::Instance().Initialize();
+	ShopManager::Instance().Initialize();
+	NpcManager::Instance().Initialize();
 
 	// 샤드 기반 워커 로직
 	const int totalRooms = 3;

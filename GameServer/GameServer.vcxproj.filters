@@ -204,16 +204,10 @@
     <ClCompile Include="NpcDialogManager.cpp">
       <Filter>GameContents\Npc</Filter>
     </ClCompile>
-    <ClCompile Include="NpcManager.cpp">
-      <Filter>GameContents\Npc</Filter>
-    </ClCompile>
     <ClCompile Include="NpcQuestComponent.cpp">
       <Filter>GameContents\Npc</Filter>
     </ClCompile>
     <ClCompile Include="NpcShopComponent.cpp">
-      <Filter>GameContents\Npc</Filter>
-    </ClCompile>
-    <ClCompile Include="NpcShopDataManager.cpp">
       <Filter>GameContents\Npc</Filter>
     </ClCompile>
     <ClCompile Include="JsonDataParser.cpp">
@@ -251,6 +245,18 @@
     </ClCompile>
     <ClCompile Include="EquipmentDataParser.cpp">
       <Filter>DataParser</Filter>
+    </ClCompile>
+    <ClCompile Include="ShopDataParser.cpp">
+      <Filter>DataParser</Filter>
+    </ClCompile>
+    <ClCompile Include="ShopManager.cpp">
+      <Filter>GameContents\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="NpcDataParser.cpp">
+      <Filter>DataParser</Filter>
+    </ClCompile>
+    <ClCompile Include="NpcManager.cpp">
+      <Filter>GameContents\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -404,16 +410,10 @@
     <ClInclude Include="NpcDialogManager.h">
       <Filter>GameContents\Npc</Filter>
     </ClInclude>
-    <ClInclude Include="NpcManager.h">
-      <Filter>GameContents\Npc</Filter>
-    </ClInclude>
     <ClInclude Include="NpcQuestComponent.h">
       <Filter>GameContents\Npc</Filter>
     </ClInclude>
     <ClInclude Include="NpcShopComponent.h">
-      <Filter>GameContents\Npc</Filter>
-    </ClInclude>
-    <ClInclude Include="NpcShopDataManager.h">
       <Filter>GameContents\Npc</Filter>
     </ClInclude>
     <ClInclude Include="MonsterDataParser.h">
@@ -455,6 +455,24 @@
     <ClInclude Include="EquipmentDataParser.h">
       <Filter>DataParser</Filter>
     </ClInclude>
+    <ClInclude Include="ShopCore.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopDataParser.h">
+      <Filter>DataParser</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopManager.h">
+      <Filter>GameContents\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="NpcDataParser.h">
+      <Filter>DataParser</Filter>
+    </ClInclude>
+    <ClInclude Include="StringUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="NpcManager.h">
+      <Filter>GameContents\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="appsettings.json">
@@ -491,6 +509,15 @@
       <Filter>Resources\Data</Filter>
     </None>
     <None Include="Resources\Data\Equipment_data.json">
+      <Filter>Resources\Data</Filter>
+    </None>
+    <None Include="Resources\Data\Npc_data.json">
+      <Filter>Resources\Data</Filter>
+    </None>
+    <None Include="Resources\Data\Shop_data.json">
+      <Filter>Resources\Data</Filter>
+    </None>
+    <None Include="Resources\Data\ShopItem_data.json">
       <Filter>Resources\Data</Filter>
     </None>
   </ItemGroup>

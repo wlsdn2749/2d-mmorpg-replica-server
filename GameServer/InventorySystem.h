@@ -28,12 +28,14 @@ public:
     ItemSlot& GetSlot(int slotIndex);
     bool IsValidSlotIndex(int slotIndex) const;
     bool IsSlotEmpty(int slotIndex) const;
+	Vector<ItemSlot*> GetSlotsById(int itemId);
 
     // 퀵슬롯 관리
     bool SetQuickSlot(int slotIndex, bool isQuickSlot);
     std::vector<int> GetQuickSlotIndices() const;
 
     // 검색
+	int FindItemCount(int itemId) const;
     int FindItemSlot(int itemId) const;
     int FindEmptySlot() const;
     std::vector<int> GetItemSlots(int itemId) const;

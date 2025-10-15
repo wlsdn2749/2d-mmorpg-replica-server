@@ -1,0 +1,32 @@
+[
+  {
+    "shopId": "1",
+    "itemId": "10001",
+    "buyPrice": "10",
+    "stock": "-1",
+    "refreshTime": "0",
+    "shopName": "Shop 1",
+    "shopType": "GENERAL",
+    "name": "체력 포션",
+    "description": "HP를 30 회복 시킵니다.",
+    "isStackable": "TRUE",
+    "maxStack": "99",
+    "itemType": "CONSUMABLE",
+    "sellPrice": "1"
+  },
+  {
+    "shopId": "1",
+    "itemId": "10002",
+    "buyPrice": "20",
+    "stock": "-1",
+    "refreshTime": "0",
+    "shopName": "Shop 1",
+    "shopType": "GENERAL",
+    "name": "고급 체력 포션",
+    "description": "HP를 50 회복 시킵니다.",
+    "isStackable": "TRUE",
+    "maxStack": "99",
+    "itemType": "CONSUMABLE",
+    "sellPrice": "1"
+  }
+]

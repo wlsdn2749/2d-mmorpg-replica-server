@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "EntityCore.h"
 #include "NpcDialogComponent.h"
 #include "NpcQuestComponent.h"
@@ -33,8 +33,9 @@ enum class ENpcInteractionType : uint8_t
 struct NpcConfig
 {
 	int				npcId {};
+	std::string		name{};
 	ENpcRole		role {};
-	std::string		name {};
+	int				mapId {};
 	int				x{}, y{};
 	int				dialogId {};
 	int				shopId {};
@@ -44,11 +45,16 @@ struct NpcConfig
 
 class Npc
 {
-	EntityCore	core; // 
+public: // TODO 나중에 private로 교체 요망
+	EntityCore	core; 
 	std::string name;
 	ENpcRole	role;
 	ENpcState	state;
 
+private:
+	std::unique_ptr<NpcDialogComponent> _dialog;
+	std::unique_ptr<NpcShopComponent> _shop;
+	std::unique_ptr<NpcQuestComponent> _quest;
 
 public:
 	void Initialize(const NpcConfig& cfg);
@@ -69,9 +75,5 @@ public:
 	NpcShopComponent* GetShopComponent() { return _shop.get(); }
 	NpcQuestComponent* GetQuestComponent() { return _quest.get(); }
 
-private:
-	std::unique_ptr<NpcDialogComponent> _dialog;
-	std::unique_ptr<NpcShopComponent> _shop;
-	std::unique_ptr<NpcQuestComponent> _quest;
 };
 

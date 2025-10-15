@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "InventoryCore.h"
 #include "DBDisPatcher.h"
 
@@ -32,13 +32,14 @@ public:
     bool IsStackableItem(int itemId) const;
     int GetMaxStackSize(int itemId) const;
     Protocol::EItemType GetItemType(int itemId) const;
+	int GetSellPrice(int itemId) const;
 
     // 아이템 효과 처리
     bool CanUseItem(int itemId) const;
     void ApplyItemEffect(int itemId, int count, PlayerRef player);
 
     // 디버그 및 관리
-    void AddItemData(const ItemData& itemData);
+    void AddItemData(ItemData&& itemData);
     void RemoveItemData(int itemId);
     void PrintAllItems() const;
     size_t GetItemCount() const;

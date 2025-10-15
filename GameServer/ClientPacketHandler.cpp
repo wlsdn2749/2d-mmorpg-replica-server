@@ -462,14 +462,26 @@ bool Handle_C_NpcInteractRequest(PacketSessionRef& session, Protocol::C_NpcInter
 
 	RoomRef room = player->GetRoom();
 
-	// TODO
+	// InteractionType에 맞게 Room에 실행 넘기기
+	room->DoAsync(&Room::HandleNpcInteract, player, pkt.interactiontype());
+
+	return true;
+	
 }
 bool Handle_C_NpcShopBuyRequest(PacketSessionRef& session, Protocol::C_NpcShopBuyRequest& pkt)
 {
 
-	// TODO
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
 
-	return false;
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+
+	RoomRef room = player->GetRoom();
+
+	room->DoAsync(&Room::HandleShopBuy, player, pkt.npcid(), pkt.itemid(), pkt.quantity());
+	return true;
 }
 
 bool Handle_C_PlayerDeathReady(PacketSessionRef& session, Protocol::C_PlayerDeathReady& pkt)
@@ -551,21 +563,15 @@ bool Handle_C_GiveItemRequest(PacketSessionRef& session, Protocol::C_GiveItemReq
 			replyPkt.set_success(true);
 			replyPkt.set_errormessage("");
 
-			// 인벤토리 업데이트 브로드캐스트
-			Protocol::S_InventoryUpdate updatePkt;
 			auto slots = player->GetInventory().ToProtocolSlots();
 			for (const auto& slot : slots)
 			{
 				if (slot.itemid() == itemId)
 				{
-					*updatePkt.add_changedslots() = slot;
 					*replyPkt.mutable_addedslot() = slot;
 					break;
 				}
 			}
-
-			auto updateBuffer = ClientPacketHandler::MakeSendBuffer(updatePkt);
-			session->Send(updateBuffer);
 
 			GConsoleLogger->WriteStdOut(Color::GREEN,
 				L"[Test] To Player %d, Item:%d, Count:%d Give Complete\n",
@@ -1236,4 +1242,22 @@ bool Handle_C_EquipmentInfoRequest(PacketSessionRef& session, Protocol::C_Equipm
 	session->Send(SendBuffer);
 
 	return true;
+}
+
+bool Handle_C_NpcShopSellRequest(PacketSessionRef& session, Protocol::C_NpcShopSellRequest& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+	if (!player)
+		return false;
+
+	RoomRef room = player->GetRoom();
+
+	room->DoAsync(&Room::HandleShopSell, player, pkt.npcid(), pkt.itemid(), pkt.quantity());
+	
+	
 }
