@@ -345,8 +345,12 @@ void Room::HandleNpcInteract(PlayerRef player, int interactionType)
     ForwardTile(player->GetPos(), player->Dir(), outPos);
     Npc* npc = FindNpcByPosition(outPos);
 
+	if(!npc) return; // 없으면 종료
+
+
     // 2. 거리 체크 (IsNearby)
-    if(!npc->IsNearby(player->GetPos()), 1) return; // Npc Interaction은 1칸 이내 이여야함. 
+    if(!npc->IsNearby(player->GetPos(), 1)) 
+		return; // Npc Interaction은 1칸 이내 이여야함. 
 
 	
     // 3. NPC 컴포넌트별 처리 위임
@@ -389,8 +393,8 @@ Protocol::NpcInfo Room::GetNpcInfo(int npcId)
 	info.set_npcid(npc->NpcId());
 	info.set_npcname(npc->Name());
 
-	Protocol::Vector2Info pos2Info = Pos2ToVector2Info(npc->Position());
-	info.set_allocated_pos(&pos2Info);
+	auto vectorInfo = Pos2ToVector2Info(npc->Position());
+	info.mutable_pos()->CopyFrom(vectorInfo);
 
 	return info;
 }

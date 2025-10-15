@@ -13,7 +13,7 @@ bool TownRoom::CanEnterTile(int nx, int ny) const
 
 void TownRoom::InitRoomSystems()
 {
-	;
+	Room::InitRoomSystems();
 }
 
 void TownRoom::OnEnter(const PlayerRef& p)

@@ -111,7 +111,7 @@ public:
 	inline void SetBaseAtk(int baseAtk) { _baseAtk = baseAtk; }
 	inline void SetBaseDef(int baseDef) { _baseDef = baseDef; }
 
-	inline void AddMoney(int money) { _money += money; }
+	inline void AddMoney(int money) { _money += money; } // TODO 나중에 돈이 변경될때 DB에 업데이트하는 로직이 있어야함
 	inline void AddLevel(int level = 1) { _level += level; }
 	inline void AddExp(int exp)
 	{

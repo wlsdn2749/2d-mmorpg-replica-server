@@ -4,8 +4,8 @@
     "name": "상인",
     "role": "SHOP",
     "mapId": "1",
-    "x": "15",
-    "y": "25",
+    "x": "26",
+    "y": "-22",
     "dialogId": "-1",
     "shopId": "1",
     "questIds": "-1"

@@ -72,7 +72,6 @@ bool NpcShopComponent::ProcessPurchase(PlayerRef player, int itemId, int quantit
 
 bool NpcShopComponent::ProcessSell(PlayerRef player, int itemId, int quantity)
 {
-	// TODO 
 	// 1. 플레이어 확인
 	auto playerId  = player->playerId;
 	// 2. 팔고자하는 아이템 확인 (인벤토리 존재 유무)
@@ -86,6 +85,7 @@ bool NpcShopComponent::ProcessSell(PlayerRef player, int itemId, int quantity)
 
 	// 4. 인벤토리에서 아이템 제거 및 가격 추가
 	player->RemoveItemById(itemId, quantity);
+	player->AddMoney(sellPrice * quantity);
 	
 	return false;
 }

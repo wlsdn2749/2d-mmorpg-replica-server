@@ -73,6 +73,10 @@ class Program
             Console.WriteLine("\n===== 장비 시스템 테스트 =====");
             Console.WriteLine("[e] 장비 정보 조회");
             Console.WriteLine("[h] 장비 관리 (장착/해제)");
+            Console.WriteLine("\n===== NPC 상점 시스템 테스트 =====");
+            Console.WriteLine("[/] NPC 상호작용 (InteractionType 입력)");
+            Console.WriteLine("[\'] NPC 상점 아이템 구매 (NpcId, ItemId, Quantity 입력)");
+            Console.WriteLine("[;] NPC 상점 아이템 판매 (NpcId, ItemId, Quantity 입력)");
             Console.WriteLine("\n===== 종료 로직 테스트 =====");
             Console.WriteLine("[x] 룸에서 나가기 (캐릭터 변경)");
             Console.WriteLine("[l] 로그아웃 테스트 (JWT 인증 상태로 복귀)");
@@ -710,6 +714,115 @@ class Program
                     {
                         Console.WriteLine("잘못된 선택입니다.");
                     }
+                    break;
+                case "/":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
+                        break;
+                    }
+                    Console.WriteLine("NPC 상호작용 타입 선택:");
+                    Console.WriteLine("  [0] Talk");
+                    Console.WriteLine("  [1] Shop");
+                    Console.WriteLine("  [2] Quest");
+                    Console.Write("선택: ");
+                    string? interactionTypeInput = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(interactionTypeInput) || !Int32.TryParse(interactionTypeInput, out int interactionType))
+                    {
+                        Console.WriteLine("올바른 상호작용 타입을 입력해주세요!");
+                        break;
+                    }
+
+                    if (interactionType < 0 || interactionType > 2)
+                    {
+                        Console.WriteLine("상호작용 타입은 0~2 사이여야 합니다!");
+                        break;
+                    }
+
+                    await SessionManager.Instance.SendNpcInteractRequest(interactionType);
+                    break;
+                case "'":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
+                        break;
+                    }
+                    Console.Write("NPC ID 입력: ");
+                    string? buyNpcIdInput = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(buyNpcIdInput) || !Int32.TryParse(buyNpcIdInput, out int buyNpcId))
+                    {
+                        Console.WriteLine("올바른 NPC ID를 입력해주세요!");
+                        break;
+                    }
+
+                    Console.Write("구매할 아이템 ID 입력: ");
+                    string? buyItemIdInput = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(buyItemIdInput) || !Int32.TryParse(buyItemIdInput, out int buyItemId))
+                    {
+                        Console.WriteLine("올바른 아이템 ID를 입력해주세요!");
+                        break;
+                    }
+
+                    Console.Write("구매 수량 입력: ");
+                    string? buyQuantityInput = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(buyQuantityInput) || !Int32.TryParse(buyQuantityInput, out int buyQuantity))
+                    {
+                        Console.WriteLine("올바른 수량을 입력해주세요!");
+                        break;
+                    }
+
+                    if (buyQuantity <= 0)
+                    {
+                        Console.WriteLine("수량은 0보다 커야 합니다!");
+                        break;
+                    }
+
+                    await SessionManager.Instance.SendNpcShopBuyRequest(buyNpcId, buyItemId, buyQuantity);
+                    break;
+                case ";":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
+                        break;
+                    }
+                    Console.Write("NPC ID 입력: ");
+                    string? sellNpcIdInput = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(sellNpcIdInput) || !Int32.TryParse(sellNpcIdInput, out int sellNpcId))
+                    {
+                        Console.WriteLine("올바른 NPC ID를 입력해주세요!");
+                        break;
+                    }
+
+                    Console.Write("판매할 아이템 ID 입력: ");
+                    string? sellItemIdInput = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(sellItemIdInput) || !Int32.TryParse(sellItemIdInput, out int sellItemId))
+                    {
+                        Console.WriteLine("올바른 아이템 ID를 입력해주세요!");
+                        break;
+                    }
+
+                    Console.Write("판매 수량 입력: ");
+                    string? sellQuantityInput = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(sellQuantityInput) || !Int32.TryParse(sellQuantityInput, out int sellQuantity))
+                    {
+                        Console.WriteLine("올바른 수량을 입력해주세요!");
+                        break;
+                    }
+
+                    if (sellQuantity <= 0)
+                    {
+                        Console.WriteLine("수량은 0보다 커야 합니다!");
+                        break;
+                    }
+
+                    await SessionManager.Instance.SendNpcShopSellRequest(sellNpcId, sellItemId, sellQuantity);
                     break;
                 case "x":
                     if (!_isInGame)

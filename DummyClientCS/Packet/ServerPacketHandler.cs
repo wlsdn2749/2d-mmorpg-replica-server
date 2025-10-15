@@ -344,17 +344,52 @@ namespace Packet
 
         internal static void HANDLE_S_NpcShopOpen(PacketSession session, S_NpcShopOpen open)
         {
-            throw new NotImplementedException();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"[S_NpcShopOpen] NPC Shop Open - NpcId: {open.NpcId}, ShopId: {open.ShopId}");
+            Console.WriteLine("Available Items:");
+            foreach (var item in open.Items)
+            {
+                Console.WriteLine($"  - ItemId: {item.ItemId}, Quantity: {item.Quantity}, Price: {item.Price}");
+            }
+            Console.ResetColor();
         }
 
         internal static void HANDLE_S_NpcShopBuyReply(PacketSession session, S_NpcShopBuyReply reply)
         {
-            throw new NotImplementedException();
+            if (reply.Success)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"[S_NpcShopBuyReply] Purchase Success!");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"[S_NpcShopBuyReply] Purchase Failed: {reply.Detail}");
+            }
+            Console.ResetColor();
         }
 
         internal static void HANDLE_S_NpcInteractReply(PacketSession session, S_NpcInteractReply reply)
         {
-            throw new NotImplementedException();
+            string interactionType = reply.InteractionType switch
+            {
+                0 => "Talk",
+                1 => "Shop",
+                2 => "Quest",
+                _ => "Unknown"
+            };
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"[S_NpcInteractReply] NPC Interaction - NpcId: {reply.NpcId}, Name: {reply.NpcName}, Type: {interactionType}");
+            if (reply.Dialogs.Count > 0)
+            {
+                Console.WriteLine("Dialogs:");
+                foreach (var dialog in reply.Dialogs)
+                {
+                    Console.WriteLine($"  - {dialog}");
+                }
+            }
+            Console.ResetColor();
         }
 
         internal static void HANDLE_S_PlayerStat(PacketSession session, S_PlayerStat stat)
@@ -790,20 +825,37 @@ namespace Packet
             Console.ResetColor();
         }
 
-        internal static void HANDLE_S_UnEquipItemReply(PacketSession session, S_UnequipItemReply reply)
-        {
-            // Duplicate handler - redirects to HANDLE_S_UnequipItemReply
-            HANDLE_S_UnequipItemReply(session, reply);
-        }
-
         internal static void HANDLE_S_NpcList(PacketSession session, S_NpcList list)
         {
-            throw new NotImplementedException();
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine($"[S_NpcList] MapId: {list.MapId}, NPC Count: {list.Npcs.Count}");
+            foreach (var npc in list.Npcs)
+            {
+                string npcTypeName = npc.NpcType switch
+                {
+                    0 => "Dialog",
+                    1 => "Shop",
+                    2 => "Quest",
+                    _ => "Unknown"
+                };
+                Console.WriteLine($"  - NpcId: {npc.NpcId}, Name: {npc.NpcName}, Pos: ({npc.Pos.X}, {npc.Pos.Y}), Type: {npcTypeName}");
+            }
+            Console.ResetColor();
         }
 
         internal static void HANDLE_S_NpcShopSellReply(PacketSession session, S_NpcShopSellReply reply)
         {
-            throw new NotImplementedException();
+            if (reply.Success)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"[S_NpcShopSellReply] Sell Success!");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"[S_NpcShopSellReply] Sell Failed: {reply.Detail}");
+            }
+            Console.ResetColor();
         }
     }
 }

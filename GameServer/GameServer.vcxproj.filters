@@ -511,6 +511,15 @@
     <None Include="Resources\Data\Equipment_data.json">
       <Filter>Resources\Data</Filter>
     </None>
+    <None Include="Resources\Data\Npc_data.json">
+      <Filter>Resources\Data</Filter>
+    </None>
+    <None Include="Resources\Data\Shop_data.json">
+      <Filter>Resources\Data</Filter>
+    </None>
+    <None Include="Resources\Data\ShopItem_data.json">
+      <Filter>Resources\Data</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="GameDB.xml">

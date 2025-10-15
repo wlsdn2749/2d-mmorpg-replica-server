@@ -332,6 +332,9 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <None Include="Resources\Data\Equipment_data.json" />
     <None Include="Resources\Data\Item_data.json" />
     <None Include="Resources\Data\Monster_data.json" />
+    <None Include="Resources\Data\Npc_data.json" />
+    <None Include="Resources\Data\ShopItem_data.json" />
+    <None Include="Resources\Data\Shop_data.json" />
     <None Include="Resources\Data\SpawnPoint_data.json" />
     <None Include="Resources\Maps\Baekje_Tilemap_Info.json" />
     <None Include="Resources\Maps\Goguryeo_Tilemap_Info.json" />

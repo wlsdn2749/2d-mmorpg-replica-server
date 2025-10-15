@@ -464,12 +464,13 @@ bool Handle_C_NpcInteractRequest(PacketSessionRef& session, Protocol::C_NpcInter
 
 	// InteractionType에 맞게 Room에 실행 넘기기
 	room->DoAsync(&Room::HandleNpcInteract, player, pkt.interactiontype());
+
+	return true;
 	
 }
 bool Handle_C_NpcShopBuyRequest(PacketSessionRef& session, Protocol::C_NpcShopBuyRequest& pkt)
 {
 
-	// TODO
 	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
 
 	if (gameSession->GetState() != GameSession::State::InRoom)
@@ -479,7 +480,8 @@ bool Handle_C_NpcShopBuyRequest(PacketSessionRef& session, Protocol::C_NpcShopBu
 
 	RoomRef room = player->GetRoom();
 
-	return false;
+	room->DoAsync(&Room::HandleShopBuy, player, pkt.npcid(), pkt.itemid(), pkt.quantity());
+	return true;
 }
 
 bool Handle_C_PlayerDeathReady(PacketSessionRef& session, Protocol::C_PlayerDeathReady& pkt)
@@ -1244,5 +1246,18 @@ bool Handle_C_EquipmentInfoRequest(PacketSessionRef& session, Protocol::C_Equipm
 
 bool Handle_C_NpcShopSellRequest(PacketSessionRef& session, Protocol::C_NpcShopSellRequest& pkt)
 {
-	return false;
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+	if (!player)
+		return false;
+
+	RoomRef room = player->GetRoom();
+
+	room->DoAsync(&Room::HandleShopSell, player, pkt.npcid(), pkt.itemid(), pkt.quantity());
+	
+	
 }
