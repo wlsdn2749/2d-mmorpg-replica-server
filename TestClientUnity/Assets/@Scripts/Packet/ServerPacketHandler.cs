@@ -570,5 +570,17 @@ namespace Packet
         {
             PartyState.Instance.HandleJoinRequestList(pkt);
         }
+        internal static void HANDLE_S_EquipItemReply(PacketSession session, S_EquipItemReply pkt)
+        {
+        }
+        internal static void HANDLE_S_UnequipItemReply(PacketSession session, S_UnequipItemReply pkt)
+        {
+        }
+        internal static void HANDLE_S_EquipmentInfoReply(PacketSession session, S_EquipmentInfoReply pkt)
+        {
+        }
+        internal static void HANDLE_S_BroadcastPlayerEquipment(PacketSession session, S_BroadcastPlayerEquipment pkt)
+        {
+        }
     }
 }

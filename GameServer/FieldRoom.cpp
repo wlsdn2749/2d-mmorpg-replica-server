@@ -59,7 +59,7 @@ bool FieldRoom::ProcessMonsterDropInRoom(EntityId monsterId, int killerPlayerId)
 
 	// 실패한 아이템이 있으면 알림 전송
 	if (failCount > 0) {
-		std::string message = "인벤토리가 가득 참: " + failedItems;
+		std::string message = /*"인벤토리가 가득 참: "*/ "Inventory is Full : " + failedItems;
 		SendSystemMessageToPlayer(killerPlayerId, message, Protocol::EMessageType::MESSAGE_WARNING);
 	}
 
