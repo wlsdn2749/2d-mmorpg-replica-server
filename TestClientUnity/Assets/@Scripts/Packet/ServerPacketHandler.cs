@@ -582,5 +582,11 @@ namespace Packet
         internal static void HANDLE_S_BroadcastPlayerEquipment(PacketSession session, S_BroadcastPlayerEquipment pkt)
         {
         }
+        internal static void HANDLE_S_NpcList(PacketSession session, S_NpcList pkt)
+        {
+        }
+        internal static void HANDLE_S_NpcShopSellReply(PacketSession session, S_NpcShopSellReply pkt)
+        {
+        }
     }
 }
