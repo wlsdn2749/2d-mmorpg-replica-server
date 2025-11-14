@@ -1,5 +1,9 @@
 #pragma once
 
+#include "TypeCore.h"
+#include "Protocol.pb.h"
+#include "GeometryCore.h"
+
 struct EntityCore
 {
 	EntityId	id{};

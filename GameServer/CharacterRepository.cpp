@@ -1,2 +1,236 @@
 #include "pch.h"
 #include "CharacterRepository.h"
+
+
+
+
+/* 캐릭터 생성 요청*/
+void CharacterRepository::CreateCharacter_DB(DBConnection& conn, int userId, String username, Protocol::EGender gender, Protocol::ERegion region, int lastRoom)
+{
+	SP::CreateCharacter sp(conn);
+	sp.ParamIn_UserId(userId); // ForeignKey
+	sp.ParamIn_Username(username.c_str(), static_cast<int>(username.size()));
+	sp.ParamIn_Gender(gender);
+	sp.ParamIn_Region(region);
+	sp.ParamIn_LastRoom(lastRoom);
+	sp.Execute();
+}
+std::future<void> CharacterRepository::CreateCharacterAsync(int userId, wstring_view username, Protocol::EGender gender, Protocol::ERegion region, int lastRoom)
+{
+	auto w_username = String(username);
+	return DbDispatcher::EnqueueRet([userId, w_username, gender, region, lastRoom](DBConnection& c) {
+		CreateCharacter_DB(c, userId, w_username, gender, region, lastRoom);
+		});
+}
+	/* 동일 Username 존재 판단*/
+
+CharacterRepository::ValidationResult CharacterRepository::IsValidUsername(std::string username) // username이 u8문자열
+{
+	auto fut = CharacterUsernameExists(username); // 미리 비동기 처리
+
+	// 2-6자, 한글 아니면 바로 리턴
+	if (!IsValidKoreanNameAndLengths(username))
+	{
+		return ValidationResult{ false, "이름이 길거나 적합하지 않습니다" };
+	}
+
+	// DB에 중복 되어있는 문자열 확인
+	auto isDuplicated = fut.get();
+	if (isDuplicated)
+	{
+		return ValidationResult{ false, "등록된 이름입니다." };
+	}
+
+	return ValidationResult{ true, "" };
+}
+std::future<bool> CharacterRepository::CharacterUsernameExists(std::string username)
+{
+	return DbDispatcher::EnqueueRet([username](DBConnection& c) {
+		return CharacterUsernameExists_DB(c, username);
+		});
+}
+bool CharacterRepository::CharacterUsernameExists_DB(DBConnection& conn, std::string username)
+{
+	int exists;
+	String wname = StrToWstr(username);
+	SP::CharacterUsernameExists sp(conn);
+	sp.ParamIn_Username(wname.c_str(), static_cast<int>(wname.size()));
+	sp.ParamOut_Exists(OUT exists);
+	sp.Execute();
+	if (exists) return true; // 존재하면
+	else return false; // 존재하지 않으면
+}
+bool CharacterRepository::IsValidKoreanNameAndLengths(const std::string& username)
+{
+	// UTF-8을 코드포인트 단위로 파싱
+	int count = 0;
+	for (size_t i = 0; i < username.size();)
+	{
+		unsigned char c = username[i];
+
+		// 한글은 UTF-8에서 3바이트
+		if (c >= 0xE0 && c <= 0xEF && i + 2 < username.size())
+		{
+			unsigned int codepoint =
+				((username[i] & 0x0F) << 12) |
+				((username[i + 1] & 0x3F) << 6) |
+				(username[i + 2] & 0x3F);
+
+			// 한글 범위 체크
+			if (codepoint < 0xAC00 || codepoint > 0xD7A3)
+				return false;
+
+			count++;
+			i += 3; // UTF-8 한글은 3바이트
+		}
+		else
+		{
+			// 한글이 아닌 다른 문자가 나오면 false
+			return false;
+		}
+	}
+
+	// 2~6자만 허용
+	return (count >= 2 && count <= 6);
+}
+
+
+/* 캐릭터 리스트 받아오기*/
+
+Vector<CharacterRepository::CharacterInfo> CharacterRepository::GetCharactersByUser_DB(DBConnection& conn, int userId)
+{
+	Vector<CharacterInfo> characters;
+	int characterId;
+	WCHAR username[100];
+	int posX;
+	int posY;
+
+	int gender;
+	int region;
+	int dir;
+	int level;
+	int money;
+
+	SP::GetCharactersByUser sp(conn);
+	sp.ParamIn_UserId(userId);
+	sp.ColumnOut_CharacterId(OUT characterId);
+	sp.ColumnOut_Username(OUT username);
+	sp.ColumnOut_PosX(OUT posX);
+	sp.ColumnOut_PosY(OUT posY);
+	sp.ColumnOut_Gender(OUT gender);
+	sp.ColumnOut_Region(OUT region);
+	sp.ColumnOut_Dir(OUT dir);
+	sp.ColumnOut_Level(OUT level);
+	sp.ColumnOut_Money(OUT money);
+	sp.Execute();
+	while (sp.Fetch())
+	{
+		GConsoleLogger->WriteStdOut(Color::GREEN,
+			L"Username[%s] Gender[%d] Region[%d] Level[%d] Money[%d]\n"
+			, username, gender, region, level, money);
+
+		CharacterInfo info
+		{
+			characterId,
+			WstrToStr(username),
+			posX,
+			posY,
+			static_cast<Protocol::EGender>(gender),
+			static_cast<Protocol::ERegion>(region),
+			static_cast<Protocol::EDirection>(dir),
+			level
+		};
+		characters.push_back(info);
+	}
+
+	return characters;
+}
+std::future<Vector<CharacterRepository::CharacterInfo>> CharacterRepository::GetCharactersByUserAsync(int userId)
+{
+	return DbDispatcher::EnqueueRet([userId](DBConnection& c) {
+		return GetCharactersByUser_DB(c, userId);
+		});
+}
+
+/* 캐릭터 정보 업데이트*/
+
+void CharacterRepository::UpdateCharacterStats_DB(DBConnection& conn, const CharacterStat& stat)
+{
+	SP::UpdateCharacterStats sp(conn);
+
+	// const_cast 사용: BindParam은 읽기 전용이므로 안전
+	sp.ParamIn_CharacterId(const_cast<int32&>(stat.characterId));
+	sp.ParamIn_PosX(const_cast<int32&>(stat.posX));
+	sp.ParamIn_PosY(const_cast<int32&>(stat.posY));
+	sp.ParamIn_Dir(const_cast<int32&>(static_cast<const int32&>(stat.dir)));
+	sp.ParamIn_LastRoom(const_cast<int32&>(stat.lastRoom));
+	sp.ParamIn_Hp(const_cast<int32&>(stat.hp));
+	sp.ParamIn_MaxHp(const_cast<int32&>(stat.maxHp));
+	sp.ParamIn_Level(const_cast<int32&>(stat.level));
+	sp.ParamIn_Exp(const_cast<int32&>(stat.exp));
+	sp.ParamIn_Money(const_cast<int32&>(stat.money));
+	sp.Execute();
+}
+
+std::future<void> CharacterRepository::UpdateCharacterStatsAsync(const CharacterStat& stat)
+{
+	return DbDispatcher::Enqueue([statCopy = stat](DBConnection& c)
+		{
+			return UpdateCharacterStats_DB(c, statCopy);
+		});
+}
+
+CharacterRepository::CharacterStat CharacterRepository::GetCharacterStats_DB(DBConnection& conn, int characterId)
+{
+	CharacterStat stat{};
+	int32 _dir;
+	SP::GetCharacterStats sp(conn);
+	sp.ParamIn_CharacterId(characterId);
+	sp.ColumnOut_PosX(OUT stat.posX);
+	sp.ColumnOut_PosY(OUT stat.posY);
+	sp.ColumnOut_Dir(OUT _dir);
+	sp.ColumnOut_LastRoom(OUT stat.lastRoom);
+	sp.ColumnOut_Hp(OUT stat.hp);
+	sp.ColumnOut_MaxHp(OUT stat.maxHp);
+	sp.ColumnOut_Level(OUT stat.level);
+	sp.ColumnOut_Exp(OUT stat.exp);
+	sp.ColumnOut_Money(OUT stat.money);
+	sp.Execute();
+	if (sp.Fetch())
+	{
+		stat.characterId = characterId;
+		stat.dir = static_cast<Protocol::EDirection>(_dir);
+	}
+	return stat;
+}
+std::future<CharacterRepository::CharacterStat> CharacterRepository::GetCharacterStatsAsync(int characterId)
+{
+	return DbDispatcher::EnqueueRet([characterId](DBConnection& c)
+		{
+			return GetCharacterStats_DB(c, characterId);
+		});
+}
+
+/* 캐릭터 삭제 (Soft Delete)*/
+
+bool CharacterRepository::DeleteCharacter_DB(DBConnection& conn, int userId, int characterId)
+{
+	int64 rowCount = 0;
+	SP::DeleteCharacter sp(conn);
+	sp.ParamIn_UserId(userId);
+	sp.ParamIn_CharacterId(characterId);
+	sp.ColumnOut_RowCount(OUT rowCount);
+	sp.Execute();
+	if (sp.Fetch())
+	{
+		return rowCount > 0;
+	}
+	return false;
+}
+std::future<bool> CharacterRepository::DeleteCharacterAsync(int userId, int characterId)
+{
+	return DbDispatcher::EnqueueRet([userId, characterId](DBConnection& c) {
+		return DeleteCharacter_DB(c, userId, characterId);
+		});
+}
+

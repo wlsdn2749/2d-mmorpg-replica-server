@@ -9,13 +9,13 @@ constexpr int INVENTORY_QUICK_SLOTS = 10;
 
 // 아이템 메타데이터 (Sheet Item 테이블에서 로드)
 struct ItemData {
-    int itemId = 0;
-    std::string name;
-    std::string description;
-    bool isStackable = false;
-    int maxStack = 1;
+	int itemId {};
+	std::string name {};
+	std::string description{};
+	bool isStackable{};
+	int maxStack{};
     Protocol::EItemType itemType = Protocol::EItemType::ITEM_TYPE_UNKNOWN;
-	int sellPrice {};
+	int sellPrice{};
 
     ItemData() = default;
     ItemData(int id, const std::string& n, const std::string& desc, 
@@ -37,7 +37,7 @@ struct ItemSlot {
         : slotIndex(slot), itemId(id), count(cnt), isQuickSlot(quick), equipmentInstanceId(equipInstId) {}
 
     // 비어있는 슬롯인지 확인
-    bool IsEmpty() const { return itemId == 0 || count <= 0; }
+    inline bool IsEmpty() const { return itemId == 0 || count <= 0; }
 
     // 슬롯 초기화
     void Clear() {

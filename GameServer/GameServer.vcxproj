@@ -200,13 +200,11 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClCompile Include="MonsterCombatSystem.cpp" />
     <ClCompile Include="DBDisPatcher.cpp" />
     <ClCompile Include="DBWorker.cpp" />
-    <ClCompile Include="EntityCore.cpp" />
     <ClCompile Include="FieldRoom.cpp" />
     <ClCompile Include="GameServer.cpp" />
     <ClCompile Include="GameSession.cpp" />
     <ClCompile Include="GameSessionAccessor.cpp" />
     <ClCompile Include="GameSessionContainer.cpp" />
-    <ClCompile Include="GeometryCore.cpp" />
     <ClCompile Include="GlobalQueueShard.cpp" />
     <ClCompile Include="JwtAuth.cpp" />
     <ClCompile Include="MapData.cpp" />
@@ -248,7 +246,6 @@ xcopy "$(ProjectDir)Resources\*" "$(OutDir)Resources\" /E /I /Y /H</Command>
     <ClCompile Include="SpawnPointDataParser.cpp" />
     <ClCompile Include="TimeUtils.cpp" />
     <ClCompile Include="TownRoom.cpp" />
-    <ClCompile Include="TypeCore.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Account.h" />
