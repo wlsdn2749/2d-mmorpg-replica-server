@@ -138,15 +138,6 @@
     <ClCompile Include="FieldRoom.cpp">
       <Filter>GameContents\Rooms</Filter>
     </ClCompile>
-    <ClCompile Include="EntityCore.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="GeometryCore.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="TypeCore.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>GameContents\Player</Filter>
     </ClCompile>
