@@ -707,7 +707,7 @@ bool Handle_C_PartyLeave(PacketSessionRef& session, Protocol::C_PartyLeave& pkt)
 	}
 	else
 	{
-		CRASH(); // 둘 중 하나는 반드시 있어야함
+		CRASH("CRASH PARTY..."); // 둘 중 하나는 반드시 있어야함
 	}
 	
 	return true;
