@@ -6,6 +6,14 @@
 
 이 프로젝트는 학습 및 포트폴리오를 목적으로 개발되었으며, 실제 게임 서버에서 요구되는 핵심 기능들을 구현하고 있습니다.
 
+## Quick Start
+1. 먼저 Shared 디렉토리에 AuthServer, GameServer, Example_Service_Key json을 로컬 설정에 맞게 각 폴더의 루트에 넣습니다. 
+2. DB(ms-sql) 기준 AuthDb와 GameDb를 만들어줍니다. 테이블과 프로시져는 ORM으로 빌드 시 생성됩니다.
+3. visual studio 2022 버전으로 .sin을 열어 빌드시켜줍니다.
+
+
+
+
 ## 주요 기술 스택
 
 - **IOCP 기반 C++ 게임 서버**: Windows IOCP를 활용한 고성능 멀티스레드 비동기 I/O 처리

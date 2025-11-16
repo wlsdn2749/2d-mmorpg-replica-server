@@ -1,0 +1,10 @@
+{
+  "AppSettings": {
+    "JwtSecret": "<YOUR_JWT_SECRET>",
+    "TokenExpiryHours": 12,
+    "Issuer": "GameAuth",
+    "Audience": "GameClient",
+    "DBLocalPath": "Driver={ODBC Driver 17 for SQL Server};Server=(localdb)\\MSSQLLocalDB;Database=GameDb;Trusted_Connection=Yes;",
+    "DBXmlPath": "<GAMEDB_XML_PATH>"
+  }
+}
