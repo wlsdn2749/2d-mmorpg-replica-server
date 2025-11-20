@@ -634,6 +634,28 @@ namespace DummyClientCS
             }
         }
 
+        // 파티장 위임 요청 (리더 전용 - targetPid 지정
+        public async Task SendPartyDelegatePartyLeaderWithPid(int targetPid)
+        {
+            if (!_canSendPackets) return;
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    var pkt = new Google.Protobuf.Protocol.C_PartyDelegateLeader
+                    {
+                        TargetPid = targetPid,
+
+                    };
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"[리더 요청] TargetPid : {targetPid}에게 위임을 했습니다.");
+                    Console.ResetColor();
+                }
+            }
+        }
+
         // ========== 장비 시스템 테스트 ==========
 
         // 장비 장착 요청

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 class Party
 {
 public:
@@ -27,6 +27,8 @@ public:
 	string GetPartyName() const;
 	int32 GetCurrentMemberCount() const;
 	Protocol::PartyInfo GetPartyInfo() const;
+
+	bool SetLeader(PlayerRef target);
 private:
 	int32 _partyId;
 	PlayerRef _leader;

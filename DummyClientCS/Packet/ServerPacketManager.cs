@@ -84,6 +84,7 @@ namespace Packet
 	    PKT_S_NpcList = 73,
 	    PKT_C_NpcShopSellRequest = 74,
 	    PKT_S_NpcShopSellReply = 75,
+	    PKT_C_PartyDelegateLeader = 76,
     }
     public class ServerPacketManager
     {
@@ -137,6 +138,7 @@ namespace Packet
         public static ArraySegment<byte> MakeSendBuffer(C_UnequipItemRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_UnequipItemRequest);
         public static ArraySegment<byte> MakeSendBuffer(C_EquipmentInfoRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_EquipmentInfoRequest);
         public static ArraySegment<byte> MakeSendBuffer(C_NpcShopSellRequest pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_NpcShopSellRequest);
+        public static ArraySegment<byte> MakeSendBuffer(C_PartyDelegateLeader pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_PartyDelegateLeader);
 
         void Register()
         {

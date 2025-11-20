@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "Session.h"
 #include "GameSessionContainer.h"
@@ -29,6 +29,8 @@ public:
 	bool CharacterSelect(OUT std::string& detailOut);
 
 private:
+	void OnLeaveGame();
+
 	GameSessionContainerRef _gameSessionContainer;
 
 /*---------------------------

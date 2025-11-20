@@ -1261,3 +1261,24 @@ bool Handle_C_NpcShopSellRequest(PacketSessionRef& session, Protocol::C_NpcShopS
 	
 	
 }
+
+bool Handle_C_PartyDelegateLeader(PacketSessionRef& session, Protocol::C_PartyDelegateLeader& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false;
+
+	PlayerRef player = gameSession->_currentPlayer;
+	if (!player)
+		return false;
+
+	auto targetPlayer = RoomManager::Instance().FindPlayerInAllRooms(pkt.targetpid());
+
+	if (!targetPlayer)
+	{
+		GConsoleLogger->WriteStdErr(Color::RED, L"TargetPlayer Not Found");
+	}
+
+	bool party = PartyManager::Instance().DelegatePartyLeader(player->GetPartyId(), player, targetPlayer);
+}

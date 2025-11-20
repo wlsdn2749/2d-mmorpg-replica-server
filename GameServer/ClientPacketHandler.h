@@ -83,6 +83,7 @@ enum : uint16
 	PKT_S_NpcList = 73,
 	PKT_C_NpcShopSellRequest = 74,
 	PKT_S_NpcShopSellReply = 75,
+	PKT_C_PartyDelegateLeader = 76,
 
 };
 
@@ -117,6 +118,7 @@ bool Handle_C_EquipItemRequest(PacketSessionRef& session, Protocol::C_EquipItemR
 bool Handle_C_UnequipItemRequest(PacketSessionRef& session, Protocol::C_UnequipItemRequest& pkt);
 bool Handle_C_EquipmentInfoRequest(PacketSessionRef& session, Protocol::C_EquipmentInfoRequest& pkt);
 bool Handle_C_NpcShopSellRequest(PacketSessionRef& session, Protocol::C_NpcShopSellRequest& pkt);
+bool Handle_C_PartyDelegateLeader(PacketSessionRef& session, Protocol::C_PartyDelegateLeader& pkt);
 
 class ClientPacketHandler
 {
@@ -156,6 +158,7 @@ public:
 		GPacketHandler[PKT_C_UnequipItemRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_UnequipItemRequest>(Handle_C_UnequipItemRequest, session, buffer, len); };
 		GPacketHandler[PKT_C_EquipmentInfoRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_EquipmentInfoRequest>(Handle_C_EquipmentInfoRequest, session, buffer, len); };
 		GPacketHandler[PKT_C_NpcShopSellRequest] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_NpcShopSellRequest>(Handle_C_NpcShopSellRequest, session, buffer, len); };
+		GPacketHandler[PKT_C_PartyDelegateLeader] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_PartyDelegateLeader>(Handle_C_PartyDelegateLeader, session, buffer, len); };
 		
 	}
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
