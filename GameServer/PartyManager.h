@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 class PartyManager
 {
 #pragma region Meyers Singleton
@@ -28,6 +28,7 @@ public:
 	bool JoinParty(int32 partyId, PlayerRef player);
 	bool LeaveParty(PlayerRef player);
 	bool kickMember(int32 partyId, PlayerRef kicker, PlayerRef target);
+	bool DelegatePartyLeader(int32 partyId, PlayerRef player, PlayerRef target);
 
 	// 조회
 	PartyRef FindParty(int32 partyId);

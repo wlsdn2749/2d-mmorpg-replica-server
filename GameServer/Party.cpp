@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "Party.h"
 #include "Player.h"
 #include "GameSession.h"
@@ -106,7 +106,7 @@ Vector<PlayerRef> Party::GetOnlineMembers()
             if(s->IsInGame()) onlineMembers.push_back(member);
         }
     }
-
+	
     return onlineMembers;
 }
 
@@ -156,4 +156,11 @@ Protocol::PartyInfo Party::GetPartyInfo() const
     info.set_partyleaderid(GetLeader()->playerId);
 
     return info;
+}
+
+bool Party::SetLeader(PlayerRef target)
+{
+    if(!target) return false;
+
+	_leader = target;
 }

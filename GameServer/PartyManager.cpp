@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "PartyManager.h"
 #include "Player.h"
 #include "Party.h"
@@ -49,6 +49,9 @@ bool PartyManager::DisbandParty(int32 partyId)
 
     if(!FindParty(partyId)) return false;
 
+	// 먼저 보내야, 정보가 살아있음
+	PartyService::Instance().SendPartyStatusUpdate(partyId, Protocol::EPartyUpdateType::PARTY_UPDATE_DISBANDED);
+
     for (auto it = _playerToParty.begin(); it != _playerToParty.end();)
     {
         if (it->second == partyId)
@@ -64,7 +67,7 @@ bool PartyManager::DisbandParty(int32 partyId)
 
     _parties.erase(partyId);
    
-    PartyService::Instance().SendPartyStatusUpdate(partyId, Protocol::EPartyUpdateType::PARTY_UPDATE_DISBANDED);
+  
     return true;
     
 }
@@ -133,6 +136,24 @@ bool PartyManager::kickMember(int32 partyId, PlayerRef kicker, PlayerRef target)
 
     PartyService::Instance().SendPartyStatusUpdate(partyId, Protocol::EPartyUpdateType::PARTY_UPDATE_MEMBER_LEAVE);
     return true;
+}
+
+bool PartyManager::DelegatePartyLeader(int32 partyId, PlayerRef player, PlayerRef target)
+{
+	auto party = FindParty(partyId);
+
+	if(!party) return false; // 파티 Id가 없는 경우
+
+	if(party->IsLeader(player) == false) return false; // player가 리더가 아닌경우
+
+	if(!player) return false;
+	if(!target) return false;  // 파티장과 대상이 존재하지 않는 경우
+
+	auto result = party->SetLeader(target);
+
+	PartyService::Instance().SendPartyStatusUpdate(partyId, Protocol::EPartyUpdateType::PARTY_UPDATE_DELEGATE_LEADER);
+
+	return result;
 }
 
 PartyRef PartyManager::FindParty(int32 partyId)

@@ -70,6 +70,7 @@ class Program
             Console.WriteLine("[j] 리더: 가입 요청 리스트 조회");
             Console.WriteLine("[m] 리더: 가입 요청 수락");
             Console.WriteLine("[k] 리더: 가입 요청 거절");
+            Console.WriteLine("[ll] 리더: 파티장 위임");
             Console.WriteLine("\n===== 장비 시스템 테스트 =====");
             Console.WriteLine("[e] 장비 정보 조회");
             Console.WriteLine("[h] 장비 관리 (장착/해제)");
@@ -644,6 +645,23 @@ class Program
                     }
 
                     await SessionManager.Instance.SendPartyJoinResponseWithPid(rejectResponsePartyId, rejectRequesterPid, false);
+                    break;
+                case "ll":
+                    if (!_isInGame)
+                    {
+                        Console.WriteLine("먼저 게임 접속(8번)을 완료해야 합니다!");
+                        break;
+                    }
+                    Console.Write("[리더] 위임할 플레이어 ID 입력 :");
+                    string? delegateTargetPlayerIdInput = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(delegateTargetPlayerIdInput) || !Int32.TryParse(delegateTargetPlayerIdInput, out int delegateTargetPlayerId))
+                    {
+                        Console.WriteLine("올바른 파티 ID를 입력해주세요!");
+                        break;
+                    }
+
+                    await SessionManager.Instance.SendPartyDelegatePartyLeaderWithPid(delegateTargetPlayerId);
                     break;
                 case "e":
                     if (!_isInGame)

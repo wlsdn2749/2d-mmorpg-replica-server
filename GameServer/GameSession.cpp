@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "GameSession.h"
 #include "ClientPacketHandler.h"
 #include "Player.h"
@@ -14,6 +14,9 @@ void GameSession::OnDisconnected()
 {
 	if (GetState() == State::InRoom && _currentPlayer)
 	{
+		// 게임에서 나갈 때하는 행동 정의
+		OnLeaveGame();
+
 		RoomRef room = _currentPlayer->GetRoom();
 		room->DoAsync(&Room::Leave, _currentPlayer); // 여기서 데이터 저장
 	}
@@ -53,6 +56,8 @@ bool GameSession::Logout(OUT std::string& detailOut)
 	// 현재 플레이어가 있다면 데이터 저장 및 룸에서 제거
 	if (_currentPlayer != nullptr)
 	{
+		// 게임에서 나갈 때하는 행동 정의
+		OnLeaveGame();
 		// 룸에서 플레이어 제거
 		RoomRef room = _currentPlayer->GetRoom();
 		if (room != nullptr)
@@ -87,6 +92,8 @@ bool GameSession::CharacterSelect(OUT std::string& detailOut)
 	// 현재 플레이어가 있다면 데이터 저장 및 룸에서 제거
 	if (_currentPlayer != nullptr)
 	{
+		// 게임에서 나갈때 하는 행동 정의
+		OnLeaveGame();
 		// 룸에서 플레이어 제거
 		RoomRef room = _currentPlayer->GetRoom();
 		if (room != nullptr)
@@ -100,4 +107,13 @@ bool GameSession::CharacterSelect(OUT std::string& detailOut)
 	detailOut = "Character Select Success!";
 
 	return true;
+}
+
+
+// _currentPlayer가 해제되기전 가장 먼저 해야함
+void GameSession::OnLeaveGame()
+{
+	// 파티 있으면 파티 해산 
+	if(_currentPlayer != nullptr)
+		PartyManager::Instance().LeaveParty(_currentPlayer);
 }
