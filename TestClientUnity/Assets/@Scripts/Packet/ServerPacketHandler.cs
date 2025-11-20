@@ -115,6 +115,7 @@ namespace Packet
 
         internal static void HANDLE_S_PlayerList(PacketSession session, S_PlayerList list)
         {
+            NetDebug.MyPlayerId = list.MyPlayerId;
             MonsterSync.OnMapActivated(list.MapId);
 
             // ▶ 최초 접속 루트: 여기서만 씬 로드

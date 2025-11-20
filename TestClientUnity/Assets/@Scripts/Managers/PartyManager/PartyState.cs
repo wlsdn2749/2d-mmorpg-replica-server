@@ -12,6 +12,7 @@ public sealed class PartyState
     public int MaxMemberCount { get; private set; }
     public int CurMemberCount => _members.Count;
 
+    public bool InParty => _members.Count > 0;
     // playerId -> PartyMemberStatusInfo
     private readonly Dictionary<int, PartyMemberStatusInfo> _members = new();
 
@@ -110,12 +111,17 @@ public sealed class PartyState
         => OnInviteResult?.Invoke(r.Success, r.ErrorMessage);
 
     public void HandleCreateReply(S_PartyCreateReply r)
-        => OnCreateResult?.Invoke(r.Success, r.Message);
-
+    {
+        OnCreateResult?.Invoke(r.Success, r.Message);
+    }
+    
     public void HandleJoinReply(S_PartyJoinReply r, int requestedPartyId)
     {
         OnJoinResult?.Invoke(r.Success, r.Message);
-        if (r.Success) ConfirmJoined(requestedPartyId);
+        if (r.Success) 
+        { 
+            ConfirmJoined(requestedPartyId);
+        }
     }
 
     public void HandleJoinNotifyToLeader(S_PartyJoinNotify n)
@@ -130,7 +136,10 @@ public sealed class PartyState
     // ===== 내부 유틸 =====
     private void ClearPartyInternal()
     {
-        PartyId = null; PartyName = null; MaxMemberCount = 0; PartyLeaderId = 0;
+        PartyId = null; 
+        PartyName = null; 
+        MaxMemberCount = 0; 
+        PartyLeaderId = 0;
         _members.Clear();
         OnPartyChanged?.Invoke();
     }

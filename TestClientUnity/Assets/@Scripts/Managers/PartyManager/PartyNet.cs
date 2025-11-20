@@ -1,6 +1,7 @@
 ﻿using Google.Protobuf;
 using Google.Protobuf.Protocol;
-using Packet; 
+using Packet;
+using UnityEngine;
 
 public static class PartyNet
 {
@@ -72,5 +73,10 @@ public static class PartyNet
         var id = _lastRequestedJoinPartyId;
         _lastRequestedJoinPartyId = -1;
         return id;
+    }
+    public static void DelegateLeader(int targetPid)
+    {
+        var req = new C_PartyDelegateLeader { TargetPid = targetPid };
+        Send(req, PacketID.PKT_C_PartyDelegateLeader);
     }
 }
