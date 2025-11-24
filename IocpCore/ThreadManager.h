@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <thread>
 #include <functional>
@@ -7,7 +7,7 @@
 /*------------------
 	ThreadManager
 -------------------*/
-class ThreadManager
+class ThreadManager 
 {
 
 public:
@@ -20,7 +20,6 @@ public:
 	static void initTLS();
 	static void DestroyTLS();
 	static void DistributeReservedJobs();
-
 
 	static void DoGlobalQueueWork(GlobalQueue* q);
 private:

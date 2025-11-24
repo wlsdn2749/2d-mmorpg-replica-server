@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import jinja2
 import ProtoParser
 
@@ -29,7 +29,7 @@ def main():
     with open(final_output, 'w+', encoding='utf-8') as f:
         f.write(output)
 
-    print(output)
+    #print(output)
     return;
 
 if __name__ == '__main__':

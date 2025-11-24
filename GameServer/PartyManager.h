@@ -1,21 +1,8 @@
 #pragma once
-class PartyManager
+#include "Singleton.h"
+
+class PartyManager : public Singleton<PartyManager>
 {
-#pragma region Meyers Singleton
-public:
-	static PartyManager& Instance()
-	{
-		static PartyManager instance;
-		return instance;
-	}
-
-	PartyManager(const PartyManager&) = delete;
-	PartyManager& operator=(const PartyManager&) = delete;
-private:
-	PartyManager() = default;
-	~PartyManager() = default;
-
-#pragma endregion
 
 public:
 	bool Initialize();

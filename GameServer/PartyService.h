@@ -1,24 +1,12 @@
-﻿#pragma once
+#pragma once
+#include "Singleton.h"
 #include "PartyManager.h"
 #include "Player.h"
 #include "Party.h"
 #include "Room.h"
 
-class PartyService {
-#pragma region Meyers Singleton
-public:
-    static PartyService& Instance() {
-        static PartyService instance;
-        return instance;
-    }
-
-    PartyService(const PartyService&) = delete;
-    PartyService& operator=(const PartyService&) = delete;
-private:
-    PartyService() = default;
-    ~PartyService() = default;
-
-#pragma endregion
+class PartyService : public Singleton<PartyService>
+{
 
 public:
     bool Initialize();

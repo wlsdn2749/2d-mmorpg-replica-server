@@ -3,20 +3,10 @@
 #include <unordered_map>
 #include <memory>
 #include <string>
+#include "Singleton.h"
 
-class ShopManager
+class ShopManager : public Singleton<ShopManager>
 {
-#pragma region Meyers Singleton
-public:
-	static ShopManager& Instance();
-
-	ShopManager(const ShopManager&) = delete;
-	ShopManager& operator=(const ShopManager&) = delete;
-private:
-	ShopManager() = default;
-	~ShopManager() = default;
-
-#pragma endregion
 
 public:
 	// 초기화 및 정리

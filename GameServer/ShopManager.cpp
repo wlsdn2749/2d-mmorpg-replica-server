@@ -2,12 +2,6 @@
 #include "ShopManager.h"
 #include "ShopDataParser.h"
 
-ShopManager& ShopManager::Instance()
-{
-	static ShopManager instance;
-	return instance;
-}
-
 bool ShopManager::Initialize()
 {
 	if (_initialized)

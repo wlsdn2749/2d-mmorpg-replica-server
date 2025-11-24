@@ -9,12 +9,6 @@
 #include <algorithm>
 #include "PartyManager.h"
 
-ItemManager& ItemManager::Instance()
-{
-    static ItemManager instance;
-    return instance;
-}
-
 bool ItemManager::Initialize()
 {
     if (_initialized)

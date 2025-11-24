@@ -1,4 +1,5 @@
-﻿#pragma once
+#pragma once
+#include "Singleton.h"
 
 struct DropItemInfo;
 
@@ -28,23 +29,8 @@ struct DroppedItem
 
 // unordered_map<monsterId, vector<MonsterDropTable>>
 
-class DropManager
+class DropManager : public Singleton<DropManager>
 {
-#pragma region Meyers Singleton
-public:
-	static DropManager& Instance()
-	{
-		static DropManager dropManager;
-		return dropManager;
-	}
-
-	DropManager(const DropManager&) = delete;
-	DropManager& operator=(const DropManager&) = delete;
-private:
-	DropManager() = default;
-	~DropManager() = default;
-
-#pragma endregion
 
 public:
 	bool Initialize();

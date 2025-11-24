@@ -1,21 +1,12 @@
 #pragma once
+
+#include "Singleton.h"
 #include "EquipmentCore.h"
 #include <unordered_map>
 #include <memory>
 
-class EquipmentManager
+class EquipmentManager : public Singleton<EquipmentManager>
 {
-#pragma region Meyers Singleton
-public:
-	static EquipmentManager& Instance();
-
-	EquipmentManager(const EquipmentManager&) = delete;
-	EquipmentManager& operator=(const EquipmentManager&) = delete;
-private:
-	EquipmentManager() = default;
-	~EquipmentManager() = default;
-
-#pragma endregion
 
 public:
 	// 초기화 및 정리

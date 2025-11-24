@@ -4,8 +4,6 @@
 
 #include "Protocol.pb.h"
 
-class ShopItemData;
-
 struct ShopData
 {
 	int shopId {};

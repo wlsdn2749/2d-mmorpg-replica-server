@@ -91,9 +91,9 @@ int main()
 	NpcManager::Instance().Initialize();
 
 	// 샤드 기반 워커 로직
-	const int totalRooms = 3;
-	const int roomPersQueue = 2;
-	const UINT32 budgetMs = 30; // 한 워커의 수행시간 Slice 
+	constexpr int totalRooms = 3;
+	constexpr int roomPersQueue = 2;
+	constexpr UINT32 budgetMs = 30; // 한 워커의 수행시간 Slice 
 	StartShardedQueues(totalRooms, roomPersQueue, budgetMs);
 
 	// 룸 생성/배정/틱 시작

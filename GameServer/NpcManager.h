@@ -1,24 +1,10 @@
 #pragma once
+
+#include "Singleton.h"
 #include "Npc.h"
 
-class NpcManager
+class NpcManager : public Singleton<NpcManager>
 {
-#pragma region Meyers Singleton
-public:
-	static NpcManager& Instance()
-	{
-		static NpcManager npcManager;
-		return npcManager;
-	}
-
-	NpcManager(const NpcManager&) = delete;
-	NpcManager& operator=(const NpcManager&) = delete;
-
-private:
-	NpcManager() = default;
-	~NpcManager() = default;
-#pragma endregion
-
 public:
 	// 초기화 및 정리
 	bool Initialize();
@@ -34,4 +20,3 @@ private:
 	bool _initialized = false;
 
 };
-

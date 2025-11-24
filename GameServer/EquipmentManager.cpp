@@ -3,12 +3,6 @@
 #include "EquipmentDataParser.h"
 #include <fstream>
 
-EquipmentManager& EquipmentManager::Instance()
-{
-	static EquipmentManager instance;
-	return instance;
-}
-
 bool EquipmentManager::Initialize()
 {
 	if (_initialized)

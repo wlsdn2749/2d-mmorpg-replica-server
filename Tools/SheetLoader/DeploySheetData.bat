@@ -3,61 +3,61 @@ echo ================================
 echo Google Sheets Data Deploy Script
 echo ================================
 
-:: í˜„ìž¬ ë””ë ‰í† ë¦¬ë¥¼ SheetLoaderë¡œ ë³€ê²½
+:: ÇöÀç µð·ºÅä¸®¸¦ SheetLoader·Î º¯°æ
 cd /d "%~dp0"
 
-echo 1. Google Sheetsì—ì„œ ë°ì´í„° ë‹¤ìš´ë¡œë“œ ì¤‘...
+echo 1. Google Sheets¿¡¼­ µ¥ÀÌÅÍ ´Ù¿î·Îµå Áß...
 dotnet run
 if errorlevel 1 (
-    echo ì˜¤ë¥˜: Google Sheets ë°ì´í„° ë‹¤ìš´ë¡œë“œ ì‹¤íŒ¨
+    echo ¿À·ù: Google Sheets µ¥ÀÌÅÍ ´Ù¿î·Îµå ½ÇÆÐ
     pause
     exit /b 1
 )
 
 echo.
-echo 2. ëŒ€ìƒ í´ë” ìƒì„± ì¤‘...
+echo 2. ´ë»ó Æú´õ »ý¼º Áß...
 
-:: GameServer/Resources/Data í´ë” ìƒì„±
+:: GameServer/Resources/Data Æú´õ »ý¼º
 if not exist "..\..\GameServer\Resources\Data" (
     mkdir "..\..\GameServer\Resources\Data"
-    echo - GameServer/Resources/Data í´ë” ìƒì„±ë¨
+    echo - GameServer/Resources/Data Æú´õ »ý¼ºµÊ
 )
 
-:: TestClientUnity/Assets/Resources/Data í´ë” ìƒì„±
+:: TestClientUnity/Assets/Resources/Data Æú´õ »ý¼º
 if not exist "..\..\TestClientUnity\Assets\Resources" (
     mkdir "..\..\TestClientUnity\Assets\Resources"
 )
 if not exist "..\..\TestClientUnity\Assets\Resources\Data" (
     mkdir "..\..\TestClientUnity\Assets\Resources\Data"
-    echo - TestClientUnity/Assets/Resources/Data í´ë” ìƒì„±ë¨
+    echo - TestClientUnity/Assets/Resources/Data Æú´õ »ý¼ºµÊ
 )
 
 echo.
-echo 3. JSON íŒŒì¼ ë³µì‚¬ ì¤‘...
+echo 3. JSON ÆÄÀÏ º¹»ç Áß...
 
-:: resources í´ë”ì˜ ëª¨ë“  JSON íŒŒì¼ì„ ëŒ€ìƒ ìœ„ì¹˜ì— ë³µì‚¬
+:: resources Æú´õÀÇ ¸ðµç JSON ÆÄÀÏÀ» ´ë»ó À§Ä¡¿¡ º¹»ç
 for %%f in (resources\*.json) do (
-    echo - %%f ë³µì‚¬ ì¤‘...
+    echo - %%f º¹»ç Áß...
     copy "%%f" "..\..\GameServer\Resources\Data\" > nul
     copy "%%f" "..\..\TestClientUnity\Assets\Resources\Data\" > nul
     if errorlevel 1 (
-        echo ì˜¤ë¥˜: %%f ë³µì‚¬ ì‹¤íŒ¨
+        echo ¿À·ù: %%f º¹»ç ½ÇÆÐ
     ) else (
-        echo   â†’ GameServer/Resources/Data/
-        echo   â†’ TestClientUnity/Assets/Resources/Data/
+        echo   ¡æ GameServer/Resources/Data/
+        echo   ¡æ TestClientUnity/Assets/Resources/Data/
     )
 )
 
 echo.
-echo 4. ë°°í¬ ì™„ë£Œ!
+echo 4. ¹èÆ÷ ¿Ï·á!
 echo - GameServer: %cd%\..\..\GameServer\Resources\Data\
 echo - TestClientUnity: %cd%\..\..\TestClientUnity\Assets\Resources\Data\
 
 echo.
-echo ë°°í¬ëœ íŒŒì¼ ëª©ë¡:
+echo ¹èÆ÷µÈ ÆÄÀÏ ¸ñ·Ï:
 dir "..\..\GameServer\Resources\Data\*.json" /b 2>nul
 if errorlevel 1 (
-    echo (JSON íŒŒì¼ ì—†ìŒ)
+    echo (JSON ÆÄÀÏ ¾øÀ½)
 )
 
 echo.

@@ -23,6 +23,8 @@ namespace SimpleGoogleSheetsExample
             _sheetManager = SheetManager.Instance;
             _sheetManager.init();
 
+            //Console.OutputEncoding = System.Text.Encoding.Unicode; 
+
             foreach (string sheetName in sheetNameList)
             {
                 try
@@ -34,12 +36,12 @@ namespace SimpleGoogleSheetsExample
                     Console.WriteLine($"JSON 파일이 저장되었습니다: {savedFilePath}");
 
                     // JSON 내용 출력 (선택적)
-                    if (args.Length > 0 && args[0] == "--verbose")
-                    {
-                        Console.WriteLine("\n=== JSON 내용 ===");
-                        string jsonResult = _sheetManager.GetDataAsJson(sheetName);
-                        Console.WriteLine(jsonResult);
-                    }
+                    //if (args.Length > 0 && args[0] == "--verbose")
+                    //{
+                    //    Console.WriteLine("\n=== JSON 내용 ===");
+                    //    string jsonResult = _sheetManager.GetDataAsJson(sheetName);
+                    //    Console.WriteLine(jsonResult);
+                    //}
                 }
                 catch (Exception ex)
                 {

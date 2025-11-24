@@ -11,16 +11,16 @@ constexpr int INVENTORY_QUICK_SLOTS = 10;
 struct ItemData {
 	int itemId {};
 	std::string name {};
-	std::string description{};
-	bool isStackable{};
-	int maxStack{};
+	std::string description {};
+	bool isStackable {};
+	int maxStack {};
     Protocol::EItemType itemType = Protocol::EItemType::ITEM_TYPE_UNKNOWN;
 	int sellPrice{};
 
     ItemData() = default;
-    ItemData(int id, const std::string& n, const std::string& desc, 
+    ItemData(int id, std::string n, std::string desc, 
              bool stackable, int maxStk, Protocol::EItemType type, int sellPrice)
-        : itemId(id), name(n), description(desc), 
+        : itemId(id), name(std::move(n)), description(std::move(desc)),
           isStackable(stackable), maxStack(maxStk), itemType(type), sellPrice(sellPrice) {}
 };
 

@@ -2,24 +2,14 @@
 #include "InventoryCore.h"
 #include "DBDisPatcher.h"
 
+#include "Singleton.h"
 #include "ItemDataParser.h"
 #include <unordered_map>
 #include <memory>
 #include <future>
 
-class ItemManager
+class ItemManager : public Singleton<ItemManager>
 {
-#pragma region Meyers Singleton
-public:
-    static ItemManager& Instance();
-
-    ItemManager(const ItemManager&) = delete;
-    ItemManager& operator=(const ItemManager&) = delete;
-private:
-    ItemManager() = default;
-    ~ItemManager() = default;
-
-#pragma endregion
 
 public:
     // 초기화 및 정리
@@ -27,22 +17,22 @@ public:
     void Shutdown();
 
     // 아이템 데이터 조회
-    const ItemData* GetItemData(int itemId) const;
-    bool IsValidItem(int itemId) const;
-    bool IsStackableItem(int itemId) const;
-    int GetMaxStackSize(int itemId) const;
+    const ItemData*		GetItemData(int itemId) const;
+    bool				IsValidItem(int itemId) const;
+    bool				IsStackableItem(int itemId) const;
+    int					GetMaxStackSize(int itemId) const;
     Protocol::EItemType GetItemType(int itemId) const;
-	int GetSellPrice(int itemId) const;
+	int					GetSellPrice(int itemId) const;
 
     // 아이템 효과 처리
-    bool CanUseItem(int itemId) const;
-    void ApplyItemEffect(int itemId, int count, PlayerRef player);
+    bool				CanUseItem(int itemId) const;
+    void				ApplyItemEffect(int itemId, int count, PlayerRef player);
 
     // 디버그 및 관리
-    void AddItemData(ItemData&& itemData);
-    void RemoveItemData(int itemId);
-    void PrintAllItems() const;
-    size_t GetItemCount() const;
+    void				AddItemData(ItemData&& itemData);
+    void				RemoveItemData(int itemId);
+    void				PrintAllItems() const;
+    size_t				GetItemCount() const;
 
 private:
     // 아이템 효과 적용 헬퍼

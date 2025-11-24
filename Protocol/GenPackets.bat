@@ -1,13 +1,12 @@
 pushd %~dp0
 
-REM Auth Proto íŒŒì¼ë“¤ ìƒì„±
+REM Auth Proto ÆÄÀÏµé »ı¼º
 set PROTOC="../third_party\grpc\install\bin\protoc.exe"
 set GRPC_PLUGIN_CPP="../third_party\grpc\install\bin\grpc_cpp_plugin.exe"
 set GRPC_PLUGIN_CS="../third_party\grpc\install\bin\grpc_csharp_plugin.exe"
 set OUT_DIR_CPP="./"
 set OUT_DIR_CS="./"
 
-%PROTOC% --csharp_out=%OUT_DIR_CS% --grpc_out=%OUT_DIR_CS% --plugin=protoc-gen-grpc=%GRPC_PLUGIN_CS% ./greet.proto
 %PROTOC% --csharp_out=%OUT_DIR_CS% --grpc_out=%OUT_DIR_CS% --plugin=protoc-gen-grpc=%GRPC_PLUGIN_CS% ./auth.proto
 
 IF ERRORLEVEL 1 PAUSE
@@ -17,16 +16,16 @@ XCOPY /Y authGrpc.cs "../DummyClientCS\Protocol"
 XCOPY /Y auth.cs "../AuthServer\Protocol"
 XCOPY /Y authGrpc.cs "../AuthServer\Protocol"
 
-REM Game Proto íŒŒì¼ë“¤ ìƒì„±
+REM Game Proto ÆÄÀÏµé »ı¼º
 protoc.exe -I=./ --cpp_out=./ ./Protocol.proto
 protoc.exe -I=./ --csharp_out=./ ./Protocol.proto
 
-REM ìë™í™”ëœ Handler ìƒì„±
+REM ÀÚµ¿È­µÈ Handler »ı¼º
 GenPackets.exe --path=./Protocol.proto --output=ClientPacketHandler --recv=C_ --send=S_
 GenPackets.exe --path=./Protocol.proto --output=ServerPacketHandler --recv=S_ --send=C_
 GenPackets.exe --path=./Protocol.proto --output=ServerPacketManager --ext=cs --template=PacketManager.cs --recv=S_ --send=C_
 
-REM ê°ì ìœ„ì¹˜ì— ì˜®ê²¨ì£¼ê¸°
+REM °¢ÀÚ À§Ä¡¿¡ ¿Å°ÜÁÖ±â
 
 REM IOCP C++ GameServer
 XCOPY /Y Protocol.pb.h "../GameServer"
