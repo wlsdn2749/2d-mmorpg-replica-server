@@ -21,7 +21,7 @@ bool ItemManager::Initialize()
 
     _initialized = true;
 
-    GConsoleLogger->WriteStdOut(Color::GREEN, L"ItemManager: 초기화 완료. 총 %d개 아이템 로드됨.\n",
+    GConsoleLogger->WriteStdOut(Color::GREEN, L"ItemManager: 초기화 완료. 총 %d개 아이템 로드됨1.\n",
                                static_cast<int>(_itemDataMap.size()));
 
     return true;

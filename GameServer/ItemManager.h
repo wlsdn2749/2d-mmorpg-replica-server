@@ -12,7 +12,7 @@ class ItemManager : public Singleton<ItemManager>
 {
 
 public:
-    // 초기화 및 정리
+    // 초기화 및 정리 1
     bool Initialize();
     void Shutdown();
 
