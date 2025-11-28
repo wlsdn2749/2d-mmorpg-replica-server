@@ -119,6 +119,7 @@ const Vector<Protocol::PartyMemberStatusInfo> Party::GetMemberStatusInfo() const
     {
         Protocol::PartyMemberStatusInfo memberInfo;
         memberInfo.set_playerid(member->playerId);
+		memberInfo.set_playername(member->username);
         memberInfo.set_hp(member->Hp());
         memberInfo.set_maxhp(member->MaxHp());
         memberInfo.set_level(member->Level());
