@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "PartyService.h"
 
 #include "ClientPacketHandler.h"
@@ -58,6 +58,7 @@ void PartyService::SendPartyStatusUpdate(int32 partyId, const Protocol::EPartyUp
 	for (auto& member : party->GetOnlineMembers()) {
 		auto* memberInfo = pkt.add_members();
 		memberInfo->set_playerid(static_cast<int32>(member->playerId));
+		memberInfo->set_playername(member->username);
 		memberInfo->set_hp(member->Hp());
 		memberInfo->set_maxhp(member->MaxHp());
 		memberInfo->set_level(member->Level());

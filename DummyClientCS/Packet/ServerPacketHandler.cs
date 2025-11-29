@@ -556,7 +556,15 @@ namespace Packet
             };
 
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"[S_BroadcastPartyUpdate] {updateTypeStr} | 파티원: {update.Members.Count}명");
+            Console.WriteLine($"[PartyUpdate] {updateTypeStr} | 파티원: {update.Members.Count}명");
+            foreach (var member in update.Members)
+            {
+                Console.WriteLine($"[Id:] {member.PlayerId} | Name: {member.PlayerName} | 리더: {member.IsLeader}");
+                Console.WriteLine($"[hp:] {member.Hp}/{member.MaxHp} | Lv: {member.Level}");
+
+            }
+
+
             Console.ResetColor();
         }
 
@@ -585,13 +593,13 @@ namespace Packet
         {
             Console.ForegroundColor = reply.Success ? ConsoleColor.Green : ConsoleColor.Red;
             Console.WriteLine("════════════════════════════════════════════════════════════════════════");
-            Console.WriteLine($"[S_PartyJoinReply] {(reply.Success ? "파티 가입 성공!" : "파티 가입 실패!")}");
+            Console.WriteLine($"[S_PartyJoinReply] {(reply.Success ? "파티 가입 요청 성공!" : "파티 가입 요청 실패!")}");
             Console.WriteLine("════════════════════════════════════════════════════════════════════════");
 
             if (reply.Success)
             {
-                Console.WriteLine("파티에 성공적으로 가입했습니다!");
-                Console.WriteLine("S_BroadcastPartyUpdate로 파티원 정보를 확인할 수 있습니다.");
+                Console.WriteLine("파티에 성공적으로 가입요청을 보넀습니다. ");
+                Console.WriteLine("파티장이 승인하면 가입 됩니다.");
             }
             else
             {
