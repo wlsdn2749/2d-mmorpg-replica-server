@@ -127,7 +127,7 @@ bool PartyManager::kickMember(int32 partyId, PlayerRef kicker, PlayerRef target)
     
     if (party->GetLeader() != kicker) return false; // 방장만 강퇴 가능
 
-    if (!IsSameParty(kicker, target)) return false; // 같은 파티가 아닐경우 못함
+    if (!IsSameParty(kicker->GetPartyId(), target->GetPartyId())) return false; // 같은 파티가 아닐경우 못함
 
     party->RemoveMember(target);
 
