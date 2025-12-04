@@ -105,7 +105,7 @@ bool PartyManager::LeaveParty(PlayerRef player)
     {
         return DisbandParty(GetPlayerPartyId(player));
     }
-
+	
     party->RemoveMember(player);
 
     // 일반 사람인 경우
@@ -129,12 +129,14 @@ bool PartyManager::kickMember(int32 partyId, PlayerRef kicker, PlayerRef target)
 
     if (!IsSameParty(kicker->GetPartyId(), target->GetPartyId())) return false; // 같은 파티가 아닐경우 못함
 
+	PartyService::Instance().SendPartyStatusUpdate(partyId, Protocol::EPartyUpdateType::PARTY_UPDATE_MEMBER_LEAVE);
+
     party->RemoveMember(target);
 
     _playerToParty.erase(target);
     target->SetPartyId(0);
 
-    PartyService::Instance().SendPartyStatusUpdate(partyId, Protocol::EPartyUpdateType::PARTY_UPDATE_MEMBER_LEAVE);
+    
     return true;
 }
 
