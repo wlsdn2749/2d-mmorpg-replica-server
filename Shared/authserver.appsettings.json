@@ -1,0 +1,17 @@
+{
+  "ConnectionStrings": {
+    "SqlConnection": "Server=(localdb)\\MSSQLLocalDB; Database=AuthDb; Integrated Security=true"
+  },
+  "AppSettings": {
+    "JwtSecret": "YOUR-JWT-SECRET",
+    "TokenExpiryHours": 12
+  },
+  "Kestrel": {
+    "Endpoints": {
+      "GrpcHttp": {
+        "Url": "http://0.0.0.0:8080",
+        "Protocols": "Http2"
+      }
+    }
+  }
+}

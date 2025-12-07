@@ -7,9 +7,14 @@
 이 프로젝트는 학습 및 포트폴리오를 목적으로 개발되었으며, 실제 게임 서버에서 요구되는 핵심 기능들을 구현하고 있습니다.
 
 ## Quick Start
-1. 먼저 Shared 디렉토리에 AuthServer, GameServer, Example_Service_Key json을 로컬 설정에 맞게 각 폴더의 루트에 넣습니다. 
-2. DB(ms-sql) 기준 AuthDb와 GameDb를 만들어줍니다. 테이블과 프로시져는 ORM으로 빌드 시 생성됩니다.
-3. visual studio 2022 버전으로 .sin을 열어 빌드시켜줍니다.
+1. Visual Studio 2022 필요
+Installer에서 Python 개발, .NET 데스크톱 개발, C++ 사용한 데스크톱 개발, 데이터 스토리지 및 처리 설치
+
+2. Shared 디렉토리에 있는 `authserver.appsettings.json`, `gameserver.appsettings.json`, `sheetloader.example_service_key.json`를
+로컬 설정에 맞게 변경 후, 이름을 `appsettings.json`과 `service-account-key.json`으로 변경 후 각 폴더의 루트에 넣습니다. 
+
+3. DB(ms-sql) 기준 AuthDb와 GameDb를 만들어줍니다. 테이블과 프로시져는 ORM으로 빌드 시 생성됩니다.
+4. .sin을 열어 빌드시켜줍니다. Client는 DummyClient나 TestClientUnity(GUI)를 사용하시면 됩니다.
 
 
 
@@ -21,7 +26,7 @@
 - **Protocol Buffers**: 효율적인 바이너리 직렬화 및 클라이언트-서버 통신
 - **자동화된 코드 생성**:
   - PacketGenerator: Protocol Buffers 정의로부터 C++ Handler 및 C# Manager 자동 생성
-  - ProcedureGenerator: XML 스키마로부터 ORM Stored Procedure 래퍼 자동 생성
+  - ProcedureGenerator: XML 스키마로부터 ORM Stored Proced ure 래퍼 자동 생성
 - **Google Sheets 연동**: 게임 데이터(몬스터, 아이템 등)를 Google Sheets에서 JSON으로 자동 배포
 
 ## 구현된 게임 시스템

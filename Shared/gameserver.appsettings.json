@@ -1,0 +1,10 @@
+{
+  "AppSettings": {
+    "JwtSecret": "JWT-SECRET",
+    "TokenExpiryHours": 12,
+    "Issuer": "GameAuth",
+    "Audience": "GameClient",
+    "DBLocalPath": "YOUR-DB-DRIVER-LOCAL-PATH",
+    "DBXmlPath": "YOUR-DB-XML-PATH"
+  }
+}
