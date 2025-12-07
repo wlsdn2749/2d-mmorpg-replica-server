@@ -21,6 +21,9 @@ public:
     // 파티 상태 업데이트 송신
     void SendPartyStatusUpdate(int32 partyId, const Protocol::EPartyUpdateType& updateType);
 
+	// Kicked 당한 사람에게 메세지 전달
+	void SendMessageToKickedPlayer(int32 partyId, PlayerRef kicker, PlayerRef target);
+
 private:
     void BroadcastToPartyMembers(PartyRef party, Protocol::S_BroadcastPartyUpdate& pkt);
 

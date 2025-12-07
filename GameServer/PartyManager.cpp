@@ -112,7 +112,6 @@ bool PartyManager::LeaveParty(PlayerRef player)
     _playerToParty.erase(player);
     player->SetPartyId(0);
 
-
     PartyService::Instance().SendPartyStatusUpdate(partyId, Protocol::EPartyUpdateType::PARTY_UPDATE_MEMBER_LEAVE);
     return true;
 }
@@ -129,12 +128,17 @@ bool PartyManager::kickMember(int32 partyId, PlayerRef kicker, PlayerRef target)
 
     if (!IsSameParty(kicker->GetPartyId(), target->GetPartyId())) return false; // 같은 파티가 아닐경우 못함
 
-	PartyService::Instance().SendPartyStatusUpdate(partyId, Protocol::EPartyUpdateType::PARTY_UPDATE_MEMBER_LEAVE);
-
     party->RemoveMember(target);
 
     _playerToParty.erase(target);
     target->SetPartyId(0);
+
+	
+	// 강퇴된 파티멤버에게는 Kick 메시지를
+	PartyService::Instance().SendMessageToKickedPlayer(partyId, kicker, target);
+
+	// 기존 파티멤버들에게는 업데이트 패킷을
+	PartyService::Instance().SendPartyStatusUpdate(partyId, Protocol::EPartyUpdateType::PARTY_UPDATE_MEMBER_LEAVE);
 
     
     return true;

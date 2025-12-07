@@ -84,6 +84,7 @@ enum : uint16
 	PKT_C_NpcShopSellRequest = 74,
 	PKT_S_NpcShopSellReply = 75,
 	PKT_C_PartyDelegateLeader = 76,
+	PKT_S_PartyKickedNotify = 77,
 
 };
 
@@ -214,6 +215,7 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::S_BroadcastPlayerEquipment& pkt) { return MakeSendBuffer(pkt, PKT_S_BroadcastPlayerEquipment); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_NpcList& pkt) { return MakeSendBuffer(pkt, PKT_S_NpcList); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_NpcShopSellReply& pkt) { return MakeSendBuffer(pkt, PKT_S_NpcShopSellReply); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_PartyKickedNotify& pkt) { return MakeSendBuffer(pkt, PKT_S_PartyKickedNotify); };
 
 private:
 	template<typename PacketType, typename ProcessFunc>

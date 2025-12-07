@@ -70,6 +70,18 @@ void PartyService::SendPartyStatusUpdate(int32 partyId, const Protocol::EPartyUp
 }
 
 
+void PartyService::SendMessageToKickedPlayer(int32 partyId, PlayerRef kicker, PlayerRef target)
+{
+	Protocol::S_PartyKickedNotify pkt;
+	pkt.set_partyid(partyId);
+	pkt.set_leaderid(kicker->playerId);
+	pkt.set_kickedplayerid(target->playerId);
+
+	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
+	if(auto s = target->ownerSession.lock())
+		s->Send(sendBuffer);
+}
+
 void PartyService::BroadcastToPartyMembers(PartyRef party, Protocol::S_BroadcastPartyUpdate& pkt)
 {
 	for (const auto& player : party->GetOnlineMembers())

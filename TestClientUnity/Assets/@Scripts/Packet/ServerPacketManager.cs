@@ -85,6 +85,7 @@ namespace Packet
 	    PKT_C_NpcShopSellRequest = 74,
 	    PKT_S_NpcShopSellReply = 75,
 	    PKT_C_PartyDelegateLeader = 76,
+	    PKT_S_PartyKickedNotify = 77,
     }
     public class ServerPacketManager
     {
@@ -194,6 +195,7 @@ namespace Packet
             RegisterHandler((ushort)PacketID.PKT_S_BroadcastPlayerEquipment, ServerPacketHandler.HANDLE_S_BroadcastPlayerEquipment, S_BroadcastPlayerEquipment.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_NpcList, ServerPacketHandler.HANDLE_S_NpcList, S_NpcList.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_NpcShopSellReply, ServerPacketHandler.HANDLE_S_NpcShopSellReply, S_NpcShopSellReply.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_PartyKickedNotify, ServerPacketHandler.HANDLE_S_PartyKickedNotify, S_PartyKickedNotify.Parser);
             
                   
         }

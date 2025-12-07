@@ -82,6 +82,7 @@ enum MsgId
 	C_NPC_SHOP_SELL_REQUEST = 74;
 	S_NPC_SHOP_SELL_REPLY = 75;
 	C_PARTY_DELEGATE_LEADER = 76;
+	S_PARTY_KICKED_NOTIFY = 77;
 }
 
 // 클라 -> 게임 서버 jwt 로그인 인증 (0)
@@ -587,6 +588,14 @@ message S_NpcShopSellReply {
 // (76) 클라 -> 서버 : 파티장 위임 요청
 message C_PartyDelegateLeader {
 	int32 targetPid = 1;
+}
+
+
+// (77) 서버 -> 클라 : Kick 당한 사람에게 알려주기
+message S_PartyKickedNotify {
+	int32 partyId = 1;
+	int32 kickedPlayerId = 2;
+	int32 leaderId = 3;
 }
 
 enum ELoginResult

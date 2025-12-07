@@ -865,5 +865,10 @@ namespace Packet
             }
             Console.ResetColor();
         }
+
+        internal static void HANDLE_S_PartyKickedNotify(PacketSession session, S_PartyKickedNotify notify)
+        {
+            Console.WriteLine($"[S_PartyKickedNotify] partyId {notify.PartyId}, kickedPlayerId:{notify.KickedPlayerId}, leaderId:{notify.LeaderId}");
+        }
     }
 }
