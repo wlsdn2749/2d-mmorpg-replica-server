@@ -9,7 +9,7 @@ public class PartyHUD : MonoBehaviour
 {
     [SerializeField] Transform content;
     [SerializeField] PartyHUDSlot slotPrefab;
-
+    [SerializeField] private GameObject _partyHUDLayout;
     void OnEnable() { PartyState.Instance.OnPartyChanged += Rebuild; PartyState.Instance.OnPartyStatusUpdated += Refresh; Rebuild(); }
     void OnDisable() { PartyState.Instance.OnPartyChanged -= Rebuild; PartyState.Instance.OnPartyStatusUpdated -= Refresh; }
 
@@ -22,7 +22,7 @@ public class PartyHUD : MonoBehaviour
             var slot = Instantiate(slotPrefab, content);
             slot.Bind(m, PartyState.Instance.PartyLeaderId);
         }
-        gameObject.SetActive(mem.Count > 0);
+        _partyHUDLayout.SetActive(mem.Count > 0);
     }
     void Refresh()
     {

@@ -62,8 +62,14 @@ public class PartyJoinRequestWindow : MonoBehaviour
 
         foreach (var info in requesters)
         {
-            var slot = Instantiate(_slotPrefab, _content);
+            var slotGO = ObjectPoolManager.Instance.GetObject("PartyWindow_RequesterSlot");
+            slotGO.transform.SetParent(_content, false);
+
+            var slot = slotGO.GetComponent<PartyJoinRequesterSlot>();
+            slot.gameObject.SetActive(true);
+
             slot.Bind(partyId, info);
+            
             _slots.Add(slot);
         }
 

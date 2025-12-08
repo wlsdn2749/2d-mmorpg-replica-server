@@ -25,13 +25,13 @@ public class UI_Chat : MonoBehaviour
         currentType = _defaultType;
         SetPanel(false);
 
-        // ✅ 엔터로 제출되도록 보장
+        // 엔터로 제출되도록 보장
         if (_input)
         {
             // SingleLine 또는 MultiLineSubmit 권장
             _input.lineType = TMP_InputField.LineType.SingleLine;
 
-            // ✅ onSubmit으로 전송 처리 (IME 안전)
+            //  onSubmit으로 전송 처리 (IME 안전)
             _input.onSubmit.RemoveListener(OnSubmit); // 중복 방지
             _input.onSubmit.AddListener(OnSubmit);
         }
@@ -47,7 +47,7 @@ public class UI_Chat : MonoBehaviour
             ChatManager.Instance.OnMessageAdded += OnMessageAdded;
         }
 
-        // ✅ Content 살아있는지 점검 후 리바인딩
+        //  Content 살아있는지 점검 후 리바인딩
         if (!IsAlive(_content))
         {
             var canvas = GetComponentInParent<Canvas>();
@@ -172,7 +172,8 @@ public class UI_Chat : MonoBehaviour
         if (!IsAlive(_linePrefab)) { Debug.LogError("[ChatUI] _linePrefab is null"); return; }
         if (!IsAlive(_content)) { Debug.LogError("[ChatUI] _content is null or destroyed"); return; }
 
-        var go = Instantiate(_linePrefab.gameObject);
+        //var go = Instantiate(_linePrefab.gameObject);
+        var go = ObjectPoolManager.Instance.GetObject("ChatLine");
         go.transform.SetParent(_content, worldPositionStays: false);
 
         var line = go.GetComponent<UI_ChatLine>();
@@ -180,7 +181,7 @@ public class UI_Chat : MonoBehaviour
 
         string typePrefix = m.chatType == EChatType.ChatAll ? "[전체]" : "[지역]";
         
-        // ✅ 캐시에서 이름 조회 (씬 오브젝트 접근 금지)
+        //  캐시에서 이름 조회 (씬 오브젝트 접근 금지)
         string who = null;
         if (m.playerId.HasValue)
         {

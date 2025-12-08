@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "FieldRoom.h"
 #include "ClientPacketHandler.h"
 #include "RoomManager.h"
@@ -78,7 +78,7 @@ bool FieldRoom::ProcessMonsterExpInRoom(EntityId typeId, int srcPlayerId)
 {
 	const int dropExp = 100; /*TODO 나중에 sheet 기반으로 변경*/
 	auto killerPlayer = FindPlayer(srcPlayerId);
-
+	 
 	// 파티 경험치 분배  (PartyService로 위임)
 	if (killerPlayer->IsInParty())
 	{

@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PartyJoinRequesterSlot : MonoBehaviour
+public class PartyJoinRequesterSlot : PoolAble
 {
     [SerializeField] TMP_Text _levelText;      // Text_RequesterLevel
     [SerializeField] TMP_Text _nameText;       // Text_RequesterName
@@ -34,6 +34,8 @@ public class PartyJoinRequesterSlot : MonoBehaviour
         // 일단 버튼 잠궈두기 (서버 브로드캐스트 오면 실제 파티 상태 갱신됨)
         _buttonAccept.interactable = false;
         _buttonReject.interactable = false;
+
+        ReleaseObject();
     }
 
     void OnClickReject()
@@ -41,5 +43,6 @@ public class PartyJoinRequesterSlot : MonoBehaviour
         PartyNet.RespondJoinAsLeader(_partyId, _playerId, false);
         _buttonAccept.interactable = false;
         _buttonReject.interactable = false;
+        ReleaseObject();
     }
 }

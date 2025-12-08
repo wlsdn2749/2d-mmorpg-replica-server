@@ -15,12 +15,15 @@ public static class PartyNet
 
     public static void SendInvite(int targetPid)
     {
+        Debug.Log($"[PartyNet] SendInvite() called. targetPid={targetPid}");
         var req = new C_PartyInviteRequest { TargetPid = targetPid };
         Send(req, PacketID.PKT_C_PartyInviteRequest);
+        Debug.Log("[PartyNet] C_PartyInviteRequest sent to server.");
     }
 
     public static void RespondInvite(int partyId, bool accept)
     {
+        Debug.Log($"[PartyNet] RespondInvite() partyId={partyId}, accept={accept}");
         var req = new C_PartyInviteResponse { PartyId = partyId, Accept = accept };
         Send(req, PacketID.PKT_C_PartyInviteResponse);
     }
@@ -30,13 +33,16 @@ public static class PartyNet
         var req = new C_PartyLeave();
         req.SelfLeave = true; // oneof
         Send(req, PacketID.PKT_C_PartyLeave);
+        Debug.Log ("Sent Party Leave Self");
     }
 
     public static void Kick(int targetPid)
     {
         var req = new C_PartyLeave();
         req.TargetPid = targetPid; // oneof
+        //req.SelfLeave = false;
         Send(req, PacketID.PKT_C_PartyLeave);
+        Debug.Log ("Sent Party Leave Kick for PID: " + targetPid);
     }
 
     public static void Create(string partyName)

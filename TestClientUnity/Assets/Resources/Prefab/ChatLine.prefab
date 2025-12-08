@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 6836609133940808850}
   - component: {fileID: 133270908520049189}
   - component: {fileID: 6826137351730585191}
+  - component: {fileID: -182401483988880933}
   m_Layer: 0
   m_Name: ChatLine
   m_TagString: Untagged
@@ -207,3 +208,15 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &-182401483988880933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8862529921184482864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 392eef3fa5f3eb44c892570121ba1928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PoolAble
