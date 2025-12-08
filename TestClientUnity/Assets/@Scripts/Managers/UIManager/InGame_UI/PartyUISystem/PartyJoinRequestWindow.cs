@@ -50,7 +50,10 @@ public class PartyJoinRequestWindow : MonoBehaviour
     {
         foreach (var s in _slots)
         {
-            if (s) Destroy(s.gameObject);
+            if (s == null)
+                continue;
+
+            s.ReleaseObject();
         }
         _slots.Clear();
     }

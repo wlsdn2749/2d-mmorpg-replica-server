@@ -463,7 +463,6 @@ namespace Packet
         internal static void HANDLE_S_SystemMessage(PacketSession session, S_SystemMessage sysMsg)
         {
             Debug.Log($"[SystemMessage] {sysMsg.Message}");
-
         }
         internal static void HANDLE_S_NpcInteractReply(PacketSession session, S_NpcInteractReply npcInter)
         {
