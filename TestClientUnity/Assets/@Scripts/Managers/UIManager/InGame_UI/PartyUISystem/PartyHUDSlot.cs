@@ -12,11 +12,6 @@ public class PartyHUDSlot : MonoBehaviour
     [SerializeField] TMP_Text levelText;
     [SerializeField] Image hpFill;
     int _pid;
-    private void Start()
-    {
-        leaderUI.SetActive(false);
-        memberUI.SetActive(false);
-    }
     public void Bind(PartyMemberStatusInfo info, int leaderId)
     {
         _pid = info.PlayerId;
