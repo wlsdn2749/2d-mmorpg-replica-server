@@ -8,6 +8,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 public class Auth_UI : MonoBehaviour
 {
     private YetAnotherHttpHandler _handler;
@@ -43,10 +44,16 @@ public class Auth_UI : MonoBehaviour
             });
         _client = new Auth.AuthClient(_channel);
     }
+    private void OnEnable()
+    {
+        FocusIdField();
+    }
+
     void InitializeInputField()
     {
         _idField.text = "";
         _pwField.text = "";
+        FocusIdField();
     }
     void OnClickCreateAccount()
     {
@@ -112,4 +119,61 @@ public class Auth_UI : MonoBehaviour
         NetworkManager.Instance.Send(sendBuffer);
         Debug.Log($"[UI] JWT 로그인 요청 전송: len={sendBuffer.Count}");
     }
+    void Update()
+    {
+        if (!gameObject.activeInHierarchy)
+            return;
+
+        // TAB: ID → PW로 포커스 이동
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            HandleTabNavigation();
+        }
+
+        // ENTER: 로그인 시도 (어디에 포커스 있어도)
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            OnClickLogin();
+        }
+    }
+
+    // === 키보드 네비게이션 유틸 ===
+
+    void FocusIdField()
+    {
+        if (_idField == null || EventSystem.current == null)
+        {
+            Debug.LogWarning("[Auth_UI] FocusIdField: _idField 또는 EventSystem.current가 null입니다.");  
+            return;
+        }
+
+        EventSystem.current.SetSelectedGameObject(_idField.gameObject);
+        _idField.ActivateInputField();
+    }
+
+    void FocusPwField()
+    {
+        if (_pwField == null || EventSystem.current == null)
+            return;
+
+        EventSystem.current.SetSelectedGameObject(_pwField.gameObject);
+        _pwField.ActivateInputField();
+    }
+
+    void HandleTabNavigation()
+    {
+        if (EventSystem.current == null)
+            return;
+
+        var current = EventSystem.current.currentSelectedGameObject;
+
+        // ID 입력창에 포커스가 있을 때만 PW로 넘김
+        if (current == _idField.gameObject)
+        {
+            FocusPwField();
+        }
+        // 나중에 필요하면 PW에서 다시 ID로 돌아가는 로직도 추가 가능
+        // else if (current == _pwField.gameObject) { FocusIdField(); }
+    }
+
 }

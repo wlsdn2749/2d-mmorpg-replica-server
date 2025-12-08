@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 497896943485935703}
   - component: {fileID: 2466168421507936383}
   - component: {fileID: 3600690835060543116}
+  - component: {fileID: -9000007508689868021}
   m_Layer: 5
-  m_Name: PartyWinodw_Slot_Requester
+  m_Name: PartyWindow_RequesterSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,6 +97,18 @@ MonoBehaviour:
   _nameText: {fileID: 4836602284911907578}
   _buttonAccept: {fileID: 1218973619065131517}
   _buttonReject: {fileID: 8656599121109259916}
+--- !u!114 &-9000007508689868021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996820174313356463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 392eef3fa5f3eb44c892570121ba1928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PoolAble
 --- !u!1 &1074974625001920661
 GameObject:
   m_ObjectHideFlags: 0

@@ -53,7 +53,8 @@ public class PartyWindowUI : MonoBehaviour
         PartyState.Instance.OnPartyList += HandlePartyList;
         PartyState.Instance.OnCreateResult += HandleCreateResult;
         PartyState.Instance.OnJoinResult += HandleJoinResult;
-
+        PartyState.Instance.OnKicked += HandleKicked;
+        PartyState.Instance.OnInviteResult += HandleJoinResult;
         // 켜질 때마다 최신 리스트 요청
         PartyNet.RequestPartyList();
     }
@@ -65,6 +66,8 @@ public class PartyWindowUI : MonoBehaviour
         PartyState.Instance.OnPartyList -= HandlePartyList;
         PartyState.Instance.OnCreateResult -= HandleCreateResult;
         PartyState.Instance.OnJoinResult -= HandleJoinResult;
+        PartyState.Instance.OnKicked -= HandleKicked;
+        PartyState.Instance.OnInviteResult -= HandleJoinResult;
     }
 
     private void ClearRows()
@@ -96,7 +99,6 @@ public class PartyWindowUI : MonoBehaviour
             _rows.Add(row);
         }
     }
-
     // 행에서 호출됨
     public void OnRowSelected(PartyListRowUI row, int partyId)
     {
@@ -136,39 +138,51 @@ public class PartyWindowUI : MonoBehaviour
         string name = _createNameInput.text;
         if (string.IsNullOrWhiteSpace(name))
             name = null;
-
+        if (!string.IsNullOrEmpty(name)) // 서버에서 패킷 도달 전, 로컬에서 파티 이름 미리 세팅. 방어용.
+            PartyState.Instance.SetLocalPartyName(name);
         PartyNet.Create(name);
         ShowStatus("파티 생성 요청을 보냈습니다.");
         _createWindowRoot.SetActive(false);
     }
-
+    private void HandleKicked()
+    {
+        ShowStatus("파티에서 강퇴되었습니다.");
+    }
     private void HandleCreateResult(bool success, string message)
     {
-        ShowStatus(message ?? (success ? "파티 생성 성공" : "파티 생성 실패"));
-
         if (success)
         {
-            PartyNet.RequestPartyList(); // 생성 후 리스트 새로고침
+            // 생성 성공 시 파티 창은 자동으로 닫힘
+            CloseCreateWindow();
+            ShowStatus("파티가 생성되었습니다.");
+        }
+        else
+        {
+            ShowStatus($"파티 생성에 실패했습니다.\n{message}");
         }
     }
 
     private void HandleJoinResult(bool success, string message)
     {
-        ShowStatus(message ?? (success ? "파티 가입 성공" : "파티 가입 실패"));
-        if (success)
-        {
-            // 실제 파티 HUD 등은 PartyState 브로드캐스트로 갱신될 거라 여기선 메시지 정도만
-        }
+        // 1) 상태창에 메시지 출력
+        string msg = success ? "파티에 가입되었습니다." : "파티 가입에 실패했습니다.";
+
+        ShowStatus(msg); // 내부에서 Party_StatusWindow 활성화
     }
     private void RefreshPartyList()
     {
         ShowStatus("파티 목록을 새로고침합니다.");
         PartyNet.RequestPartyList();
     }
-    private void ShowStatus(string msg)
+    public void ShowStatus(string msg)
     {
-        if (string.IsNullOrEmpty(msg)) return;
         _statusText.text = msg;
-        _statusWindowRoot.SetActive(true);
+
+        // 내 상태창 활성화
+        if (_statusWindowRoot != null)
+            _statusWindowRoot.SetActive(true);
+
+        // 파티 패널 자체도 보이게
+        gameObject.SetActive(true);
     }
 }

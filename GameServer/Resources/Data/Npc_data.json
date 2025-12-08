@@ -9,5 +9,16 @@
     "dialogId": "-1",
     "shopId": "1",
     "questIds": "-1"
+  },
+  {
+    "npcId": "2",
+    "name": "마을 이장",
+    "role": "QUEST",
+    "mapId": "1",
+    "x": "35",
+    "y": "-20",
+    "dialogId": "-1",
+    "shopId": "-1",
+    "questIds": "1"
   }
 ]

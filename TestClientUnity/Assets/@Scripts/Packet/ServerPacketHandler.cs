@@ -541,7 +541,14 @@ namespace Packet
         }
         internal static void HANDLE_S_PartyInviteNotify(PacketSession session, S_PartyInviteNotify pkt)
         {
-            PartyState.Instance.HandleInviteNotify(pkt);
+            var n = pkt;
+
+            Debug.Log(
+                $"[PacketHandler] S_PartyInviteNotify received. " +
+                $"inviterPid={n.InviterPid}, inviterName={n.InviterName}, partyId={n.PartyId}"
+            );
+
+            PartyState.Instance.HandleInviteNotify(n);
         }
         internal static void HANDLE_S_PartyInviteReply(PacketSession session, S_PartyInviteReply pkt)
         {
@@ -570,6 +577,10 @@ namespace Packet
         internal static void HANDLE_S_PartyJoinRequestList(PacketSession session, S_PartyJoinRequestList pkt)
         {
             PartyState.Instance.HandleJoinRequestList(pkt);
+        }
+        internal static void HANDLE_S_PartyKickedNotify (PacketSession session, S_PartyKickedNotify pkt)
+        {
+            PartyState.Instance.HandleKickedNotify(pkt);
         }
         internal static void HANDLE_S_EquipItemReply(PacketSession session, S_EquipItemReply pkt)
         {

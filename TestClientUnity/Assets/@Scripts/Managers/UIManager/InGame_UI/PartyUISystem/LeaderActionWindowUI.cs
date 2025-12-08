@@ -47,8 +47,13 @@ public class LeaderActionWindowUI : MonoBehaviour
 
     void OnClickKick()
     {
-        if (_targetPid < 0) return;
+        if (_targetPid < 0)
+        {
+            Debug.LogWarning("[LeaderActionWindowUI] Kick clicked but _targetPid < 0");
+            return;
+        }
 
+        Debug.Log($"[LeaderActionWindowUI] Request Kick pid={_targetPid}");
         PartyNet.Kick(_targetPid); // 이미 구현되어 있음
         Close();
     }

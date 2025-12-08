@@ -73,17 +73,26 @@ public class MyPartyViewUI : MonoBehaviour
             gameObject.SetActive(false);
             return;
         }
+
         Debug.Log($"[MyPartyUI] InParty. PartyId={ps.PartyId}, LeaderId={ps.PartyLeaderId}, MyId={NetDebug.MyPlayerId}");
 
-        // 파티 이름
-        _partyNameText.text = ps.PartyName;
+        //  파티 이름이 아직 서버에서 안 온 경우 대비
+        string partyName = ps.PartyName;
 
-        // 파티장/일반 UI 선택
+        if (string.IsNullOrEmpty(partyName))
+        {
+            if (ps.PartyId.HasValue)
+                partyName = $"파티 {ps.PartyId.Value}";
+            else
+                partyName = "파티 이름 불러오는중..."; // 디버그용 임시 문자열
+        }
+
+        _partyNameText.text = partyName;
+
         bool isLeader = (ps.PartyLeaderId == NetDebug.MyPlayerId);
         _viewLeaderUI.SetActive(isLeader);
         _viewNormalMemberUI.SetActive(!isLeader);
 
-        // 파티원 슬롯들 업데이트
         UpdateMemberSlots();
     }
 
@@ -112,7 +121,9 @@ public class MyPartyViewUI : MonoBehaviour
 
     void OnExitParty()
     {
-        PartyNet.LeaveSelf();  
+        PartyState.Instance.MarkSelfLeaveRequested();
+        PartyNet.LeaveSelf();
+        PartyState.Instance.ClearParty();
     }
     public void OnMemberSlotClicked(int pid, bool isSelf)
     {

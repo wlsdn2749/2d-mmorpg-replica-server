@@ -1,8 +1,10 @@
-using Google.Protobuf.Protocol;
+ï»¿using Google.Protobuf.Protocol;
 using Packet;
+using System.Collections;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 public enum Gender
 {
@@ -21,26 +23,26 @@ public class CreateCharacter_UI : MonoBehaviour
 {
     public static CreateCharacter_UI Instance { get; private set; }
     /// <summary>
-    /// ¼­¹ö¿¡ º¸³¾ ÆĞÅ¶ 
-    /// 1. À¯Àú ÀÌ¸§
-    /// 2. ¼ºº° (0 = NONE, 1 = MALE, 2 = FEMALE)
-    /// 3. Áö¿ª (0 = NONE, 1 = GOGURYEO, 2 = BAEKJE)
+    /// ì„œë²„ì— ë³´ë‚¼ íŒ¨í‚· 
+    /// 1. ìœ ì € ì´ë¦„
+    /// 2. ì„±ë³„ (0 = NONE, 1 = MALE, 2 = FEMALE)
+    /// 3. ì§€ì—­ (0 = NONE, 1 = GOGURYEO, 2 = BAEKJE)
     /// </summary>
     [SerializeField] private Gender _selectedGender;
     [SerializeField] private Region _selectedRegion;
     #region Images
     [SerializeField] private Image _maleCharacterImg;
     [SerializeField] private Image _femaleCharacterImg;
-    [Tooltip("0 = ³²ÀÚ, 1 = ¿©ÀÚ")]
+    [Tooltip("0 = ë‚¨ì, 1 = ì—¬ì")]
     [SerializeField] private Image[] _selectedGenderSealImg; 
-    [Tooltip("0 = °í±¸·Á, 1 = ¹éÁ¦")]
+    [Tooltip("0 = ê³ êµ¬ë ¤, 1 = ë°±ì œ")]
     [SerializeField] private Image[] _selectedRegionSealImg; 
     #endregion
     #region Buttons
-    [Tooltip("0 = ³²ÀÚ, 1 = ¿©ÀÚ")]
+    [Tooltip("0 = ë‚¨ì, 1 = ì—¬ì")]
     [SerializeField] private Button _selectMaleBtn;
     [SerializeField] private Button _selectFemaleBtn;
-    [Tooltip("0 = °í±¸·Á, 1 = ¹éÁ¦")]
+    [Tooltip("0 = ê³ êµ¬ë ¤, 1 = ë°±ì œ")]
     [SerializeField] private Button _selectGoguryeoBtn;
     [SerializeField] private Button _selectBaekjeBtn;
     [SerializeField] private Button _tryCreateCharacterBtn;
@@ -50,6 +52,24 @@ public class CreateCharacter_UI : MonoBehaviour
     #endregion
     #region Variables
     #endregion
+    private void OnEnable()
+    {
+        // íŒ¨ë„ì´ ì¼œì§ˆ ë•Œ ID í•„ë“œì— ìë™ í¬ì»¤ìŠ¤
+        StartCoroutine(FocusIdNextFrame());
+    }
+    private IEnumerator FocusIdNextFrame()
+    {
+        // UI ê·¸ë ¤ì§€ëŠ” í”„ë ˆì„ í•œë‘ ë²ˆ ê¸°ë‹¤ë ¸ë‹¤ê°€ í¬ì»¤ìŠ¤
+        yield return null;
+        yield return null;
+
+        if (_userNameField == null || EventSystem.current == null)
+            yield break;
+
+        EventSystem.current.SetSelectedGameObject(_userNameField.gameObject);
+        _userNameField.Select();
+        _userNameField.ActivateInputField();
+    }
     private void Awake()
     {
         if (Instance == null)
@@ -106,7 +126,7 @@ public class CreateCharacter_UI : MonoBehaviour
     public bool IsValidNickname(string userName)
     {
         string name = userName.Trim();
-        return Regex.IsMatch(name, @"^[°¡-ÆR]{2,6}$");
+        return Regex.IsMatch(name, @"^[ê°€-í£]{2,6}$");
     }
     private void OnClickTryCreateCharacter()
     {
@@ -138,7 +158,7 @@ public class CreateCharacter_UI : MonoBehaviour
         var sendBuffer = ServerPacketManager.MakeSendBuffer(req);
 
         NetworkManager.Instance.Send(sendBuffer);
-        Debug.Log($"Ä³¸¯ÅÍ »ı¼º ¿äÃ» Àü¼Û\nÄ³¸¯ÅÍ ÀÌ¸§ : {_userNameField.text}\n ¼ºº° : {_selectedGender}\n Áö¿ª : {_selectedRegion} ");
+        Debug.Log($"ìºë¦­í„° ìƒì„± ìš”ì²­ ì „ì†¡\nìºë¦­í„° ì´ë¦„ : {_userNameField.text}\n ì„±ë³„ : {_selectedGender}\n ì§€ì—­ : {_selectedRegion} ");
 
     }
     void Start()
