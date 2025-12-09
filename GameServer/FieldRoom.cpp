@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "FieldRoom.h"
 #include "ClientPacketHandler.h"
-#include "RoomManager.h"
 #include "DropManager.h"
 #include "ItemManager.h"
 #include "MonsterDataParser.h"
@@ -71,6 +70,8 @@ bool FieldRoom::ProcessMonsterMoneyInRoom(EntityId typeId, int srcPlayerId)
 	const int dropMoney = 500; /*TODO 나중에 sheet 기반으로 변경*/
 	auto player = FindPlayer(srcPlayerId);
 	player->AddMoney(dropMoney);
+
+	OnPlayerStatChanged(player);
 	return true;
 }
 
@@ -87,6 +88,7 @@ bool FieldRoom::ProcessMonsterExpInRoom(EntityId typeId, int srcPlayerId)
 	else
 	{
 		killerPlayer->AddExp(dropExp);
+		OnPlayerStatChanged(killerPlayer);
 	}
 	return true;
 }
@@ -358,22 +360,6 @@ void FieldRoom::InitMonsters()
 			spawnPointCfgDatas->push_back(spawnPointRecord.cfg);
 		}
 
-		//// 1001번 몬스터 (일반 몬스터)
-		//if (monsterDataMap.find(1001) != monsterDataMap.end())
-		//{
-
-		//	SpawnPointCfg spawnPointCfg = { 1, 15, -4, 5, 1, 8000, 10, 1001 };
-		//	spawnPointCfgDatas->push_back(spawnPointCfg);
-
-		//}
-
-		//// 2001번 몬스터 (다른 몬스터 타입)
-		//if (monsterDataMap.find(2001) != monsterDataMap.end())
-		//{
-		//	SpawnPointCfg spawnPointCfg = { 2, 18, -8, 3, 1, 6000, 8, 2001 };
-		//	spawnPointCfgDatas->push_back(spawnPointCfg);
-		//}
-
 		// 허수아비 몬스터 9999 (하드코딩 유지 - JSON에 없을 경우 대비)
 		if (monsterDataMap.find(9999) == monsterDataMap.end())
 		{
@@ -460,9 +446,6 @@ bool FieldRoom::PlayerMonsterLinkerImpl::ApplyDamageToMonster(int monsterId, int
 		// TODO 돈 지급 - Cfg
 		_r.ProcessMonsterMoneyInRoom(mv.typeId, srcPlayerId);
 		_r.ProcessMonsterDropInRoom(mv.typeId, srcPlayerId); // 플레이어에게 드랍
-
-		auto player = _r.FindPlayer(srcPlayerId);
-		_r.OnPlayerStatChanged(player);
 	}
 	
 	return isDie;

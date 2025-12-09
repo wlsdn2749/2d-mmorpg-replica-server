@@ -16,17 +16,21 @@ void PartyService::DistributeExp(PlayerRef killer, int32 baseExp)
 
 	auto onlineMembers = party->GetOnlineMembers();
 
-	// 처치자: 110% 경험치
-	killer->AddExp(static_cast<int32>(baseExp * 1.1f));
-
-	// 나머지 파티원: 각각 10% 경험치 주기 
-	for (auto& member : onlineMembers)
+	// 나머지 모든 파티원: 각각 10% 경험치 주기 
+	for (const auto& member : onlineMembers)
 	{
-		if (member != killer)
+		if (member == killer)
+		{
+			member->AddExp(static_cast<int32>(baseExp * 1.1f));
+		}
+		else
 		{
 			member->AddExp(static_cast<int32>(baseExp * 0.1f));
 		}
+
+		member->GetRoom()->OnPlayerStatChanged(member);
 	}
+
 }
 
 void PartyService::UpdatePartyStatuses(const vector<PlayerRef>& roomPlayers, const Protocol::EPartyUpdateType& updateType)

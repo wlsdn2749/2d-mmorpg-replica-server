@@ -22,7 +22,7 @@ struct PendingRoomChange {
 	int dstPortalId = 0;
 };
 
-class Player : std::enable_shared_from_this<Player>
+class Player
 {
 public:
 	bool operator==(const Player& rhs) const { return this->playerId == rhs.playerId; }
@@ -122,7 +122,6 @@ public:
 		const int remainingExp = static_cast<int>(_curExp % _maxExp);
 		AddLevel(pendingAddLevel);
 		SetExp(remainingExp);
-		GetRoom()->OnPlayerStatChanged(shared_from_this());
 	}
 
 	bool ApplyDamage(int dmg, int srcMonsterId) {
