@@ -84,9 +84,17 @@ public class ObjectPoolManager : MonoBehaviour
     }
 
     private void OnTakeFromPool(GameObject obj)
-
     {
+        if (obj == null)
+        {
+            Debug.LogWarning("[ObjectPoolManager] OnTakeFromPool: obj is null/destroyed");
+            return;
+        }
+
         obj.SetActive(true);
+
+        if (obj.TryGetComponent<PoolAble>(out var p))
+            p.OnTakenFromPool();
     }
 
     private void OnReturnedToPool(GameObject obj)

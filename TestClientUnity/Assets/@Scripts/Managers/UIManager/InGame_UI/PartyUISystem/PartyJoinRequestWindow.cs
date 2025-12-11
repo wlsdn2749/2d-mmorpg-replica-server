@@ -48,14 +48,30 @@ public class PartyJoinRequestWindow : MonoBehaviour
 
     void Clear()
     {
-        foreach (var s in _slots)
-        {
-            if (s == null)
-                continue;
+        //foreach (var s in _slots)
+        //{
+        //    if (s == null)
+        //        continue;
 
-            s.ReleaseObject();
+        //    s.ReleaseObject();
+        //}
+        //_slots.Clear();
+        for (int i = _content.childCount - 1; i >= 0; i--)
+        {
+            var child = _content.GetChild(i);
+            
+            if (child.TryGetComponent<PartyJoinRequesterSlot>(out var slot))
+            {
+                if (!slot.gameObject.activeSelf)
+                    continue;
+                // 풀에 돌려보내기
+                slot.ReleaseObject();
+            }
+            else
+            {
+                Destroy(child.gameObject);
+            }
         }
-        _slots.Clear();
     }
 
     // 서버가 전체 요청 리스트 내려줄 때
@@ -72,12 +88,7 @@ public class PartyJoinRequestWindow : MonoBehaviour
             slot.gameObject.SetActive(true);
 
             slot.Bind(partyId, info);
-            
-            _slots.Add(slot);
         }
-
-        // 요청이 하나도 없으면 자동으로 창 닫을지 여부는 취향
-        // if (requesters.Count == 0) Close();
     }
 
     // 누군가 새로 가입 요청을 했다는 알림 (리더만 받음)
@@ -92,8 +103,6 @@ public class PartyJoinRequestWindow : MonoBehaviour
         {
             PartyNet.RequestJoinRequestList(partyId);
         }
-
-        // 여기서 "새 가입 요청이 있습니다" 같은 작은 이펙트/아이콘 표시도 가능
     }
 
     public void Open()

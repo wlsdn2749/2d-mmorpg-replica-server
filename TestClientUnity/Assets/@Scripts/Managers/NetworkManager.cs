@@ -42,8 +42,8 @@ public class NetworkManager : MonoBehaviour
     {
         // 진우씨 IP = 14.36.6.179
         // 로컬 IP =  127.0.0.1
-        string host = "14.36.6.179";
-        //string host = "127.0.0.1";
+        //string host = "14.36.6.179";
+        string host = "127.0.0.1";
         int     port = 6201;
         
         Debug.Log("NetworkSession Start");

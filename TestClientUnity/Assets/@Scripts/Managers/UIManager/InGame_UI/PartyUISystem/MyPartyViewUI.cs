@@ -1,5 +1,6 @@
 ﻿using Google.Protobuf.Protocol;
 using Packet;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -18,7 +19,7 @@ public class MyPartyViewUI : MonoBehaviour
     [Header("Leader UI Buttons")]
     [SerializeField] private Button _buttonLeaderExitParty;
     [SerializeField] private Button _buttonOpenJoinRequestWindow;
-
+    [SerializeField] private Image _imageJoinRequestNotification;
 
     [Header("Normal Member UI Buttons")]
     [SerializeField] private Button _buttonNormalExitParty;
@@ -48,19 +49,27 @@ public class MyPartyViewUI : MonoBehaviour
 
         foreach (var slot in _memberSlots)
             slot?.SetOwner(this);
+
+        _imageJoinRequestNotification.enabled = false;
     }
 
     void OnEnable()
     {
         // 파티 상태 갱신 이벤트
         PartyState.Instance.OnPartyChanged += Refresh;
+        PartyState.Instance.OnJoinNotifyToLeader += OnJoinNotifyLeader;
+        PartyState.Instance.OnJoinRequestList += OnJoinRequestListForImage;
         Refresh();
     }
 
     void OnDisable()
     {
         if (PartyState.Instance != null)
+        {
             PartyState.Instance.OnPartyChanged -= Refresh;
+            PartyState.Instance.OnJoinNotifyToLeader -= OnJoinNotifyLeader;
+            PartyState.Instance.OnJoinRequestList -= OnJoinRequestListForImage;
+        }
     }
 
     void Refresh()
@@ -151,5 +160,33 @@ public class MyPartyViewUI : MonoBehaviour
 
         _joinRequestWindow.Open();
         PartyNet.RequestJoinRequestList(ps.PartyId.Value);
+    }
+    void OnJoinNotifyLeader(int joinPlayerId, int partyId, int leaderId)
+    {
+        // 내가 리더가 아니면 무시
+        if (leaderId != NetDebug.MyPlayerId)
+            return;
+
+        // 내 파티가 아닌 다른 파티의 요청이면 무시
+        var ps = PartyState.Instance;
+        if (!ps.PartyId.HasValue || ps.PartyId.Value != partyId)
+            return;
+
+        //  이미지 켜기
+        if (_imageJoinRequestNotification != null)
+            _imageJoinRequestNotification.enabled = true;
+    }
+    void OnJoinRequestListForImage(int partyId, List<PartyJoinRequesterInfo> requesters)
+    {
+        var ps = PartyState.Instance;
+        if (!ps.PartyId.HasValue || ps.PartyId.Value != partyId)
+            return;
+
+        //  요청이 1개 이상이면 배지 켜고, 없으면 끈다
+        bool hasRequests = (requesters != null && requesters.Count > 0);
+
+        if (_imageJoinRequestNotification != null)
+            _imageJoinRequestNotification.enabled = hasRequests;
+
     }
 }

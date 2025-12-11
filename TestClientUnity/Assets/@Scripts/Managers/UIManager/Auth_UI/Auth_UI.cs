@@ -38,18 +38,18 @@ public class Auth_UI : MonoBehaviour
         _handler = new YetAnotherHttpHandler { Http2Only = true };
         // 진우씨 아이피 = http://14.36.6.179:8080
         // 로컬 아이피 = http://127.0.0.1:8080
-        _channel = GrpcChannel.ForAddress("http://14.36.6.179:8080",
-            new GrpcChannelOptions
-            {
-                HttpHandler = _handler,
-                DisposeHttpClient = true
-            });
-        //_channel = GrpcChannel.ForAddress("http://127.0.0.1:8080",
+        //_channel = GrpcChannel.ForAddress("http://14.36.6.179:8080",
         //    new GrpcChannelOptions
         //    {
         //        HttpHandler = _handler,
         //        DisposeHttpClient = true
         //    });
+        _channel = GrpcChannel.ForAddress("http://127.0.0.1:8080",
+            new GrpcChannelOptions
+            {
+                HttpHandler = _handler,
+                DisposeHttpClient = true
+            });
         _client = new Auth.AuthClient(_channel);
     }
     private void OnEnable()

@@ -26,6 +26,9 @@ public class PartyJoinRequesterSlot : PoolAble
 
         _buttonAccept.onClick.AddListener(OnClickAccept);
         _buttonReject.onClick.AddListener(OnClickReject);
+
+        _buttonAccept.interactable = true;
+        _buttonReject.interactable = true;
     }
 
     void OnClickAccept()

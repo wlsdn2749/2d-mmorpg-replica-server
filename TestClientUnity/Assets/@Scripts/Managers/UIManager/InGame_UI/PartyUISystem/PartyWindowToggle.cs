@@ -5,6 +5,7 @@ public class PartyWindowToggle : MonoBehaviour
 {
     [SerializeField] private GameObject partyListWindow; // Window_PartyList
     [SerializeField] private GameObject myPartyWindow;   // Window_MyParty
+    [SerializeField] private GameObject joinRequestWindow; // Panel_JoinRequestWindow  
     [SerializeField] private Button CancleMyPartyUIButton;    
 
     void Awake()
@@ -73,7 +74,12 @@ public class PartyWindowToggle : MonoBehaviour
         {
             bool newState = !myPartyWindow.activeSelf;
             myPartyWindow.SetActive(newState);
-            if (partyListWindow) partyListWindow.SetActive(false);
+            if (joinRequestWindow.activeSelf)
+                joinRequestWindow.SetActive(false);
+            if (partyListWindow) 
+            {
+                partyListWindow.SetActive(false);   
+            }
         }
         else
         {

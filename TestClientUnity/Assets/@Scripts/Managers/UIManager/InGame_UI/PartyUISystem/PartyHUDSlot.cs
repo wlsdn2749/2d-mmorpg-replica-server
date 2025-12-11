@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 public class PartyHUDSlot : MonoBehaviour
 {
-    [SerializeField] GameObject leaderUI;
-    [SerializeField] GameObject memberUI;   
-    [SerializeField] TMP_Text leaderNameText;
+    [SerializeField] Image leaderIcon;
     [SerializeField] TMP_Text memberNameText;
     [SerializeField] TMP_Text levelText;
     [SerializeField] Image hpFill;
@@ -16,18 +14,15 @@ public class PartyHUDSlot : MonoBehaviour
     {
         _pid = info.PlayerId;
         levelText.text = $"Lv.{info.Level}";
+        memberNameText.text = info.PlayerName;
         hpFill.fillAmount = info.MaxHp > 0 ? (float)info.Hp / info.MaxHp : 0f;
         if (_pid == leaderId)
         {
-            leaderUI.SetActive(true);
-            memberUI.SetActive(false);
-            leaderNameText.text = info.PlayerName;
+            leaderIcon.enabled = true;
         }
         else
         {
-            leaderUI.SetActive(false);
-            memberUI.SetActive(true);
-            memberNameText.text = info.PlayerName;
+            leaderIcon.enabled = false;
         }
     }
     public void Refresh()
